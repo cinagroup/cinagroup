@@ -1,0 +1,12 @@
+[2026-04-03 10:02:31] [0;34m[INFO][0m Created default config: /root/.openclaw/workspace/.memory-backup-config.json
+[2026-04-03 10:02:31] [0;34m[INFO][0m Creating backup: memory_backup_20260403_100231_ad0fe7f3
+[2026-04-03 10:02:31] [0;34m[INFO][0m Copied workspace memory files
+[2026-04-03 10:02:31] [0;34m[INFO][0m Copied scene blocks
+[2026-04-03 10:02:31] [0;34m[INFO][0m Copied MEMORY.md
+[2026-04-03 10:02:40] [0;34m[INFO][0m Creating backup: memory_backup_20260403_100240_ad0fe7f3
+[2026-04-03 10:02:40] [0;34m[INFO][0m Copied workspace memory files
+[2026-04-03 10:02:40] [0;34m[INFO][0m Copied scene blocks
+[2026-04-03 10:02:40] [0;34m[INFO][0m Copied MEMORY.md
+[2026-04-03 10:02:40] [0;34m[INFO][0m Created archive: /root/.openclaw/workspace/.backups/memory/memory_backup_20260403_100240_ad0fe7f3.tar.gz (24K)
+[2026-04-03 10:02:40] [1;33m[WARN][0m Encryption password not set, skipping encryption
+[2026-04-03 10:02:40] [0;32m[SUCCESS][0m Backup created: /root/.openclaw/workspace/.backups/memory/memory_backup_20260403_100240_ad0fe7f3.tar.gz.enc

@@ -2038,3 +2038,13 @@
 [2026-04-03 05:30:06] ❌ ERROR: Failed to push to remote
 [2026-04-03 09:00:01] ✅ Health check complete
 [2026-04-03 09:00:01] ✅ Health check complete
+[2026-04-03 10:00:01] 🔍 Running briefing health check...
+[2026-04-03 10:00:01] 🔍 Running briefing health check...
+[2026-04-03 10:00:01] ✅ Morning briefing found: ai-news-briefing-2026-04-03-06.md
+[2026-04-03 10:00:01] ✅ Morning briefing found: ai-news-briefing-2026-04-03-06.md
+[2026-04-03 10:00:01] 🌐 Checking website deployment status...
+[2026-04-03 10:00:01] 🌐 Checking website deployment status...
+[2026-04-03 10:00:01] 🚨 ALERT: Errors found in publish log:\n[2026-04-01 05:30:03] ❌ ERROR: Failed to push to remote
+[2026-04-03 05:30:06] ❌ ERROR: Failed to push to remote
+[2026-04-03 10:00:01] ✅ Health check complete
+[2026-04-03 10:00:01] ✅ Health check complete
