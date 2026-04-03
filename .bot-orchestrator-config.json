@@ -1,0 +1,66 @@
+{
+  "version": "1.0",
+  "enabled": true,
+  "mode": "round_robin",
+  "bots": {
+    "qqbot": {
+      "enabled": true,
+      "priority": 1,
+      "capabilities": ["message", "file", "remind"],
+      "rate_limit": 60
+    },
+    "wecom": {
+      "enabled": true,
+      "priority": 2,
+      "capabilities": ["message", "file", "todo", "schedule", "meeting", "doc"],
+      "rate_limit": 100
+    },
+    "weixin": {
+      "enabled": true,
+      "priority": 3,
+      "capabilities": ["message", "template"],
+      "rate_limit": 1000
+    },
+    "ddingtalk": {
+      "enabled": true,
+      "priority": 4,
+      "capabilities": ["message", "file", "remind"],
+      "rate_limit": 60
+    },
+    "lightclawbot": {
+      "enabled": true,
+      "priority": 5,
+      "capabilities": ["message", "file", "cron"],
+      "rate_limit": 30
+    },
+    "yuanbao": {
+      "enabled": true,
+      "priority": 6,
+      "capabilities": ["message", "file"],
+      "rate_limit": 30
+    }
+  },
+  "routing": {
+    "default": "qqbot",
+    "rules": [
+      {"type": "todo", "bot": "wecom"},
+      {"type": "schedule", "bot": "wecom"},
+      {"type": "meeting", "bot": "wecom"},
+      {"type": "doc", "bot": "wecom"},
+      {"type": "remind", "bot": "qqbot"},
+      {"type": "cron", "bot": "lightclawbot"},
+      {"type": "template", "bot": "weixin"}
+    ]
+  },
+  "failover": {
+    "enabled": true,
+    "retry_count": 3,
+    "retry_delay_ms": 1000,
+    "fallback_order": ["qqbot", "wecom", "lightclawbot"]
+  },
+  "monitoring": {
+    "health_check_interval": 60,
+    "alert_on_failure": true,
+    "log_all_requests": true
+  }
+}
