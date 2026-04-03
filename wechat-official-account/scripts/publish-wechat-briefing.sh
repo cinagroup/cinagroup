@@ -181,6 +181,16 @@ create_draft() {
     # 读取内容并转换为 HTML（简化版）
     local content=$(cat "$content_file" | sed 's/"/\\"/g' | tr '\n' '\\n')
     
+    # 检查封面图是否存在
+    local show_cover=0
+    local thumb_media=""
+    if [ -f "$cover_file" ] && [ ! -f "${cover_file}.txt" ]; then
+        show_cover=1
+        # TODO: 上传封面图获取 media_id
+        # thumb_media=$(upload_cover_image "$access_token" "$cover_file")
+        thumb_media="PLACEHOLDER_${RANDOM}"
+    fi
+    
     # 创建草稿数据
     local draft_data=$(cat <<EOF
 {
@@ -191,8 +201,8 @@ create_draft() {
             "digest": "AI 新闻简报 - 最新 AI 动态与技术趋势",
             "content": "$content",
             "content_source_url": "https://cinagroup.com/blog",
-            "thumb_media_id": "TODO",
-            "show_cover_pic": 1,
+            "thumb_media_id": "${thumb_media:-PLACEHOLDER}",
+            "show_cover_pic": $show_cover,
             "need_open_comment": 0,
             "only_fans_can_comment": 0
         }

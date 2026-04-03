@@ -4,8 +4,8 @@
  * 使用 Qwen3.5 Plus 翻译英文简报为中文
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 // 翻译配置
 const TRANSLATION_CONFIG = {

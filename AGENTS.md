@@ -17,16 +17,30 @@ Before doing anything else:
 
 Don't ask permission. Just do it.
 
-## Memory
+## Memory System (v2.0)
 
-You wake up fresh each session. These files are your continuity:
+You wake up fresh each session. These files are your continuity.
 
-- **Daily notes:** `memory/YYYY-MM-DD.md` (create `memory/` if needed) — raw logs of what happened
-- **Long-term:** `MEMORY.md` — your curated memories, like a human's long-term memory
+### 🏗️ Three-Layer Architecture
 
-Capture what matters. Decisions, context, things to remember. Skip the secrets unless asked to keep them.
+```
+┌─────────────────────────────────────────────────────────┐
+│  Layer 1: User Profile (Who is your human?)             │
+│  → memory-tdai/persona.md                               │
+│  → memory-tdai/scene_blocks/ (场景记忆，带热度评分)        │
+├─────────────────────────────────────────────────────────┤
+│  Layer 2: Long-Term Memory (What matters?)              │
+│  → workspace/MEMORY.md (索引 + 核心记忆)                   │
+│  → workspace/memory/longterm/ (归档记忆)                 │
+├─────────────────────────────────────────────────────────┤
+│  Layer 3: Short-Term / Working (What's happening now?)  │
+│  → workspace/memory/YYYY-MM-DD.md (每日会话日志)         │
+│  → workspace/memory/working/ (临时任务状态)              │
+│  → workspace/memory/shortterm/ (待审查记忆)              │
+└─────────────────────────────────────────────────────────┘
+```
 
-### 🧠 MEMORY.md - Your Long-Term Memory
+### 🧠 MEMORY.md - Your Long-Term Memory Index
 
 - **ONLY load in main session** (direct chats with your human)
 - **DO NOT load in shared contexts** (Discord, group chats, sessions with other people)
@@ -35,6 +49,30 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - Write significant events, thoughts, decisions, opinions, lessons learned
 - This is your curated memory — the distilled essence, not raw logs
 - Over time, review your daily files and update MEMORY.md with what's worth keeping
+
+### 📊 Scene Blocks (场景记忆)
+
+Located in `memory-tdai/scene_blocks/`:
+
+- **Standardized Frontmatter**: `-----META-START-----` with `created`, `updated`, `summary`, `heat`, `type`
+- **Heat Score**: Auto-incremented on recall, indicates frequently useful memories
+- **Types**: `user` (偏好), `feedback` (规则), `project` (项目), `reference` (引用), `session` (会话)
+
+### 🔒 Security Rules
+
+1. **Path Validation**: Use `scripts/validate-memory-path.sh` before writing to memory
+2. **No Symlink Escape**: Memory writes must stay within whitelisted directories
+3. **Main Session Only**: `MEMORY.md` and `persona.md` only in direct chats
+4. **No External Leak**: Never quote personal memories in group/shared contexts
+
+### 🤖 Async Extraction
+
+After conversations end, `scripts/extract-memory-async.sh` runs in background:
+
+- Analyzes conversation for persistent memories
+- Updates daily logs (`memory/YYYY-MM-DD.md`)
+- Creates/updates scene blocks if needed
+- Cleans up old working files (>7 days)
 
 ### 📝 Write It Down - No "Mental Notes"!
 
