@@ -1,0 +1,281 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+
+const metadata = {
+  title: 'CinaSeek — AI-Powered Intelligent Search',
+  description: 'Enterprise-grade AI search solution with multi-source data aggregation and natural language understanding',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Section ******************* -->
+  <Hero
+    tagline="Intelligent Search"
+    title={'AI-Driven <span class="text-green-600 dark:text-green-400">Intelligent Search</span>'}
+    subtitle="CinaSeek leverages advanced AI to aggregate, understand, and deliver information from multiple sources. Make data-driven decisions faster than ever."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Start Free Trial',
+        href: '#pricing',
+        icon: 'tabler:rocket',
+      },
+      { 
+        text: 'View Demo', 
+        href: '#demo',
+        icon: 'tabler:player-play',
+      },
+    ]}
+    image={{ 
+      src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', 
+      alt: 'CinaSeek AI Search' 
+    }}
+  />
+
+  <!-- Features Section *************** -->
+  <Features
+    id="features"
+    tagline="Core Features"
+    title="Powerful Search Capabilities"
+    subtitle="Everything you need to build intelligent search experiences"
+    items={[
+      {
+        title: 'Multi-Source Aggregation',
+        description: 'Search across databases, APIs, documents, and web sources simultaneously with unified results.',
+        icon: 'tabler:database-search',
+      },
+      {
+        title: 'Natural Language Understanding',
+        description: 'Ask questions in plain language. Our AI understands context, intent, and nuance.',
+        icon: 'tabler:message',
+      },
+      {
+        title: 'Smart Ranking & Relevance',
+        description: 'ML-powered ranking ensures the most relevant results appear first, improving over time.',
+        icon: 'tabler:sort-ascending-2',
+      },
+      {
+        title: 'Real-time Indexing',
+        description: 'Changes are indexed instantly. Always search the most up-to-date information.',
+        icon: 'tabler:refresh',
+      },
+      {
+        title: 'Enterprise Knowledge Base',
+        description: 'Integrate internal documents, wikis, and databases for comprehensive organizational search.',
+        icon: 'tabler:building-warehouse',
+      },
+      {
+        title: 'Advanced Analytics',
+        description: 'Track search patterns, popular queries, and user behavior to optimize your knowledge base.',
+        icon: 'tabler:chart-bar',
+      },
+    ]}
+  />
+
+  <!-- How It Works ******************* -->
+  <Content
+    isReversed
+    tagline="How It Works"
+    title="Seamless Integration Process"
+    items={[
+      {
+        title: 'Connect Data Sources',
+        description: 'Link your databases, APIs, document repositories, and other data sources through our connectors.',
+        icon: 'tabler:plug',
+      },
+      {
+        title: 'Configure & Customize',
+        description: 'Set up search parameters, ranking rules, and customize the AI model for your domain.',
+        icon: 'tabler:settings',
+      },
+      {
+        title: 'Deploy & Scale',
+        description: 'Launch your search interface and scale automatically as usage grows.',
+        icon: 'tabler:rocket',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+      alt: 'Data Integration',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        Get Started in Minutes
+      </h3>
+      No complex setup. No lengthy onboarding. Just connect and search.
+    </Fragment>
+  </Content>
+
+  <!-- Use Cases ******************** -->
+  <Content
+    tagline="Use Cases"
+    title="Built for Every Team"
+    items={[
+      {
+        title: 'Customer Support',
+        description: 'Empower support teams with instant access to knowledge bases, reducing response time by 70%.',
+        icon: 'tabler:headset',
+      },
+      {
+        title: 'Research & Analysis',
+        description: 'Aggregate information from multiple sources for comprehensive market research and competitive analysis.',
+        icon: 'tabler:chart-bar',
+      },
+      {
+        title: 'E-commerce',
+        description: 'Help customers find products faster with intelligent search that understands intent and context.',
+        icon: 'tabler:shopping-cart',
+      },
+      {
+        title: 'Internal Knowledge',
+        description: 'Create a unified search interface for all company documents, wikis, and databases.',
+        icon: 'tabler:building',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1552664688-cf412ec27db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+      alt: 'Use Cases',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        Versatile Applications
+      </h3>
+      From customer-facing search to internal knowledge management, CinaSeek adapts to your needs.
+    </Fragment>
+  </Content>
+
+  <!-- Pricing Section **************** -->
+  <Pricing
+    id="pricing"
+    tagline="Pricing Plans"
+    title="Choose Your Plan"
+    subtitle="Start free and scale as you grow"
+    items={[
+      {
+        title: 'Free',
+        price: '$0',
+        period: '/month',
+        description: 'Perfect for testing and small projects',
+        features: [
+          'Up to 1,000 searches/month',
+          '1 data source',
+          'Basic AI models',
+          'Email support',
+          'Community access',
+        ],
+        action: {
+          text: 'Start Free',
+          href: '#',
+          variant: 'secondary',
+        },
+      },
+      {
+        title: 'Pro',
+        price: '$49',
+        period: '/month',
+        description: 'For growing teams and businesses',
+        features: [
+          'Up to 100,000 searches/month',
+          '10 data sources',
+          'Advanced AI models',
+          'Priority support',
+          'Analytics dashboard',
+          'Custom ranking',
+          'API access',
+        ],
+        action: {
+          text: 'Start Pro Trial',
+          href: '#',
+          variant: 'primary',
+        },
+        popular: true,
+      },
+      {
+        title: 'Enterprise',
+        price: 'Custom',
+        period: '',
+        description: 'For large-scale deployments',
+        features: [
+          'Unlimited searches',
+          'Unlimited data sources',
+          'Custom AI training',
+          'Dedicated support',
+          'SLA guarantee',
+          'On-premise deployment',
+          'White-label options',
+          'Advanced security',
+        ],
+        action: {
+          text: 'Contact Sales',
+          href: '/contact',
+          variant: 'secondary',
+        },
+      },
+    ]}
+  />
+
+  <!-- FAQs Section ******************* -->
+  <FAQs
+    title="Frequently Asked Questions"
+    subtitle="Everything you need to know about CinaSeek"
+    tagline="FAQs"
+    classes={{ container: 'max-w-4xl' }}
+    items={[
+      {
+        title: 'What data sources does CinaSeek support?',
+        description: 'CinaSeek supports databases (MySQL, PostgreSQL, MongoDB), APIs (REST, GraphQL), document repositories (Google Drive, Notion, Confluence), web sources, and custom data connectors.',
+      },
+      {
+        title: 'How accurate is the AI search?',
+        description: 'Our AI models achieve 90%+ accuracy on standard benchmarks. The system learns from user interactions to continuously improve relevance for your specific use case.',
+      },
+      {
+        title: 'Can I customize the search ranking?',
+        description: 'Yes! Pro and Enterprise plans include custom ranking rules, allowing you to boost specific content types, recency, or any custom metadata field.',
+      },
+      {
+        title: 'Is my data secure?',
+        description: 'Absolutely. We use enterprise-grade encryption (AES-256) for data at rest and TLS 1.3 for data in transit. Enterprise plans offer on-premise deployment options.',
+      },
+      {
+        title: 'How long does integration take?',
+        description: 'Most customers complete basic integration within 1-2 hours. Complex enterprise deployments with multiple data sources typically take 1-2 weeks.',
+      },
+    ]}
+  />
+
+  <!-- Call to Action *************** -->
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Start Free Trial',
+        href: '#pricing',
+        icon: 'tabler:rocket',
+      },
+      {
+        variant: 'secondary',
+        text: 'Contact Sales',
+        href: '/contact',
+        icon: 'tabler:mail',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Ready to <span class="text-green-600 dark:text-green-400">Transform</span> Your Search?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Join thousands of teams using CinaSeek to find information faster. <br class="hidden md:inline" />
+      Start your free trial today.
+    </Fragment>
+  </CallToAction>
+</Layout>
