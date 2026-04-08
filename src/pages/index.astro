@@ -12,8 +12,92 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const metadata = {
-  title: lang === 'zh' ? 'CinaGroup — 人工智能与 Web3 解决方案' : 'CinaGroup — AI & Web3 Solutions',
+  title: lang === 'zh' 
+    ? 'CinaGroup — 人工智能与 Web3 解决方案 | AI 搜索、机器人、区块链' 
+    : 'CinaGroup — AI & Web3 Solutions | Intelligent Search, Robotics & Blockchain',
   ignoreTitleTemplate: true,
+  description: lang === 'zh'
+    ? 'CinaGroup 提供企业级 AI 与 Web3 解决方案：CinaSeek（AI 搜索）、CinaClaw（智能机器人）、CinaSkill（技能平台）、CinaToken（AI API 网关）和 CinaChain（区块链基础设施）。服务全球 5 万 + 用户。'
+    : 'CinaGroup delivers enterprise-grade AI & Web3 solutions: CinaSeek (AI search), CinaClaw (intelligent robots), CinaSkill (skills platform), CinaToken (AI API gateway), and CinaChain (blockchain infrastructure). Empowering 50K+ users worldwide.',
+  keywords: lang === 'zh'
+    ? ['AI 搜索', '智能机器人', '区块链', 'Web3', '人工智能', 'API 网关', '自动化', '智能合约', 'DeFi', '技能平台']
+    : ['AI search', 'intelligent robot', 'blockchain', 'Web3', 'AI API gateway', 'automation', 'smart contracts', 'DeFi', 'robot skills'],
+  openGraph: {
+    type: 'website',
+    locale: lang === 'zh' ? 'zh_CN' : 'en_US',
+    site_name: 'CinaGroup',
+    description: lang === 'zh'
+      ? 'CinaGroup 提供企业级 AI 与 Web3 解决方案，服务全球 5 万 + 用户'
+      : 'Enterprise-grade AI & Web3 solutions empowering 50K+ users worldwide',
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+  },
+  // Structured data for rich snippets
+  structuredData: {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'CinaGroup',
+    url: 'https://cinagroup.com',
+    logo: 'https://cinagroup.com/favicon.svg',
+    description: lang === 'zh'
+      ? 'CinaGroup 提供企业级 AI 与 Web3 解决方案'
+      : 'Enterprise-grade AI & Web3 solutions',
+    sameAs: [
+      'https://github.com/cinagroup',
+      'https://twitter.com/cinagroup',
+    ],
+    brand: {
+      '@type': 'Brand',
+      name: 'CinaGroup',
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'AI & Web3 Products',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'SoftwareApplication',
+            name: 'CinaSeek',
+            description: lang === 'zh' ? 'AI 驱动的企业搜索解决方案' : 'AI-driven enterprise search solution',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'SoftwareApplication',
+            name: 'CinaClaw',
+            description: lang === 'zh' ? '24/7 AI 智能助手' : '24/7 AI intelligent assistant',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'SoftwareApplication',
+            name: 'CinaSkill',
+            description: lang === 'zh' ? '机器人技能创建与分享平台' : 'Robot skills creation and sharing platform',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'SoftwareApplication',
+            name: 'CinaToken',
+            description: lang === 'zh' ? '统一 AI API 网关' : 'Unified AI API gateway',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'SoftwareApplication',
+            name: 'CinaChain',
+            description: lang === 'zh' ? '高性能 Web3 基础设施' : 'High-performance Web3 infrastructure',
+          },
+        },
+      ],
+    },
+  },
 };
 
 // Business data with translations

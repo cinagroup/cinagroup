@@ -70,9 +70,13 @@ export interface MetaData {
   robots?: MetaDataRobots;
 
   description?: string;
+  keywords?: string[];
 
   openGraph?: MetaDataOpenGraph;
   twitter?: MetaDataTwitter;
+  
+  // Structured data for rich snippets (Schema.org JSON-LD)
+  structuredData?: Record<string, any>;
 }
 
 export interface MetaDataRobots {

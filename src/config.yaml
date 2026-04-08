@@ -9,9 +9,9 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: CinaGroup — AI & Web3 Solutions
+    default: CinaGroup — AI & Web3 Solutions | Intelligent Search, Robotics & Blockchain
     template: '%s — CinaGroup'
-  description: "CinaGroup provides cutting-edge solutions in AI search (CinaSeek), intelligent robots (CinaClaw), skill platforms (CinaSkill), and blockchain infrastructure (CinaChain)."
+  description: "CinaGroup delivers enterprise-grade AI & Web3 solutions: CinaSeek (AI search), CinaClaw (intelligent robots), CinaSkill (skills platform), CinaToken (AI API gateway), and CinaChain (blockchain infrastructure). Empowering 50K+ users worldwide."
   keywords:
     - "AI search"
     - "intelligent robot"
@@ -20,9 +20,17 @@ metadata:
     - "CinaSeek"
     - "CinaClaw"
     - "CinaSkill"
+    - "CinaToken"
     - "CinaChain"
+    - "AI API gateway"
     - "automation"
     - "smart contracts"
+    - "enterprise AI"
+    - "machine learning"
+    - "DeFi"
+    - "robot skills"
+    - "AI assistant"
+    - "multi-model API"
   robots:
     index: true
     follow: true
@@ -39,6 +47,15 @@ metadata:
     handle: '@cinagroup'
     site: '@cinagroup'
     cardType: summary_large_image
+  additional:
+    - name: "author"
+      content: "CinaGroup"
+    - name: "publisher"
+      content: "CinaGroup"
+    - name: "theme-color"
+      content: "#3b82f6"
+    - name: "application-name"
+      content: "CinaGroup"
 
 # Favicon configuration
 favicon:
