@@ -22,3 +22,16 @@ pnpm-debug.log*
 pnpm-lock.yaml
 
 .astro
+
+# nested git repositories (local workspaces)
+10001/
+cinagroup-github/
+cinagroup-site/
+cinaskill/
+cinaskill-website/
+cinatoken/
+cina-robots-backup/
+cnelec/
+memory-backups/
+memory-dashboard/
+wechat-official-account/
