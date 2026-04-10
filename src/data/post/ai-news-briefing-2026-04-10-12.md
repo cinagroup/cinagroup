@@ -1,3 +1,12 @@
+---
+publishDate: 2026-04-10T12:00:00+08:00
+title: "AI 新闻简报 | 2026 年 4 月 10 日 12:00"
+author: "CinaGroup AI"
+tags: ["AI 新闻", "人工智能", "科技简报"]
+category: "AI Briefing"
+excerpt: "48 小时 5 款大模型连发；AAAI 2026 研究热点；开源模型持续爆发"
+---
+
 # AI 新闻简报 | 2026 年 4 月 10 日 12:00
 
 > 过去 12 小时 AI 领域核心动态精选

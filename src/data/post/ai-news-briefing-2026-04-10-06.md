@@ -1,3 +1,12 @@
+---
+publishDate: 2026-04-10T06:00:00+08:00
+title: "AI 新闻简报 | 2026 年 4 月 10 日 06:00"
+author: "CinaGroup AI"
+tags: ["AI 新闻", "人工智能", "科技简报"]
+category: "AI Briefing"
+excerpt: "OpenAI 向投资者抨击 Anthropic；智谱 AI 开源 GLM-5.1；Google 发布 Gemma 4 系列"
+---
+
 # AI 新闻简报 | 2026 年 4 月 10 日 06:00
 
 > 过去 12 小时 AI 领域核心动态精选

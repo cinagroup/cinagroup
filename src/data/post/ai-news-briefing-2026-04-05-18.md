@@ -1,6 +1,6 @@
 ---
 title: "AI 新闻简报 | 2026 年 4 月 5 日 晚间版"
-date: 2026-04-05T18:00:00+08:00
+publishDate: 2026-04-05T18:00:00+08:00
 author: "CinaGroup AI"
 tags: ["AI 新闻", "人工智能", "科技简报"]
 category: "AI Briefing"

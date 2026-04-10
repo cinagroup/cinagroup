@@ -1,3 +1,12 @@
+---
+publishDate: 2026-04-09T18:00:00+08:00
+title: "AI 新闻简报 | 2026 年 4 月 9 日 18:00"
+author: "CinaGroup AI"
+tags: ["AI 新闻", "人工智能", "科技简报"]
+category: "AI Briefing"
+excerpt: "Anthropic 发布 Claude Mythos Preview；Meta 发布 Muse Spark；中美 AI 对抗升级"
+---
+
 # AI 新闻简报 | 2026 年 4 月 9 日 18:00
 
 > 过去 12 小时 AI 领域核心动态精选
