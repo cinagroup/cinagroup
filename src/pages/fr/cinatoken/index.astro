@@ -1,0 +1,100 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'CinaToken — Passerelle API de Modèles d\'IA et Gestion de Tokens',
+  description: 'Passerelle API unifiée pour Claude, GPT, Gemini et plus de 100 modèles d\'IA. Gestion simplifiée des tokens, optimisation des coûts et fiabilité de niveau entreprise.',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="Passerelle API d'IA"
+    title={'Accès Unifié à <span class="text-blue-600 dark:text-blue-400">Plus de 100 Modèles d\'IA</span>'}
+    subtitle="CinaToken est votre passerelle vers les principaux modèles d'IA du monde. Une clé API, facturation unifiée, routage intelligent et fiabilité de niveau entreprise pour Claude, GPT, Gemini et plus."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Obtenir Clé API',
+        href: '#pricing',
+        icon: 'tabler:key',
+      },
+      { 
+        text: 'Voir Modèles', 
+        href: '#models',
+        icon: 'tabler:cpu',
+      },
+    ]}
+    image={{ 
+      src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1740&q=80', 
+      alt: 'CinaToken API Gateway' 
+    }}
+  />
+
+  <Features
+    id="features"
+    tagline="Fonctionnalités Principales"
+    title="Pourquoi Choisir CinaToken"
+    items={[
+      {
+        title: 'Interface API Unifiée',
+        description: 'Une norme API pour Claude, GPT, Gemini, Mistral et plus de 100 modèles. Changez de modèle sans modifier le code.',
+        icon: 'tabler:api',
+      },
+      {
+        title: 'Routage Intelligent',
+        description: 'Basculement automatique et équilibrage de charge entre plusieurs fournisseurs. 99.9% de disponibilité garantie.',
+        icon: 'tabler:route',
+      },
+      {
+        title: 'Optimisation des Coûts',
+        description: 'Routage intelligent vers le modèle le moins cher disponible. Jusqu\'à 40% de réduction des coûts sans perte de qualité.',
+        icon: 'tabler:wallet',
+      },
+      {
+        title: 'Facturation Unifiée',
+        description: 'Une seule facture pour toute l\'utilisation des modèles d\'IA. Suivez les dépenses par projet, équipe ou endpoint.',
+        icon: 'tabler:receipt',
+      },
+      {
+        title: 'Gestion des Limites de Taux',
+        description: 'Nouvelles tentatives automatiques et traitement du backoff. N\'atteignez plus jamais les limites de taux avec la file d\'attente intelligente.',
+        icon: 'tabler:clock-hour-12',
+      },
+      {
+        title: 'Sécurité Entreprise',
+        description: 'Conformité SOC 2, chiffrement des données au repos et en transit. Vos clés API ne quittent jamais notre coffre-fort.',
+        icon: 'tabler:shield-lock',
+      },
+    ]}
+  />
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Obtenez Votre Clé API',
+        href: '#',
+        icon: 'tabler:key',
+      },
+      {
+        variant: 'secondary',
+        text: 'Lire Documentation',
+        href: '#',
+        icon: 'tabler:book',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Prêt à <span class="text-blue-600 dark:text-blue-400">Simplifier</span> Votre Intégration d'IA ?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Rejoignez des milliers de développeurs utilisant CinaToken. <br class="hidden md:inline" />
+      Commencez avec $5 de crédit gratuit, sans carte de crédit requise.
+    </Fragment>
+  </CallToAction>
+</Layout>

@@ -1,0 +1,100 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'CinaToken — Шлюз API Больших Языковых Моделей и Управление Токенами',
+  description: 'Унифицированный API-шлюз для Claude, GPT, Gemini и более 100 AI-моделей. Упрощенное управление токенами, оптимизация затрат и надежность корпоративного уровня.',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="AI API Шлюз"
+    title={'Единый Доступ к <span class="text-blue-600 dark:text-blue-400">Более 100 AI-Моделям</span>'}
+    subtitle="CinaToken — это ваш шлюз к ведущим AI-моделям мира. Один ключ API, единый биллинг, интеллектуальная маршрутизация и надежность корпоративного уровня для Claude, GPT, Gemini и других."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Получить API Ключ',
+        href: '#pricing',
+        icon: 'tabler:key',
+      },
+      { 
+        text: 'Смотреть Модели', 
+        href: '#models',
+        icon: 'tabler:cpu',
+      },
+    ]}
+    image={{ 
+      src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1740&q=80', 
+      alt: 'CinaToken API Gateway' 
+    }}
+  />
+
+  <Features
+    id="features"
+    tagline="Основные Функции"
+    title="Почему Выбрать CinaToken"
+    items={[
+      {
+        title: 'Унифицированный API Интерфейс',
+        description: 'Один стандарт API для Claude, GPT, Gemini, Mistral и более 100 моделей. Переключайтесь между моделями без изменения кода.',
+        icon: 'tabler:api',
+      },
+      {
+        title: 'Интеллектуальная Маршрутизация',
+        description: 'Автоматический отказоустойчивый режим и балансировка нагрузки между несколькими провайдерами. 99.9% гарантированного времени безотказной работы.',
+        icon: 'tabler:route',
+      },
+      {
+        title: 'Оптимизация Затрат',
+        description: 'Умная маршрутизация к самой дешевой доступной модели. До 40% снижения затрат без потери качества.',
+        icon: 'tabler:wallet',
+      },
+      {
+        title: 'Единый Биллинг',
+        description: 'Один счет за все использование AI-моделей. Отслеживайте расходы по проекту, команде или endpoint.',
+        icon: 'tabler:receipt',
+      },
+      {
+        title: 'Управление Ограничениями Скорости',
+        description: 'Автоматические повторные попытки и обработка backoff. Больше никогда не достигайте ограничений скорости с умной очередью.',
+        icon: 'tabler:clock-hour-12',
+      },
+      {
+        title: 'Корпоративная Безопасность',
+        description: 'Соответствие SOC 2, шифрование данных при хранении и передаче. Ваши API-ключи никогда не покидают наше хранилище.',
+        icon: 'tabler:shield-lock',
+      },
+    ]}
+  />
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Получите Ваш API Ключ',
+        href: '#',
+        icon: 'tabler:key',
+      },
+      {
+        variant: 'secondary',
+        text: 'Читать Документацию',
+        href: '#',
+        icon: 'tabler:book',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Готовы <span class="text-blue-600 dark:text-blue-400">Упростить</span> Вашу AI Интеграцию?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Присоединяйтесь к тысячам разработчиков, использующих CinaToken. <br class="hidden md:inline" />
+      Начните с $5 бесплатного кредита, кредитная карта не требуется.
+    </Fragment>
+  </CallToAction>
+</Layout>

@@ -1,8 +1,14 @@
+# Netlify configuration for AstroWind
+
 [build]
-  publish = "dist"
   command = "npm run build"
-[build.processing.html]
-  pretty_urls = false
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
 [[headers]]
   for = "/_astro/*"
   [headers.values]

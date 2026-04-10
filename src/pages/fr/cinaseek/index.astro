@@ -1,0 +1,13 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = { title: 'CinaGroup Product — Français' };
+---
+<Layout metadata={metadata}>
+  <Hero tagline="Produit" title={'<span class="text-accent dark:text-white">Solution Intelligente</span>'} subtitle="Outils puissants pour la croissance de votre entreprise" actions={[{ variant: 'primary', text: 'Commencer gratuitement', href: '/fr/contact', icon: 'tabler:rocket' }]} image={{ src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'Product' }} />
+  <Features tagline="Fonctionnalités clés" title="Fonctionnalités Puissantes" subtitle="Soutien pour la réussite de votre entreprise" items={[{ title: 'Haute performance', description: 'Traitement rapide et fiable', icon: 'tabler:bolt' }, { title: 'Intégration facile', description: 'Connexion transparente aux systèmes existants', icon: 'tabler:plug-connected' }, { title: 'Support 24/7', description: 'Support disponible 24 heures sur 24, 7 jours sur 7', icon: 'tabler:headset' }]} columns={3} />
+  <CallToAction tagline="Commencer" title="Prêt à commencer?" subtitle="Essai gratuit de 14 jours" button={{ text: 'Commencer gratuitement', href: '/fr/contact', variant: 'primary', icon: 'tabler:rocket' }} />
+</Layout>

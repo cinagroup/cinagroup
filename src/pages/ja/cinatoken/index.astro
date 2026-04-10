@@ -1,0 +1,191 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'CinaToken — 大規模言語モデル API ゲートウェイ & トークン管理',
+  description: 'Claude、GPT、Gemini および 100 以上の AI モデル向けの統合 API ゲートウェイ。簡素化されたトークン管理、コスト最適化、エンタープライズグレードの信頼性。',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="AI API ゲートウェイ"
+    title={'<span class="text-blue-600 dark:text-blue-400">100 以上の AI モデル</span>への統一アクセス'}
+    subtitle="CinaToken は、世界をリードする AI モデルへのゲートウェイです。1 つの API キー、統合請求、インテリジェントルーティング、Claude、GPT、Gemini などのエンタープライズグレードの信頼性。"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'API キーを取得',
+        href: '#pricing',
+        icon: 'tabler:key',
+      },
+      { 
+        text: 'モデルを見る', 
+        href: '#models',
+        icon: 'tabler:cpu',
+      },
+    ]}
+    image={{ 
+      src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1740&q=80', 
+      alt: 'CinaToken API Gateway' 
+    }}
+  />
+
+  <Features
+    id="features"
+    tagline="主な機能"
+    title="CinaToken を選ぶ理由"
+    items={[
+      {
+        title: '統一 API インターフェース',
+        description: 'Claude、GPT、Gemini、Mistral および 100 以上のモデル向けの 1 つの API 標準。コード変更なしでモデルを切り替え可能。',
+        icon: 'tabler:api',
+      },
+      {
+        title: 'インテリジェントルーティング',
+        description: '複数のプロバイダー間での自動フェイルオーバーと負荷分散。99.9% のアップタイムを保証。',
+        icon: 'tabler:route',
+      },
+      {
+        title: 'コスト最適化',
+        description: '利用可能な最も安価なモデルへのスマートルーティング。品質を損なうことなく最大 40% のコスト削減。',
+        icon: 'tabler:wallet',
+      },
+      {
+        title: '統合請求',
+        description: 'すべての AI モデル使用量の単一請求書。プロジェクト、チーム、またはエンドポイント別に支出を追跡。',
+        icon: 'tabler:receipt',
+      },
+      {
+        title: 'レート制限管理',
+        description: '自動再試行とバックオフ処理。インテリジェントキューイングでレート制限に達することはありません。',
+        icon: 'tabler:clock-hour-12',
+      },
+      {
+        title: 'エンタープライズセキュリティ',
+        description: 'SOC 2 準拠、保存時および転送時のデータ暗号化。API キーはボルトから出ることはありません。',
+        icon: 'tabler:shield-lock',
+      },
+    ]}
+  />
+
+  <section id="models" class="py-16 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="text-3xl font-bold tracking-tight dark:text-white sm:text-4xl mb-4">
+          サポートされている AI モデル
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300">
+          単一の API を通じて世界の主要な AI モデルにアクセス
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 p-6">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600"></div>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center mr-4">
+              <span class="text-2xl">🤖</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold dark:text-white">Anthropic</h3>
+              <p class="text-sm text-gray-500">Claude シリーズ</p>
+            </div>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Claude 3.5 Sonnet</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Claude 3.5 Haiku</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Claude 3 Opus</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Claude 3.7 Sonnet</li>
+          </ul>
+        </div>
+
+        <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 p-6">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 to-green-600"></div>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center mr-4">
+              <span class="text-2xl">🟢</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold dark:text-white">OpenAI</h3>
+              <p class="text-sm text-gray-500">GPT シリーズ</p>
+            </div>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>GPT-4.5 Turbo</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>GPT-4o</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>GPT-4o Mini</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>o1 / o3</li>
+          </ul>
+        </div>
+
+        <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 p-6">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-blue-600"></div>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mr-4">
+              <span class="text-2xl">🔵</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold dark:text-white">Google</h3>
+              <p class="text-sm text-gray-500">Gemini シリーズ</p>
+            </div>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Gemini 2.5 Pro</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Gemini 2.5 Flash</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Gemini 2.0</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Imagen 3</li>
+          </ul>
+        </div>
+
+        <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 p-6">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center mr-4">
+              <span class="text-2xl">⚡</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold dark:text-white">+100 以上</h3>
+              <p class="text-sm text-gray-500">様々なプロバイダー</p>
+            </div>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Mistral AI</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Cohere</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Groq</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>他多数...</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'API キーを取得',
+        href: '#',
+        icon: 'tabler:key',
+      },
+      {
+        variant: 'secondary',
+        text: 'ドキュメントを読む',
+        href: '#',
+        icon: 'tabler:book',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      AI 統合を<span class="text-blue-600 dark:text-blue-400">簡素化</span>する準備はできましたか？
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      CinaToken を使用する数千人の開発者に参加。<br class="hidden md:inline" />
+      クレジットカード不要で$5 の無料クレジットから開始。
+    </Fragment>
+  </CallToAction>
+</Layout>

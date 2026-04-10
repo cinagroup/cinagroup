@@ -1,0 +1,47 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'CinaSeek — AI インテリジェント検索',
+  description: 'AI 駆動の企業検索ソリューション。多源データ聚合と自然言語理解をサポート。',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="インテリジェント検索"
+    title={'AI 駆動の<span class="text-green-600 dark:text-green-400">スマート検索</span>'}
+    subtitle="CinaSeek は高度な AI を活用し、複数のソースから情報を聚合、理解、提供します。データ駆動型の意思決定をこれまで以上に迅速に。"
+    actions={[
+      { variant: 'primary', text: '無料トライアル', href: '/ja/contact', icon: 'tabler:rocket' },
+      { text: 'デモを見る', href: '/ja/contact', icon: 'tabler:player-play' },
+    ]}
+    image={{ src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'CinaSeek' }}
+  />
+
+  <Features
+    tagline="主な機能"
+    title="強力な検索機能"
+    subtitle="インテリジェントな検索体験を構築するために必要なすべて"
+    items={[
+      { title: 'マルチソース聚合', description: 'データベース、API、ドキュメント、ウェブソースを同時に検索', icon: 'tabler:database-search' },
+      { title: '自然言語理解', description: '普通の言葉で質問。AI が文脈、意図、ニュアンスを理解', icon: 'tabler:message' },
+      { title: 'スマートランキング', description: 'ML 搭載のランキングで最も関連性の高い結果を最初に表示', icon: 'tabler:sort-ascending-2' },
+      { title: 'リアルタイムインデックス', description: 'データが変更されると自動的にインデックスを更新', icon: 'tabler:refresh' },
+      { title: '高度なフィルタリング', description: '日付、タイプ、ソースなどのメタデータで検索結果を正確にフィルタリング', icon: 'tabler:filter' },
+      { title: '分析ダッシュボード', description: '検索パターン、人気クエリ、ユーザー行動を追跡', icon: 'tabler:chart-bar' },
+    ]}
+    columns={3}
+    image={{ src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'Dashboard' }}
+  />
+
+  <CallToAction
+    tagline="今すぐ開始"
+    title="検索体験を向上させる準備はできましたか？"
+    subtitle="CinaSeek を使用する数千の企業に参加しましょう。"
+    button={{ text: '無料で開始', href: '/ja/contact', variant: 'primary', icon: 'tabler:rocket' }}
+  />
+</Layout>

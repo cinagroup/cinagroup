@@ -1,0 +1,47 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'CinaSkill — 로봇 스킬 플랫폼',
+  description: '로봇 스킬 생성, 공유, 발견. 무한한 가능성.',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="스킬 플랫폼"
+    title={'<span class="text-pink-600 dark:text-pink-400">로봇 스킬</span> 을 구축하세요'}
+    subtitle="CinaSkill 은 누구나 로봇 스킬을 생성, 공유, 발견할 수 있는 오픈 스킬 플랫폼입니다."
+    actions={[
+      { variant: 'primary', text: '스킬 생성', href: '/ko/contact', icon: 'tabler:plus' },
+      { text: '스킬 찾기', href: '/ko/contact', icon: 'tabler:search' },
+    ]}
+    image={{ src: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'CinaSkill' }}
+  />
+
+  <Features
+    tagline="플랫폼 기능"
+    title="강력한 스킬 생성 도구"
+    subtitle="제로에서 첫 로봇 스킬을 구축하세요"
+    items={[
+      { title: '비주얼 에디터', description: '드래그 앤 드롭 인터페이스, 프로그래밍 없이 복잡한 대화 흐름 생성', icon: 'tabler:layout-grid' },
+      { title: '스킬 템플릿', description: '풍부한 사전 설정 템플릿, 스킬 개발을 빠르게 시작', icon: 'tabler:template' },
+      { title: 'API 통합', description: '서드파티 API 를 쉽게 연결, 스킬 기능 확장', icon: 'tabler:api' },
+      { title: '테스트 및 디버그', description: '내장 테스트 도구, 실시간 미리보기 및 디버그', icon: 'tabler:bug' },
+      { title: '게시 및 배포', description: '원클릭으로 스킬 마켓에 게시, 전 세계 사용자가 이용 가능', icon: 'tabler:rocket' },
+      { title: '데이터 분석', description: '스킬 사용 현황 추적, 지속적으로 최적화 및 개선', icon: 'tabler:chart-bar' },
+    ]}
+    columns={3}
+    image={{ src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'Editor' }}
+  />
+
+  <CallToAction
+    tagline="지금 시작"
+    title="창의력을 발휘할 준비가 되셨나요?"
+    subtitle="수만 명의 개발자와 함께 독특한 로봇 스킬을 만드세요."
+    button={{ text: '스킬 생성', href: '/ko/contact', variant: 'primary', icon: 'tabler:plus' }}
+  />
+</Layout>

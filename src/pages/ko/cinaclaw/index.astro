@@ -1,0 +1,47 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'CinaClaw — 24/7 AI 어시스턴트',
+  description: '멀티 플랫폼 통합 및 워크플로우 자동화를 지원하는 AI 어시스턴트',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="AI 어시스턴트"
+    title={'<span class="text-orange-600 dark:text-orange-400">24 시간 연중무휴 스마트 어시스턴트</span>'}
+    subtitle="CinaClaw 는 작업 자동화, 질문 답변, 생산성 향상을 지원하는 강력한 AI 어시스턴트입니다."
+    actions={[
+      { variant: 'primary', text: '무료 체험', href: '/ko/contact', icon: 'tabler:rocket' },
+      { text: '데모 보기', href: '/ko/contact', icon: 'tabler:player-play' },
+    ]}
+    image={{ src: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'CinaClaw' }}
+  />
+
+  <Features
+    tagline="주요 기능"
+    title="강력한 AI 어시스턴트 기능"
+    subtitle="일상 업무를 자동화하고 중요한 일에 집중하세요"
+    items={[
+      { title: '스마트 대화', description: '자연어 대화, 문맥을 이해하고 정확하고 유용한 답변 제공', icon: 'tabler:message-chatbot' },
+      { title: '멀티 플랫폼', description: '기업용 위챗, DingTalk, Slack, Telegram 등과 원활하게 통합', icon: 'tabler:plug-connected' },
+      { title: '워크플로우 자동화', description: '데이터 입력, 보고서 생성, 알림 전송 등 반복 작업 자동 실행', icon: 'tabler:refresh' },
+      { title: '지식 베이스', description: '문서 및 지식 베이스 연결, 기업 정보 기반 답변 제공', icon: 'tabler:briefcase' },
+      { title: '다국어 지원', description: '중국어, 영어, 한국어 등 여러 언어 지원', icon: 'tabler:world' },
+      { title: '데이터 분석', description: '사용 현황, 인기 질문, 사용자 만족도 추적 및 서비스 최적화', icon: 'tabler:chart-bar' },
+    ]}
+    columns={3}
+    image={{ src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'Dashboard' }}
+  />
+
+  <CallToAction
+    tagline="지금 시작"
+    title="업무 효율성을 높일 준비가 되셨나요?"
+    subtitle="CinaClaw 를 스마트 어시스턴트로 활용하세요."
+    button={{ text: '무료 체험', href: '/ko/contact', variant: 'primary', icon: 'tabler:rocket' }}
+  />
+</Layout>

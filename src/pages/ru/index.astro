@@ -1,0 +1,131 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Footer from '~/components/widgets/Footer.astro';
+
+const metadata = {
+  title: 'CinaGroup — Решения в области ИИ и Web3',
+  description: 'CinaGroup предлагает передовые решения в области умного поиска (CinaSeek), AI-ассистента (CinaClaw), AI API шлюза (CinaToken), платформы навыков (CinaSkill) и блокчейн-инфраструктуры (CinaChain).',
+};
+
+const businessCards = [
+  { name: 'CinaSeek', tagline: 'Умный Поиск', desc: 'Решение для корпоративного поиска на базе ИИ с агрегацией данных из нескольких источников', action: 'Узнать Больше', href: '/ru/cinaseek', color: 'green', icon: 'search' },
+  { name: 'CinaClaw', tagline: 'AI Ассистент', desc: 'Круглосуточный AI-ассистент с мультиплатформенной интеграцией и автоматизацией рабочих процессов', action: 'Попробовать Демо', href: '/ru/cinaclaw', color: 'orange', icon: 'device-desktop' },
+  { name: 'CinaToken', tagline: 'AI API Шлюз', desc: 'Унифицированный API-шлюз для Claude, GPT, Gemini и более 100 AI-моделей', action: 'Получить API Ключ', href: '/ru/cinatoken', color: 'blue', icon: 'key' },
+  { name: 'CinaSkill', tagline: 'Платформа Навыков', desc: 'Создавайте, делитесь и открывайте навыки роботов с безграничными возможностями', action: 'Просмотреть Навыки', href: '/ru/cinaskill', color: 'pink', icon: 'code' },
+  { name: 'CinaChain', tagline: 'Блокчейн Сеть', desc: 'Высокопроизводительная, недорогая Web3 инфраструктура со смарт-контрактами и DeFi', action: 'Посмотреть Сеть', href: '/ru/cinachain', color: 'purple', icon: 'world' },
+];
+
+const footerData = {
+  links: [
+    { title: 'Продукты', links: [
+      { text: 'CinaSeek — Умный Поиск', href: '/ru/cinaseek' },
+      { text: 'CinaClaw — AI Ассистент', href: '/ru/cinaclaw' },
+      { text: 'CinaToken — AI API Шлюз', href: '/ru/cinatoken' },
+      { text: 'CinaSkill — Платформа Навыков', href: '/ru/cinaskill' },
+      { text: 'CinaChain — Блокчейн Сеть', href: '/ru/cinachain' },
+    ]},
+    { title: 'Developers', links: [
+      { text: 'Documentation', href: '#' },
+      { text: 'API Reference', href: '#' },
+      { text: 'SDK & Tools', href: '#' },
+      { text: 'Grants Program', href: '#' },
+      { text: 'Developer Blog', href: '/ru/blog' },
+    ]},
+    { title: 'Support', links: [
+      { text: 'Help Center', href: '#' },
+      { text: 'Community', href: '#' },
+      { text: 'Contact Support', href: '/ru/contact' },
+      { text: 'System Status', href: '#' },
+    ]},
+    { title: 'Company', links: [
+      { text: 'About Us', href: '/ru/about' },
+      { text: 'Blog', href: '/ru/blog' },
+      { text: 'Careers', href: '#' },
+      { text: 'Press Kit', href: '#' },
+      { text: 'Contact', href: '/ru/contact' },
+    ]},
+  ],
+  socialLinks: [
+    { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/cinagroup' },
+    { ariaLabel: 'X', icon: 'tabler:brand-x', href: 'https://x.com/cinagroup' },
+    { ariaLabel: 'TikTok', icon: 'tabler:brand-tiktok', href: 'https://tiktok.com/@cinaseek' },
+    { ariaLabel: 'Telegram', icon: 'tabler:brand-telegram', href: '#' },
+    { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
+  ],
+  footNote: '© 2026 By CinaClaw@CinaSeek.AI All Rights Reserved.',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="Добро пожаловать в CinaGroup"
+    title={'Создаем будущее <span class="text-accent dark:text-white">ИИ и Web3</span>'}
+    subtitle="Мы предоставляем передовые решения в области умного поиска, AI-ассистента, AI API шлюза, платформы навыков и блокчейн-инфраструктуры. Поддерживаем компании и разработчиков по всему миру."
+    actions={[
+      { variant: 'primary', text: 'Наши Продукты', href: '#business', icon: 'tabler:arrow-down' },
+      { text: 'Контакты', href: '/ru/contact', icon: 'tabler:mail' },
+    ]}
+    image={{ src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'Технология ИИ' }}
+  />
+
+  <section id="business" class="py-16 bg-white dark:bg-gray-900 overflow-hidden">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="text-3xl font-bold tracking-tight dark:text-white sm:text-4xl mb-4">Наши Продукты</h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300">Пять мощных платформ работают вместе, чтобы предложить комплексные решения в области ИИ и Web3</p>
+      </div>
+      <div class="relative group">
+        <div id="business-scroll" class="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 scroll-smooth">
+          {businessCards.map((card) => (
+            <div class="snap-start shrink-0 w-80 md:w-72 lg:w-80">
+              <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 h-full">
+                <div class={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-${card.color}-400 to-${card.color}-600`}></div>
+                <div class="p-6">
+                  <div class={`w-14 h-14 bg-${card.color}-100 dark:bg-${card.color}-900/30 rounded-xl flex items-center justify-center mb-4`}>
+                    <svg class={`w-8 h-8 text-${card.color}-600 dark:text-${card.color}-400`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      {card.icon === 'search' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>}
+                      {card.icon === 'device-desktop' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>}
+                      {card.icon === 'key' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>}
+                      {card.icon === 'code' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>}
+                      {card.icon === 'world' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>}
+                    </svg>
+                  </div>
+                  <h3 class="text-xl font-bold dark:text-white mb-2">{card.name}</h3>
+                  <p class={`text-sm text-${card.color}-600 dark:text-${card.color}-400 font-medium mb-3`}>{card.tagline}</p>
+                  <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">{card.desc}</p>
+                  <a href={card.href} class={`inline-flex items-center text-${card.color}-600 dark:text-${card.color}-400 hover:text-${card.color}-700 dark:hover:text-${card.color}-300 font-medium text-sm group-hover:translate-x-1 transition-transform`}>
+                    {card.action}
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <button id="scroll-left" class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 z-10" aria-label="Scroll left">
+          <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <button id="scroll-right" class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 z-10" aria-label="Scroll right">
+          <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+  <script>
+    const scrollContainer = document.getElementById('business-scroll'), scrollLeftBtn = document.getElementById('scroll-left'), scrollRightBtn = document.getElementById('scroll-right');
+    if (scrollContainer && scrollLeftBtn && scrollRightBtn) {
+      const scrollAmount = 320;
+      scrollLeftBtn.addEventListener('click', () => { scrollContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' }); });
+      scrollRightBtn.addEventListener('click', () => { scrollContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' }); });
+    }
+  </script>
+  
+  <Footer {...footerData} />
+</Layout>

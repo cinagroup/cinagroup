@@ -1,0 +1,16 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+
+const metadata = { title: 'Contato — CinaGroup' };
+---
+<Layout metadata={metadata}>
+  <Hero tagline="Contato" title={'<span class="text-accent dark:text-white">Fale Conosco</span>'} subtitle="Tem perguntas? Adoraríamos ouvi-lo. Respondemos em 24 horas." image={{ src: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'Contact' }} />
+  <section class="py-16 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold dark:text-white mb-6">Informações de Contato</h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-8">Email: info@cinagroup.com</p>
+      <p class="text-gray-600 dark:text-gray-300">Endereço: Pequim, China</p>
+    </div>
+  </section>
+</Layout>

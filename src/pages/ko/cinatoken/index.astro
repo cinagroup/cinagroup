@@ -1,0 +1,100 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'CinaToken — 대규모 언어 모델 API 게이트웨이 및 토큰 관리',
+  description: 'Claude, GPT, Gemini 및 100 개 이상의 AI 모델을 위한 통합 API 게이트웨이. 간소화된 토큰 관리, 비용 최적화 및 엔터프라이즈급 신뢰성.',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="AI API 게이트웨이"
+    title={'<span class="text-blue-600 dark:text-blue-400">100 개 이상의 AI 모델</span>에 대한 통합 액세스'}
+    subtitle="CinaToken 은 세계 최고의 AI 모델에 대한 관문입니다. 하나의 API 키, 통합 청구, 지능형 라우팅 및 Claude, GPT, Gemini 등을 위한 엔터프라이즈급 신뢰성."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'API 키 받기',
+        href: '#pricing',
+        icon: 'tabler:key',
+      },
+      { 
+        text: '모델 보기', 
+        href: '#models',
+        icon: 'tabler:cpu',
+      },
+    ]}
+    image={{ 
+      src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1740&q=80', 
+      alt: 'CinaToken API Gateway' 
+    }}
+  />
+
+  <Features
+    id="features"
+    tagline="주요 기능"
+    title="CinaToken 을 선택하는 이유"
+    items={[
+      {
+        title: '통합 API 인터페이스',
+        description: 'Claude, GPT, Gemini, Mistral 및 100 개 이상의 모델을 위한 하나의 API 표준. 코드 변경 없이 모델 전환 가능.',
+        icon: 'tabler:api',
+      },
+      {
+        title: '지능형 라우팅',
+        description: '여러 공급자 간 자동 페일오버 및 로드 밸런싱. 99.9% 가동 시간 보장.',
+        icon: 'tabler:route',
+      },
+      {
+        title: '비용 최적화',
+        description: '사용 가능한 가장 저렴한 모델로 스마트 라우팅. 품질 손실 없이 최대 40% 비용 절감.',
+        icon: 'tabler:wallet',
+      },
+      {
+        title: '통합 청구',
+        description: '모든 AI 모델 사용량에 대한 단일 청구서. 프로젝트, 팀 또는 엔드포인트별로 지출 추적.',
+        icon: 'tabler:receipt',
+      },
+      {
+        title: '속도 제한 관리',
+        description: '자동 재시도 및 백오프 처리. 지능형 큐잉으로 속도 제한에 도달하지 않음.',
+        icon: 'tabler:clock-hour-12',
+      },
+      {
+        title: '엔터프라이즈 보안',
+        description: 'SOC 2 준수, 저장 및 전송 중 데이터 암호화. API 키는 볼트를 떠나지 않음.',
+        icon: 'tabler:shield-lock',
+      },
+    ]}
+  />
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'API 키 받기',
+        href: '#',
+        icon: 'tabler:key',
+      },
+      {
+        variant: 'secondary',
+        text: '문서 읽기',
+        href: '#',
+        icon: 'tabler:book',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      AI 통합을 <span class="text-blue-600 dark:text-blue-400">단순화</span>할 준비가 되셨나요?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      CinaToken 을 사용하는 수천 명의 개발자에 참여하세요.<br class="hidden md:inline" />
+      신용카드 없이 $5 무료 크레딧으로 시작하세요.
+    </Fragment>
+  </CallToAction>
+</Layout>

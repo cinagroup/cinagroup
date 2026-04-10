@@ -1,0 +1,36 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'CinaSeek — Интеллектуальный поиск на ИИ',
+  description: 'Корпоративное поисковое решение на базе ИИ с агрегацией данных из нескольких источников',
+};
+---
+<Layout metadata={metadata}>
+  <Hero
+    tagline="Интеллектуальный поиск"
+    title={'Поиск на базе <span class="text-green-600 dark:text-green-400">искусственного интеллекта</span>'}
+    subtitle="CinaSeek использует передовой ИИ для агрегации, понимания и предоставления информации из нескольких источников. Принимайте решения на основе данных быстрее, чем когда-либо."
+    actions={[{ variant: 'primary', text: 'Начать бесплатно', href: '/ru/contact', icon: 'tabler:rocket' }, { text: 'Смотреть демо', href: '/ru/contact', icon: 'tabler:player-play' }]}
+    image={{ src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'CinaSeek' }}
+  />
+  <Features
+    tagline="Основные функции"
+    title="Мощные поисковые возможности"
+    subtitle="Все необходимое для создания интеллектуального поискового опыта"
+    items={[
+      { title: 'Агрегация из нескольких источников', description: 'Поиск по базам данных, API, документам и веб-источникам одновременно', icon: 'tabler:database-search' },
+      { title: 'Понимание естественного языка', description: 'Задавайте вопросы обычным языком. ИИ понимает контекст, намерение и нюансы', icon: 'tabler:message' },
+      { title: 'Умный рейтинг', description: 'Ранжирование на базе ML обеспечивает наиболее релевантные результаты первыми', icon: 'tabler:sort-ascending-2' },
+      { title: 'Индексация в реальном времени', description: 'Автоматическое обновление индекса при изменении данных', icon: 'tabler:refresh' },
+      { title: 'Расширенная фильтрация', description: 'Точная фильтрация результатов по дате, типу, источнику и другим метаданным', icon: 'tabler:filter' },
+      { title: 'Аналитическая панель', description: 'Отслеживание поисковых паттернов, популярных запросов и поведения пользователей', icon: 'tabler:chart-bar' },
+    ]}
+    columns={3}
+    image={{ src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'Dashboard' }}
+  />
+  <CallToAction tagline="Начать сейчас" title="Готовы улучшить поисковый опыт?" subtitle="Присоединяйтесь к тысячам компаний, использующих CinaSeek" button={{ text: 'Начать бесплатно', href: '/ru/contact', variant: 'primary', icon: 'tabler:rocket' }} />
+</Layout>

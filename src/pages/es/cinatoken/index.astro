@@ -1,0 +1,195 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+
+const metadata = {
+  title: 'CinaToken — Puerta de Enlace API de Modelos Grandes y Gestión de Tokens',
+  description: 'Puerta de enlace API unificada para Claude, GPT, Gemini y más de 100 modelos de IA. Gestión simplificada de tokens, optimización de costos y confiabilidad de nivel empresarial.',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="Puerta de Enlace API de IA"
+    title={'Acceso Unificado a <span class="text-blue-600 dark:text-blue-400">Más de 100 Modelos de IA</span>'}
+    subtitle="CinaToken es tu puerta de enlace a los principales modelos de IA del mundo. Una clave API, facturación unificada, enrutamiento inteligente y confiabilidad de nivel empresarial para Claude, GPT, Gemini y más."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Obtener Clave API',
+        href: '#pricing',
+        icon: 'tabler:key',
+      },
+      { 
+        text: 'Ver Modelos', 
+        href: '#models',
+        icon: 'tabler:cpu',
+      },
+    ]}
+    image={{ 
+      src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1740&q=80', 
+      alt: 'CinaToken API Gateway' 
+    }}
+  />
+
+  <Features
+    id="features"
+    tagline="Características Principales"
+    title="Por Qué Elegir CinaToken"
+    subtitle="Todo lo que necesitas para integrar modelos de IA en tus aplicaciones"
+    items={[
+      {
+        title: 'Interfaz API Unificada',
+        description: 'Un estándar API para Claude, GPT, Gemini, Mistral y más de 100 modelos. Cambia de modelo sin modificar el código.',
+        icon: 'tabler:api',
+      },
+      {
+        title: 'Enrutamiento Inteligente',
+        description: 'Conmutación por error automática y balanceo de carga entre múltiples proveedores. 99.9% de tiempo de actividad garantizado.',
+        icon: 'tabler:route',
+      },
+      {
+        title: 'Optimización de Costos',
+        description: 'Enrutamiento inteligente al modelo más económico disponible. Hasta 40% de reducción de costos sin pérdida de calidad.',
+        icon: 'tabler:wallet',
+      },
+      {
+        title: 'Facturación Unificada',
+        description: 'Una sola factura para todo el uso de modelos de IA. Rastrea gastos por proyecto, equipo o endpoint.',
+        icon: 'tabler:receipt',
+      },
+      {
+        title: 'Gestión de Límites de Tasa',
+        description: 'Reintentos automáticos y manejo de retroceso. Nunca más alcances límites de tasa con cola inteligente.',
+        icon: 'tabler:clock-hour-12',
+      },
+      {
+        title: 'Seguridad Empresarial',
+        description: 'Cumplimiento SOC 2, cifrado de datos en reposo y en tránsito. Tus claves API nunca salen de nuestra bóveda.',
+        icon: 'tabler:shield-lock',
+      },
+    ]}
+  />
+
+  <section id="models" class="py-16 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="text-3xl font-bold tracking-tight dark:text-white sm:text-4xl mb-4">
+          Modelos de IA Soportados
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300">
+          Accede a los principales modelos de IA del mundo a través de una sola API
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 p-6">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600"></div>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center mr-4">
+              <span class="text-2xl">🤖</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold dark:text-white">Anthropic</h3>
+              <p class="text-sm text-gray-500">Serie Claude</p>
+            </div>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Claude 3.5 Sonnet</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Claude 3.5 Haiku</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Claude 3 Opus</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Claude 3.7 Sonnet</li>
+          </ul>
+        </div>
+
+        <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 p-6">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 to-green-600"></div>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center mr-4">
+              <span class="text-2xl">🟢</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold dark:text-white">OpenAI</h3>
+              <p class="text-sm text-gray-500">Serie GPT</p>
+            </div>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>GPT-4.5 Turbo</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>GPT-4o</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>GPT-4o Mini</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>o1 / o3</li>
+          </ul>
+        </div>
+
+        <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 p-6">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-blue-600"></div>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mr-4">
+              <span class="text-2xl">🔵</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold dark:text-white">Google</h3>
+              <p class="text-sm text-gray-500">Serie Gemini</p>
+            </div>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Gemini 2.5 Pro</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Gemini 2.5 Flash</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Gemini 2.0</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Imagen 3</li>
+          </ul>
+        </div>
+
+        <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 p-6">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center mr-4">
+              <span class="text-2xl">⚡</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold dark:text-white">+100 Más</h3>
+              <p class="text-sm text-gray-500">Varios Proveedores</p>
+            </div>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Mistral AI</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Cohere</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Groq</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Y más...</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Obtén Tu Clave API',
+        href: '#',
+        icon: 'tabler:key',
+      },
+      {
+        variant: 'secondary',
+        text: 'Leer Documentación',
+        href: '#',
+        icon: 'tabler:book',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      ¿Listo para <span class="text-blue-600 dark:text-blue-400">Simplificar</span> Tu Integración de IA?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Únete a miles de desarrolladores usando CinaToken. <br class="hidden md:inline" />
+      Comienza con $5 de crédito gratis, sin tarjeta de crédito requerida.
+    </Fragment>
+  </CallToAction>
+</Layout>

@@ -1,0 +1,47 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'CinaSkill — ロボットスキルプラットフォーム',
+  description: 'ロボットスキルの作成、共有、発見。無限の可能性。',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="スキルプラットフォーム"
+    title={'<span class="text-pink-600 dark:text-pink-400">ロボットスキル</span> を構築'}
+    subtitle="CinaSkill はオープンなスキルプラットフォームで、誰でもロボットスキルを作成、共有、発見できます。"
+    actions={[
+      { variant: 'primary', text: 'スキルを作成', href: '/ja/contact', icon: 'tabler:plus' },
+      { text: 'スキルを探す', href: '/ja/contact', icon: 'tabler:search' },
+    ]}
+    image={{ src: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'CinaSkill' }}
+  />
+
+  <Features
+    tagline="プラットフォーム機能"
+    title="強力なスキル作成ツール"
+    subtitle="ゼロから最初のロボットスキルを構築"
+    items={[
+      { title: 'ビジュアルエディタ', description: 'ドラッグ&ドロップインターフェース、プログラミングなしで複雑な対話フローを作成', icon: 'tabler:layout-grid' },
+      { title: 'スキルテンプレート', description: '豊富な事前設定テンプレート、スキル開発を迅速に開始', icon: 'tabler:template' },
+      { title: 'API 統合', description: 'サードパーティ API を簡単に接続、スキル機能を拡張', icon: 'tabler:api' },
+      { title: 'テストとデバッグ', description: '内蔵テストツール、リアルタイムプレビューとデバッグ', icon: 'tabler:bug' },
+      { title: '公開と配布', description: 'ワンクリックでスキルマーケットに公開、世界中のユーザーに利用可能に', icon: 'tabler:rocket' },
+      { title: 'データ分析', description: 'スキル使用状況を追跡、継続的に最適化して改善', icon: 'tabler:chart-bar' },
+    ]}
+    columns={3}
+    image={{ src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'Editor' }}
+  />
+
+  <CallToAction
+    tagline="今すぐ開始"
+    title="創造力を披露する準備はできましたか？"
+    subtitle="数万人の開発者に参加し、ユニークなロボットスキルを作成しましょう。"
+    button={{ text: 'スキルを作成', href: '/ja/contact', variant: 'primary', icon: 'tabler:plus' }}
+  />
+</Layout>

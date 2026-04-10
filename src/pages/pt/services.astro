@@ -1,0 +1,13 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = { title: 'サービス — CinaGroup' };
+---
+<Layout metadata={metadata}>
+  <Hero tagline="サービス" title="専門的なソリューション" subtitle="ビジネスの成功を支援する包括的なサービス" image={{ src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'Services' }} />
+  <Features tagline="サービス内容" title="包括的なソリューション" subtitle="お客様のビジネス成長を支援" items={[{ title: 'コンサルティング', description: '専門家がビジネス課題を解決', icon: 'tabler:briefcase' }, { title: '技術サポート', description: '24 時間 365 日のサポート', icon: 'tabler:headset' }, { title: 'カスタム開発', description: 'ニーズに合わせた定制開発', icon: 'tabler:code' }]} columns={3} />
+  <CallToAction tagline="お問い合わせ" title="ご相談ください" subtitle="専門チームがサポートいたします" button={{ text: '連絡する', href: '/pt/contact', variant: 'primary' }} />
+</Layout>

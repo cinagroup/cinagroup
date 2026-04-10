@@ -1,0 +1,49 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+
+const metadata = {
+  title: '私たちについて — CinaGroup',
+  description: 'CinaGroup の使命は、AI と Web3 技術を民主化し、すべての人にアクセス可能、手頃な価格、有用にすることです。',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="私たちについて"
+    title={'<span class="text-accent dark:text-white">技術の未来</span> を構築'}
+    subtitle="AI と Web3 技術を民主化し、すべての人にアクセス可能、手頃な価格、有用にすることを使命としています。"
+    image={{ 
+      src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', 
+      alt: 'CinaGroup チーム' 
+    }}
+  />
+
+  <section class="py-16 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl font-bold dark:text-white mb-6">私たちの使命</h2>
+        <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+          「AI と Web3 技術を民主化し、すべての人が利用でき、手頃な価格で、有益なものにすること」
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          <div class="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+            <div class="text-4xl mb-4">🎯</div>
+            <h3 class="font-bold dark:text-white mb-2">アクセシビリティ</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm">技術的障壁を取り除き、誰でも最先端技術を活用できるように</p>
+          </div>
+          <div class="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl">
+            <div class="text-4xl mb-4">💰</div>
+            <h3 class="font-bold dark:text-white mb-2">手頃な価格</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm">すべての人に適した価格で企業グレードのソリューションを提供</p>
+          </div>
+          <div class="p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+            <div class="text-4xl mb-4">⚡</div>
+            <h3 class="font-bold dark:text-white mb-2">実用性</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm">実際の問題を解決する実用的なツールを構築</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

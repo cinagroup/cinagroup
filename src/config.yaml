@@ -1,35 +1,75 @@
 site:
-  name: AstroWind
-  site: 'https://astrowind.vercel.app'
+  name: CinaGroup
+  site: 'https://cinagroup.com'
   base: '/'
   trailingSlash: false
 
-  googleSiteVerificationId: orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M
+  googleSiteVerificationId: null
 
 # Default SEO metadata
 metadata:
   title:
-    default: AstroWind
-    template: '%s — AstroWind'
-  description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
+    default: CinaGroup — AI & Web3 Solutions | Intelligent Search, Robotics & Blockchain
+    template: '%s — CinaGroup'
+  description: "CinaGroup delivers enterprise-grade AI & Web3 solutions: CinaSeek (AI search), CinaClaw (intelligent robots), CinaSkill (skills platform), CinaToken (AI API gateway), and CinaChain (blockchain infrastructure). Empowering 50K+ users worldwide."
+  keywords:
+    - "AI search"
+    - "intelligent robot"
+    - "blockchain"
+    - "Web3"
+    - "CinaSeek"
+    - "CinaClaw"
+    - "CinaSkill"
+    - "CinaToken"
+    - "CinaChain"
+    - "AI API gateway"
+    - "automation"
+    - "smart contracts"
+    - "enterprise AI"
+    - "machine learning"
+    - "DeFi"
+    - "robot skills"
+    - "AI assistant"
+    - "multi-model API"
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: AstroWind
+    site_name: CinaGroup
     images:
       - url: '~/assets/images/default.png'
         width: 1200
         height: 628
+        alt: "CinaGroup - AI & Web3 Solutions"
     type: website
+    locale: en_US
   twitter:
-    handle: '@arthelokyo'
-    site: '@arthelokyo'
+    handle: '@cinagroup'
+    site: '@cinagroup'
     cardType: summary_large_image
+  additional:
+    - name: "author"
+      content: "CinaGroup"
+    - name: "publisher"
+      content: "CinaGroup"
+    - name: "theme-color"
+      content: "#3b82f6"
+    - name: "application-name"
+      content: "CinaGroup"
+
+# Favicon configuration
+favicon:
+  path: '/favicon.svg'
+  # Use favicon SVG for consistency across browser tab and branding
+  apple: '/favicon.svg'
+  safari: '/favicon.svg'
 
 i18n:
   language: en
   textDirection: ltr
+  locales:
+    - en
+    - zh
 
 apps:
   blog:
@@ -67,6 +107,9 @@ analytics:
   vendors:
     googleAnalytics:
       id: null # or "G-XXXXXXXXXX"
+    splitbee:
+      enabled: false # Set to true and add token for Splitbee analytics
+      token: null
 
 ui:
   theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"

@@ -24,11 +24,34 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 export default defineConfig({
   output: 'static',
 
+  i18n: {
+    locales: ['en', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'],
+    defaultLocale: 'en',
+    prefixDefaultLocale: false,
+    routing: {
+      prefixDefaultLocale: false,
+      redirectToDefaultLocale: false,
+    },
+  },
+
   integrations: [
     tailwind({
       applyBaseStyles: false,
     }),
-    sitemap(),
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: {
+          en: 'en-US',
+          ja: 'ja-JP',
+          ko: 'ko-KR',
+          ru: 'ru-RU',
+          es: 'es-ES',
+          pt: 'pt-BR',
+          fr: 'fr-FR',
+        },
+      },
+    }),
     mdx(),
     icon({
       include: {
