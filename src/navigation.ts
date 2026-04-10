@@ -80,8 +80,8 @@ export const headerData = {
     },
   ],
   actions: [
-    { text: 'Get Started', href: '/contact', variant: 'primary' },
-    { text: 'GitHub', href: 'https://github.com/cinagroup/homepage', target: '_blank' },
+    { text: 'Login', href: 'https://account.cinagroup.com/login', variant: 'primary' },
+    { text: 'Signup', href: 'https://account.cinagroup.com/signup', variant: 'secondary' },
   ],
 };
 
