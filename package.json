@@ -1,7 +1,7 @@
 {
-  "name": "@onwidget/astrowind",
-  "version": "1.0.0-beta.52",
-  "description": "AstroWind: A free template using Astro 5.0 and Tailwind CSS. Astro starter theme.",
+  "name": "@cinagroup/homepage",
+  "version": "1.0.0",
+  "description": "CinaGroup official website — built with Astro 5 and Tailwind CSS",
   "type": "module",
   "private": true,
   "engines": {

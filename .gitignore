@@ -35,3 +35,18 @@ cnelec/
 memory-backups/
 memory-dashboard/
 wechat-official-account/
+
+# backups & ops files
+.backups/
+cron-backups/
+logs/
+openclaw-robots-backup/
+memory/*.md
+memory/*.json
+.openclaw/
+.clawhub/
+
+# generated / temp
+*.log
+*.tmp
+.DS_Store

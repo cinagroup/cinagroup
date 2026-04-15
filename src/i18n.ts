@@ -39,7 +39,7 @@ export const ui = {
     
     // Business Lines
     'business.title': 'Our Business Lines',
-    'business.subtitle': 'Four powerful platforms working together to deliver comprehensive AI and Web3 solutions',
+    'business.subtitle': 'Five powerful platforms working together to deliver comprehensive AI and Web3 solutions',
     'business.cinaseek.title': 'CinaSeek',
     'business.cinaseek.tagline': 'Intelligent Search',
     'business.cinaseek.desc': 'AI-driven enterprise search solution with multi-source data aggregation',
@@ -78,7 +78,7 @@ export const ui = {
     'why.support.title': '24/7 Support',
     'why.support.desc': 'Round-the-clock technical support and comprehensive knowledge base.',
     
-    // Stats
+    // Stats (placeholder values — update with real metrics)
     'stats.users': 'Active Users',
     'stats.apiCalls': 'API Calls/Day',
     'stats.skills': 'Skills Available',
@@ -94,17 +94,17 @@ export const ui = {
     'how.step3.title': 'Scale & Optimize',
     'how.step3.desc': 'Monitor performance and scale as your usage grows',
     
-    // Testimonials
-    'testimonials.title': 'Trusted by Innovators',
+    // Testimonials (placeholder — replace with real customer quotes)
+    'testimonials.title': 'What Our Clients Say',
     'testimonials.quote1': 'CinaSeek has transformed how our team accesses information. The AI-powered search is incredibly accurate and saves us hours every day.',
-    'testimonials.author1': 'Alex Chen',
-    'testimonials.role1': 'CTO, TechCorp',
-    'testimonials.quote2': 'CinaClaw automated 80% of our customer service inquiries. The ROI was evident within the first month of deployment.',
-    'testimonials.author2': 'Sarah Johnson',
-    'testimonials.role2': 'Operations Director, StartupXYZ',
-    'testimonials.quote3': 'The CinaChain infrastructure is rock-solid. We\'ve built our entire DeFi platform on it with zero downtime.',
-    'testimonials.author3': 'Michael Zhang',
-    'testimonials.role3': 'Founder, Web3 Labs',
+    'testimonials.author1': '—',
+    'testimonials.role1': '[Company], [Title]',
+    'testimonials.quote2': 'CinaClaw automated our customer service workflows. The integration was smooth and the results exceeded our expectations.',
+    'testimonials.author2': '—',
+    'testimonials.role2': '[Company], [Title]',
+    'testimonials.quote3': 'The CinaChain infrastructure is reliable and well-documented. A solid foundation for our Web3 applications.',
+    'testimonials.author3': '—',
+    'testimonials.role3': '[Company], [Title]',
     
     // CTA
     'cta.title': 'Ready to {0} Your Business?',
@@ -151,7 +151,7 @@ export const ui = {
     
     // Business Lines
     'business.title': '我们的业务线',
-    'business.subtitle': '四大平台协同工作，提供全面的 AI 和 Web3 解决方案',
+    'business.subtitle': '五大平台协同工作，提供全面的 AI 和 Web3 解决方案',
     'business.cinaseek.title': 'CinaSeek',
     'business.cinaseek.tagline': '智能搜索',
     'business.cinaseek.desc': 'AI 驱动的企业级搜索解决方案，支持多源数据聚合',
@@ -190,7 +190,7 @@ export const ui = {
     'why.support.title': '24/7 支持',
     'why.support.desc': '全天候技术支持和全面的知识库。',
     
-    // Stats
+    // Stats（占位数值 — 请用真实数据替换）
     'stats.users': '活跃用户',
     'stats.apiCalls': 'API 调用/天',
     'stats.skills': '可用技能',
@@ -206,17 +206,17 @@ export const ui = {
     'how.step3.title': '扩展与优化',
     'how.step3.desc': '监控性能并随使用量增长而扩展',
     
-    // Testimonials
-    'testimonials.title': '创新者的信赖',
+    // Testimonials（占位 — 替换为真实客户评价）
+    'testimonials.title': '客户评价',
     'testimonials.quote1': 'CinaSeek 彻底改变了我们团队获取信息的方式。AI 驱动的搜索非常准确，每天为我们节省数小时。',
-    'testimonials.author1': 'Alex Chen',
-    'testimonials.role1': 'TechCorp CTO',
-    'testimonials.quote2': 'CinaClaw 自动化了我们 80% 的客户服务查询。投资回报在部署后第一个月就显现出来。',
-    'testimonials.author2': 'Sarah Johnson',
-    'testimonials.role2': 'StartupXYZ 运营总监',
-    'testimonials.quote3': 'CinaChain 基础设施非常稳定。我们在其上构建了整个 DeFi 平台，零停机时间。',
-    'testimonials.author3': 'Michael Zhang',
-    'testimonials.role3': 'Web3 Labs 创始人',
+    'testimonials.author1': '—',
+    'testimonials.role1': '[公司名]，[职位]',
+    'testimonials.quote2': 'CinaClaw 自动化了我们的客户服务工作流。集成过程很顺畅，效果超出预期。',
+    'testimonials.author2': '—',
+    'testimonials.role2': '[公司名]，[职位]',
+    'testimonials.quote3': 'CinaChain 基础设施稳定可靠，文档完善。是我们 Web3 应用的坚实基础。',
+    'testimonials.author3': '—',
+    'testimonials.role3': '[公司名]，[职位]',
     
     // CTA
     'cta.title': '准备好{0}您的业务了吗？',

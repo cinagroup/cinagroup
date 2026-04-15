@@ -192,13 +192,13 @@ const featuresData = {
   ],
 };
 
-// Stats data
+// Stats data (placeholder — update with real metrics)
 const statsData = {
   items: [
-    { amount: '50K+', title: t('stats.users') },
-    { amount: '10M+', title: t('stats.apiCalls') },
-    { amount: '1,000+', title: t('stats.skills') },
-    { amount: '500+', title: t('stats.nodes') },
+    { amount: '—', title: t('stats.users') },
+    { amount: '—', title: t('stats.apiCalls') },
+    { amount: '—', title: t('stats.skills') },
+    { amount: '—', title: t('stats.nodes') },
   ],
 };
 
@@ -225,7 +225,7 @@ const howData = {
   ],
 };
 
-// Testimonials
+// Testimonials (placeholder avatars)
 const testimonialsData = {
   title: t('testimonials.title'),
   items: [
@@ -233,19 +233,19 @@ const testimonialsData = {
       quote: t('testimonials.quote1'),
       author: t('testimonials.author1'),
       role: t('testimonials.role1'),
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+      image: null, // replace with real customer photo
     },
     {
       quote: t('testimonials.quote2'),
       author: t('testimonials.author2'),
       role: t('testimonials.role2'),
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+      image: null, // replace with real customer photo
     },
     {
       quote: t('testimonials.quote3'),
       author: t('testimonials.author3'),
       role: t('testimonials.role3'),
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+      image: null, // replace with real customer photo
     },
   ],
 };
@@ -454,9 +454,15 @@ const ctaData = {
               </blockquote>
               <hr class="dark:border-slate-600 border-slate-200 my-4">
               <div class="flex items-center">
-                <div class="rounded-full h-10 w-10 border border-slate-200 dark:border-slate-600">
-                  <img alt={item.author} class="rounded-full h-10 w-10 border border-slate-200 dark:border-slate-600 min-h-full min-w-full" height="40" src={item.image} width="40" crossorigin="anonymous" decoding="async" loading="lazy" referrerpolicy="no-referrer" sizes="40px" srcset={`${item.image.replace('w=500', 'w=40')} 40w, ${item.image.replace('w=500', 'w=80')} 80w`} style="object-fit:cover;object-position:top left;width:40px;height:40px">
-                </div>
+                {item.image ? (
+                  <div class="rounded-full h-10 w-10 border border-slate-200 dark:border-slate-600">
+                    <img alt={item.author} class="rounded-full h-10 w-10 border border-slate-200 dark:border-slate-600 min-h-full min-w-full" height="40" src={item.image} width="40" crossorigin="anonymous" decoding="async" loading="lazy" referrerpolicy="no-referrer" sizes="40px" srcset={`${item.image.replace('w=500', 'w=40')} 40w, ${item.image.replace('w=500', 'w=80')} 80w`} style="object-fit:cover;object-position:top left;width:40px;height:40px">
+                  </div>
+                ) : (
+                  <div class="rounded-full h-10 w-10 bg-gray-200 dark:bg-gray-700 flex items-center justify-center border border-slate-200 dark:border-slate-600">
+                    <span class="text-gray-400 dark:text-gray-500 text-sm">👤</span>
+                  </div>
+                )}
                 <div class="rtl:ml-0 grow ml-3 rtl:mr-3">
                   <p class="font-semibold text-base">{item.author}</p>
                   <p class="text-muted text-xs">{item.role}</p>
