@@ -6,10 +6,11 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-WORKSPACE_DIR="/root/.openclaw/workspace"
-SITE_DIR="$WORKSPACE_DIR/cinagroup-site"
+SITE_DIR="/root/homepage"
 POSTS_DIR="$SITE_DIR/src/data/post"
-LOG_FILE="$WORKSPACE_DIR/logs/news-briefing-publish.log"
+LOG_DIR="/root/homepage/logs"
+LOG_FILE="$LOG_DIR/news-briefing-publish.log"
+mkdir -p "$LOG_DIR"
 
 # Ensure log directory exists
 mkdir -p "$(dirname "$LOG_FILE")"
