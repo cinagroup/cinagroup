@@ -106,7 +106,7 @@ apps:
 analytics:
   vendors:
     googleAnalytics:
-      id: null # or "G-XXXXXXXXXX"
+      id: "G-QYXR6DT2F0"
     splitbee:
       enabled: false # Set to true and add token for Splitbee analytics
       token: null
