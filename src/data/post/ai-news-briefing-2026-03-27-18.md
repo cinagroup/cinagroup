@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-27 18:00"
+title: "EU AI Act Implementation Timeline"
 description: "12-hour AI digest: EU AI Act timeline revealed, OpenAI enterprise pivot accelerates, Google Personal Intelligence expansion, iOS 26.4 AI features"
 publishDate: 2026-03-27T10:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Policy", "Enterprise", "Google", "Apple"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# EU AI Act Implementation Timeline
 
 **Published**: 2026-03-27 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-27 06:00 — 2026-03-27 18:00

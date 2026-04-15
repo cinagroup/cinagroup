@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-26 12:00"
+title: "Google TurboQuant · Kleiner Perkins $3.5B Fund · Harvey $11B"
 description: "12-hour AI digest: Google TurboQuant memory compression, Kleiner Perkins $3.5B AI fund, Anthropic Claude Code enhancements, Google Lyria 3 Pro music model, Harvey $11B valuation"
 publishDate: 2026-03-26T04:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Google TurboQuant · Kleiner Perkins $3.5B Fund · Harvey $11B
 
 **Published**: March 26, 2026 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-26 00:00 — 2026-03-26 12:00
@@ -65,7 +65,7 @@ Google released Lyria 3 Pro, its latest AI music generation model. The new model
 **Source**: TechCrunch  
 **Time**: ~8 hours ago
 
-AI legal technology company Harvey confirmed its $11 billion valuation, with Sequoia Capital announcing a triple追加 investment. Harvey focuses on providing AI-assisted tools for law firms, and its rapid valuation growth reflects the enormous potential of AI in enterprise services. The company's AI can draft legal documents, conduct research, and assist with case strategy, significantly reducing time spent on routine legal work.
+AI legal technology company Harvey confirmed its $11 billion valuation, with Sequoia Capital announcing a triple-down investment. Harvey focuses on providing AI-assisted tools for law firms, and its rapid valuation growth reflects the enormous potential of AI in enterprise services. The company's AI can draft legal documents, conduct research, and assist with case strategy, significantly reducing time spent on routine legal work.
 
 [Read More](https://techcrunch.com/2026/03/26/harvey-11b-valuation-sequoia)
 

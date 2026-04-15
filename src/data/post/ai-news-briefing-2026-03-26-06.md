@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-26 06:00"
+title: "GPT-5.4 GDPVal 83% · 1M Token Context Window"
 description: "12-hour AI digest: OpenAI GPT-5.4 dominates benchmarks, Anthropic Claude auto-mode launches, Google Gemini hits 750M users, Nvidia bets big on AI agents, Microsoft 100+ agents in production"
 publishDate: 2026-03-25T22:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# GPT-5.4 GDPVal 83% · 1M Token Context Window
 
 **Published**: March 26, 2026 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-25 18:00 — 2026-03-26 06:00

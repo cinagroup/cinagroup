@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-27 06:00"
+title: "EU AI Act Delay · Meta Layoffs · Korea Chip Investment"
 description: "12-hour AI digest: EU AI Act delay, OpenAI chatbot shelved, Meta layoffs, Korea chip investment"
 publishDate: 2026-03-26T22:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Policy", "Enterprise", "Chips"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# EU AI Act Delay · Meta Layoffs · Korea Chip Investment
 
 **Published**: 2026-03-27 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-26 18:00 — 2026-03-27 06:00

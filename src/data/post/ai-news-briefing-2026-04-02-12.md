@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-02 12:00"
+title: "Anthropic GitHub Incident · Cognichip $60M · Baidu Robotaxi"
 description: "12-hour AI digest: Anthropic GitHub incident, Cognichip $60M raise, Baidu robotaxi failure"
 publishDate: 2026-04-02T04:00:00.000Z
 author: "001"

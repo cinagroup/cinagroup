@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-28 00:00"
+title: "SoftBank $40B Bridge Loan for OpenAI"
 description: "12-hour AI digest: SoftBank $40B OpenAI investment, Apple opens Siri to rival AIs, NeurIPS reverses paper ban after China boycott"
 publishDate: 2026-03-27T16:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Investment", "Apple", "Policy", "China"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# SoftBank $40B Bridge Loan for OpenAI
 
 **Published**: 2026-03-28 00:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-27 12:00 — 2026-03-28 00:00

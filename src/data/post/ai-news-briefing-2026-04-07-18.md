@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-07 18:00"
+title: "$7T AI Infrastructure Check · Meta Open-Source · Oracle 30K Layoffs"
 description: "12-hour AI digest: AI infrastructure reality check, Meta open-source plans, Oracle layoffs"
 publishDate: 2026-04-07T10:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# $7T AI Infrastructure Check · Meta Open-Source · Oracle 30K Layoffs
 
 **Published**: 2026-04-07 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-07 06:00 — 2026-04-07 18:00

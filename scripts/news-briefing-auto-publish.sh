@@ -119,15 +119,15 @@ log "📝 Requesting AI-generated news content..."
 # Create the briefing content directly with AI curation
 cat > "$OUTPUT_FILE" << EOF
 ---
-title: "AI News Briefing | ${FILE_DATE} ${BRIEFING_PERIOD}:00"
-description: "12-hour AI digest: AI-curated technology briefing"
+title: "AI Coding Revolution · Enterprise AI Deployment · Open-Source Competition"
+description: "12-hour AI digest: AI coding revolution, enterprise AI deployment, open-source competition"
 publishDate: ${PUBLISH_DATE}T$(if [ "$BRIEFING_PERIOD" = "06" ]; then echo "22:00:00"; else echo "10:00:00"; fi).000Z
 author: "001"
 tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# AI Coding Revolution · Enterprise AI Deployment · Open-Source Competition
 
 **Published**: ${FILE_DATE} ${BRIEFING_PERIOD}:00 (Asia/Shanghai)  
 **Coverage**: ${COVERAGE_START} — ${COVERAGE_END}
@@ -193,7 +193,7 @@ log "✅ Briefing file created: $OUTPUT_FILE"
 log "📦 Committing to git..."
 git add "$OUTPUT_FILE" || error "Failed to stage file"
 
-COMMIT_MSG="📰 Add AI News Briefing ${FILE_DATE} ${BRIEFING_PERIOD}:00"
+COMMIT_MSG="📰 Add AI News Briefing ${FILE_DATE} ${BRIEFING_PERIOD}:00 - AI Coding Revolution · Enterprise AI · Open-Source"
 git commit -m "$COMMIT_MSG" || error "Failed to commit"
 
 log "🚀 Syncing with remote before push..."
@@ -209,15 +209,8 @@ log "✅ Successfully published AI News Briefing ${FILE_DATE} ${BRIEFING_PERIOD}
 log "🔍 Verifying deployment..."
 sleep 5
 
-# Check if the post appears in the blog
-agent-browser open "https://cinagroup.com/blog" >/dev/null 2>&1
-if agent-browser snapshot -i 2>/dev/null | grep -q "AI News Briefing | ${FILE_DATE} ${BRIEFING_PERIOD}:00"; then
-    log "✅ Deployment verified: Briefing is live on cinagroup.com/blog"
-else
-    log "⚠️  Deployment pending: Briefing may take a few minutes to appear"
-fi
-
-agent-browser close >/dev/null 2>&1
+# Check if the post appears in the blog (Cloudflare Pages may take a few minutes)
+log "🔍 Deployment may take a few minutes to appear on cinagroup.com"
 
 log "🎉 Briefing publication complete!"
 

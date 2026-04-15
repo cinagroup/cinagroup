@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-31 12:00"
+title: "Microsoft Copilot Cowork · Claude Integration"
 description: "12-hour AI digest: AI-curated technology briefing"
 publishDate: 2026-03-31T04:00:00.000Z
 author: "001"

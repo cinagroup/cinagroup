@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-01 18:00"
+title: "OpenAI $122B Raise · IPO Preparation"
 description: "12-hour AI digest: AI-curated technology briefing"
 publishDate: 2026-04-01T10:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# OpenAI $122B Raise · IPO Preparation
 
 **Publish Time**: 2026-04-01 18:00 (Asia/Shanghai)  
 **Coverage Period**: 2026-04-01 06:00 — 2026-04-01 18:00

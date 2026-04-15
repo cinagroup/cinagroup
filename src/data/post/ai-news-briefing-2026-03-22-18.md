@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-22 18:00"
+title: "Goldman Sachs $700B AI Capex Projection for 2026"
 description: "12-hour AI digest: Goldman Sachs projects $700B AI capex, UK delays OpenAI trial, identity sales for AI training, rogue OpenClaw AI incident, AI Action Firewall development, FBI surveillance concerns"
 publishDate: 2026-03-22T18:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Goldman Sachs $700B AI Capex Projection for 2026
 
 **Published**: March 22, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-22 06:00 — 2026-03-22 18:00

@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-31 18:00"
+title: "AI Coding Revolution Continues"
 description: "12-hour AI digest: AI-curated technology briefing"
 publishDate: 2026-03-31T10:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# AI Coding Revolution Continues
 
 **Published**: 2026-03-31 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-31 06:00 — 2026-03-31 18:00

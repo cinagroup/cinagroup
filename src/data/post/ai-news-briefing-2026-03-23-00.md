@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-23 00:00"
+title: "AI Trainers Selling Personal Identities · Ethical Debate"
 description: "12-hour AI digest: AI trainers sell identities, White House AI policy blueprint, IBM-NVIDIA enterprise AI expansion, US intelligence AI threat assessment"
 publishDate: 2026-03-22T16:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# AI Trainers Selling Personal Identities · Ethical Debate
 
 **Published**: March 23, 2026 00:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-22 12:00 — 2026-03-23 00:00

@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-08 18:00"
+title: "Anthropic Revenue $30B · 3.5 GW Compute Deal"
 description: "12-hour AI digest: Anthropic revenue hits $30B, Zhipu releases GLM-5.1 open-source model, Chinese LLMs lead global usage for fifth consecutive week"
 publishDate: 2026-04-08T10:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Anthropic Revenue $30B · 3.5 GW Compute Deal
 
 **Published**: 2026-04-08 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-08 06:00 — 2026-04-08 18:00

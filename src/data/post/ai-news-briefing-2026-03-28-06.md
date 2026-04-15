@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-28 06:00"
+title: "Federal Judge Blocks Pentagon Anthropic Blacklist"
 description: "12-hour AI digest: Federal judge blocks Pentagon Anthropic blacklisting, Science study reveals AI chatbots flattery problem, Wikipedia bans AI content"
 publishDate: 2026-03-27T22:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Policy", "Ethics", "Anthropic", "Wikipedia"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Federal Judge Blocks Pentagon Anthropic Blacklist
 
 **Published**: 2026-03-28 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-28 00:00 — 2026-03-28 06:00

@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-01 00:00"
+title: "Ollama Powered by MLX on Apple Silicon Preview"
 description: "12-hour AI digest: AI-curated technology briefing"
 publishDate: 2026-03-31T16:00:00.000Z
 author: "001"

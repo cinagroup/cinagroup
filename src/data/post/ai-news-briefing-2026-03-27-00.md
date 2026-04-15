@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-27 00:00"
+title: "EU Nude App Ban · AI Act Delay"
 description: "12-hour AI digest: EU delays AI rules, OpenAI shelves erotic chatbot, Meta pivots to AI with layoffs, South Korea invests in AI chips"
 publishDate: 2026-03-27T00:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Policy", "Enterprise"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# EU Nude App Ban · AI Act Delay
 
 **Published**: March 27, 2026 00:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-26 12:00 — 2026-03-27 00:00

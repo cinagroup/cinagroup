@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | Claude Code Source Code Analysis | 2026-04-02 18:00"
+title: "Claude Code CLI Architecture · 35K+ Lines Code Analysis"
 description: "12-hour AI digest: Claude Code CLI architecture deep dive - 35K+ lines production code analysis"
 publishDate: 2026-04-02T10:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech", "Claude Code", "Open Source"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Claude Code CLI Architecture · 35K+ Lines Code Analysis
 
 **Published**: 2026-04-02 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-02 06:00 — 2026-04-02 18:00

@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-25 12:00"
+title: "White House Light-Touch AI Framework · Congress Preemption"
 description: "12-hour AI digest: White House light-touch AI framework, OpenAI doubling to 8K employees, Jensen Huang's AGI claim, Luma AI Uni-1, Meta acquires Dreamer team, Doctronic $40M clinical AI, U.S. Labor Dept AI literacy push"
 publishDate: 2026-03-25T04:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# White House Light-Touch AI Framework · Congress Preemption
 
 **Published**: March 25, 2026 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-25 00:00 — 2026-03-25 12:00

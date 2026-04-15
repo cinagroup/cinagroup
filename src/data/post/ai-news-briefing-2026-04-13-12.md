@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-13 12:00"
+title: "OpenAI $852B Valuation · Mythos Gated · Zhipu Open-Source"
 description: "12-hour AI digest: OpenAI $852B valuation, Anthropic Mythos gated, Zhipu open-sources coding champion"
 publishDate: 2026-04-13T03:30:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# OpenAI $852B Valuation · Mythos Gated · Zhipu Open-Source
 
 **Published**: 2026-04-13 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-13 00:00 — 2026-04-13 12:00

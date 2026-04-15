@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-28 12:00"
+title: "Judge Blocks Pentagon Anthropic Blacklist"
 description: "12-hour AI digest: Anthropic legal victory, AI sycophancy study, Wikipedia bans AI content, OpenAI Safety Bug Bounty, $500 GPU beats Claude, agent pair programming"
 publishDate: 2026-03-28T04:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Judge Blocks Pentagon Anthropic Blacklist
 
 **Published**: March 28, 2026 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-28 00:00 — 2026-03-28 12:00

@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-24 18:00"
+title: "Apple WWDC 2026 June Date · AI Advancements Teased"
 description: "12-hour AI digest: Apple WWDC 2026 AI teaser, Helion-OpenAI fusion deal, Air Street $232M fund, Elizabeth Warren on Anthropic"
 publishDate: 2026-03-24T10:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Apple WWDC 2026 June Date · AI Advancements Teased
 
 **Published**: March 24, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-24 06:00 — 2026-03-24 18:00

@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-23 06:00"
+title: "Cursor Admits Coding Model Built on Moonshot Kimi"
 description: "12-hour AI digest: Cursor admits Kimi foundation, Bezos $100B AI manufacturing plan, Microsoft rolls back Copilot, Meta rogue AI agents"
 publishDate: 2026-03-22T22:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Cursor Admits Coding Model Built on Moonshot Kimi
 
 **Published**: March 23, 2026 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-22 18:00 — 2026-03-23 06:00

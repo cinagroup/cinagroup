@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-21 18:00"
+title: "Google Gemini Workspace Upgrade · EU AI Food Safety Tool"
 description: "12-hour AI digest: Google Gemini upgrades Workspace, EU launches AI food safety tool, AI usage surge in tech companies"
 publishDate: 2026-03-21T18:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Enterprise", "Policy"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Google Gemini Workspace Upgrade · EU AI Food Safety Tool
 
 **Published**: March 21, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-21 06:00 — 2026-03-21 18:00

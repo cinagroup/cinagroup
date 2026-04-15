@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-25 06:00"
+title: "OpenAI ChatGPT + Codex + Browser Desktop Super App"
 description: "12-hour AI digest: OpenAI super app merger, AWS Bahrain drone disruption, AI ad spend surges 63%, Anthropic Claude Computer Use launches, US Treasury AI Innovation Series"
 publishDate: 2026-03-24T22:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# OpenAI ChatGPT + Codex + Browser Desktop Super App
 
 **Published**: March 25, 2026 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-24 18:00 — 2026-03-25 06:00

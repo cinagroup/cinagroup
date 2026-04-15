@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-28 18:00"
+title: "GPT-4.5 Turbo · Microsoft $10B AI · EU AI Act · Tesla FSD V13"
 description: "12-hour AI digest: OpenAI GPT-4.5 Turbo, Microsoft $10B AI investment, EU AI Act takes effect, Tesla FSD V13"
 publishDate: 2026-03-28T10:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "OpenAI", "Microsoft", "EU", "Tesla", "Apple", "Nv
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# GPT-4.5 Turbo · Microsoft $10B AI · EU AI Act · Tesla FSD V13
 
 **Published**: 2026-03-28 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-28 06:00 — 2026-03-28 18:00

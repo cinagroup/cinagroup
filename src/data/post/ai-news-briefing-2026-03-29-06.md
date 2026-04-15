@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-29 06:00"
+title: "Anthropic Security Lapse · Unreleased Model Details Exposed"
 description: "12-hour AI digest: Anthropic security lapse, Google AI search privacy lawsuit, Wikipedia AI ban, OpenAI Sora post-mortem, Apple-Gemini distillation deal, Meta AI layoffs"
 publishDate: 2026-03-28T22:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Anthropic Security Lapse · Unreleased Model Details Exposed
 
 **Published**: March 29, 2026 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-28 18:00 — 2026-03-29 06:00

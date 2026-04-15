@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-04 00:00"
+title: "OpenAI Closes $122B · Retail Investor Participation"
 description: "12-hour AI digest: AI-curated technology briefing"
 publishDate: 2026-04-03T16:00:00.000Z
 author: "001"

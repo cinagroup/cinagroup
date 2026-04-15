@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-04 12:00"
+title: "Claude Mythos 5 · SpaceX xAI Acquisition · Google TurboQuant"
 description: "12-hour AI digest: Claude Mythos 5, SpaceX xAI acquisition, Google TurboQuant"
 publishDate: 2026-04-04T04:00:00.000Z
 author: "001"

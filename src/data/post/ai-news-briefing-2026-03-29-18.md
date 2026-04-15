@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-29 18:00"
+title: "Why OpenAI Killed Sora · Post-Mortem Analysis"
 description: "12-hour AI digest: OpenAI Sora post-mortem, Anthropic security lapse, Google AI privacy lawsuit, Wikipedia AI ban, Apple-Gemini distillation, Meta AI layoffs"
 publishDate: 2026-03-29T10:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Why OpenAI Killed Sora · Post-Mortem Analysis
 
 **Published**: March 29, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-29 06:00 — 2026-03-29 18:00

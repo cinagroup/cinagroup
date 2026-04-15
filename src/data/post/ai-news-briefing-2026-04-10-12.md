@@ -1,13 +1,13 @@
 ---
 publishDate: 2026-04-10T12:00:00+08:00
-title: "AI News Briefing | 2026-04-10 12:00"
+title: "5 Models in 48 Hours · AAAI 2026 Hotspots · Open-Source Surge"
 author: "CinaGroup AI"
 tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 excerpt: "48 hours 5 major models released; AAAI 2026 research hotspots; Open-source models continue to explode"
 ---
 
-# AI News Briefing | 2026-04-10 12:00
+# 5 Models in 48 Hours · AAAI 2026 Hotspots · Open-Source Surge
 
 > 12-hour AI industry digest
 
@@ -92,12 +92,12 @@ This release density set a new historical record, with open-source models beginn
 
 ## Industry & Business
 
-### 6. AI Infrastructure Costs传导: Tencent Cloud Price Increase 5%, Anthropic Price Increase 10%
+### 6. AI Infrastructure Costspass through: Tencent Cloud Price Increase 5%, Anthropic Price Increase 10%
 
 **Date:** April 9-10  
 **Source:** xix.ai, Planet News
 
-Global AI infrastructure cost increases are beginning to传导 to end-user services:
+Global AI infrastructure cost increases are beginning topass through to end-user services:
 - **Tencent Cloud**: AI services, containers, big data products price increase 5% effective May 9
 - **Zhipu AI**: API price increase 10%, coding subscription plan rate increase 30%+
 - **Reason**: Global hardware cost increases, strong demand, GPU supply constraints
@@ -120,7 +120,7 @@ Combined valuation of both companies exceeds $1 trillion, both preparing for pos
 | Business Model | Consumer + Enterprise | Enterprise-focused |
 | Latest Move | Investor memo attacking competitor | Mythos limited release |
 
-**Impact:** IPOs of both companies may become the biggest tech industry event of 2026, with investor relations battles预示 intense competition.
+**Impact:** IPOs of both companies may become the biggest tech industry event of 2026, with investor relations battlesforeshadow intense competition.
 
 ---
 
@@ -143,7 +143,7 @@ Combined valuation of both companies exceeds $1 trillion, both preparing for pos
 ## Upcoming Watch
 
 - **OpenAI GPT-5.5 (codename Spud)**: Expected release in coming weeks, may bring reasoning capability breakthroughs
-- **DeepSeek V4**: In gray testing, new vision version and "expert mode"即将亮相
+- **DeepSeek V4**: In gray testing, new vision version and "expert mode"launching soon
 - **AAAI 2026**: Top academic conference, may release important research results
 - **EU AI Act Implementation**: Shifting from draft to execution phase, affecting global AI deployment strategies
 - **Global Semiconductor Shortage**: Memory chip prices surged 6x, expected to continue until 2027 when new factories come online

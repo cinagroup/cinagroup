@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-08 12:00"
+title: "OpenAI $12.2B Funding · Anthropic $30B Revenue · Meta AGI Strategy"
 description: "12-hour AI digest: OpenAI $12.2B funding round, Anthropic revenue surge, Meta AGI strategy"
 publishDate: 2026-04-08T04:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# OpenAI $12.2B Funding · Anthropic $30B Revenue · Meta AGI Strategy
 
 **Published**: 2026-04-08 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-08 00:00 — 2026-04-08 12:00

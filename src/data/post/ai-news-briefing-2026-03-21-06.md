@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-21 06:00"
+title: "White House National AI Framework · Preempting State Regulations"
 description: "24-hour AI digest: White House releases national AI framework, IBM completes Confluent acquisition, NASA Mars rover achieves AI autonomous driving"
 publishDate: 2026-03-21T06:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech Policy", "Space"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# White House National AI Framework · Preempting State Regulations
 
 **Published**: March 21, 2026 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-20 06:00 — 2026-03-21 06:00

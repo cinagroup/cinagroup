@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-26 18:00"
+title: "OpenAI Shuts Down Sora · Google Personal Intelligence · iOS 26.4"
 description: "12-hour AI digest: OpenAI shuts down Sora, Google expands Personal Intelligence, iOS 26.4 released"
 publishDate: 2026-03-26T10:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# OpenAI Shuts Down Sora · Google Personal Intelligence · iOS 26.4
 
 **Published**: 2026-03-26 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-26 06:00 — 2026-03-26 18:00

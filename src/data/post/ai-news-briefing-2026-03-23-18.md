@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-23 18:00"
+title: "Cursor Kimi Integration · AI Coding Tool Controversy"
 description: "12-hour AI digest: Cursor admits Kimi foundation, Bezos $100B AI manufacturing plan, Microsoft rolls back Copilot, Meta rogue AI agents"
 publishDate: 2026-03-23T10:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Cursor Kimi Integration · AI Coding Tool Controversy
 
 **Published**: March 23, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-23 06:00 — 2026-03-23 18:00

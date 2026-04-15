@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-27 12:00"
+title: "OpenAI Shuts Down Sora · Disney Exits $1B Partnership"
 description: "12-hour AI digest: OpenAI shuts down Sora, NSF AI-Ready initiative, White House pushes federal AI law, MIT social AI for teens"
 publishDate: 2026-03-27T04:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Policy", "Enterprise", "OpenAI", "Education"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# OpenAI Shuts Down Sora · Disney Exits $1B Partnership
 
 **Published**: 2026-03-27 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-27 00:00 — 2026-03-27 12:00

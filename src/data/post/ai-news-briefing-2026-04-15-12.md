@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-15 12:00"
+title: "Anthropic Releases Claude 4 Opus"
 description: "Midday AI digest: AI-curated technology briefing"
 publishDate: 2026-04-15T04:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Anthropic Releases Claude 4 Opus
 
 **Published**: 2026-04-15 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-15 06:00 — 2026-04-15 12:00

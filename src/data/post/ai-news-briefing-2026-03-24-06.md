@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-24 06:00"
+title: "Air Street $232M Fund · Europe Solo VC Rise"
 description: "12-hour AI digest: Air Street $232M fund, Apple WWDC 2026 AI advancements, Helion-OpenAI power deal, Trump AI framework"
 publishDate: 2026-03-23T22:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Air Street $232M Fund · Europe Solo VC Rise
 
 **Published**: March 24, 2026 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-23 18:00 — 2026-03-24 06:00

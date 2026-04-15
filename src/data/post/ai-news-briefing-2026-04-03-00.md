@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-03 00:00"
+title: "OpenAI $3B Retail Investors in $122B Mega Round"
 description: "12-hour AI digest: AI-curated technology briefing"
 publishDate: 2026-04-02T16:00:00.000Z
 author: "001"

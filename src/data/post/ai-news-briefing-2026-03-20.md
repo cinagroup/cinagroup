@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-20 18:00"
+title: "GPT-5 Rumors · Stable Diffusion 3.5 · Chinese AI Funding Record"
 description: "12-hour AI digest: GPT-5 rumors resurface, Stable Diffusion 3.5 released, Chinese AI startup funding hits record"
 publishDate: 2026-03-20T18:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Machine Learning", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# GPT-5 Rumors · Stable Diffusion 3.5 · Chinese AI Funding Record
 
 **Published**: March 20, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-20 06:00 — 2026-03-20 18:00

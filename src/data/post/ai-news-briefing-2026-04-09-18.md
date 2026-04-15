@@ -1,13 +1,13 @@
 ---
 publishDate: 2026-04-09T18:00:00+08:00
-title: "AI News Briefing | 2026-04-09 18:00"
+title: "Claude Mythos Preview Zero-Days · Meta Muse Spark · US-China AI Confrontation"
 author: "CinaGroup AI"
 tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 excerpt: "Anthropic releases Claude Mythos Preview; Meta releases Muse Spark; US-China AI confrontation escalates"
 ---
 
-# AI News Briefing | 2026-04-09 18:00
+# Claude Mythos Preview Zero-Days · Meta Muse Spark · US-China AI Confrontation
 
 > 12-hour AI industry digest
 
@@ -116,7 +116,7 @@ Over 60 million people worldwide suffer from heart failure, a condition where th
 ## Upcoming Watch
 
 - **OpenAI GPT-5.5 (codename Spud)**: Expected release in coming weeks, may bring new reasoning capability breakthroughs
-- **DeepSeek V4**: In gray testing, new vision version and "expert mode"即将亮相
+- **DeepSeek V4**: In gray testing, new vision version and "expert mode"launching soon
 - **EU AI Act Full Implementation**: Shifting from draft to execution phase, may affect global AI deployment strategies
 - **Global Semiconductor Shortage**: Memory chip prices surged 6x, expected to continue until 2027 when new factories come online
 

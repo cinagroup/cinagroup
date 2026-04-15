@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-01 12:00"
+title: "Anthropic's Claude Mythos Model Data Leak"
 description: "12-hour AI digest: AI-curated technology briefing"
 publishDate: 2026-04-01T04:00:00.000Z
 author: "001"

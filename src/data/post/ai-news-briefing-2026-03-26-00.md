@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-26 00:00"
+title: "OpenAI Shuts Down Sora · Abandons Disney $1B Deal"
 description: "12-hour AI digest: OpenAI shuts down Sora video app, Anthropic expands Claude Code autonomy, Arm launches first in-house CPU with Meta/OpenAI as customers, Meta backs AI entrepreneurship, Granola hits unicorn status, Spotify fights AI slop, US lawmakers propose datacenter pause"
 publishDate: 2026-03-25T16:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# OpenAI Shuts Down Sora · Abandons Disney $1B Deal
 
 **Published**: March 26, 2026 00:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-25 12:00 — 2026-03-26 00:00

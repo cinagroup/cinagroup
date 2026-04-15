@@ -1,13 +1,13 @@
 ---
 publishDate: 2026-04-10T06:00:00+08:00
-title: "AI News Briefing | 2026-04-10 06:00"
+title: "OpenAI vs Anthropic Memo · Zhipu GLM-5.1 Open-Source · Google Gemma 4"
 author: "CinaGroup AI"
 tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 excerpt: "OpenAI slams Anthropic to investors; Zhipu AI open-sources GLM-5.1; Google releases Gemma 4 series"
 ---
 
-# AI News Briefing | 2026-04-10 06:00
+# OpenAI vs Anthropic Memo · Zhipu GLM-5.1 Open-Source · Google Gemma 4
 
 > 12-hour AI industry digest
 
@@ -24,7 +24,7 @@ OpenAI sent a memo to investors slamming main competitor Anthropic, characterizi
 
 The memo noted: "Even at the high end of that range, our ramp is materially ahead and widening." Both companies are collectively valued at over $1 trillion and gearing up for possible IPOs this year, while trying to convince investors they have sustainable business models.
 
-**Impact:** OpenAI-Anthropic competition extends from technical层面 to investor relations warfare, reflecting market positioning battles ahead of IPOs.
+**Impact:** OpenAI-Anthropic competition extends from technical level to investor relations warfare, reflecting market positioning battles ahead of IPOs.
 
 ---
 
@@ -106,7 +106,7 @@ Price differences no longer just about capability, but about control. The indust
 
 Tencent Cloud announced that due to strong global demand and rising hardware costs, core AI services, containers, and big data products will increase prices by 5% effective May 9, 2026. Existing customer contracts are unaffected until renewal.
 
-**Impact:** Global AI infrastructure cost increases begin传导 to end-user service prices.
+**Impact:** Global AI infrastructure cost increases beginpass through to end-user service prices.
 
 ---
 
@@ -114,7 +114,7 @@ Tencent Cloud announced that due to strong global demand and rising hardware cos
 
 ### Key Trends in Past 12 Hours
 
-1. **Open vs. Closed Philosophical Split**: 8+ models released in 7 days in early April, with 5 open-weight models coexisting with closed commercial models, reflecting fundamental industry分歧 on "who should use AI."
+1. **Open vs. Closed Philosophical Split**: 8+ models released in 7 days in early April, with 5 open-weight models coexisting with closed commercial models, reflecting fundamental industrydivergence on "who should use AI."
 
 2. **IPO Investor Relations Warfare**: OpenAI and Anthropic publicly clash through investor memos ahead of IPOs, reflecting intensifying competition in valuation and business model positioning.
 
@@ -129,7 +129,7 @@ Tencent Cloud announced that due to strong global demand and rising hardware cos
 ## Upcoming Watch
 
 - **OpenAI GPT-5.5 (codename Spud)**: Expected release in coming weeks
-- **DeepSeek V4**: In gray testing, new vision version and "expert mode"即将亮相
+- **DeepSeek V4**: In gray testing, new vision version and "expert mode"launching soon
 - **Anthropic Claude Mythos**: 50-company limited access, no public release date
 - **EU AI Act Implementation**: Shifting from draft to execution phase, may affect global AI deployment
 

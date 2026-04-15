@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-04-07 12:00"
+title: "Broadcom-Anthropic Chip · Anthropic Biotech $400M · Microsoft AI Models"
 description: "12-hour AI digest: Broadcom-Anthropic chip deal, Anthropic biotech acquisition, Microsoft AI models"
 publishDate: 2026-04-07T04:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# Broadcom-Anthropic Chip · Anthropic Biotech $400M · Microsoft AI Models
 
 **Published**: 2026-04-07 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-07 00:00 — 2026-04-07 12:00

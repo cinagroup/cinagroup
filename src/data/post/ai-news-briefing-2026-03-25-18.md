@@ -1,5 +1,5 @@
 ---
-title: "AI News Briefing | 2026-03-25 18:00"
+title: "OpenAI Agentic Commerce Protocol · ChatGPT Visual Shopping"
 description: "12-hour AI digest: OpenAI launches Agentic Commerce Protocol for shopping, Microsoft deploying 100+ AI agents company-wide, OpenAI suddenly kills Sora, Nudge Security tackles shadow AI agents, Meta offers stock options to retain AI talent"
 publishDate: 2026-03-25T10:00:00.000Z
 author: "001"
@@ -7,7 +7,7 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 🤖 AI News Briefing
+# OpenAI Agentic Commerce Protocol · ChatGPT Visual Shopping
 
 **Published**: March 25, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-25 06:00 — 2026-03-25 18:00
