@@ -1,6 +1,6 @@
 ---
 title: "AI 新闻简报 | 2026 年 4 月 15 日 12:00"
-date: 2026-04-15T12:00:00+08:00
+publishDate: 2026-04-15T12:00:00+08:00
 tags: ["AI", "人工智能", "新闻简报", "大模型"]
 category: "AI News"
 author: "CinaGroup AI"
