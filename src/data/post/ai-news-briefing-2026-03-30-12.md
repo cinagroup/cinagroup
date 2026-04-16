@@ -1,5 +1,5 @@
 ---
-title: "12 AI Models in One Week · Developer Cycles Compressed to Monthly"Model Avalanche": 12 AI Models Launched in One Week, Developer Cycles Compressed to Monthly"
+title: "12 AI Models in One Week · Developer Cycles Compressed to Monthly"
 description: "12-hour AI digest: Model avalanche continues with 12 releases in one week, Anthropic Claude Computer Use goes live, Oracle 22 enterprise agents, AI agent market to hit $139B by 2034, White House AI policy framework released"
 publishDate: 2026-03-30T04:00:00.000Z
 author: "001"
