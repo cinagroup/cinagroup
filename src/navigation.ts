@@ -80,8 +80,8 @@ export const headerData = {
     },
   ],
   actions: [
-    { text: 'Login', href: 'https://account.cinagroup.com/login', variant: 'primary' },
-    { text: 'Signup', href: 'https://account.cinagroup.com/signup', variant: 'secondary' },
+    { text: 'Login', href: 'https://cinaseek.ai/login', variant: 'primary' },
+    { text: 'Signup', href: 'https://cinaseek.ai/register', variant: 'secondary' },
   ],
 };
 
