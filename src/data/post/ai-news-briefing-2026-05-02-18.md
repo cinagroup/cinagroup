@@ -1,7 +1,7 @@
 ---
 title: "Eka Robotics Signals a 'ChatGPT Moment' for Robot Dexterity, Liquid AI Drops 24B MoE Model for Edge"
 description: "A Cambridge startup's robot claw can now screw in a light bulb — naturally. Plus: Musk v. OpenAI reveals Nvidia supercomputer giveaway and Gabe Newell emails, US government drops Anthropic from classified AI contracts, and a new 24B-parameter open model fits in 32GB RAM."
-publishDate: "2026-05-02T10:00:00.000Z"
+publishDate: 2026-05-02T10:00:00.000Z
 author: "001"
 tags:
   - AI News

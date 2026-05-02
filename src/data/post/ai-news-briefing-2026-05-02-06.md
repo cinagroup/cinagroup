@@ -1,7 +1,7 @@
 ---
 title: "Musk v. OpenAI Trial Heats Up, Uber Burns Annual AI Budget in 4 Months on Claude Code"
 description: "Jared Birchall contradicts Musk on stand; Uber's CTO confirms entire 2026 AI budget consumed by Claude Code and Cursor in just four months. Plus: Spotify verifies human artists, the Academy bars AI from Oscar contention, Anthropic launches enterprise code security."
-publishDate: "2026-05-01T22:00:00.000Z"
+publishDate: 2026-05-01T22:00:00.000Z
 author: "001"
 tags:
   - AI News
