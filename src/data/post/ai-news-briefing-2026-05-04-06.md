@@ -1,7 +1,7 @@
 ---
 title: "AI News Briefing — May 4, 2026: OpenAI's o1 Outperforms ER Doctors, SAG-AFTRA AI Deal, and the Podcast 'Slop' Crisis"
 description: "OpenAI's o1 model diagnoses 67% of ER cases vs 50-55% by human doctors in Harvard trial; SAG-AFTRA secures new AI guardrails in studio deal; Academy Awards bars AI from acting categories; AI-generated podcasts flood platforms at 39% of new feeds."
-publishDate: "2026-05-03T22:00:00.000Z"
+publishDate: 2026-05-03T22:00:00.000Z
 author: "001"
 tags:
   - AI
