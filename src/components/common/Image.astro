@@ -41,14 +41,31 @@ const _image = await findImage(props.src);
 
 let image: ImageType | undefined = undefined;
 
+// Skip optimization for public folder images (start with /images/)
+const isPublicImage = typeof _image === 'string' && _image.startsWith('/images/');
+
 if (
   typeof _image === 'string' &&
   (_image.startsWith('http://') || _image.startsWith('https://')) &&
   isUnpicCompatible(_image)
 ) {
   image = await getImagesOptimized(_image, props, unpicOptimizer);
-} else if (_image) {
+} else if (_image && !isPublicImage) {
   image = await getImagesOptimized(_image, props, astroAssetsOptimizer);
+} else if (isPublicImage) {
+  // For public folder images, just pass through with provided attributes
+  image = {
+    src: _image as string,
+    attributes: {
+      alt: props.alt || '',
+      width: props.width,
+      height: props.height,
+      loading: props.loading,
+      decoding: props.decoding,
+      class: props.class,
+      style: props.style,
+    },
+  };
 }
 ---
 
