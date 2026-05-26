@@ -1,7 +1,7 @@
 ---
 title: "Google I/O Remakes AI Search, Nvidia Hits $58.3B Record Profit, Meta Cuts 8,000 Jobs — AI News Briefing"
 description: "Google unveils Gemini Spark agents and overhauls AI subscriptions at I/O 2026. Nvidia delivers record $58.3B profit as AI chip demand surges. Meta slashes 8,000 jobs in its biggest AI-driven restructuring yet. Anthropic acquires dev-tools startup Stainless, and Andrej Karpathy returns to frontier LLM research."
-publishDate: 2026-05-21T22:00:00.000Z
+publishDate: 2026-05-20T22:00:00.000Z
 author: "001"
 tags:
   - AI

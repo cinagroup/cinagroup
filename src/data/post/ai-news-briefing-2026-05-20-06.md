@@ -1,7 +1,7 @@
 ---
 title: "Google Unveils Gemini 3.5 Flash for AI Agents, Musk vs. OpenAI Trial Ends, Alibaba Launches Agent-Specific AI Chip — AI News Briefing"
 description: "Google dominates headlines from I/O 2026 with Gemini 3.5 Flash, a redesigned Search, and smart glasses. A federal jury rejects Elon Musk's lawsuit against OpenAI. Alibaba unveils its Zhenwu M890 AI agent chip, while Hugging Face hosts a widely downloaded malware repository masquerading as an OpenAI release."
-publishDate: 2026-05-20T22:00:00.000Z
+publishDate: 2026-05-19T22:00:00.000Z
 author: "001"
 tags:
   - AI

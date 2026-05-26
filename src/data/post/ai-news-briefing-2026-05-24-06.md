@@ -1,7 +1,7 @@
 ---
 title: "OpenAI Files for IPO, Anthropic Nears First Profit, Google Remakes Search — AI News Briefing"
 description: "OpenAI confidentially files for its long-awaited IPO while Anthropic surges toward profitability at $10.9B quarterly revenue. Google's I/O 2026 reshapes search with Gemini Omni and AI agents. Plus: Karpathy jumps to Anthropic, AI tokenmaxxing sparks cost crisis, and California issues landmark AI workforce order."
-publishDate: 2026-05-24T22:00:00.000Z
+publishDate: 2026-05-23T22:00:00.000Z
 author: "001"
 tags:
   - AI
