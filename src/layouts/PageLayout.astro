@@ -1,10 +1,10 @@
----
 import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/widgets/Header.astro';
 import Footer from '~/components/widgets/Footer.astro';
 import Announcement from '~/components/widgets/Announcement.astro';
 
 import { headerData, footerData } from '~/navigation';
+import { headerData as zhHeaderData, footerData as zhFooterData } from '~/navigation.zh';
 
 import type { MetaData } from '~/types';
 
@@ -13,6 +13,13 @@ export interface Props {
 }
 
 const { metadata } = Astro.props;
+
+// Detect language from URL path and use appropriate navigation data
+const pathname = new URL(Astro.url).pathname;
+const isZh = pathname.startsWith('/zh/');
+
+const activeHeaderData = isZh ? zhHeaderData : headerData;
+const activeFooterData = isZh ? zhFooterData : footerData;
 ---
 
 <Layout metadata={metadata}>
@@ -20,12 +27,12 @@ const { metadata } = Astro.props;
     <Announcement />
   </slot>
   <slot name="header">
-    <Header {...headerData} isSticky showRssFeed showToggleTheme />
+    <Header {...activeHeaderData} isSticky showRssFeed showToggleTheme />
   </slot>
   <main>
     <slot />
   </main>
   <slot name="footer">
-    <Footer {...footerData} />
+    <Footer {...activeFooterData} />
   </slot>
 </Layout>
