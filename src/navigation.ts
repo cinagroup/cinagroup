@@ -1,4 +1,5 @@
 import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
+import type { CallToAction } from './types';
 
 export const headerData = {
   links: [
@@ -82,7 +83,7 @@ export const headerData = {
   actions: [
     { text: 'Login', href: 'https://cinaseek.ai/login', variant: 'primary', target: '_blank' },
     { text: 'Signup', href: 'https://cinaseek.ai/register', variant: 'secondary', target: '_blank' },
-  ],
+  ] satisfies CallToAction[],
 };
 
 export const footerData = {

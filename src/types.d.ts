@@ -2,15 +2,18 @@ import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import type { HTMLAttributes, ImageMetadata } from 'astro/types';
 import type { Lang } from './i18n';
 
+declare global {
+  namespace App {
+    interface Locals {
+      lang: Lang;
+      pathWithoutLang: string;
+    }
+  }
+}
+
 export interface Locals {
   lang: Lang;
   pathWithoutLang: string;
-}
-
-declare global {
-  interface App {
-    locals: Locals;
-  }
 }
 
 export interface Post {
@@ -74,9 +77,9 @@ export interface MetaData {
 
   openGraph?: MetaDataOpenGraph;
   twitter?: MetaDataTwitter;
-  
+
   // Structured data for rich snippets (Schema.org JSON-LD)
-  structuredData?: Record<string, any>;
+  structuredData?: Record<string, unknown>;
 }
 
 export interface MetaDataRobots {
@@ -164,7 +167,10 @@ export interface Price {
   price?: number | string;
   period?: string;
   items?: Array<Item>;
-  callToAction?: CallToAction;
+  features?: string[];
+  callToAction?: CallToAction | string;
+  action?: CallToAction | string;
+  popular?: boolean;
   hasRibbon?: boolean;
   ribbonTitle?: string;
 }
@@ -245,6 +251,7 @@ export interface Stats extends Omit<Headline, 'classes'>, Widget {
 
 export interface Pricing extends Omit<Headline, 'classes'>, Widget {
   prices?: Array<Price>;
+  items?: Array<Price>;
 }
 
 export interface Testimonials extends Omit<Headline, 'classes'>, Widget {

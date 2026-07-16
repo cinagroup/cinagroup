@@ -19,7 +19,10 @@ const metadata = {
       { variant: 'primary', text: '무료 체험 시작', href: '/ko/contact', icon: 'tabler:rocket' },
       { text: '데모 보기', href: '/ko/contact', icon: 'tabler:player-play' },
     ]}
-    image={{ src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'CinaSeek' }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+      alt: 'CinaSeek',
+    }}
   />
 
   <Features
@@ -27,15 +30,34 @@ const metadata = {
     title="강력한 검색 기능"
     subtitle="지능형 검색 경험을 구축하는 데 필요한 모든 것"
     items={[
-      { title: '다중 소스 집계', description: '데이터베이스, API, 문서, 웹 소스를 동시에 검색하여 통합 결과 제공', icon: 'tabler:database-search' },
-      { title: '자연어 이해', description: '일반적인 언어로 질문하세요. AI 가 문맥, 의도, 뉘앙스를 이해합니다', icon: 'tabler:message' },
-      { title: '스마트 순위', description: 'ML 기반 순위로 가장 관련성 높은 결과를 먼저 표시', icon: 'tabler:sort-ascending-2' },
+      {
+        title: '다중 소스 집계',
+        description: '데이터베이스, API, 문서, 웹 소스를 동시에 검색하여 통합 결과 제공',
+        icon: 'tabler:database-search',
+      },
+      {
+        title: '자연어 이해',
+        description: '일반적인 언어로 질문하세요. AI 가 문맥, 의도, 뉘앙스를 이해합니다',
+        icon: 'tabler:message',
+      },
+      {
+        title: '스마트 순위',
+        description: 'ML 기반 순위로 가장 관련성 높은 결과를 먼저 표시',
+        icon: 'tabler:sort-ascending-2',
+      },
       { title: '실시간 인덱스', description: '데이터 변경 시 자동으로 인덱스 업데이트', icon: 'tabler:refresh' },
-      { title: '고급 필터링', description: '날짜, 유형, 소스 및 기타 메타데이터로 검색 결과 정확히 필터링', icon: 'tabler:filter' },
+      {
+        title: '고급 필터링',
+        description: '날짜, 유형, 소스 및 기타 메타데이터로 검색 결과 정확히 필터링',
+        icon: 'tabler:filter',
+      },
       { title: '분석 대시보드', description: '검색 패턴, 인기 쿼리, 사용자 행동 추적', icon: 'tabler:chart-bar' },
     ]}
     columns={3}
-    image={{ src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', alt: 'Dashboard' }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+      alt: 'Dashboard',
+    }}
   />
 
   <CallToAction

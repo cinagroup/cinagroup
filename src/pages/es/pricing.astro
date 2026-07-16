@@ -6,8 +6,13 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 
 const metadata = { title: '料金プラン — CinaGroup' };
 ---
+
 <Layout metadata={metadata}>
-  <HeroText tagline="料金プラン" title="すべてのチームに適したプラン" subtitle="ニーズに合った最適なプランをお選びください" />
+  <HeroText
+    tagline="料金プラン"
+    title="すべてのチームに適したプラン"
+    subtitle="ニーズに合った最適なプランをお選びください"
+  />
   <Prices
     title="料金体系"
     subtitle="必要なものだけにお支払い"
@@ -17,7 +22,11 @@ const metadata = { title: '料金プラン — CinaGroup' };
         subtitle: '個人・小チーム向け',
         price: 0,
         period: '円/月',
-        items: [{ description: '月 1 万ドキュメント' }, { description: '基本 AI 機能' }, { description: 'コミュニティサポート' }],
+        items: [
+          { description: '月 1 万ドキュメント' },
+          { description: '基本 AI 機能' },
+          { description: 'コミュニティサポート' },
+        ],
         callToAction: { text: '無料で開始', href: '/es/contact', variant: 'secondary' },
       },
       {
@@ -27,7 +36,12 @@ const metadata = { title: '料金プラン — CinaGroup' };
         period: '円/月',
         hasRibbon: true,
         ribbonTitle: '人気',
-        items: [{ description: '月 100 万ドキュメント' }, { description: '高度な AI 機能' }, { description: '優先サポート' }, { description: 'API アクセス' }],
+        items: [
+          { description: '月 100 万ドキュメント' },
+          { description: '高度な AI 機能' },
+          { description: '優先サポート' },
+          { description: 'API アクセス' },
+        ],
         callToAction: { text: '试用開始', href: '/es/contact', variant: 'primary' },
       },
       {
@@ -35,10 +49,20 @@ const metadata = { title: '料金プラン — CinaGroup' };
         subtitle: '大企業向け',
         price: 'カスタム',
         period: '',
-        items: [{ description: '無制限ドキュメント' }, { description: 'カスタム AI モデル' }, { description: '専用サポート' }, { description: 'オンプレミス対応' }],
+        items: [
+          { description: '無制限ドキュメント' },
+          { description: 'カスタム AI モデル' },
+          { description: '専用サポート' },
+          { description: 'オンプレミス対応' },
+        ],
         callToAction: { text: '営業担当に連絡', href: '/es/contact', variant: 'secondary' },
       },
     ]}
   />
-  <CallToAction tagline="今すぐ開始" title="準備はできましたか？" subtitle="14 日間の無料トライアルをお楽しみください" button={{ text: '無料で開始', href: '/es/contact', variant: 'primary' }} />
+  <CallToAction
+    tagline="今すぐ開始"
+    title="準備はできましたか？"
+    subtitle="14 日間の無料トライアルをお楽しみください"
+    button={{ text: '無料で開始', href: '/es/contact', variant: 'primary' }}
+  />
 </Layout>

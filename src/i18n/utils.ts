@@ -1,4 +1,4 @@
-import { defaultLang, type Lang } from './i18n';
+import { defaultLang, type Lang } from '../i18n';
 
 export function getLocalizedPath(path: string, lang: Lang): string {
   if (lang === defaultLang) {

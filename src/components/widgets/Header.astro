@@ -5,10 +5,9 @@ import ToggleTheme from '~/components/common/ToggleTheme.astro';
 import ToggleMenu from '~/components/common/ToggleMenu.astro';
 import Button from '~/components/ui/Button.astro';
 
-import { getHomePermalink } from '~/utils/permalinks';
-import { trimSlash, getAsset } from '~/utils/permalinks';
+import { getHomePermalink, trimSlash } from '~/utils/permalinks';
 import type { CallToAction } from '~/types';
-import { languages, defaultLang, getLangFromUrl, changeLangPath, getPath } from '~/i18n';
+import { getLangFromUrl } from '~/i18n';
 
 interface Link {
   text?: string;
@@ -42,7 +41,6 @@ const {
   isDark = false,
   isFullWidth = false,
   showToggleTheme = false,
-  showRssFeed = false,
   showLanguageSwitcher = true,
   position = 'center',
 } = Astro.props;
@@ -158,34 +156,90 @@ const currentLang = getLangFromUrl(Astro.url);
                   class="hidden absolute left-0 mt-2 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg min-w-[140px] z-50"
                   id="language-dropdown"
                 >
-                  <a href="/" class:list={['block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700', currentLang === 'en' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '']}>English</a>
-                  <a href="/ja/" class:list={['block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700', currentLang === 'ja' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '']}>日本語</a>
-                  <a href="/ko/" class:list={['block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700', currentLang === 'ko' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '']}>한국어</a>
-                  <a href="/ru/" class:list={['block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700', currentLang === 'ru' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '']}>Русский</a>
-                  <a href="/es/" class:list={['block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700', currentLang === 'es' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '']}>Español</a>
-                  <a href="/pt/" class:list={['block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700', currentLang === 'pt' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '']}>Português</a>
-                  <a href="/fr/" class:list={['block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700', currentLang === 'fr' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '']}>Français</a>
+                  <a
+                    href="/"
+                    class:list={[
+                      'block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700',
+                      currentLang === 'en' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '',
+                    ]}
+                  >
+                    English
+                  </a>
+                  <a
+                    href="/ja/"
+                    class:list={[
+                      'block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700',
+                      currentLang === 'ja' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '',
+                    ]}
+                  >
+                    日本語
+                  </a>
+                  <a
+                    href="/ko/"
+                    class:list={[
+                      'block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700',
+                      currentLang === 'ko' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '',
+                    ]}
+                  >
+                    한국어
+                  </a>
+                  <a
+                    href="/ru/"
+                    class:list={[
+                      'block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700',
+                      currentLang === 'ru' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '',
+                    ]}
+                  >
+                    Русский
+                  </a>
+                  <a
+                    href="/es/"
+                    class:list={[
+                      'block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700',
+                      currentLang === 'es' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '',
+                    ]}
+                  >
+                    Español
+                  </a>
+                  <a
+                    href="/pt/"
+                    class:list={[
+                      'block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700',
+                      currentLang === 'pt' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '',
+                    ]}
+                  >
+                    Português
+                  </a>
+                  <a
+                    href="/fr/"
+                    class:list={[
+                      'block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700',
+                      currentLang === 'fr' ? 'bg-gray-100 dark:bg-gray-700 font-semibold' : '',
+                    ]}
+                  >
+                    Français
+                  </a>
                 </div>
               </div>
             )
           }
         </div>
         <script is:inline>
-          document.addEventListener('DOMContentLoaded', function() {
+          document.addEventListener('DOMContentLoaded', function () {
             const languageSwitcher = document.getElementById('language-switcher');
             const languageDropdown = document.getElementById('language-dropdown');
-            
+
             if (languageSwitcher && languageDropdown) {
-              languageSwitcher.addEventListener('click', function(e) {
+              languageSwitcher.addEventListener('click', function (e) {
                 e.stopPropagation();
                 languageDropdown.classList.toggle('hidden');
               });
-              
-              languageDropdown.addEventListener('click', function(e) {
+
+              languageDropdown.addEventListener('click', function (e) {
                 e.stopPropagation();
               });
-              
-              document.addEventListener('click', function(e) {
+
+              document.addEventListener('click', function (e) {
                 if (!languageSwitcher.contains(e.target)) {
                   languageDropdown.classList.add('hidden');
                 }

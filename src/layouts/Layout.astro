@@ -40,12 +40,11 @@ const { language, textDirection } = I18N;
     <ClientRouter fallback="swap" />
 
     <!-- Structured Data (JSON-LD) -->
-    {metadata?.structuredData && (
-      <script
-        type="application/ld+json"
-        set:html={JSON.stringify(metadata.structuredData)}
-      />
-    )}
+    {
+      metadata?.structuredData && (
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(metadata.structuredData)} />
+      )
+    }
   </head>
 
   <body class="antialiased text-default bg-page tracking-tight">

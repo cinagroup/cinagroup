@@ -1,12 +1,8 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import { useTranslations, defaultLang, getLangFromUrl } from '~/i18n';
+import { useTranslations, getLangFromUrl } from '~/i18n';
 
 import Hero from '~/components/widgets/Hero.astro';
-import Features from '~/components/widgets/Features.astro';
-import Stats from '~/components/widgets/Stats.astro';
-import Testimonials from '~/components/widgets/Testimonials.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -14,8 +10,19 @@ const t = useTranslations(lang);
 const metadata = {
   title: 'CinaGroup — AI & Web3 Solutions | Intelligent Search, Robotics & Blockchain',
   ignoreTitleTemplate: true,
-  description: 'CinaGroup delivers enterprise-grade AI & Web3 solutions: CinaSeek (AI search), CinaClaw (intelligent robots), CinaSkill (skills platform), CinaToken (AI API gateway), and CinaChain (blockchain infrastructure). Empowering 50K+ users worldwide.',
-  keywords: ['AI search', 'intelligent robot', 'blockchain', 'Web3', 'AI API gateway', 'automation', 'smart contracts', 'DeFi', 'robot skills'],
+  description:
+    'CinaGroup delivers enterprise-grade AI & Web3 solutions: CinaSeek (AI search), CinaClaw (intelligent robots), CinaSkill (skills platform), CinaToken (AI API gateway), and CinaChain (blockchain infrastructure). Empowering 50K+ users worldwide.',
+  keywords: [
+    'AI search',
+    'intelligent robot',
+    'blockchain',
+    'Web3',
+    'AI API gateway',
+    'automation',
+    'smart contracts',
+    'DeFi',
+    'robot skills',
+  ],
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -33,10 +40,7 @@ const metadata = {
     url: 'https://cinagroup.com',
     logo: 'https://cinagroup.com/favicon.svg',
     description: 'Enterprise-grade AI & Web3 solutions',
-    sameAs: [
-      'https://github.com/cinagroup',
-      'https://twitter.com/cinagroup',
-    ],
+    sameAs: ['https://github.com/cinagroup', 'https://twitter.com/cinagroup'],
     brand: {
       '@type': 'Brand',
       name: 'CinaGroup',
@@ -215,8 +219,15 @@ const howData = {
   ],
 };
 
+type TestimonialItem = {
+  quote: string;
+  author: string;
+  role: string;
+  image: string | null;
+};
+
 // Testimonials (placeholder avatars)
-const testimonialsData = {
+const testimonialsData: { title: string; items: TestimonialItem[] } = {
   title: t('testimonials.title'),
   items: [
     {
@@ -253,7 +264,9 @@ const ctaData = {
   <!-- Hero Section -->
   <Hero
     tagline={t('hero.welcome')}
-    title={t('hero.title').replace('{0}', '<span class="text-accent dark:text-white">AI</span>').replace('{1}', '<span class="text-accent dark:text-white">Web3</span>')}
+    title={t('hero.title')
+      .replace('{0}', '<span class="text-accent dark:text-white">AI</span>')
+      .replace('{1}', '<span class="text-accent dark:text-white">Web3</span>')}
     subtitle={t('hero.subtitle')}
     actions={[
       {
@@ -262,15 +275,15 @@ const ctaData = {
         href: '#business',
         icon: 'tabler:arrow-down',
       },
-      { 
-        text: t('hero.contactUs'), 
+      {
+        text: t('hero.contactUs'),
         href: '/contact',
         icon: 'tabler:mail',
       },
     ]}
-    image={{ 
-      src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', 
-      alt: 'AI Technology Hero Image' 
+    image={{
+      src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+      alt: 'AI Technology Hero Image',
     }}
   />
 
@@ -288,42 +301,104 @@ const ctaData = {
 
       <!-- Horizontal Scroll Container -->
       <div class="relative group">
-        <div id="business-scroll" class="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 scroll-smooth">
-          {businessData.cards.map((card) => (
-            <div class="snap-start shrink-0 w-80 md:w-72 lg:w-80">
-              <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 h-full">
-                <div class={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-${card.color}-400 to-${card.color}-600`}></div>
-                <div class="p-6">
-                  <div class={`w-14 h-14 bg-${card.color}-100 dark:bg-${card.color}-900/30 rounded-xl flex items-center justify-center mb-4`}>
-                    <svg class={`w-8 h-8 text-${card.color}-600 dark:text-${card.color}-400`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      {card.icon === 'search' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>}
-                      {card.icon === 'device-desktop' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>}
-                      {card.icon === 'key' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>}
-                      {card.icon === 'code' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>}
-                      {card.icon === 'world' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>}
-                    </svg>
+        <div
+          id="business-scroll"
+          class="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 scroll-smooth"
+        >
+          {
+            businessData.cards.map((card) => (
+              <div class="snap-start shrink-0 w-80 md:w-72 lg:w-80">
+                <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 h-full">
+                  <div
+                    class={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-${card.color}-400 to-${card.color}-600`}
+                  />
+                  <div class="p-6">
+                    <div
+                      class={`w-14 h-14 bg-${card.color}-100 dark:bg-${card.color}-900/30 rounded-xl flex items-center justify-center mb-4`}
+                    >
+                      <svg
+                        class={`w-8 h-8 text-${card.color}-600 dark:text-${card.color}-400`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        {card.icon === 'search' && (
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                          />
+                        )}
+                        {card.icon === 'device-desktop' && (
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                          />
+                        )}
+                        {card.icon === 'key' && (
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+                          />
+                        )}
+                        {card.icon === 'code' && (
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                          />
+                        )}
+                        {card.icon === 'world' && (
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                          />
+                        )}
+                      </svg>
+                    </div>
+                    <h3 class="text-xl font-bold dark:text-white mb-2">{card.title}</h3>
+                    <p class={`text-sm text-${card.color}-600 dark:text-${card.color}-400 font-medium mb-3`}>
+                      {card.tagline}
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">{card.desc}</p>
+                    <a
+                      href={card.href}
+                      class={`inline-flex items-center text-${card.color}-600 dark:text-${card.color}-400 hover:text-${card.color}-700 dark:hover:text-${card.color}-300 font-medium text-sm group-hover:translate-x-1 transition-transform`}
+                    >
+                      {card.action}
+                      <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </a>
                   </div>
-                  <h3 class="text-xl font-bold dark:text-white mb-2">{card.title}</h3>
-                  <p class={`text-sm text-${card.color}-600 dark:text-${card.color}-400 font-medium mb-3`}>{card.tagline}</p>
-                  <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">{card.desc}</p>
-                  <a href={card.href} class={`inline-flex items-center text-${card.color}-600 dark:text-${card.color}-400 hover:text-${card.color}-700 dark:hover:text-${card.color}-300 font-medium text-sm group-hover:translate-x-1 transition-transform`}>
-                    {card.action}
-                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                  </a>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
         <!-- Navigation Arrows -->
-        <button id="scroll-left" class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 z-10" aria-label="Scroll left">
+        <button
+          id="scroll-left"
+          class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 z-10"
+          aria-label="Scroll left"
+        >
           <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
           </svg>
         </button>
-        <button id="scroll-right" class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 z-10" aria-label="Scroll right">
+        <button
+          id="scroll-right"
+          class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 z-10"
+          aria-label="Scroll right"
+        >
           <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
           </svg>
@@ -343,14 +418,14 @@ const ctaData = {
     const scrollContainer = document.getElementById('business-scroll');
     const scrollLeftBtn = document.getElementById('scroll-left');
     const scrollRightBtn = document.getElementById('scroll-right');
-    
+
     if (scrollContainer && scrollLeftBtn && scrollRightBtn) {
       const scrollAmount = 320;
-      
+
       scrollLeftBtn.addEventListener('click', () => {
         scrollContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
       });
-      
+
       scrollRightBtn.addEventListener('click', () => {
         scrollContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       });
@@ -362,28 +437,41 @@ const ctaData = {
     <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
       <div class="absolute inset-0"></div>
     </div>
-    <div class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter intersect-no-queue mx-auto px-4 relative lg:py-20 md:px-6 md:py-16 py-12 text-default max-w-5xl">
+    <div
+      class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter intersect-no-queue mx-auto px-4 relative lg:py-20 md:px-6 md:py-16 py-12 text-default max-w-5xl"
+    >
       <div class="text-center max-w-3xl mb-8 md:mb-12 md:mx-auto">
-        <p class="font-bold dark:text-blue-200 text-base text-secondary tracking-wide uppercase">{featuresData.title}</p>
-        <h2 class="font-bold font-heading leading-tighter tracking-tighter md:text-4xl text-heading text-3xl">{featuresData.subtitle}</h2>
+        <p class="font-bold dark:text-blue-200 text-base text-secondary tracking-wide uppercase">
+          {featuresData.title}
+        </p>
+        <h2 class="font-bold font-heading leading-tighter tracking-tighter md:text-4xl text-heading text-3xl">
+          {featuresData.subtitle}
+        </h2>
         <p class="text-muted text-xl mt-4">{featuresData.description}</p>
       </div>
       <div class="mx-auto gap-8 grid md:gap-y-12 sm:grid-cols-2">
-        {featuresData.items.map((feature) => (
-          <div class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0">
-            <div class="flex flex-row max-w-md">
-              <div class="flex justify-center">
-                <svg class="rounded-full h-10 w-10 bg-primary md:h-12 md:p-3 md:w-12 mr-4 p-2 rtl:ml-4 rtl:mr-0 text-white" data-icon={`tabler:${feature.icon}`} height="1em" width="1em">
-                  <use href={`#ai:tabler:${feature.icon}`}></use>
-                </svg>
-              </div>
-              <div class="mt-0.5">
-                <h3 class="font-bold text-xl md:text-[1.3rem]">{feature.title}</h3>
-                <p class="text-muted mt-3">{feature.desc}</p>
+        {
+          featuresData.items.map((feature) => (
+            <div class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0">
+              <div class="flex flex-row max-w-md">
+                <div class="flex justify-center">
+                  <svg
+                    class="rounded-full h-10 w-10 bg-primary md:h-12 md:p-3 md:w-12 mr-4 p-2 rtl:ml-4 rtl:mr-0 text-white"
+                    data-icon={`tabler:${feature.icon}`}
+                    height="1em"
+                    width="1em"
+                  >
+                    <use href={`#ai:tabler:${feature.icon}`} />
+                  </svg>
+                </div>
+                <div class="mt-0.5">
+                  <h3 class="font-bold text-xl md:text-[1.3rem]">{feature.title}</h3>
+                  <p class="text-muted mt-3">{feature.desc}</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   </section>
@@ -393,14 +481,22 @@ const ctaData = {
     <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
       <div class="absolute inset-0"></div>
     </div>
-    <div class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter intersect-no-queue mx-auto px-4 relative lg:py-20 md:px-6 md:py-16 py-12 text-default max-w-6xl">
+    <div
+      class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter intersect-no-queue mx-auto px-4 relative lg:py-20 md:px-6 md:py-16 py-12 text-default max-w-6xl"
+    >
       <div class="flex justify-center -m-4 flex-wrap text-center">
-        {statsData.items.map((stat) => (
-          <div class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter dark:md:border-slate-500 md:border-r md:last:border-none md:w-1/4 min-w-[220px] p-4 sm:w-1/2 text-center w-full">
-            <div class="font-bold dark:text-white font-heading lg:text-5xl text-[2.6rem] text-primary xl:text-6xl">{stat.amount}</div>
-            <div class="text-sm font-medium dark:text-slate-400 lg:text-base text-gray-800 tracking-widest uppercase">{stat.title}</div>
-          </div>
-        ))}
+        {
+          statsData.items.map((stat) => (
+            <div class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter dark:md:border-slate-500 md:border-r md:last:border-none md:w-1/4 min-w-[220px] p-4 sm:w-1/2 text-center w-full">
+              <div class="font-bold dark:text-white font-heading lg:text-5xl text-[2.6rem] text-primary xl:text-6xl">
+                {stat.amount}
+              </div>
+              <div class="text-sm font-medium dark:text-slate-400 lg:text-base text-gray-800 tracking-widest uppercase">
+                {stat.title}
+              </div>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -413,15 +509,17 @@ const ctaData = {
         <p class="dark:text-gray-300 text-gray-600 text-lg">{howData.subtitle}</p>
       </div>
       <div class="mx-auto gap-8 grid grid-cols-1 max-w-5xl md:grid-cols-3">
-        {howData.steps.map((step) => (
-          <div class="text-center">
-            <div class="flex items-center justify-center mb-4 bg-blue-100 dark:bg-blue-900/30 h-16 mx-auto rounded-full w-16">
-              <span class="font-bold text-2xl dark:text-blue-400 text-blue-600">{step.number}</span>
+        {
+          howData.steps.map((step) => (
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-4 bg-blue-100 dark:bg-blue-900/30 h-16 mx-auto rounded-full w-16">
+                <span class="font-bold text-2xl dark:text-blue-400 text-blue-600">{step.number}</span>
+              </div>
+              <h3 class="font-bold dark:text-white mb-2 text-xl">{step.title}</h3>
+              <p class="dark:text-gray-300 text-gray-600">{step.desc}</p>
             </div>
-            <h3 class="font-bold dark:text-white mb-2 text-xl">{step.title}</h3>
-            <p class="dark:text-gray-300 text-gray-600">{step.desc}</p>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   </section>
@@ -431,36 +529,55 @@ const ctaData = {
     <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
       <div class="absolute inset-0"></div>
     </div>
-    <div class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter intersect-no-queue mx-auto px-4 relative lg:py-20 md:px-6 md:py-16 py-12 text-default max-w-6xl">
+    <div
+      class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter intersect-no-queue mx-auto px-4 relative lg:py-20 md:px-6 md:py-16 py-12 text-default max-w-6xl"
+    >
       <div class="text-center max-w-3xl mb-8 md:mb-12 md:mx-auto">
-        <h2 class="font-bold font-heading leading-tighter tracking-tighter md:text-4xl text-heading text-3xl">{testimonialsData.title}</h2>
+        <h2 class="font-bold font-heading leading-tighter tracking-tighter md:text-4xl text-heading text-3xl">
+          {testimonialsData.title}
+        </h2>
       </div>
       <div class="grid gap-6 lg:grid-cols-3 sm:grid-cols-2">
-        {testimonialsData.items.map((item) => (
-          <div class="flex intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 h-auto">
-            <div class="flex flex-col dark:border dark:border-slate-600 dark:shadow-none md:p-6 p-4 rounded-md shadow-xl">
-              <blockquote class="flex-auto">
-                <p class="text-muted">"{item.quote}"</p>
-              </blockquote>
-              <hr class="dark:border-slate-600 border-slate-200 my-4">
-              <div class="flex items-center">
-                {item.image ? (
-                  <div class="rounded-full h-10 w-10 border border-slate-200 dark:border-slate-600">
-                    <img alt={item.author} class="rounded-full h-10 w-10 border border-slate-200 dark:border-slate-600 min-h-full min-w-full" height="40" src={item.image} width="40" crossorigin="anonymous" decoding="async" loading="lazy" referrerpolicy="no-referrer" sizes="40px" srcset={`${item.image.replace('w=500', 'w=40')} 40w, ${item.image.replace('w=500', 'w=80')} 80w`} style="object-fit:cover;object-position:top left;width:40px;height:40px">
+        {
+          testimonialsData.items.map((item) => (
+            <div class="flex intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 h-auto">
+              <div class="flex flex-col dark:border dark:border-slate-600 dark:shadow-none md:p-6 p-4 rounded-md shadow-xl">
+                <blockquote class="flex-auto">
+                  <p class="text-muted">"{item.quote}"</p>
+                </blockquote>
+                <hr class="dark:border-slate-600 border-slate-200 my-4" />
+                <div class="flex items-center">
+                  {item.image ? (
+                    <div class="rounded-full h-10 w-10 border border-slate-200 dark:border-slate-600">
+                      <img
+                        alt={item.author}
+                        class="rounded-full h-10 w-10 border border-slate-200 dark:border-slate-600 min-h-full min-w-full"
+                        height="40"
+                        src={item.image}
+                        width="40"
+                        crossorigin="anonymous"
+                        decoding="async"
+                        loading="lazy"
+                        referrerpolicy="no-referrer"
+                        sizes="40px"
+                        srcset={`${item.image.replace('w=500', 'w=40')} 40w, ${item.image.replace('w=500', 'w=80')} 80w`}
+                        style="object-fit:cover;object-position:top left;width:40px;height:40px"
+                      />
+                    </div>
+                  ) : (
+                    <div class="rounded-full h-10 w-10 bg-gray-200 dark:bg-gray-700 flex items-center justify-center border border-slate-200 dark:border-slate-600">
+                      <span class="text-gray-400 dark:text-gray-500 text-sm">👤</span>
+                    </div>
+                  )}
+                  <div class="rtl:ml-0 grow ml-3 rtl:mr-3">
+                    <p class="font-semibold text-base">{item.author}</p>
+                    <p class="text-muted text-xs">{item.role}</p>
                   </div>
-                ) : (
-                  <div class="rounded-full h-10 w-10 bg-gray-200 dark:bg-gray-700 flex items-center justify-center border border-slate-200 dark:border-slate-600">
-                    <span class="text-gray-400 dark:text-gray-500 text-sm">👤</span>
-                  </div>
-                )}
-                <div class="rtl:ml-0 grow ml-3 rtl:mr-3">
-                  <p class="font-semibold text-base">{item.author}</p>
-                  <p class="text-muted text-xs">{item.role}</p>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   </section>
@@ -470,17 +587,29 @@ const ctaData = {
     <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
       <div class="absolute inset-0"></div>
     </div>
-    <div class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter intersect-no-queue mx-auto px-4 relative lg:py-20 md:px-6 md:py-16 py-12 text-default max-w-6xl">
-      <div class="mx-auto max-w-3xl text-center dark:border dark:border-slate-600 dark:shadow-none p-6 rounded-md shadow-xl">
+    <div
+      class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter intersect-no-queue mx-auto px-4 relative lg:py-20 md:px-6 md:py-16 py-12 text-default max-w-6xl"
+    >
+      <div
+        class="mx-auto max-w-3xl text-center dark:border dark:border-slate-600 dark:shadow-none p-6 rounded-md shadow-xl"
+      >
         <div class="text-center md:mx-auto mb-0 md:mb-0">
-          <h2 class="font-bold font-heading leading-tighter tracking-tighter md:text-4xl text-heading mb-4 text-4xl" set:html={ctaData.title}></h2>
-          <p class="text-muted text-xl mt-4 dark:text-slate-400" set:html={ctaData.subtitle}></p>
+          <h2
+            class="font-bold font-heading leading-tighter tracking-tighter md:text-4xl text-heading mb-4 text-4xl"
+            set:html={ctaData.title}
+          />
+          <p class="text-muted text-xl mt-4 dark:text-slate-400" set:html={ctaData.subtitle} />
         </div>
         <div class="flex flex-col flex-nowrap gap-4 m-auto max-w-xs sm:flex-row sm:justify-center sm:max-w-md mt-6">
           <div class="flex w-full sm:w-auto">
             <a class="w-full sm:mb-0 btn-primary" href="/contact">
               {ctaData.primary}
-              <svg class="h-5 w-5 -mr-1.5 inline-block ml-1 rtl:-ml-1.5 rtl:mr-1" data-icon="tabler:rocket" height="1em" width="1em">
+              <svg
+                class="h-5 w-5 -mr-1.5 inline-block ml-1 rtl:-ml-1.5 rtl:mr-1"
+                data-icon="tabler:rocket"
+                height="1em"
+                width="1em"
+              >
                 <use href="#ai:tabler:rocket"></use>
               </svg>
             </a>
@@ -488,7 +617,12 @@ const ctaData = {
           <div class="flex w-full sm:w-auto">
             <a class="w-full sm:mb-0 btn-secondary" href="/contact">
               {ctaData.secondary}
-              <svg class="h-5 w-5 -mr-1.5 inline-block ml-1 rtl:-ml-1.5 rtl:mr-1" data-icon="tabler:phone" height="1em" width="1em">
+              <svg
+                class="h-5 w-5 -mr-1.5 inline-block ml-1 rtl:-ml-1.5 rtl:mr-1"
+                data-icon="tabler:phone"
+                height="1em"
+                width="1em"
+              >
                 <use href="#ai:tabler:phone"></use>
               </svg>
             </a>

@@ -11,26 +11,26 @@ metadata:
   title:
     default: CinaGroup — AI & Web3 Solutions | Intelligent Search, Robotics & Blockchain
     template: '%s — CinaGroup'
-  description: "CinaGroup delivers enterprise-grade AI & Web3 solutions: CinaSeek (AI search), CinaClaw (intelligent robots), CinaSkill (skills platform), CinaToken (AI API gateway), and CinaChain (blockchain infrastructure). Empowering 50K+ users worldwide."
+  description: 'CinaGroup delivers enterprise-grade AI & Web3 solutions: CinaSeek (AI search), CinaClaw (intelligent robots), CinaSkill (skills platform), CinaToken (AI API gateway), and CinaChain (blockchain infrastructure). Empowering 50K+ users worldwide.'
   keywords:
-    - "AI search"
-    - "intelligent robot"
-    - "blockchain"
-    - "Web3"
-    - "CinaSeek"
-    - "CinaClaw"
-    - "CinaSkill"
-    - "CinaToken"
-    - "CinaChain"
-    - "AI API gateway"
-    - "automation"
-    - "smart contracts"
-    - "enterprise AI"
-    - "machine learning"
-    - "DeFi"
-    - "robot skills"
-    - "AI assistant"
-    - "multi-model API"
+    - 'AI search'
+    - 'intelligent robot'
+    - 'blockchain'
+    - 'Web3'
+    - 'CinaSeek'
+    - 'CinaClaw'
+    - 'CinaSkill'
+    - 'CinaToken'
+    - 'CinaChain'
+    - 'AI API gateway'
+    - 'automation'
+    - 'smart contracts'
+    - 'enterprise AI'
+    - 'machine learning'
+    - 'DeFi'
+    - 'robot skills'
+    - 'AI assistant'
+    - 'multi-model API'
   robots:
     index: true
     follow: true
@@ -40,7 +40,7 @@ metadata:
       - url: '~/assets/images/default.png'
         width: 1200
         height: 628
-        alt: "CinaGroup - AI & Web3 Solutions"
+        alt: 'CinaGroup - AI & Web3 Solutions'
     type: website
     locale: en_US
   twitter:
@@ -48,14 +48,14 @@ metadata:
     site: '@cinagroup'
     cardType: summary_large_image
   additional:
-    - name: "author"
-      content: "CinaGroup"
-    - name: "publisher"
-      content: "CinaGroup"
-    - name: "theme-color"
-      content: "#3b82f6"
-    - name: "application-name"
-      content: "CinaGroup"
+    - name: 'author'
+      content: 'CinaGroup'
+    - name: 'publisher'
+      content: 'CinaGroup'
+    - name: 'theme-color'
+      content: '#3b82f6'
+    - name: 'application-name'
+      content: 'CinaGroup'
 
 # Favicon configuration
 favicon:
@@ -106,7 +106,7 @@ apps:
 analytics:
   vendors:
     googleAnalytics:
-      id: "G-QYXR6DT2F0"
+      id: 'G-QYXR6DT2F0'
     splitbee:
       enabled: false # Set to true and add token for Splitbee analytics
       token: null

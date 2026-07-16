@@ -68,6 +68,4 @@ const seoProps: AstroSeoProps = merge(
 
 <AstroSeo {...{ ...seoProps, openGraph: await adaptOpenGraphImages(seoProps?.openGraph, Astro.site) }} />
 
-{keywords && keywords.length > 0 && (
-  <meta name="keywords" content={keywords.join(', ')} />
-)}
+{keywords && keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}

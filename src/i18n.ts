@@ -24,16 +24,17 @@ export const ui = {
     'nav.blog': 'Blog',
     'nav.documentation': 'Documentation',
     'nav.apiReference': 'API Reference',
-    
+
     // Hero Section
     'hero.welcome': 'Welcome to CinaGroup',
     'hero.title': 'Building the Future of {0} & {1}',
     'hero.ai': 'AI',
     'hero.web3': 'Web3',
-    'hero.subtitle': 'We provide cutting-edge solutions in AI search, intelligent robots, skill platforms, and blockchain infrastructure. Empowering businesses and developers worldwide.',
+    'hero.subtitle':
+      'We provide cutting-edge solutions in AI search, intelligent robots, skill platforms, and blockchain infrastructure. Empowering businesses and developers worldwide.',
     'hero.exploreProducts': 'Explore Products',
     'hero.contactUs': 'Contact Us',
-    
+
     // Business Lines
     'business.title': 'Our Business Lines',
     'business.subtitle': 'Five powerful platforms working together to deliver comprehensive AI and Web3 solutions',
@@ -57,7 +58,7 @@ export const ui = {
     'business.cinatoken.tagline': 'AI API Gateway',
     'business.cinatoken.desc': 'Unified API gateway for Claude, GPT, Gemini, and 100+ AI models',
     'business.cinatoken.action': 'Get API Key',
-    
+
     // Why Choose Us
     'why.title': 'Why Choose Us',
     'why.subtitle': 'Technology That Drives Innovation',
@@ -74,13 +75,13 @@ export const ui = {
     'why.realtime.desc': 'Low-latency data processing and real-time analytics for time-critical applications.',
     'why.support.title': '24/7 Support',
     'why.support.desc': 'Round-the-clock technical support and comprehensive knowledge base.',
-    
+
     // Stats (placeholder values — update with real metrics)
     'stats.users': 'Active Users',
     'stats.apiCalls': 'API Calls/Day',
     'stats.skills': 'Skills Available',
     'stats.nodes': 'Network Nodes',
-    
+
     // How It Works
     'how.title': 'How It Works',
     'how.subtitle': 'Get started in three simple steps',
@@ -90,26 +91,30 @@ export const ui = {
     'how.step2.desc': 'Use our APIs and SDKs to integrate with your existing systems',
     'how.step3.title': 'Scale & Optimize',
     'how.step3.desc': 'Monitor performance and scale as your usage grows',
-    
+
     // Testimonials (placeholder — replace with real customer quotes)
     'testimonials.title': 'What Our Clients Say',
-    'testimonials.quote1': 'CinaSeek has transformed how our team accesses information. The AI-powered search is incredibly accurate and saves us hours every day.',
+    'testimonials.quote1':
+      'CinaSeek has transformed how our team accesses information. The AI-powered search is incredibly accurate and saves us hours every day.',
     'testimonials.author1': '—',
     'testimonials.role1': '[Company], [Title]',
-    'testimonials.quote2': 'CinaClaw automated our customer service workflows. The integration was smooth and the results exceeded our expectations.',
+    'testimonials.quote2':
+      'CinaClaw automated our customer service workflows. The integration was smooth and the results exceeded our expectations.',
     'testimonials.author2': '—',
     'testimonials.role2': '[Company], [Title]',
-    'testimonials.quote3': 'The CinaChain infrastructure is reliable and well-documented. A solid foundation for our Web3 applications.',
+    'testimonials.quote3':
+      'The CinaChain infrastructure is reliable and well-documented. A solid foundation for our Web3 applications.',
     'testimonials.author3': '—',
     'testimonials.role3': '[Company], [Title]',
-    
+
     // CTA
     'cta.title': 'Ready to {0} Your Business?',
     'cta.transform': 'Transform',
-    'cta.subtitle': 'Join thousands of companies using CinaGroup solutions.{0}Start your journey today with our free tier.',
+    'cta.subtitle':
+      'Join thousands of companies using CinaGroup solutions.{0}Start your journey today with our free tier.',
     'cta.getStarted': 'Get Started Free',
     'cta.talkToSales': 'Talk to Sales',
-    
+
     // Footer
     'footer.products': 'Products',
     'footer.developers': 'Developers',
@@ -129,9 +134,14 @@ export const ui = {
   },
 } as const;
 
-export function useTranslations(lang: keyof typeof ui) {
-  return function t(key: keyof typeof ui[typeof lang]) {
-    return ui[lang][key] || ui.en[key];
+type TranslationKey = keyof typeof ui.en;
+const dictionaries: Partial<Record<Lang, typeof ui.en>> = ui;
+
+export function useTranslations(lang: Lang) {
+  const dictionary = dictionaries[lang] ?? ui.en;
+
+  return function t(key: TranslationKey) {
+    return dictionary[key] || ui.en[key];
   };
 }
 

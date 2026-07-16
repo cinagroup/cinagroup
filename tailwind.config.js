@@ -4,6 +4,12 @@ import typographyPlugin from '@tailwindcss/typography';
 
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,json,md,mdx,svelte,ts,tsx,vue}'],
+  safelist: [
+    {
+      pattern: /(from|to|bg|text|hover:text)-(green|orange|blue|pink|purple)-(100|300|400|600|700|900)/,
+      variants: ['dark', 'hover'],
+    },
+  ],
   theme: {
     extend: {
       colors: {
