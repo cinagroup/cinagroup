@@ -14,10 +14,6 @@ const metadata = {
     tagline="Contact Us"
     title={'Let\'s <span class="text-accent dark:text-white">Start a Conversation</span>'}
     subtitle="Have questions about our products? Need help with integration? We're here to help!"
-    image={{
-      src: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
-      alt: 'Contact Us',
-    }}
   />
 
   <!-- Contact Form Section ********** -->
@@ -53,7 +49,9 @@ const metadata = {
               </div>
               <div>
                 <h3 class="font-bold dark:text-white mb-1">Email Us</h3>
-                <p class="text-gray-600 dark:text-gray-300">info@cinagroup.com</p>
+                <a class="text-blue-600 dark:text-blue-400 hover:underline" href="mailto:info@cinagroup.com">
+                  info@cinagroup.com
+                </a>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">We'll respond within 24 hours</p>
               </div>
             </div>
@@ -75,6 +73,7 @@ const metadata = {
                 <a
                   href="https://tiktok.com/@cinaseek"
                   target="_blank"
+                  rel="noopener noreferrer"
                   class="text-blue-600 dark:text-blue-400 hover:underline text-sm mt-1 inline-block"
                   >tiktok.com/@cinaseek →</a
                 >
@@ -98,6 +97,7 @@ const metadata = {
                 <a
                   href="https://x.com/cinagroup"
                   target="_blank"
+                  rel="noopener noreferrer"
                   class="text-blue-600 dark:text-blue-400 hover:underline text-sm mt-1 inline-block"
                   >x.com/cinagroup →</a
                 >
@@ -140,7 +140,13 @@ const metadata = {
         <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
           <h2 class="text-2xl font-bold dark:text-white mb-6">Send us a Message</h2>
 
-          <form class="space-y-6" action="#" method="POST">
+          <form
+            class="space-y-6"
+            action="mailto:info@cinagroup.com"
+            method="POST"
+            enctype="text/plain"
+            data-contact-form
+          >
             <!-- Name -->
             <div>
               <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -224,11 +230,21 @@ const metadata = {
               type="submit"
               class="w-full px-6 py-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors focus:ring-4 focus:ring-blue-500/50"
             >
-              Send Message
+              Open email draft
             </button>
 
             <p class="text-xs text-gray-500 dark:text-gray-400 text-center">
-              By submitting this form, you agree to our Privacy Policy and Terms of Service.
+              Submitting opens your email app; this website does not store your message. See our
+              <a class="underline" href="/privacy">Privacy Policy</a> and <a class="underline" href="/terms"
+                >Terms of Service</a
+              >.
+            </p>
+            <p
+              id="contact-form-status"
+              class="text-sm text-blue-600 dark:text-blue-400 text-center"
+              aria-live="polite"
+              hidden
+            >
             </p>
           </form>
         </div>
@@ -283,4 +299,41 @@ const metadata = {
       </div>
     </div>
   </section>
+
+  <script is:inline>
+    (() => {
+      const initContactForm = () => {
+        const form = /** @type {HTMLFormElement | null} */ (document.querySelector('form[data-contact-form]'));
+        if (!form || form.dataset.initialized) return;
+
+        form.dataset.initialized = 'true';
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          if (!form.reportValidity()) return;
+
+          const data = new FormData(form);
+          const selectedSubject = String(data.get('subject') || 'General inquiry');
+          const subject = `[CinaGroup] ${selectedSubject}`;
+          const body = [
+            `Name: ${String(data.get('name') || '')}`,
+            `Email: ${String(data.get('email') || '')}`,
+            `Company: ${String(data.get('company') || 'Not provided')}`,
+            '',
+            String(data.get('message') || ''),
+          ].join('\n');
+          const status = document.getElementById('contact-form-status');
+
+          if (status) {
+            status.hidden = false;
+            status.textContent = 'Your email draft is opening. If nothing happens, email info@cinagroup.com directly.';
+          }
+
+          window.location.href = `mailto:info@cinagroup.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        });
+      };
+
+      initContactForm();
+      document.addEventListener('astro:page-load', initContactForm);
+    })();
+  </script>
 </Layout>

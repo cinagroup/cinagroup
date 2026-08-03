@@ -16,13 +16,15 @@ import BasicScripts from '~/components/common/BasicScripts.astro';
 import { ClientRouter } from 'astro:transitions';
 
 import type { MetaData as MetaDataType } from '~/types';
+import { getLangFromUrl } from '~/i18n';
 
 export interface Props {
   metadata?: MetaDataType;
 }
 
 const { metadata = {} } = Astro.props;
-const { language, textDirection } = I18N;
+const language = getLangFromUrl(Astro.url);
+const { textDirection } = I18N;
 ---
 
 <!doctype html>

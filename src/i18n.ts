@@ -152,13 +152,16 @@ export function getLangFromUrl(url: URL) {
 }
 
 export function changeLangPath(url: URL, newLang: keyof typeof languages) {
-  const parts = url.pathname.split('/');
-  if (parts[1] in languages) {
-    parts[1] = newLang;
-  } else {
-    parts.splice(1, 0, newLang);
+  const parts = url.pathname.split('/').filter(Boolean);
+
+  if (parts[0] in languages) {
+    parts.shift();
   }
-  return parts.join('/').replace(/\/+/g, '/');
+
+  const path = parts.length ? `/${parts.join('/')}` : '';
+  const localizedPath = newLang === defaultLang ? path || '/' : `/${newLang}${path}`;
+
+  return `${localizedPath}${url.search}${url.hash}`;
 }
 
 export function getPath(path: string, lang: string = defaultLang) {

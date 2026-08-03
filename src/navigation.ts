@@ -33,7 +33,7 @@ export const headerData = {
       links: [
         {
           text: 'Enterprise',
-          href: getPermalink('/#business'),
+          href: getPermalink('/services'),
         },
         {
           text: 'Developers',
@@ -52,14 +52,6 @@ export const headerData = {
           text: 'Blog',
           href: getBlogPermalink(),
         },
-        {
-          text: 'Documentation',
-          href: '#',
-        },
-        {
-          text: 'API Reference',
-          href: '#',
-        },
       ],
     },
     {
@@ -72,10 +64,6 @@ export const headerData = {
         {
           text: 'Contact',
           href: getPermalink('/contact'),
-        },
-        {
-          text: 'Careers',
-          href: '#',
         },
       ],
     },
@@ -100,30 +88,17 @@ export const footerData = {
     },
     {
       title: 'Developers',
-      links: [
-        { text: 'Documentation', href: '#' },
-        { text: 'API Reference', href: '#' },
-        { text: 'SDK & Tools', href: '#' },
-        { text: 'Grants Program', href: '#' },
-        { text: 'Developer Blog', href: '/blog' },
-      ],
+      links: [{ text: 'Developer Blog', href: '/blog' }],
     },
     {
       title: 'Support',
-      links: [
-        { text: 'Help Center', href: '#' },
-        { text: 'Community', href: '#' },
-        { text: 'Contact Support', href: '/contact' },
-        { text: 'System Status', href: '#' },
-      ],
+      links: [{ text: 'Contact Support', href: '/contact' }],
     },
     {
       title: 'Company',
       links: [
         { text: 'About Us', href: '/about' },
         { text: 'Blog', href: '/blog' },
-        { text: 'Careers', href: '#' },
-        { text: 'Press Kit', href: '#' },
         { text: 'Contact', href: '/contact' },
       ],
     },
@@ -131,7 +106,6 @@ export const footerData = {
   secondaryLinks: [
     { text: 'Terms of Service', href: getPermalink('/terms') },
     { text: 'Privacy Policy', href: getPermalink('/privacy') },
-    { text: 'Cookie Policy', href: '#' },
   ],
   socialLinks: [
     { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/cinagroup' },

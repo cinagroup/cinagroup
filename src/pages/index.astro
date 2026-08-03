@@ -1,634 +1,856 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import { useTranslations, getLangFromUrl } from '~/i18n';
-
-import Hero from '~/components/widgets/Hero.astro';
-
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
 
 const metadata = {
-  title: 'CinaGroup — AI & Web3 Solutions | Intelligent Search, Robotics & Blockchain',
+  title: 'CinaGroup | Search, automation, APIs, and infrastructure',
   ignoreTitleTemplate: true,
   description:
-    'CinaGroup delivers enterprise-grade AI & Web3 solutions: CinaSeek (AI search), CinaClaw (intelligent robots), CinaSkill (skills platform), CinaToken (AI API gateway), and CinaChain (blockchain infrastructure). Empowering 50K+ users worldwide.',
+    'CinaGroup helps teams solve work across search, workflow automation, model access, reusable skills, and chain-connected infrastructure.',
   keywords: [
-    'AI search',
-    'intelligent robot',
-    'blockchain',
-    'Web3',
-    'AI API gateway',
-    'automation',
-    'smart contracts',
-    'DeFi',
-    'robot skills',
+    'CinaGroup',
+    'CinaSeek',
+    'CinaClaw',
+    'CinaSkill',
+    'CinaToken',
+    'CinaChain',
+    'enterprise search',
+    'workflow automation',
+    'model gateway',
+    'developer infrastructure',
   ],
   openGraph: {
     type: 'website',
     locale: 'en_US',
     site_name: 'CinaGroup',
-    description: 'Enterprise-grade AI & Web3 solutions empowering 50K+ users worldwide',
+    description: 'Tools for teams building with search, automation, APIs, and infrastructure.',
   },
   twitter: {
     cardType: 'summary_large_image',
   },
-  // Structured data for rich snippets
   structuredData: {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'CinaGroup',
     url: 'https://cinagroup.com',
     logo: 'https://cinagroup.com/favicon.svg',
-    description: 'Enterprise-grade AI & Web3 solutions',
+    description: 'Tools for teams building with search, automation, APIs, and infrastructure.',
     sameAs: ['https://github.com/cinagroup', 'https://twitter.com/cinagroup'],
-    brand: {
-      '@type': 'Brand',
-      name: 'CinaGroup',
-    },
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'AI & Web3 Products',
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'SoftwareApplication',
-            name: 'CinaSeek',
-            description: 'AI-driven enterprise search solution',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'SoftwareApplication',
-            name: 'CinaClaw',
-            description: '24/7 AI intelligent assistant',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'SoftwareApplication',
-            name: 'CinaSkill',
-            description: 'Robot skills creation and sharing platform',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'SoftwareApplication',
-            name: 'CinaToken',
-            description: 'Unified AI API gateway',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'SoftwareApplication',
-            name: 'CinaChain',
-            description: 'High-performance Web3 infrastructure',
-          },
-        },
-      ],
-    },
   },
 };
 
-// Business data with translations
-const businessData = {
-  title: t('business.title'),
-  subtitle: t('business.subtitle'),
-  cards: [
-    {
-      title: t('business.cinaseek.title'),
-      tagline: t('business.cinaseek.tagline'),
-      desc: t('business.cinaseek.desc'),
-      action: t('business.cinaseek.action'),
-      href: '/cinaseek',
-      color: 'green',
-      icon: 'search',
-    },
-    {
-      title: t('business.cinaclaw.title'),
-      tagline: t('business.cinaclaw.tagline'),
-      desc: t('business.cinaclaw.desc'),
-      action: t('business.cinaclaw.action'),
-      href: '/cinaclaw',
-      color: 'orange',
-      icon: 'device-desktop',
-    },
-    {
-      title: t('business.cinatoken.title'),
-      tagline: t('business.cinatoken.tagline'),
-      desc: t('business.cinatoken.desc'),
-      action: t('business.cinatoken.action'),
-      href: '/cinatoken',
-      color: 'blue',
-      icon: 'key',
-    },
-    {
-      title: t('business.cinaskill.title'),
-      tagline: t('business.cinaskill.tagline'),
-      desc: t('business.cinaskill.desc'),
-      action: t('business.cinaskill.action'),
-      href: '/cinaskill',
-      color: 'pink',
-      icon: 'code',
-    },
-    {
-      title: t('business.cinachain.title'),
-      tagline: t('business.cinachain.tagline'),
-      desc: t('business.cinachain.desc'),
-      action: t('business.cinachain.action'),
-      href: '/cinachain',
-      color: 'purple',
-      icon: 'world',
-    },
+const capabilityTabs = [
+  {
+    label: 'Find',
+    title: 'Search the work that is already done.',
+    text: 'Connect knowledge, docs, and operating notes so teams can find the answer before creating another meeting.',
+  },
+  {
+    label: 'Automate',
+    title: 'Move repeated work into dependable flows.',
+    text: 'Turn support, review, and operations tasks into auditable workflows that still leave people in control.',
+  },
+  {
+    label: 'Connect',
+    title: 'Route models, APIs, and infrastructure cleanly.',
+    text: 'Give builders one place to manage access, costs, releases, and the systems that sit behind the product.',
+  },
+];
+
+const scenarioRows = [
+  {
+    label: 'Enterprise search',
+    product: 'CinaSeek',
+    title: 'Find operational knowledge without building another portal.',
+    text: 'CinaSeek gives teams a search layer across documents, product notes, support history, and internal references.',
+    href: '/cinaseek',
+    cta: 'Explore CinaSeek',
+    visualTitle: 'Knowledge index',
+    visualRows: ['docs/handbook.md', 'support/escalations', 'product/release-notes', 'runbooks/search'],
+    output: 'Answer ready in 1 source-backed view',
+  },
+  {
+    label: 'Workflow automation',
+    product: 'CinaClaw',
+    title: 'Turn repeatable work into assistant-led workflows.',
+    text: 'CinaClaw helps teams triage requests, prepare next actions, and keep recurring operations moving without losing review control.',
+    href: '/cinaclaw',
+    cta: 'Explore CinaClaw',
+    visualTitle: 'Automation run',
+    visualRows: ['intake classified', 'context gathered', 'draft action prepared', 'human review queued'],
+    output: '4 steps completed, 1 waiting on approval',
+  },
+  {
+    label: 'Model gateway',
+    product: 'CinaToken',
+    title: 'Control model access, usage, and spend from one gateway.',
+    text: 'CinaToken gives builders a single routing layer for model access, API keys, usage policy, and cost visibility.',
+    href: '/cinatoken',
+    cta: 'Explore CinaToken',
+    visualTitle: 'Gateway policy',
+    visualRows: ['route: coding tasks', 'limit: team budget', 'fallback: secondary model', 'log: request trace'],
+    output: 'Policy applied before request leaves the app',
+  },
+  {
+    label: 'Infrastructure',
+    product: 'CinaChain + CinaSkill',
+    title: 'Ship connected services with reusable skills behind them.',
+    text: 'CinaChain and CinaSkill support teams that need trusted infrastructure, reusable capabilities, and a path from prototype to production.',
+    href: '/cinachain',
+    cta: 'Explore infrastructure',
+    visualTitle: 'Release path',
+    visualRows: ['skill packaged', 'service linked', 'contract checked', 'release promoted'],
+    output: 'Prototype moved to a production route',
+  },
+];
+
+const productRows = [
+  ['CinaSeek', 'Search layer', 'Find answers across internal knowledge and live product context.', '/cinaseek'],
+  [
+    'CinaClaw',
+    'Workflow assistant',
+    'Coordinate repeatable operational work with reviewable next actions.',
+    '/cinaclaw',
   ],
-};
-
-// Features data
-const featuresData = {
-  title: t('why.title'),
-  subtitle: t('why.subtitle'),
-  description: t('why.description'),
-  items: [
-    {
-      icon: 'brain',
-      title: t('why.ai.title'),
-      desc: t('why.ai.desc'),
-    },
-    {
-      icon: 'shield-lock',
-      title: t('why.security.title'),
-      desc: t('why.security.desc'),
-    },
-    {
-      icon: 'code',
-      title: t('why.developer.title'),
-      desc: t('why.developer.desc'),
-    },
-    {
-      icon: 'server-2',
-      title: t('why.infrastructure.title'),
-      desc: t('why.infrastructure.desc'),
-    },
-    {
-      icon: 'clock-bolt',
-      title: t('why.realtime.title'),
-      desc: t('why.realtime.desc'),
-    },
-    {
-      icon: 'headset',
-      title: t('why.support.title'),
-      desc: t('why.support.desc'),
-    },
+  ['CinaToken', 'Model gateway', 'Manage model routing, API keys, policy, logs, and cost boundaries.', '/cinatoken'],
+  ['CinaSkill', 'Reusable skills', 'Package task-specific abilities for teams, robots, and operators.', '/cinaskill'],
+  [
+    'CinaChain',
+    'Connected infrastructure',
+    'Support applications that need chain-aware services and reliable rails.',
+    '/cinachain',
   ],
-};
+];
 
-// Stats data (placeholder — update with real metrics)
-const statsData = {
-  items: [
-    { amount: '—', title: t('stats.users') },
-    { amount: '—', title: t('stats.apiCalls') },
-    { amount: '—', title: t('stats.skills') },
-    { amount: '—', title: t('stats.nodes') },
-  ],
-};
+const proofItems = [
+  'Start with one product and expand only when the workflow demands it.',
+  'Keep human review, auditability, and cost boundaries visible.',
+  'Connect search, automation, gateway, skill, and infrastructure layers without locking teams into one path.',
+];
 
-// How it works
-const howData = {
-  title: t('how.title'),
-  subtitle: t('how.subtitle'),
-  steps: [
-    {
-      number: '1',
-      title: t('how.step1.title'),
-      desc: t('how.step1.desc'),
-    },
-    {
-      number: '2',
-      title: t('how.step2.title'),
-      desc: t('how.step2.desc'),
-    },
-    {
-      number: '3',
-      title: t('how.step3.title'),
-      desc: t('how.step3.desc'),
-    },
-  ],
-};
-
-type TestimonialItem = {
-  quote: string;
-  author: string;
-  role: string;
-  image: string | null;
-};
-
-// Testimonials (placeholder avatars)
-const testimonialsData: { title: string; items: TestimonialItem[] } = {
-  title: t('testimonials.title'),
-  items: [
-    {
-      quote: t('testimonials.quote1'),
-      author: t('testimonials.author1'),
-      role: t('testimonials.role1'),
-      image: null, // replace with real customer photo
-    },
-    {
-      quote: t('testimonials.quote2'),
-      author: t('testimonials.author2'),
-      role: t('testimonials.role2'),
-      image: null, // replace with real customer photo
-    },
-    {
-      quote: t('testimonials.quote3'),
-      author: t('testimonials.author3'),
-      role: t('testimonials.role3'),
-      image: null, // replace with real customer photo
-    },
-  ],
-};
-
-// CTA
-const ctaData = {
-  title: t('cta.title').replace('{0}', t('cta.transform')),
-  subtitle: t('cta.subtitle').replace('{0}', '<br>'),
-  primary: t('cta.getStarted'),
-  secondary: t('cta.talkToSales'),
-};
+const releaseCode = `workflow "support-review" {
+  search     = "CinaSeek"
+  action     = "CinaClaw"
+  gateway    = "CinaToken"
+  skills     = ["triage", "handoff"]
+  release    = "reviewed"
+}`;
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero Section -->
-  <Hero
-    tagline={t('hero.welcome')}
-    title={t('hero.title')
-      .replace('{0}', '<span class="text-accent dark:text-white">AI</span>')
-      .replace('{1}', '<span class="text-accent dark:text-white">Web3</span>')}
-    subtitle={t('hero.subtitle')}
-    actions={[
-      {
-        variant: 'primary',
-        text: t('hero.exploreProducts'),
-        href: '#business',
-        icon: 'tabler:arrow-down',
-      },
-      {
-        text: t('hero.contactUs'),
-        href: '/contact',
-        icon: 'tabler:mail',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
-      alt: 'AI Technology Hero Image',
-    }}
-  />
-
-  <!-- Business Overview -->
-  <section id="business" class="py-16 bg-white dark:bg-gray-900 overflow-hidden">
-    <div class="container mx-auto px-4">
-      <div class="text-center max-w-3xl mx-auto mb-12">
-        <h2 class="text-3xl font-bold tracking-tight dark:text-white sm:text-4xl mb-4">
-          {businessData.title}
-        </h2>
-        <p class="text-lg text-gray-600 dark:text-gray-300">
-          {businessData.subtitle}
+  <div class="cg-home">
+    <section class="cg-hero" aria-labelledby="home-title">
+      <div class="cg-mesh" aria-hidden="true"></div>
+      <div class="cg-shell cg-hero-shell">
+        <p class="cg-system-line">Search. Automate. Connect. Ship.</p>
+        <h1 id="home-title">Tools for teams building search, automation, APIs, and infrastructure.</h1>
+        <p class="cg-hero-copy">
+          CinaGroup brings five product lines into one practical stack for teams that need answers, workflows, model
+          access, reusable skills, and connected services.
         </p>
+        <div class="cg-actions" aria-label="Primary actions">
+          <a class="cg-button cg-button-primary" href="#scenarios">See the workflows</a>
+          <a class="cg-button cg-button-secondary" href="/contact">Talk to us</a>
+        </div>
+        <div class="cg-preview" aria-label="CinaGroup workflow preview">
+          <div class="cg-preview-top">
+            <span>cinagroup/workflow</span>
+            <span>ready</span>
+          </div>
+          <div class="cg-preview-grid">
+            {
+              capabilityTabs.map((item) => (
+                <article>
+                  <span>{item.label}</span>
+                  <strong>{item.title}</strong>
+                  <p>{item.text}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
       </div>
+    </section>
 
-      <!-- Horizontal Scroll Container -->
-      <div class="relative group">
-        <div
-          id="business-scroll"
-          class="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 scroll-smooth"
-        >
+    <section id="scenarios" class="cg-section cg-section-white" aria-labelledby="scenario-title">
+      <div class="cg-shell">
+        <div class="cg-section-heading">
+          <p class="cg-mono">Start with the problem.</p>
+          <h2 id="scenario-title">Choose the path that matches the work in front of you.</h2>
+          <p>
+            Start from the job your team needs to finish. Each path shows the product, workflow, and next step without
+            forcing a platform-wide commitment.
+          </p>
+        </div>
+
+        <div class="cg-scenarios">
           {
-            businessData.cards.map((card) => (
-              <div class="snap-start shrink-0 w-80 md:w-72 lg:w-80">
-                <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 h-full">
-                  <div
-                    class={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-${card.color}-400 to-${card.color}-600`}
-                  />
-                  <div class="p-6">
-                    <div
-                      class={`w-14 h-14 bg-${card.color}-100 dark:bg-${card.color}-900/30 rounded-xl flex items-center justify-center mb-4`}
-                    >
-                      <svg
-                        class={`w-8 h-8 text-${card.color}-600 dark:text-${card.color}-400`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        {card.icon === 'search' && (
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                          />
-                        )}
-                        {card.icon === 'device-desktop' && (
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                          />
-                        )}
-                        {card.icon === 'key' && (
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
-                          />
-                        )}
-                        {card.icon === 'code' && (
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                          />
-                        )}
-                        {card.icon === 'world' && (
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                          />
-                        )}
-                      </svg>
-                    </div>
-                    <h3 class="text-xl font-bold dark:text-white mb-2">{card.title}</h3>
-                    <p class={`text-sm text-${card.color}-600 dark:text-${card.color}-400 font-medium mb-3`}>
-                      {card.tagline}
-                    </p>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">{card.desc}</p>
-                    <a
-                      href={card.href}
-                      class={`inline-flex items-center text-${card.color}-600 dark:text-${card.color}-400 hover:text-${card.color}-700 dark:hover:text-${card.color}-300 font-medium text-sm group-hover:translate-x-1 transition-transform`}
-                    >
-                      {card.action}
-                      <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                      </svg>
-                    </a>
-                  </div>
+            scenarioRows.map((item, index) => (
+              <article class={`cg-scenario ${index % 2 === 1 ? 'cg-scenario-reverse' : ''}`}>
+                <div class="cg-scenario-copy">
+                  <p class="cg-mono">{item.label}</p>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                  <a href={item.href}>{item.cta}</a>
                 </div>
-              </div>
+                <div class="cg-product-frame" aria-label={`${item.product} product preview`}>
+                  <div class="cg-product-title">
+                    <span>{item.product}</span>
+                    <span>{item.visualTitle}</span>
+                  </div>
+                  <div class="cg-product-list">
+                    {item.visualRows.map((row) => (
+                      <div>
+                        <span aria-hidden="true" />
+                        <code>{row}</code>
+                      </div>
+                    ))}
+                  </div>
+                  <div class="cg-product-output">{item.output}</div>
+                </div>
+              </article>
             ))
           }
         </div>
-        <!-- Navigation Arrows -->
-        <button
-          id="scroll-left"
-          class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 z-10"
-          aria-label="Scroll left"
-        >
-          <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-        </button>
-        <button
-          id="scroll-right"
-          class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 z-10"
-          aria-label="Scroll right"
-        >
-          <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </button>
-        <!-- Scroll indicators for mobile -->
-        <div class="md:hidden flex justify-center mt-4 gap-2">
-          <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-          <span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600"></span>
-          <span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+      </div>
+    </section>
+
+    <section class="cg-section cg-section-soft" aria-labelledby="stack-title">
+      <div class="cg-shell cg-stack-layout">
+        <div>
+          <p class="cg-mono">Product stack.</p>
+          <h2 id="stack-title">One group, five routes into production.</h2>
+        </div>
+        <div class="cg-product-table">
+          {
+            productRows.map(([name, role, description, href]) => (
+              <a href={href}>
+                <span>{name}</span>
+                <span>{role}</span>
+                <span>{description}</span>
+              </a>
+            ))
+          }
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <script>
-    // Manual scroll buttons only (no auto-scroll)
-    const scrollContainer = document.getElementById('business-scroll');
-    const scrollLeftBtn = document.getElementById('scroll-left');
-    const scrollRightBtn = document.getElementById('scroll-right');
+    <section class="cg-dark-band" aria-labelledby="delivery-title">
+      <div class="cg-shell cg-dark-grid">
+        <div>
+          <p class="cg-mono">Delivery model.</p>
+          <h2 id="delivery-title">Keep the system understandable as it grows.</h2>
+          <p>
+            Teams can start with one workflow, then add search, routing, skills, or infrastructure as the product gets
+            more serious.
+          </p>
+          <div class="cg-actions">
+            <a class="cg-button cg-button-invert" href="/contact">Plan a workflow</a>
+            <a class="cg-button cg-button-dark-secondary" href="/blog">Read the notes</a>
+          </div>
+        </div>
+        <div class="cg-code-panel" aria-label="Release checklist preview">
+          <div class="cg-code-top">
+            <span>release.config</span>
+            <span>main</span>
+          </div>
+          <pre><code>{releaseCode}</code></pre>
+        </div>
+      </div>
+    </section>
 
-    if (scrollContainer && scrollLeftBtn && scrollRightBtn) {
-      const scrollAmount = 320;
+    <section class="cg-section cg-section-white" aria-labelledby="proof-title">
+      <div class="cg-shell cg-proof">
+        <div>
+          <p class="cg-mono">Operating principles.</p>
+          <h2 id="proof-title">A practical stack without unnecessary complexity.</h2>
+        </div>
+        <div class="cg-proof-list">
+          {proofItems.map((item) => <p>{item}</p>)}
+        </div>
+      </div>
+    </section>
 
-      scrollLeftBtn.addEventListener('click', () => {
-        scrollContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-      });
-
-      scrollRightBtn.addEventListener('click', () => {
-        scrollContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      });
-    }
-  </script>
-
-  <!-- Why Choose Us -->
-  <section class="relative not-prose scroll-mt-[72px]">
-    <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
-      <div class="absolute inset-0"></div>
-    </div>
-    <div
-      class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter intersect-no-queue mx-auto px-4 relative lg:py-20 md:px-6 md:py-16 py-12 text-default max-w-5xl"
-    >
-      <div class="text-center max-w-3xl mb-8 md:mb-12 md:mx-auto">
-        <p class="font-bold dark:text-blue-200 text-base text-secondary tracking-wide uppercase">
-          {featuresData.title}
+    <section class="cg-cta" aria-labelledby="cta-title">
+      <div class="cg-shell">
+        <h2 id="cta-title">Tell us what your team is trying to move.</h2>
+        <p>
+          We will help map the right entry point, whether that is search, an operational workflow, model routing, or
+          infrastructure.
         </p>
-        <h2 class="font-bold font-heading leading-tighter tracking-tighter md:text-4xl text-heading text-3xl">
-          {featuresData.subtitle}
-        </h2>
-        <p class="text-muted text-xl mt-4">{featuresData.description}</p>
-      </div>
-      <div class="mx-auto gap-8 grid md:gap-y-12 sm:grid-cols-2">
-        {
-          featuresData.items.map((feature) => (
-            <div class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0">
-              <div class="flex flex-row max-w-md">
-                <div class="flex justify-center">
-                  <svg
-                    class="rounded-full h-10 w-10 bg-primary md:h-12 md:p-3 md:w-12 mr-4 p-2 rtl:ml-4 rtl:mr-0 text-white"
-                    data-icon={`tabler:${feature.icon}`}
-                    height="1em"
-                    width="1em"
-                  >
-                    <use href={`#ai:tabler:${feature.icon}`} />
-                  </svg>
-                </div>
-                <div class="mt-0.5">
-                  <h3 class="font-bold text-xl md:text-[1.3rem]">{feature.title}</h3>
-                  <p class="text-muted mt-3">{feature.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats -->
-  <section class="relative not-prose scroll-mt-[72px]">
-    <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
-      <div class="absolute inset-0"></div>
-    </div>
-    <div
-      class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter intersect-no-queue mx-auto px-4 relative lg:py-20 md:px-6 md:py-16 py-12 text-default max-w-6xl"
-    >
-      <div class="flex justify-center -m-4 flex-wrap text-center">
-        {
-          statsData.items.map((stat) => (
-            <div class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter dark:md:border-slate-500 md:border-r md:last:border-none md:w-1/4 min-w-[220px] p-4 sm:w-1/2 text-center w-full">
-              <div class="font-bold dark:text-white font-heading lg:text-5xl text-[2.6rem] text-primary xl:text-6xl">
-                {stat.amount}
-              </div>
-              <div class="text-sm font-medium dark:text-slate-400 lg:text-base text-gray-800 tracking-widest uppercase">
-                {stat.title}
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- How It Works -->
-  <section class="py-16 bg-gray-50 dark:bg-gray-800">
-    <div class="container mx-auto px-4">
-      <div class="mx-auto max-w-3xl text-center mb-12">
-        <h2 class="font-bold dark:text-white mb-4 sm:text-4xl text-3xl tracking-tight">{howData.title}</h2>
-        <p class="dark:text-gray-300 text-gray-600 text-lg">{howData.subtitle}</p>
-      </div>
-      <div class="mx-auto gap-8 grid grid-cols-1 max-w-5xl md:grid-cols-3">
-        {
-          howData.steps.map((step) => (
-            <div class="text-center">
-              <div class="flex items-center justify-center mb-4 bg-blue-100 dark:bg-blue-900/30 h-16 mx-auto rounded-full w-16">
-                <span class="font-bold text-2xl dark:text-blue-400 text-blue-600">{step.number}</span>
-              </div>
-              <h3 class="font-bold dark:text-white mb-2 text-xl">{step.title}</h3>
-              <p class="dark:text-gray-300 text-gray-600">{step.desc}</p>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials -->
-  <section class="relative not-prose scroll-mt-[72px]">
-    <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
-      <div class="absolute inset-0"></div>
-    </div>
-    <div
-      class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter intersect-no-queue mx-auto px-4 relative lg:py-20 md:px-6 md:py-16 py-12 text-default max-w-6xl"
-    >
-      <div class="text-center max-w-3xl mb-8 md:mb-12 md:mx-auto">
-        <h2 class="font-bold font-heading leading-tighter tracking-tighter md:text-4xl text-heading text-3xl">
-          {testimonialsData.title}
-        </h2>
-      </div>
-      <div class="grid gap-6 lg:grid-cols-3 sm:grid-cols-2">
-        {
-          testimonialsData.items.map((item) => (
-            <div class="flex intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 h-auto">
-              <div class="flex flex-col dark:border dark:border-slate-600 dark:shadow-none md:p-6 p-4 rounded-md shadow-xl">
-                <blockquote class="flex-auto">
-                  <p class="text-muted">"{item.quote}"</p>
-                </blockquote>
-                <hr class="dark:border-slate-600 border-slate-200 my-4" />
-                <div class="flex items-center">
-                  {item.image ? (
-                    <div class="rounded-full h-10 w-10 border border-slate-200 dark:border-slate-600">
-                      <img
-                        alt={item.author}
-                        class="rounded-full h-10 w-10 border border-slate-200 dark:border-slate-600 min-h-full min-w-full"
-                        height="40"
-                        src={item.image}
-                        width="40"
-                        crossorigin="anonymous"
-                        decoding="async"
-                        loading="lazy"
-                        referrerpolicy="no-referrer"
-                        sizes="40px"
-                        srcset={`${item.image.replace('w=500', 'w=40')} 40w, ${item.image.replace('w=500', 'w=80')} 80w`}
-                        style="object-fit:cover;object-position:top left;width:40px;height:40px"
-                      />
-                    </div>
-                  ) : (
-                    <div class="rounded-full h-10 w-10 bg-gray-200 dark:bg-gray-700 flex items-center justify-center border border-slate-200 dark:border-slate-600">
-                      <span class="text-gray-400 dark:text-gray-500 text-sm">👤</span>
-                    </div>
-                  )}
-                  <div class="rtl:ml-0 grow ml-3 rtl:mr-3">
-                    <p class="font-semibold text-base">{item.author}</p>
-                    <p class="text-muted text-xs">{item.role}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="relative not-prose scroll-mt-[72px]">
-    <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
-      <div class="absolute inset-0"></div>
-    </div>
-    <div
-      class="intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter intersect-no-queue mx-auto px-4 relative lg:py-20 md:px-6 md:py-16 py-12 text-default max-w-6xl"
-    >
-      <div
-        class="mx-auto max-w-3xl text-center dark:border dark:border-slate-600 dark:shadow-none p-6 rounded-md shadow-xl"
-      >
-        <div class="text-center md:mx-auto mb-0 md:mb-0">
-          <h2
-            class="font-bold font-heading leading-tighter tracking-tighter md:text-4xl text-heading mb-4 text-4xl"
-            set:html={ctaData.title}
-          />
-          <p class="text-muted text-xl mt-4 dark:text-slate-400" set:html={ctaData.subtitle} />
-        </div>
-        <div class="flex flex-col flex-nowrap gap-4 m-auto max-w-xs sm:flex-row sm:justify-center sm:max-w-md mt-6">
-          <div class="flex w-full sm:w-auto">
-            <a class="w-full sm:mb-0 btn-primary" href="/contact">
-              {ctaData.primary}
-              <svg
-                class="h-5 w-5 -mr-1.5 inline-block ml-1 rtl:-ml-1.5 rtl:mr-1"
-                data-icon="tabler:rocket"
-                height="1em"
-                width="1em"
-              >
-                <use href="#ai:tabler:rocket"></use>
-              </svg>
-            </a>
-          </div>
-          <div class="flex w-full sm:w-auto">
-            <a class="w-full sm:mb-0 btn-secondary" href="/contact">
-              {ctaData.secondary}
-              <svg
-                class="h-5 w-5 -mr-1.5 inline-block ml-1 rtl:-ml-1.5 rtl:mr-1"
-                data-icon="tabler:phone"
-                height="1em"
-                width="1em"
-              >
-                <use href="#ai:tabler:phone"></use>
-              </svg>
-            </a>
-          </div>
+        <div class="cg-actions">
+          <a class="cg-button cg-button-primary" href="/contact">Contact CinaGroup</a>
+          <a class="cg-button cg-button-secondary" href="/pricing">View pricing</a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </Layout>
+
+<style>
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  .cg-home {
+    --cg-ink: #171717;
+    --cg-body: #4d4d4d;
+    --cg-muted: #888888;
+    --cg-hairline: #ebebeb;
+    --cg-canvas: #ffffff;
+    --cg-soft: #fafafa;
+    --cg-soft-2: #f5f5f5;
+    --cg-link: #0070f3;
+    color: var(--cg-ink);
+    background: var(--cg-soft);
+    font-family:
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      sans-serif;
+    font-feature-settings:
+      'ss01' 1,
+      'ss02' 1;
+  }
+
+  .cg-shell {
+    width: min(100% - 32px, 1200px);
+    margin: 0 auto;
+  }
+
+  .cg-hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--cg-canvas);
+    border-bottom: 1px solid var(--cg-hairline);
+  }
+
+  .cg-mesh {
+    position: absolute;
+    inset: 72px 0 auto;
+    height: 420px;
+    background:
+      linear-gradient(110deg, rgba(0, 124, 240, 0.28), rgba(0, 223, 216, 0.2) 28%, transparent 52%),
+      linear-gradient(145deg, transparent 24%, rgba(121, 40, 202, 0.24) 48%, rgba(255, 0, 128, 0.2) 68%),
+      linear-gradient(20deg, rgba(255, 77, 77, 0.18), rgba(249, 203, 40, 0.16), transparent 58%);
+    filter: blur(38px);
+    opacity: 0.9;
+    transform: translateY(-24px);
+  }
+
+  .cg-hero-shell {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 760px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 96px 0 80px;
+    text-align: center;
+  }
+
+  .cg-system-line,
+  .cg-mono {
+    margin: 0 0 16px;
+    color: var(--cg-muted);
+    font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0;
+  }
+
+  .cg-hero h1,
+  .cg-section h2,
+  .cg-dark-band h2,
+  .cg-cta h2 {
+    margin: 0;
+    max-width: 920px;
+    color: var(--cg-ink);
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .cg-hero-copy {
+    max-width: 710px;
+    margin: 24px 0 0;
+    color: var(--cg-body);
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .cg-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .cg-button {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+    padding: 0 18px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-decoration: none;
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease,
+      background 160ms ease;
+  }
+
+  .cg-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .cg-button:focus-visible,
+  .cg-scenario-copy a:focus-visible,
+  .cg-product-table a:focus-visible {
+    outline: 3px solid rgba(0, 112, 243, 0.35);
+    outline-offset: 4px;
+  }
+
+  .cg-button-primary {
+    background: var(--cg-ink);
+    color: #ffffff;
+  }
+
+  .cg-button-secondary {
+    border: 1px solid var(--cg-hairline);
+    background: var(--cg-canvas);
+    color: var(--cg-ink);
+    box-shadow:
+      0 1px 1px rgba(0, 0, 0, 0.02),
+      0 2px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  .cg-preview {
+    width: min(100%, 1040px);
+    margin-top: 72px;
+    overflow: hidden;
+    border: 1px solid var(--cg-hairline);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.86);
+    text-align: left;
+    box-shadow:
+      0 1px 1px rgba(0, 0, 0, 0.03),
+      0 8px 24px -16px rgba(0, 0, 0, 0.16),
+      inset 0 0 0 1px rgba(0, 0, 0, 0.02);
+    backdrop-filter: blur(18px);
+  }
+
+  .cg-preview-top,
+  .cg-product-title,
+  .cg-code-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid var(--cg-hairline);
+    padding: 12px 16px;
+    color: var(--cg-muted);
+    font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .cg-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cg-preview-grid article {
+    min-height: 230px;
+    padding: 28px;
+    border-right: 1px solid var(--cg-hairline);
+  }
+
+  .cg-preview-grid article:last-child {
+    border-right: 0;
+  }
+
+  .cg-preview-grid span {
+    color: var(--cg-link);
+    font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .cg-preview-grid strong {
+    display: block;
+    margin-top: 18px;
+    color: var(--cg-ink);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+  }
+
+  .cg-preview-grid p,
+  .cg-section-heading p,
+  .cg-scenario-copy p,
+  .cg-dark-band p,
+  .cg-cta p {
+    margin: 12px 0 0;
+    color: var(--cg-body);
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .cg-section {
+    padding: 96px 0;
+  }
+
+  .cg-section-white {
+    background: var(--cg-canvas);
+  }
+
+  .cg-section-soft {
+    background: var(--cg-soft);
+    border-top: 1px solid var(--cg-hairline);
+    border-bottom: 1px solid var(--cg-hairline);
+  }
+
+  .cg-section-heading {
+    max-width: 760px;
+    margin-bottom: 48px;
+  }
+
+  .cg-section h2,
+  .cg-dark-band h2,
+  .cg-cta h2 {
+    max-width: 760px;
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .cg-scenarios {
+    display: grid;
+    gap: 48px;
+  }
+
+  .cg-scenario {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    align-items: center;
+    gap: 64px;
+    padding: 48px 0;
+    border-top: 1px solid var(--cg-hairline);
+  }
+
+  .cg-scenario-reverse .cg-scenario-copy {
+    order: 2;
+  }
+
+  .cg-scenario h3 {
+    margin: 0;
+    color: var(--cg-ink);
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 40px;
+    letter-spacing: 0;
+  }
+
+  .cg-scenario-copy a {
+    display: inline-flex;
+    margin-top: 24px;
+    color: var(--cg-link);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 22px;
+    text-decoration: none;
+  }
+
+  .cg-scenario-copy a:hover {
+    text-decoration: underline;
+  }
+
+  .cg-product-frame {
+    overflow: hidden;
+    border: 1px solid var(--cg-hairline);
+    border-radius: 12px;
+    background: var(--cg-canvas);
+    box-shadow:
+      0 1px 1px rgba(0, 0, 0, 0.03),
+      0 8px 16px -12px rgba(0, 0, 0, 0.14),
+      inset 0 0 0 1px rgba(0, 0, 0, 0.02);
+  }
+
+  .cg-product-list {
+    display: grid;
+    gap: 0;
+    padding: 12px 0;
+  }
+
+  .cg-product-list div {
+    display: grid;
+    grid-template-columns: 12px 1fr;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--cg-hairline);
+    padding: 14px 18px;
+  }
+
+  .cg-product-list div:last-child {
+    border-bottom: 0;
+  }
+
+  .cg-product-list span {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #0070f3;
+  }
+
+  .cg-product-list code {
+    color: var(--cg-ink);
+    font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .cg-product-output {
+    margin: 0 16px 16px;
+    border-radius: 8px;
+    background: var(--cg-soft);
+    padding: 16px;
+    color: var(--cg-body);
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .cg-stack-layout {
+    display: grid;
+    grid-template-columns: 0.42fr 0.58fr;
+    gap: 72px;
+    align-items: start;
+  }
+
+  .cg-product-table {
+    border-top: 1px solid var(--cg-hairline);
+  }
+
+  .cg-product-table a {
+    display: grid;
+    grid-template-columns: 0.8fr 0.8fr 1.4fr;
+    gap: 24px;
+    border-bottom: 1px solid var(--cg-hairline);
+    padding: 20px 0;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .cg-product-table a:hover span:first-child {
+    color: var(--cg-link);
+  }
+
+  .cg-product-table span {
+    color: var(--cg-body);
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .cg-product-table span:first-child {
+    color: var(--cg-ink);
+    font-weight: 500;
+  }
+
+  .cg-dark-band {
+    background: var(--cg-ink);
+    color: #ffffff;
+    padding: 96px 0;
+  }
+
+  .cg-dark-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 64px;
+    align-items: center;
+  }
+
+  .cg-dark-band h2,
+  .cg-dark-band p {
+    color: #ffffff;
+  }
+
+  .cg-dark-band p {
+    max-width: 620px;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .cg-button-invert {
+    background: #ffffff;
+    color: var(--cg-ink);
+  }
+
+  .cg-button-dark-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: #ffffff;
+  }
+
+  .cg-code-panel {
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 12px;
+    background: #050505;
+    box-shadow:
+      0 1px 1px rgba(0, 0, 0, 0.28),
+      0 24px 48px -28px rgba(0, 0, 0, 0.72);
+  }
+
+  .cg-code-top {
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.52);
+  }
+
+  .cg-code-panel pre {
+    margin: 0;
+    overflow-x: auto;
+    padding: 28px;
+  }
+
+  .cg-code-panel code {
+    color: #ededed;
+    font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 13px;
+    line-height: 22px;
+  }
+
+  .cg-proof {
+    display: grid;
+    grid-template-columns: 0.42fr 0.58fr;
+    gap: 72px;
+  }
+
+  .cg-proof-list {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--cg-hairline);
+  }
+
+  .cg-proof-list p {
+    margin: 0;
+    border-bottom: 1px solid var(--cg-hairline);
+    padding: 20px 0;
+    color: var(--cg-body);
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .cg-cta {
+    border-top: 1px solid var(--cg-hairline);
+    background: var(--cg-soft);
+    padding: 96px 0;
+    text-align: center;
+  }
+
+  .cg-cta .cg-shell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cg-cta p {
+    max-width: 660px;
+  }
+
+  @media (max-width: 900px) {
+    .cg-hero-shell {
+      min-height: auto;
+      padding: 80px 0 64px;
+    }
+
+    .cg-hero h1 {
+      font-size: 40px;
+      line-height: 44px;
+    }
+
+    .cg-preview-grid,
+    .cg-scenario,
+    .cg-stack-layout,
+    .cg-dark-grid,
+    .cg-proof {
+      grid-template-columns: 1fr;
+    }
+
+    .cg-preview-grid article {
+      min-height: auto;
+      border-right: 0;
+      border-bottom: 1px solid var(--cg-hairline);
+    }
+
+    .cg-preview-grid article:last-child {
+      border-bottom: 0;
+    }
+
+    .cg-scenario,
+    .cg-dark-grid,
+    .cg-stack-layout,
+    .cg-proof {
+      gap: 32px;
+    }
+
+    .cg-scenario-reverse .cg-scenario-copy {
+      order: 0;
+    }
+
+    .cg-product-table a {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .cg-shell {
+      width: min(100% - 24px, 1200px);
+    }
+
+    .cg-hero h1 {
+      font-size: 36px;
+      line-height: 40px;
+    }
+
+    .cg-section h2,
+    .cg-dark-band h2,
+    .cg-cta h2,
+    .cg-scenario h3 {
+      font-size: 28px;
+      line-height: 34px;
+    }
+
+    .cg-section,
+    .cg-dark-band,
+    .cg-cta {
+      padding: 72px 0;
+    }
+
+    .cg-actions {
+      width: 100%;
+    }
+
+    .cg-button {
+      width: 100%;
+    }
+
+    .cg-preview {
+      margin-top: 48px;
+    }
+
+    .cg-preview-grid article {
+      padding: 22px;
+    }
+
+    .cg-code-panel pre {
+      padding: 22px;
+    }
+  }
+</style>
