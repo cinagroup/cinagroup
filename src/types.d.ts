@@ -3,6 +3,13 @@ import type { HTMLAttributes, ImageMetadata } from 'astro/types';
 import type { Lang } from './i18n';
 
 declare global {
+  interface Window {
+    awIntersectionObserver?: {
+      start(): void;
+      removeAnimationDelay(): void;
+    };
+  }
+
   namespace App {
     interface Locals {
       lang: Lang;
