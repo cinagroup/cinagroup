@@ -54,10 +54,9 @@ metadata:
 
 # Favicon configuration
 favicon:
-  path: '/favicon.svg'
-  # Use favicon SVG for consistency across browser tab and branding
-  apple: '/favicon.svg'
-  safari: '/favicon.svg'
+  path: '/logo.png'
+  apple: '/logo.png'
+  safari: '/logo.png'
 
 i18n:
   language: en
