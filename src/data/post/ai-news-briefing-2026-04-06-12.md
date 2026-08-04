@@ -7,7 +7,6 @@ category: "blog"
 summary: "OpenAI completes $122B funding at $852B valuation; Anthropic Claude Mythos 5 sparks new arms race; SpaceX-xAI merger integration accelerates"
 ---
 
-# OpenAI $122B · Claude Mythos 5 Arms Race · SpaceX-xAI Merger
 **2026-04-06 12:00** | Past 12 Hours Hot Topics
 
 ---

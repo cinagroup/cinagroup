@@ -14,8 +14,6 @@ tags:
 category: AI News
 ---
 
-# GPT-5 Gov't Intervention, Anthropic Alibaba Theft, DOJ Backs xAI — AI News Briefing
-
 **Published**: June 28, 2026 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-06-27 06:00 — 2026-06-28 06:00 CST
 

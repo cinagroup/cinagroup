@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Policy", "Enterprise", "OpenAI", "Education"]
 category: "blog"
 ---
 
-# OpenAI Shuts Down Sora · Disney Exits $1B Partnership
-
 **Published**: 2026-03-27 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-27 00:00 — 2026-03-27 12:00
 

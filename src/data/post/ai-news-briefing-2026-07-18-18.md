@@ -14,8 +14,6 @@ tags:
 category: AI News
 ---
 
-# LM Studio Bionic, Soofi S, Kaiser AI Surveillance — AI News Briefing
-
 **Published**: July 18, 2026 18:00 CST (Asia/Shanghai)
 **Coverage**: 2026-07-18 06:00 — 2026-07-18 18:00 CST
 

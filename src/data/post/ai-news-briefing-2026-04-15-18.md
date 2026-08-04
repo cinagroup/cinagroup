@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI Establishes New AI Safety Research Lab in Geneva · UK Proposes Mandatory AI Incident Reporting for Tech Companies
-
 **Published**: 2026-04-15 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-15 06:00 — 2026-04-15 18:00
 

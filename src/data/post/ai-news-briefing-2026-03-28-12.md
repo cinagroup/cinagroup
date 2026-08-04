@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Judge Blocks Pentagon Anthropic Blacklist
-
 **Published**: March 28, 2026 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-28 00:00 — 2026-03-28 12:00
 

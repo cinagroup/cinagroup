@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# DeepMind Solves Protein Folding for Entire Human Proteome · OpenAI Releases GPT-4.5 Turbo with 200K Context Window · Rep
-
 **Published**: 2026-04-21 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-20 18:00 — 2026-04-21 06:00
 

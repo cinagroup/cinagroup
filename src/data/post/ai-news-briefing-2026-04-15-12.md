@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Anthropic Releases Claude 4 Opus
-
 **Published**: 2026-04-15 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-15 06:00 — 2026-04-15 12:00
 

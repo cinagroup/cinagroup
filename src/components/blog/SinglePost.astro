@@ -13,6 +13,7 @@ export interface Props {
 }
 
 const { post } = Astro.props;
+const isAutomatedBriefing = post.slug.startsWith('ai-news-briefing-');
 ---
 
 <article class="cg-blog-post">
@@ -27,6 +28,17 @@ const { post } = Astro.props;
         {post.category && <><span aria-hidden="true"> / </span><a href={getPermalink(post.category.slug, 'category')}>{post.category.title}</a></>}
         {post.readingTime && <><span aria-hidden="true"> / </span><span>{post.readingTime} min read</span></>}
       </p>
+      {
+        isAutomatedBriefing && (
+          <aside class="cg-briefing-notice" aria-label="Automated briefing notice">
+            <strong>Automated briefing archive.</strong>
+            <span>
+              This item was generated from an automated news workflow and has not been independently verified by the
+              CinaGroup editorial team. Check primary sources before relying on any claim.
+            </span>
+          </aside>
+        )
+      }
     </div>
     {
       post.image && (

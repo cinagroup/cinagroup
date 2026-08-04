@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# LangGraph Enables Production-Ready Agentic Workflows · Nature Paper: AI Outperforms Humans in Scientific Literature Revi
-
 **Published**: 2026-04-11 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-11 06:00 — 2026-04-11 18:00
 

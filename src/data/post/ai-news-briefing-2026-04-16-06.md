@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# SAP Introduces Joule AI Copilot for Business Process Automation · Apache Foundation Accepts AI/ML Project Incubation Pip
-
 **Published**: 2026-04-16 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-15 18:00 — 2026-04-16 06:00
 

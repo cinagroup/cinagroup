@@ -7,8 +7,6 @@ category: "blog"
 excerpt: "48 hours 5 major models released; AAAI 2026 research hotspots; Open-source models continue to explode"
 ---
 
-# 5 Models in 48 Hours · AAAI 2026 Hotspots · Open-Source Surge
-
 > 12-hour AI industry digest
 
 ---

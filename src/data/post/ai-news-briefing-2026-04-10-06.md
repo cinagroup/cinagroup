@@ -7,8 +7,6 @@ category: "blog"
 excerpt: "OpenAI slams Anthropic to investors; Zhipu AI open-sources GLM-5.1; Google releases Gemma 4 series"
 ---
 
-# OpenAI vs Anthropic Memo · Zhipu GLM-5.1 Open-Source · Google Gemma 4
-
 > 12-hour AI industry digest
 
 ---

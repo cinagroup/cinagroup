@@ -14,8 +14,6 @@ tags:
 category: "AI News Briefing"
 ---
 
-# Musk v. Altman Trial Escalates, Oscars Ban AI from Acting Awards, Ask.com Shuts Down
-
 **Published**: 2026-05-03 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-05-02 18:00 — 2026-05-03 06:00
 

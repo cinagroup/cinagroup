@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# LangChain Ecosystem Reaches 5 Million Weekly Downloads · Perplexity AI Launches Enterprise Knowledge Assistant · Cerebra
-
 **Published**: 2026-04-22 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-21 18:00 — 2026-04-22 06:00
 

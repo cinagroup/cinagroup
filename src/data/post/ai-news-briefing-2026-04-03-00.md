@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# AI News Briefing
-
 **Date:** April 3, 2026  
 **Time:** 00:00 AM (Asia/Shanghai)  
 **Edition:** Daily Briefing #001

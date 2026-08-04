@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI Establishes New AI Safety Research Lab in Geneva · Berkeley Lab Creates AI for Real-Time Climate Modeling · DeepM
-
 **Published**: 2026-04-23 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-23 06:00 — 2026-04-23 18:00
 

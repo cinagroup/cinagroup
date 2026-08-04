@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# EU AI Act Enforcement Begins with First Compliance Audits · NIST Publishes Updated AI Risk Management Framework 2.0 · No
-
 **Published**: 2026-04-13 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-13 06:00 — 2026-04-13 18:00
 

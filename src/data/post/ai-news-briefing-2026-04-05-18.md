@@ -7,7 +7,6 @@ category: "blog"
 summary: "Anthropic releases 10T parameter Claude Mythos 5; OpenAI GPT-5.4 achieves OS-level autonomous execution; Google TurboQuant achieves 6x memory compression"
 ---
 
-# Claude Mythos 5 10T Parameters · GPT-5.4 OS Agent · TurboQuant 6x Compression
 **2026-04-05 18:00** | Past 12 Hours Hot Topics
 
 ---

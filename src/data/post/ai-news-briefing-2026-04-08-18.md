@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Anthropic Revenue $30B · 3.5 GW Compute Deal
-
 **Published**: 2026-04-08 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-08 06:00 — 2026-04-08 18:00
 

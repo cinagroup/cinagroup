@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Google TurboQuant · Kleiner Perkins $3.5B Fund · Harvey $11B
-
 **Published**: March 26, 2026 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-26 00:00 — 2026-03-26 12:00
 

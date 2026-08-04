@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Legal", "Healthcare", "Open Source", "Consumer AI
 category: "blog"
 ---
 
-# Musk v. Altman Trial Heats Up · Kimi K2.6 Beats Western Frontier Models
-
 **Published**: 2026-05-05 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-05-04 18:00 — 2026-05-05 06:00
 

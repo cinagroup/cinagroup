@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# China Blocks Meta's $2B Manus Acquisition · Musk Drops OpenAI Fraud Claims · Google Pours Up to $40B Into Anthropic
-
 **Published**: 2026-04-27 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-27 06:00 — 2026-04-27 18:00
 

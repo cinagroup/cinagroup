@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# AI Trainers Selling Personal Identities · Ethical Debate
-
 **Published**: March 23, 2026 00:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-22 12:00 — 2026-03-23 00:00
 

@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Anthropic Claude Mythos · Most Capable Model Can't Use It
-
 **Published**: April 12, 2026 00:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-11 12:00 — 2026-04-12 00:00
 

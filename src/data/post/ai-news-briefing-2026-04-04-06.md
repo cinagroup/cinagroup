@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Groq Launches Second-Generation LPU for Instant AI Responses · Replit Agent Expands to Multi-Agent Development Workflows
-
 **Published**: 2026-04-04 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-03 18:00 — 2026-04-04 06:00
 

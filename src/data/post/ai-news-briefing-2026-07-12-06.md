@@ -14,8 +14,6 @@ tags:
 category: AI News
 ---
 
-# OpenAI GPT-5.6 Sol, Apple Sues OpenAI, Meta's Paid AI Model
-
 **Published**: July 12, 2026 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-07-11 18:00 — 2026-07-12 06:00
 

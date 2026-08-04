@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Meta Releases Llama 5 with Multimodal Capabilities · Perplexity AI Launches Enterprise Knowledge Assistant · Ollama Adds
-
 **Published**: 2026-04-20 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-20 06:00 — 2026-04-20 18:00
 

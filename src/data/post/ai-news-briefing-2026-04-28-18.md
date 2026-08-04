@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Microsoft and OpenAI End Revenue-Sharing Deal · Alibaba Launches Qwen 3 · Huawei Targets Nvidia with New AI Chip
-
 **Published**: 2026-04-28 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-28 06:00 — 2026-04-28 18:00
 

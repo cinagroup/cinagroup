@@ -39,6 +39,7 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     sitemap({
+      filter: (page) => !page.includes('/blog/ai-news-briefing-'),
       i18n: {
         defaultLocale: 'en',
         locales: {

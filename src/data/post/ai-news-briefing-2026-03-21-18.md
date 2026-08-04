@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Enterprise", "Policy"]
 category: "blog"
 ---
 
-# Google Gemini Workspace Upgrade · EU AI Food Safety Tool
-
 **Published**: March 21, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-21 06:00 — 2026-03-21 18:00
 

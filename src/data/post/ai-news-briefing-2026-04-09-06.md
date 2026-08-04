@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Microsoft Launches Copilot Studio for Custom Enterprise Agents · OpenAI Establishes New AI Safety Research Lab in Geneva
-
 **Published**: 2026-04-09 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-08 18:00 — 2026-04-09 06:00
 

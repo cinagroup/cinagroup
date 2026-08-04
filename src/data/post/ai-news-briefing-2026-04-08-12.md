@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI $12.2B Funding · Anthropic $30B Revenue · Meta AGI Strategy
-
 **Published**: 2026-04-08 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-08 00:00 — 2026-04-08 12:00
 

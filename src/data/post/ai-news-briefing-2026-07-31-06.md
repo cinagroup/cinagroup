@@ -14,8 +14,6 @@ tags:
 category: AI News
 ---
 
-# 1,100+ AI Workers Demand Pacing, OpenAI Rogue Agent Exposed, Anthropic $15B Debt — AI News Briefing
-
 **Published**: July 31, 2026 06:00 CST (Asia/Shanghai)
 **Coverage**: 2026-07-30 18:00 — 2026-07-31 06:00 CST
 

@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Amazon Q Developer Adds Full Codebase Understanding · Groq Launches Second-Generation LPU for Instant AI Responses · Per
-
 **Published**: 2026-04-22 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-22 06:00 — 2026-04-22 18:00
 

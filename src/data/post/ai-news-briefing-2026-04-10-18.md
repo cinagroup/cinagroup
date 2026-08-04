@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Microsoft Autogen Adds Human-in-the-Loop Agent Coordination · OpenAI Releases GPT-4.5 Turbo with 200K Context Window · U
-
 **Published**: 2026-04-10 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-10 06:00 — 2026-04-10 18:00
 

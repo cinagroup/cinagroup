@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# 12 AI Models in One Week · Developer Cycles Compressed to Monthly
-
 **Published**: March 30, 2026 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-30 00:00 — 2026-03-30 12:00
 

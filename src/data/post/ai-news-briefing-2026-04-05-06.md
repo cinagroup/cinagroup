@@ -7,7 +7,6 @@ category: "blog"
 excerpt: "OpenAI completes $122B funding record; Microsoft announces $10B Japan AI infrastructure investment; Utah pioneers AI prescription renewals"
 ---
 
-# OpenAI $122B Record Funding · Microsoft $10B Japan AI · Utah AI Prescriptions
 **2026-04-05 06:00** | Past 12 Hours Hot Topics
 
 ---

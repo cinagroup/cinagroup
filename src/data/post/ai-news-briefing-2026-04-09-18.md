@@ -7,8 +7,6 @@ category: "blog"
 excerpt: "Anthropic releases Claude Mythos Preview; Meta releases Muse Spark; US-China AI confrontation escalates"
 ---
 
-# Claude Mythos Preview Zero-Days · Meta Muse Spark · US-China AI Confrontation
-
 > 12-hour AI industry digest
 
 ---

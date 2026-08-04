@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Replit Agent Expands to Multi-Agent Development Workflows · Midjourney v7 Introduces Consistent Character Generation · S
-
 **Published**: 2026-04-14 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-14 06:00 — 2026-04-14 18:00
 

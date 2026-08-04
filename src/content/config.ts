@@ -47,9 +47,15 @@ const metadataDefinition = () =>
     .optional();
 
 const postCollection = defineCollection({
-  // Publish only the reviewed editorial collection. Automated briefings in
-  // src/data/post remain available for internal review but are not public pages.
-  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/content/blog' }),
+  loader: glob({
+    pattern: ['content/blog/*.{md,mdx}', 'data/post/*.{md,mdx}'],
+    base: 'src',
+    generateId: ({ entry }) =>
+      entry
+        .split('/')
+        .pop()
+        ?.replace(/\.(md|mdx)$/i, '') || entry,
+  }),
   schema: z.object({
     publishDate: z.date(),
     updateDate: z.date().optional(),
@@ -57,6 +63,7 @@ const postCollection = defineCollection({
 
     title: z.string(),
     excerpt: z.string().optional(),
+    description: z.string().optional(),
     image: z.string().optional(),
 
     category: z.string().optional(),

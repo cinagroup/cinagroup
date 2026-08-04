@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Anthropic Security Lapse · Unreleased Model Details Exposed
-
 **Published**: March 29, 2026 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-28 18:00 — 2026-03-29 06:00
 

@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Musk v. Altman Trial Dominates Headlines · OpenAI Pivots to AWS · iOS 27 Brings AI Photo Editing
-
 **Published**: 2026-04-29 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-29 06:00 — 2026-04-29 18:00
 

@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Berkeley Lab Creates AI for Real-Time Climate Modeling · Perplexity AI Launches Enterprise Knowledge Assistant · LangCha
-
 **Published**: 2026-04-04 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-04 06:00 — 2026-04-04 18:00
 

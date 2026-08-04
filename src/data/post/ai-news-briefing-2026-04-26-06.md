@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI Releases GPT-5.5 'Spud' · DeepSeek V4 Launched · Google Bets $185B on AI Cloud
-
 **Published**: 2026-04-26 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-25 18:00 — 2026-04-26 06:00
 

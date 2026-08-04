@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI Shuts Down Sora · Abandons Disney $1B Deal
-
 **Published**: March 26, 2026 00:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-25 12:00 — 2026-03-26 00:00
 

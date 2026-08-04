@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# White House Light-Touch AI Framework · Congress Preemption
-
 **Published**: March 25, 2026 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-25 00:00 — 2026-03-25 12:00
 

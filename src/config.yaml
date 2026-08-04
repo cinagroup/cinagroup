@@ -106,4 +106,4 @@ analytics:
       token: null
 
 ui:
-  theme: 'light:only' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
+  theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"

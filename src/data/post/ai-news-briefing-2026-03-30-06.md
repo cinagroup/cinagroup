@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Mistral Secures $830M Debt Deal for Nvidia-Powered European Data Center OpenAI Shuts Down Sora, Redirects Compute to Hig
-
 **Published**: 2026-03-30 06:00 (Asia/Shanghai)
 **Coverage**: 2026-03-29 18:00 — 2026-03-30 06:00
 

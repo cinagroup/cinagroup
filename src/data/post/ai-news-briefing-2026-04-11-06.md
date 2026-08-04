@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# SAP Introduces Joule AI Copilot for Business Process Automation · GitHub Copilot Workspace Graduates to General Availabi
-
 **Published**: 2026-04-11 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-10 18:00 — 2026-04-11 06:00
 

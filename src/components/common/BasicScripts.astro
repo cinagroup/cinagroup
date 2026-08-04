@@ -9,12 +9,24 @@ import { UI } from 'astrowind:config';
 
   window.basic_script = true;
 
+  function syncThemeControls() {
+    const isDark = document.documentElement.classList.contains('dark');
+    const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+
+    document.querySelectorAll('[data-aw-toggle-color-scheme]').forEach((control) => {
+      control.setAttribute('aria-label', label);
+      control.setAttribute('aria-pressed', String(isDark));
+      control.setAttribute('title', label);
+    });
+  }
+
   function applyTheme(theme) {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
+    syncThemeControls();
   }
 
   const initTheme = function () {
@@ -138,6 +150,7 @@ import { UI } from 'astrowind:config';
 
       document.documentElement.classList.toggle('dark');
       localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      syncThemeControls();
     });
 
     attachEvent('[data-aw-social-share]', 'click', function (_, elem) {

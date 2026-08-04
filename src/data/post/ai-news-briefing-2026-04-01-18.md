@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI $122B Raise · IPO Preparation
-
 **Publish Time**: 2026-04-01 18:00 (Asia/Shanghai)  
 **Coverage Period**: 2026-04-01 06:00 — 2026-04-01 18:00
 

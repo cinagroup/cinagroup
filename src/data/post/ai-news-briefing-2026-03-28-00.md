@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Investment", "Apple", "Policy", "China"]
 category: "blog"
 ---
 
-# SoftBank $40B Bridge Loan for OpenAI
-
 **Published**: 2026-03-28 00:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-27 12:00 — 2026-03-28 00:00
 

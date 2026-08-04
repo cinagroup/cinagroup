@@ -7,7 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# AI News Briefing
 **April 4, 2026 - Midday Edition**
 
 ---

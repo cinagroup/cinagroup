@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Goldman Sachs $700B AI Capex Projection for 2026
-
 **Published**: March 22, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-22 06:00 — 2026-03-22 18:00
 

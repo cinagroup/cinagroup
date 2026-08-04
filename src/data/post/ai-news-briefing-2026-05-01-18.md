@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Shai-Hulud Malware Compromises PyTorch Lightning · Claude Code Blocks 'OpenClaw' Commits · Musk v. Altman Trial Enters Second Week
-
 **Published**: 2026-05-01 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-30 06:00 — 2026-05-01 18:00
 

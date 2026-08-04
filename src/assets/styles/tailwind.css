@@ -31,16 +31,18 @@
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center rounded-full border bg-white font-medium text-center text-base leading-6 transition py-3 px-6 ease-in duration-200 focus:ring-2 focus:ring-offset-2 cursor-pointer;
+    @apply inline-flex items-center justify-center rounded-full border font-medium text-center text-base leading-6 transition py-3 px-6 ease-in duration-200 focus:ring-2 focus:ring-offset-2 cursor-pointer;
+    background: var(--cg-canvas);
     color: var(--cg-ink);
     border-color: var(--cg-hairline);
     box-shadow: var(--cg-shadow-2);
   }
 
   .btn-primary {
-    @apply btn text-white shadow-none;
+    @apply btn shadow-none;
     background: var(--cg-ink);
     border-color: var(--cg-ink);
+    color: var(--cg-on-primary);
   }
 
   .btn-secondary {

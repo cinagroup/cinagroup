@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI ChatGPT + Codex + Browser Desktop Super App
-
 **Published**: March 25, 2026 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-24 18:00 — 2026-03-25 06:00
 

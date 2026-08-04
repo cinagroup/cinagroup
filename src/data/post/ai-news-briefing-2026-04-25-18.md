@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Nvidia Becomes First $5T Company · Meta Muse Spark AI Rolls Out · Anthropic Defense Lawsuit Widens
-
 **Published**: 2026-04-25 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-25 06:00 — 2026-04-25 18:00
 

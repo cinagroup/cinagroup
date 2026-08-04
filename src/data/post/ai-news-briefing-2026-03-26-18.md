@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI Shuts Down Sora · Google Personal Intelligence · iOS 26.4
-
 **Published**: 2026-03-26 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-26 06:00 — 2026-03-26 18:00
 

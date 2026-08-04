@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# EU AI Act Enforcement Begins with First Compliance Audits · Hugging Face Launches Open Model Hub with 100K+ Models · MIT
-
 **Published**: 2026-04-21 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-21 06:00 — 2026-04-21 18:00
 

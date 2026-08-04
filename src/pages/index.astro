@@ -318,6 +318,8 @@ const releaseCode = `workflow "support-review" {
     --cg-canvas: #ffffff;
     --cg-soft: #fafafa;
     --cg-soft-2: #f5f5f5;
+    --cg-on-primary: #ffffff;
+    --cg-surface-translucent: rgba(255, 255, 255, 0.86);
     --cg-link: #0070f3;
     color: var(--cg-ink);
     background: var(--cg-soft);
@@ -332,6 +334,19 @@ const releaseCode = `workflow "support-review" {
     font-feature-settings:
       'ss01' 1,
       'ss02' 1;
+  }
+
+  :global(.dark) .cg-home {
+    --cg-ink: #f5f5f5;
+    --cg-body: #b7b7b7;
+    --cg-muted: #8f8f8f;
+    --cg-hairline: #2a2a2a;
+    --cg-canvas: #0a0a0a;
+    --cg-soft: #111111;
+    --cg-soft-2: #171717;
+    --cg-on-primary: #0a0a0a;
+    --cg-surface-translucent: rgba(10, 10, 10, 0.86);
+    --cg-link: #52a8ff;
   }
 
   .cg-shell {
@@ -350,6 +365,11 @@ const releaseCode = `workflow "support-review" {
     position: absolute;
     inset: 0;
     pointer-events: none;
+  }
+
+  :global(.dark) .cg-hero-art {
+    opacity: 0.28;
+    filter: brightness(0.58) saturate(1.12);
   }
 
   .cg-hero-art :global(img) {
@@ -437,7 +457,7 @@ const releaseCode = `workflow "support-review" {
 
   .cg-button-primary {
     background: var(--cg-ink);
-    color: #ffffff;
+    color: var(--cg-on-primary);
   }
 
   .cg-button-secondary {
@@ -455,7 +475,7 @@ const releaseCode = `workflow "support-review" {
     overflow: hidden;
     border: 1px solid var(--cg-hairline);
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.86);
+    background: var(--cg-surface-translucent);
     text-align: left;
     box-shadow:
       0 1px 1px rgba(0, 0, 0, 0.03),
@@ -680,7 +700,7 @@ const releaseCode = `workflow "support-review" {
   }
 
   .cg-dark-band {
-    background: var(--cg-ink);
+    background: #171717;
     color: #ffffff;
     padding: 96px 0;
   }
@@ -704,7 +724,7 @@ const releaseCode = `workflow "support-review" {
 
   .cg-button-invert {
     background: #ffffff;
-    color: var(--cg-ink);
+    color: #171717;
   }
 
   .cg-button-dark-secondary {

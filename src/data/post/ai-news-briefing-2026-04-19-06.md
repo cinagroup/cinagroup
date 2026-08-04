@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# SAP Introduces Joule AI Copilot for Business Process Automation · LangChain Ecosystem Reaches 5 Million Weekly Downloads
-
 **Published**: 2026-04-19 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-18 18:00 — 2026-04-19 06:00
 

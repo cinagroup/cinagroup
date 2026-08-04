@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# EU AI Act Enforcement Begins with First Compliance Audits · Midjourney v7 Introduces Consistent Character Generation · M
-
 **Published**: 2026-04-07 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-06 18:00 — 2026-04-07 06:00
 

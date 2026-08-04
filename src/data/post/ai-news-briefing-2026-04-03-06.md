@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI Establishes New AI Safety Research Lab in Geneva · Replit Agent Expands to Multi-Agent Development Workflows · Ca
-
 **Published**: 2026-04-03 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-02 18:00 — 2026-04-03 06:00
 

@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Claude AI Agent Wipes Company Database in 9 Seconds · China Orders Meta to Unwind Manus Deal · Microsoft Cuts OpenAI Revenue Share
-
 **Published**: 2026-04-28 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-27 18:00 — 2026-04-28 06:00
 

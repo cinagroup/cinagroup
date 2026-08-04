@@ -18,6 +18,7 @@ const { post } = Astro.props;
 const image = (await findImage(post.image)) as ImageMetadata | undefined;
 
 const link = APP_BLOG?.post?.isEnabled ? getPermalink(post.permalink, 'post') : '';
+const isAutomatedBriefing = post.slug.startsWith('ai-news-briefing-');
 ---
 
 <article
@@ -65,6 +66,7 @@ const link = APP_BLOG?.post?.isEnabled ? getPermalink(post.permalink, 'post') : 
     <header>
       <div class="cg-blog-meta">
         <span>
+          {isAutomatedBriefing && <><span class="cg-blog-kind">Automated briefing</span>{' '}·{' '}</>}
           <time datetime={String(post.publishDate)} class="inline-block">{getFormattedDate(post.publishDate)}</time>
           {
             post.author && (

@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Meta Releases Llama 5 with Multimodal Capabilities · AWS Introduces Trainium3 Chips for Cost-Effective AI Training · Ora
-
 **Published**: 2026-04-14 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-13 18:00 — 2026-04-14 06:00
 

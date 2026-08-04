@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# SAP Introduces Joule AI Copilot for Business Process Automation · OpenAI Releases GPT-4.5 Turbo with 200K Context Window
-
 **Published**: 2026-04-18 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-18 06:00 — 2026-04-18 18:00
 

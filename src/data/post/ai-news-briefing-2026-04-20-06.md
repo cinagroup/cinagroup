@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Perplexity AI Launches Enterprise Knowledge Assistant · NIST Publishes Updated AI Risk Management Framework 2.0 · Apache
-
 **Published**: 2026-04-20 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-19 18:00 — 2026-04-20 06:00
 

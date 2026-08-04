@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# MIT Develops AI System That Learns from 10 Examples · TSMC Begins 2nm Production for Next-Gen AI Chips · Adobe Firefly 3
-
 **Published**: 2026-04-12 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-12 06:00 — 2026-04-12 18:00
 

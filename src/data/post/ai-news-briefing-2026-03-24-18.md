@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Apple WWDC 2026 June Date · AI Advancements Teased
-
 **Published**: March 24, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-24 06:00 — 2026-03-24 18:00
 

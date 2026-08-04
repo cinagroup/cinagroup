@@ -15,8 +15,6 @@ tags:
 category: "AI News Briefing"
 ---
 
-# Kimi K2.6 Beats Claude and GPT-5.5 in Coding Challenge, Uber Burns Full AI Budget on Claude Code, Anthropic Launches Enterprise Security Scanner
-
 **Published**: 2026-05-03 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-05-03 06:00 — 2026-05-03 18:00
 

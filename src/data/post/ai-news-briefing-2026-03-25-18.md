@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI Agentic Commerce Protocol · ChatGPT Visual Shopping
-
 **Published**: March 25, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-25 06:00 — 2026-03-25 18:00
 

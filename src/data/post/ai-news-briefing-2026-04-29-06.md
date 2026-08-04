@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Google Signs Classified AI Deal With Pentagon · China Blocks Meta-Manus Acquisition · Amazon Deploys Agentic Software for Mass Hiring
-
 **Published**: 2026-04-29 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-28 18:00 — 2026-04-29 06:00
 

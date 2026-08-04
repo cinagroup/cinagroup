@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# UK Proposes Mandatory AI Incident Reporting for Tech Companies · Notion AI Expands to Full Document Generation · SAP Int
-
 **Published**: 2026-04-13 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-12 18:00 — 2026-04-13 06:00
 

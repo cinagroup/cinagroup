@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Ex-OpenAI Researcher: AI Could Cause Human Extinction in 5 Years
-
 **Published**: March 29, 2026 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-29 00:00 — 2026-03-29 12:00
 

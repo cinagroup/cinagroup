@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Why OpenAI Killed Sora · Post-Mortem Analysis
-
 **Published**: March 29, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-29 06:00 — 2026-03-29 18:00
 

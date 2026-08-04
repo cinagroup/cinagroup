@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Google Gemini 2.0 Pro Excels at Scientific Reasoning Tasks · Nature Paper: AI Outperforms Humans in Scientific Literatur
-
 **Published**: 2026-04-23 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-22 18:00 — 2026-04-23 06:00
 

@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Claude Design Launches as Figma-Killer · GPT-Rosalind Enters Drug Discovery · Claude Opus 4.7 Routines Enable Autonomous Workflows
-
 **Published**: 2026-04-25 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-24 18:00 — 2026-04-25 06:00
 

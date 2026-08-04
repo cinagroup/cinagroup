@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# $7T AI Infrastructure Check · Meta Open-Source · Oracle 30K Layoffs
-
 **Published**: 2026-04-07 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-07 06:00 — 2026-04-07 18:00
 

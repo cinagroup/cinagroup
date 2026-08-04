@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Google DeepMind Releases Alignment Benchmark Suite · Alibaba Qwen-Max Surpasses GPT-4 in Chinese Language Tasks · Oracle
-
 **Published**: 2026-04-16 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-16 06:00 — 2026-04-16 18:00
 

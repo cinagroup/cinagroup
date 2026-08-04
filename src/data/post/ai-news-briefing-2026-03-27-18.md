@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Policy", "Enterprise", "Google", "Apple"]
 category: "blog"
 ---
 
-# EU AI Act Implementation Timeline
-
 **Published**: 2026-03-27 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-27 06:00 — 2026-03-27 18:00
 

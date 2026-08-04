@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI Agent SDK Simplifies Custom AI Agent Development · Google DeepMind Releases Alignment Benchmark Suite · Devin AI 
-
 **Published**: 2026-04-17 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-17 06:00 — 2026-04-17 18:00
 

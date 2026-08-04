@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Gartner Survey: 80% of CEOs Say AI Will Force Major Operational Overhauls Braze Launches BrazeAI Operator and Agent Cons
-
 **Published**: 2026-04-24 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-24 06:00 — 2026-04-24 18:00
 

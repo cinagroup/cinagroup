@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech", "Claude Code", "Open Source"]
 category: "blog"
 ---
 
-# Claude Code CLI Architecture · 35K+ Lines Code Analysis
-
 **Published**: 2026-04-02 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-02 06:00 — 2026-04-02 18:00
 

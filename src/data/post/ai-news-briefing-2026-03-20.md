@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Machine Learning", "Tech"]
 category: "blog"
 ---
 
-# GPT-5 Rumors · Stable Diffusion 3.5 · Chinese AI Funding Record
-
 **Published**: March 20, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-20 06:00 — 2026-03-20 18:00
 

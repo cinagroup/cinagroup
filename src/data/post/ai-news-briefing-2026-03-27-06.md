@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Policy", "Enterprise", "Chips"]
 category: "blog"
 ---
 
-# EU AI Act Delay · Meta Layoffs · Korea Chip Investment
-
 **Published**: 2026-03-27 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-26 18:00 — 2026-03-27 06:00
 

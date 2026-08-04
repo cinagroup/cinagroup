@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# AI News Briefing
-
 **Period:** March 31, 2026 00:00 - March 31, 2026 12:00 (Asia/Shanghai)  
 **Published:** March 31, 2026 12:00
 

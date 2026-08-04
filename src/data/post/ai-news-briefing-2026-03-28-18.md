@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "OpenAI", "Microsoft", "EU", "Tesla", "Apple", "Nv
 category: "blog"
 ---
 
-# GPT-4.5 Turbo · Microsoft $10B AI · EU AI Act · Tesla FSD V13
-
 **Published**: 2026-03-28 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-28 06:00 — 2026-03-28 18:00
 

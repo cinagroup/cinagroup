@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Mistral Large 2 Powers European Sovereign AI Initiative · EU AI Act Enforcement Begins with First Compliance Audits · Op
-
 **Published**: 2026-04-03 18:00 (Asia/Shanghai)
 **Coverage**: 2026-04-03 06:00 — 2026-04-03 18:00
 

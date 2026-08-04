@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI GPT-5.4 Thinking Model Launches
-
 **Published**: March 22, 2026 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-21 18:00 — 2026-03-22 06:00
 

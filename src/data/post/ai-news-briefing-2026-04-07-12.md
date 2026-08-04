@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Broadcom-Anthropic Chip · Anthropic Biotech $400M · Microsoft AI Models
-
 **Published**: 2026-04-07 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-07 00:00 — 2026-04-07 12:00
 

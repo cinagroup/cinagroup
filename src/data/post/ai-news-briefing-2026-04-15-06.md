@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Notion AI Expands to Full Document Generation · SAP Introduces Joule AI Copilot for Business Process Automation · EU AI 
-
 **Published**: 2026-04-15 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-14 18:00 — 2026-04-15 06:00
 

@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Policy", "Ethics", "Anthropic", "Wikipedia"]
 category: "blog"
 ---
 
-# Federal Judge Blocks Pentagon Anthropic Blacklist
-
 **Published**: 2026-03-28 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-28 00:00 — 2026-03-28 06:00
 

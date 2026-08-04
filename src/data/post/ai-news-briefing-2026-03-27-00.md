@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Policy", "Enterprise"]
 category: "blog"
 ---
 
-# EU Nude App Ban · AI Act Delay
-
 **Published**: March 27, 2026 00:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-26 12:00 — 2026-03-27 00:00
 

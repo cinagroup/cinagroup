@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Notion AI Expands to Full Document Generation · Apache Foundation Accepts AI/ML Project Incubation Pipeline · TSMC Begin
-
 **Published**: 2026-04-12 06:00 (Asia/Shanghai)
 **Coverage**: 2026-04-11 18:00 — 2026-04-12 06:00
 

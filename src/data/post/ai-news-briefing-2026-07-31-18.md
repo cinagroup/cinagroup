@@ -14,8 +14,6 @@ tags:
 category: AI News
 ---
 
-# Claude Breaches Real Firms in Tests, OpenAI Slashes Prices 80%, Apple Overtakes Nvidia — AI News Briefing
-
 **Published**: July 31, 2026 18:00 CST (Asia/Shanghai)
 **Coverage**: 2026-07-31 06:00 — 2026-07-31 18:00 CST
 

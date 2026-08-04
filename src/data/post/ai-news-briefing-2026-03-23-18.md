@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Cursor Kimi Integration · AI Coding Tool Controversy
-
 **Published**: March 23, 2026 18:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-23 06:00 — 2026-03-23 18:00
 

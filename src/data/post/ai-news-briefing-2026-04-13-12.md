@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# OpenAI $852B Valuation · Mythos Gated · Zhipu Open-Source
-
 **Published**: 2026-04-13 12:00 (Asia/Shanghai)  
 **Coverage**: 2026-04-13 00:00 — 2026-04-13 12:00
 

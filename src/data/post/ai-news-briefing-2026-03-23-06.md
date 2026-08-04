@@ -7,8 +7,6 @@ tags: ["AI", "News Briefing", "Tech"]
 category: "blog"
 ---
 
-# Cursor Admits Coding Model Built on Moonshot Kimi
-
 **Published**: March 23, 2026 06:00 (Asia/Shanghai)  
 **Coverage**: 2026-03-22 18:00 — 2026-03-23 06:00
 
