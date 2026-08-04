@@ -1,4 +1,4 @@
-import { access, readFile, readdir } from 'node:fs/promises';
+import { access, readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
@@ -6,6 +6,17 @@ const distDir = path.join(root, 'dist');
 const automatedSourceDir = path.join(root, 'src', 'data', 'post');
 const origin = 'https://cinagroup.com';
 const failures = [];
+const maxCssFileBytes = 64 * 1024;
+const requiredHeaderFragments = [
+  "Content-Security-Policy: default-src 'self'",
+  "frame-ancestors 'none'",
+  "form-action 'self' mailto:",
+  'Strict-Transport-Security: max-age=31536000',
+  'Cross-Origin-Opener-Policy: same-origin',
+  'X-Frame-Options: DENY',
+  'X-Content-Type-Options: nosniff',
+  'Cache-Control: public, max-age=31536000, immutable',
+];
 
 const attributeValue = (tag, name) => {
   const match = tag.match(new RegExp(`\\b${name}="([^"]*)"`, 'i'));
@@ -57,10 +68,26 @@ const targetExists = async (pathname) => {
   return (await Promise.all(candidates.map(exists))).some(Boolean);
 };
 
-const htmlFiles = (await walk(distDir)).filter((file) => file.endsWith('.html'));
+const distFiles = await walk(distDir);
+const htmlFiles = distFiles.filter((file) => file.endsWith('.html'));
+const cssFiles = distFiles.filter((file) => file.endsWith('.css'));
 const automatedSources = (await readdir(automatedSourceDir)).filter((file) => /\.mdx?$/.test(file));
 let automatedPages = 0;
 let checkedLinks = 0;
+let totalCssBytes = 0;
+
+const headersFile = await readFile(path.join(distDir, '_headers'), 'utf8');
+for (const fragment of requiredHeaderFragments) {
+  if (!headersFile.includes(fragment)) failures.push(`_headers: missing ${fragment}`);
+}
+
+for (const file of cssFiles) {
+  const bytes = (await stat(file)).size;
+  totalCssBytes += bytes;
+  if (bytes > maxCssFileBytes) {
+    failures.push(`${path.basename(file)}: ${bytes} CSS bytes exceeds ${maxCssFileBytes}-byte budget`);
+  }
+}
 
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
@@ -75,6 +102,22 @@ for (const file of htmlFiles) {
   if (!/<html\b[^>]*\blang="[^"]+"/i.test(html)) failures.push(`${route}: missing html lang`);
   if (themeToggleCount !== 1) failures.push(`${route}: expected one theme toggle, found ${themeToggleCount}`);
   if (/[�]|â€”|â€™|â€œ|â€|Ã./.test(html)) failures.push(`${route}: possible mojibake`);
+
+  if (/googletagmanager\.com|G-QYXR6DT2F0|type="text\/partytown"/i.test(html)) {
+    failures.push(`${route}: contains disabled analytics markup`);
+  }
+
+  for (const match of html.matchAll(/\s(?:src|srcset|action|poster)="(https?:\/\/[^\"]+)"/gi)) {
+    failures.push(`${route}: unexpected external resource ${match[1]}`);
+  }
+
+  for (const match of html.matchAll(/<link\b[^>]*>/gi)) {
+    const rel = attributeValue(match[0], 'rel')?.toLowerCase() ?? '';
+    const href = attributeValue(match[0], 'href') ?? '';
+    if (/\b(stylesheet|preload|prefetch|modulepreload|icon|manifest)\b/.test(rel) && /^https?:\/\//i.test(href)) {
+      failures.push(`${route}: unexpected external link resource ${href}`);
+    }
+  }
 
   if (route.startsWith('/blog/ai-news-briefing-')) {
     automatedPages += 1;
@@ -131,5 +174,5 @@ if (failures.length) {
 }
 
 console.log(
-  `Build audit passed: ${htmlFiles.length} HTML pages, ${automatedPages} automated briefings, ${checkedLinks} internal links.`
+  `Build audit passed: ${htmlFiles.length} HTML pages, ${automatedPages} automated briefings, ${checkedLinks} internal links, ${cssFiles.length} CSS files (${totalCssBytes} bytes).`
 );

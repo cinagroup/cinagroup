@@ -100,7 +100,9 @@ apps:
 analytics:
   vendors:
     googleAnalytics:
-      id: 'G-QYXR6DT2F0'
+      # External scripts are intentionally disabled in astro.config.ts. Keep this null
+      # until analytics is enabled together with consent and privacy controls.
+      id: null
     splitbee:
       enabled: false # Set to true and add token for Splitbee analytics
       token: null
