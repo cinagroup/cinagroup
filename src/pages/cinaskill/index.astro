@@ -1,351 +1,47 @@
 ---
-import Layout from '~/layouts/PageLayout.astro';
-import Hero from '~/components/widgets/Hero.astro';
-import Features from '~/components/widgets/Features.astro';
-import Content from '~/components/widgets/Content.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
-import Stats from '~/components/widgets/Stats.astro';
+import CinaProductPage from '~/components/CinaProductPage.astro';
 
 const metadata = {
-  title: 'CinaSkill — Robot Skills Marketplace & Development Platform',
-  description: 'Create, share, and discover robot skills. Extend your AI assistant with unlimited capabilities.',
+  title: 'CinaSkill — Package reusable capabilities for teams and assistants',
+  description: 'CinaSkill helps teams define, review, version, and reuse task-specific capabilities across products and workflows.',
 };
+
+const code = `skill "support-handoff" {
+  input    = "reviewed-case"
+  action   = "prepare-handoff"
+  owner    = "support-lead"
+  version  = "1.0"
+}`;
 ---
 
-<Layout metadata={metadata}>
-  <!-- Hero Section ******************* -->
-  <Hero
-    tagline="Skills Platform"
-    title={'Build, Share, <span class="text-pink-600 dark:text-pink-400">Monetize</span>'}
-    subtitle="CinaSkill is the ultimate platform for creating and discovering robot skills. Extend your AI assistant with unlimited capabilities or turn your skills into revenue."
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Browse Skills',
-        href: '#marketplace',
-        icon: 'tabler:search',
-      },
-      { 
-        text: 'Start Building', 
-        href: '#create',
-        icon: 'tabler:code',
-      },
-    ]}
-    image={{ 
-      src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', 
-      alt: 'CinaSkill Development Platform' 
-    }}
-  />
-
-  <!-- Stats Section ****************** -->
-  <Stats
-    stats={[
-      { title: 'Skills Available', amount: '1,000+' },
-      { title: 'Active Developers', amount: '500+' },
-      { title: 'Total Downloads', amount: '100K+' },
-      { title: 'Revenue Paid Out', amount: '$50K+' },
-    ]}
-  />
-
-  <!-- Features Section *************** -->
-  <Features
-    id="features"
-    tagline="Platform Features"
-    title="Everything for Skill Creators"
-    subtitle="Powerful tools to build, publish, and monetize your skills"
-    items={[
-      {
-        title: 'Skill Development Framework',
-        description: 'Comprehensive SDK with templates, examples, and debugging tools. Build skills in Python, JavaScript, or any language.',
-        icon: 'tabler:code',
-      },
-      {
-        title: 'Skill Marketplace',
-        description: 'Publish your skills to our marketplace. Reach thousands of users and businesses looking for solutions.',
-        icon: 'tabler:shopping-cart',
-      },
-      {
-        title: 'Version Management',
-        description: 'Git-like version control for skills. Rollback, branch, and manage updates seamlessly.',
-        icon: 'tabler:git-branch',
-      },
-      {
-        title: 'Revenue Sharing',
-        description: 'Earn 70% revenue share on paid skills. Monthly payouts via PayPal, bank transfer, or crypto.',
-        icon: 'tabler:wallet',
-      },
-      {
-        title: 'Analytics Dashboard',
-        description: 'Track downloads, active users, ratings, and revenue. Understand what makes your skill successful.',
-        icon: 'tabler:chart-bar',
-      },
-      {
-        title: 'Community & Support',
-        description: 'Join developer community, share knowledge, get help, and collaborate on projects.',
-        icon: 'tabler:users',
-      },
-    ]}
-  />
-
-  <!-- Marketplace Preview ************ -->
-  <section id="marketplace" class="py-16 bg-gray-50 dark:bg-gray-800">
-    <div class="container mx-auto px-4">
-      <div class="text-center max-w-3xl mx-auto mb-12">
-        <h2 class="text-3xl font-bold tracking-tight dark:text-white sm:text-4xl mb-4">
-          Featured Skills
-        </h2>
-        <p class="text-lg text-gray-600 dark:text-gray-300">
-          Discover popular skills created by our community
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        <!-- Skill Card 1 -->
-        <div class="bg-white dark:bg-gray-700 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mr-4">
-              <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-bold dark:text-white">Payment Processor</h3>
-              <p class="text-sm text-gray-500 dark:text-gray-400">by @DevMaster</p>
-            </div>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
-            Accept payments via Stripe, PayPal, and crypto. Perfect for e-commerce bots.
-          </p>
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-500 dark:text-gray-400">⬇️ 5.2K downloads</span>
-            <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-xs font-medium rounded-full">Free</span>
-          </div>
-        </div>
-
-        <!-- Skill Card 2 -->
-        <div class="bg-white dark:bg-gray-700 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mr-4">
-              <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-bold dark:text-white">Video Downloader</h3>
-              <p class="text-sm text-gray-500 dark:text-gray-400">by @MediaBot</p>
-            </div>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
-            Download videos from YouTube, Bilibili, TikTok with quality selection.
-          </p>
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-500 dark:text-gray-400">⬇️ 8.7K downloads</span>
-            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-medium rounded-full">¥9.99</span>
-          </div>
-        </div>
-
-        <!-- Skill Card 3 -->
-        <div class="bg-white dark:bg-gray-700 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mr-4">
-              <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-bold dark:text-white">Weather Alerts</h3>
-              <p class="text-sm text-gray-500 dark:text-gray-400">by @WeatherPro</p>
-            </div>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
-            Real-time weather updates, severe weather alerts, and forecasts.
-          </p>
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-500 dark:text-gray-400">⬇️ 12K downloads</span>
-            <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-xs font-medium rounded-full">Free</span>
-          </div>
-        </div>
-
-        <!-- Skill Card 4 -->
-        <div class="bg-white dark:bg-gray-700 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center mr-4">
-              <svg class="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-bold dark:text-white">Stock Tracker</h3>
-              <p class="text-sm text-gray-500 dark:text-gray-400">by @FinanceBot</p>
-            </div>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
-            Track stocks, crypto, set price alerts, and get market news.
-          </p>
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-500 dark:text-gray-400">⬇️ 6.3K downloads</span>
-            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-medium rounded-full">¥19.99</span>
-          </div>
-        </div>
-
-        <!-- Skill Card 5 -->
-        <div class="bg-white dark:bg-gray-700 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-pink-100 dark:bg-pink-900/30 rounded-lg flex items-center justify-center mr-4">
-              <svg class="w-6 h-6 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-bold dark:text-white">Image Generator</h3>
-              <p class="text-sm text-gray-500 dark:text-gray-400">by @AIArtist</p>
-            </div>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
-            Generate images from text using Stable Diffusion and DALL-E.
-          </p>
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-500 dark:text-gray-400">⬇️ 15K downloads</span>
-            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-medium rounded-full">¥29.99</span>
-          </div>
-        </div>
-
-        <!-- Skill Card 6 -->
-        <div class="bg-white dark:bg-gray-700 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center mr-4">
-              <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-bold dark:text-white">Language Tutor</h3>
-              <p class="text-sm text-gray-500 dark:text-gray-400">by @EduBot</p>
-            </div>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
-            Learn languages with AI-powered lessons, practice, and corrections.
-          </p>
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-500 dark:text-gray-400">⬇️ 9.1K downloads</span>
-            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-medium rounded-full">¥14.99</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="text-center mt-8">
-        <a href="#" class="inline-flex items-center px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white font-medium rounded-lg transition-colors">
-          View All Skills
-          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- How to Create ****************** -->
-  <Content
-    isReversed
-    id="create"
-    tagline="For Developers"
-    title="Create Your First Skill"
-    items={[
-      {
-        title: 'Install SDK',
-        description: 'Get started with our comprehensive SDK. Available for Python, JavaScript, and more.',
-        icon: 'tabler:download',
-      },
-      {
-        title: 'Build Skill',
-        description: 'Follow tutorials and examples. Use templates to accelerate development.',
-        icon: 'tabler:code',
-      },
-      {
-        title: 'Publish & Earn',
-        description: 'Submit to marketplace, set your price, and start earning from day one.',
-        icon: 'tabler:currency-dollar',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
-      alt: 'Skill Development',
-    }}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
-        Developer-Friendly Platform
-      </h3>
-      <p class="text-gray-600 dark:text-gray-300 mb-4">
-        Whether you're a seasoned developer or just starting, CinaSkill provides everything you need.
-      </p>
-      <div class="bg-gray-800 dark:bg-gray-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
-        <code class="text-green-400"># Install SDK</code><br>
-        <span class="text-white">npm install @cinaskill/sdk</span><br><br>
-        <code class="text-green-400"># Create skill</code><br>
-        <span class="text-white">cinaskill create my-first-skill</span><br><br>
-        <code class="text-green-400"># Deploy</code><br>
-        <span class="text-white">cinaskill deploy</span>
-      </div>
-    </Fragment>
-  </Content>
-
-  <!-- Monetization ******************* -->
-  <section class="py-16 bg-white dark:bg-gray-900">
-    <div class="container mx-auto px-4">
-      <div class="text-center max-w-3xl mx-auto mb-12">
-        <h2 class="text-3xl font-bold tracking-tight dark:text-white sm:text-4xl mb-4">
-          Earn From Your Skills
-        </h2>
-        <p class="text-lg text-gray-600 dark:text-gray-300">
-          Turn your coding skills into passive income
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        <div class="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
-          <div class="text-4xl mb-4">💰</div>
-          <h3 class="font-bold dark:text-white mb-2">70% Revenue Share</h3>
-          <p class="text-gray-600 dark:text-gray-300 text-sm">Keep 70% of every sale. We handle payments, support, and distribution.</p>
-        </div>
-        <div class="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
-          <div class="text-4xl mb-4">📊</div>
-          <h3 class="font-bold dark:text-white mb-2">Transparent Analytics</h3>
-          <p class="text-gray-600 dark:text-gray-300 text-sm">Track sales, downloads, and earnings in real-time dashboard.</p>
-        </div>
-        <div class="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
-          <div class="text-4xl mb-4">💸</div>
-          <h3 class="font-bold dark:text-white mb-2">Monthly Payouts</h3>
-          <p class="text-gray-600 dark:text-gray-300 text-sm">Get paid monthly via PayPal, bank transfer, or cryptocurrency.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Call to Action *************** -->
-  <CallToAction
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Start Building Free',
-        href: '#',
-        icon: 'tabler:rocket',
-      },
-      {
-        variant: 'secondary',
-        text: 'Browse Marketplace',
-        href: '#marketplace',
-        icon: 'tabler:search',
-      },
-    ]}
-  >
-    <Fragment slot="title">
-      Ready to <span class="text-pink-600 dark:text-pink-400">Create</span> Your Skill?
-    </Fragment>
-
-    <Fragment slot="subtitle">
-      Join 500+ developers earning from their skills. <br class="hidden md:inline" />
-      Start building today, it's completely free.
-    </Fragment>
-  </CallToAction>
-</Layout>
+<CinaProductPage
+  {metadata}
+  eyebrow="CinaSkill / reusable capabilities."
+  title="Package repeatable capabilities without hiding their boundaries."
+  lead="CinaSkill helps teams define, review, version, and reuse task-specific capabilities across products, assistants, and operational workflows."
+  primary={{ text: 'Plan a skill workflow', href: '/contact' }}
+  secondary={{ text: 'View the full stack', href: '/' }}
+  capabilities={[
+    { label: 'Define.', title: 'Give each skill one clear job.', description: 'Document the inputs, action, output, and operating boundary before packaging the capability.' },
+    { label: 'Review.', title: 'Inspect behavior before reuse.', description: 'Make permissions, dependencies, and review points visible to the teams adopting the skill.' },
+    { label: 'Version.', title: 'Change capabilities deliberately.', description: 'Track compatible changes and preserve a stable contract for the workflows that depend on them.' },
+    { label: 'Compose.', title: 'Combine small skills into workflows.', description: 'Reuse focused capabilities across products without turning one skill into an opaque all-purpose agent.' },
+    { label: 'Own.', title: 'Keep responsibility visible.', description: 'Assign maintainers and support expectations so reusable capabilities do not become abandoned dependencies.' },
+    { label: 'Measure.', title: 'Learn from real workflow use.', description: 'Use adoption, failures, and review feedback to improve the skill where it matters.' },
+  ]}
+  workflowTitle="Move from a task boundary to a reusable capability."
+  workflowLead="A useful skill is small enough to understand, explicit enough to review, and stable enough to reuse."
+  workflow={[
+    { title: 'Define the contract', description: 'Specify the inputs, output, permissions, and owner for one task.' },
+    { title: 'Test the behavior', description: 'Exercise representative cases and confirm the review and failure paths.' },
+    { title: 'Package and version', description: 'Publish the capability with a stable contract and clear compatibility notes.' },
+    { title: 'Adopt and observe', description: 'Use the skill in a real workflow and improve it from operator feedback.' },
+  ]}
+  codeLabel="Skill contract."
+  {code}
+  principles={[
+    { title: 'Small by design.', description: 'A skill should solve one task well and compose cleanly with other capabilities.' },
+    { title: 'Reviewable by default.', description: 'Permissions, dependencies, and expected behavior stay visible to adopters.' },
+    { title: 'Owned over time.', description: 'Versioning and maintenance responsibility are part of the product surface.' },
+  ]}
+/>

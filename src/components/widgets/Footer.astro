@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import { SITE } from 'astrowind:config';
 import { getHomePermalink } from '~/utils/permalinks';
+import { changeLangPath, getLangFromUrl, getLocalizedLabel } from '~/i18n';
 
 interface Link {
   text?: string;
@@ -24,6 +25,25 @@ export interface Props {
 }
 
 const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme = 'light' } = Astro.props;
+const currentLang = getLangFromUrl(Astro.url);
+const homeHref = changeLangPath(new URL('/', Astro.url), currentLang);
+const localizedFooterPaths = new Set([
+  '/',
+  '/cinaseek',
+  '/cinaclaw',
+  '/cinatoken',
+  '/cinaskill',
+  '/cinachain',
+  '/contact',
+  '/pricing',
+  '/services',
+]);
+const localizeFooterHref = (href?: string) => {
+  if (!href || currentLang === 'en' || !href.startsWith('/') || href.startsWith('//')) return href;
+  const [path, hash = ''] = href.split('#');
+  if (!localizedFooterPaths.has(path || '/')) return href;
+  return `/${currentLang}${path === '/' ? '' : path}${hash ? `#${hash}` : ''}`;
+};
 ---
 
 <footer class:list={[{ dark: theme === 'dark' }, 'relative border-t border-gray-200 dark:border-slate-800 not-prose']}>
@@ -34,7 +54,7 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
     <div class="grid grid-cols-12 gap-4 gap-y-8 sm:gap-8 py-8 md:py-12">
       <div class="col-span-12 lg:col-span-4">
         <div class="mb-2">
-          <a class="inline-block font-bold text-xl" href={getHomePermalink()}>{SITE?.name}</a>
+          <a class="inline-block font-bold text-xl" href={homeHref || getHomePermalink()}>{SITE?.name}</a>
         </div>
         <div class="text-sm text-muted flex gap-1">
           {
@@ -43,8 +63,8 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
                 {index !== 0 ? ' · ' : ''}
                 <a
                   class="text-muted hover:text-gray-700 dark:text-gray-400 hover:underline transition duration-150 ease-in-out"
-                  href={href}
-                  set:html={text}
+                  href={localizeFooterHref(href)}
+                  set:html={getLocalizedLabel(currentLang, text)}
                 />
               </>
             ))
@@ -54,17 +74,17 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
       {
         links.map(({ title, links }) => (
           <div class="col-span-6 md:col-span-3 lg:col-span-2">
-            <div class="dark:text-gray-300 font-medium mb-2">{title}</div>
+            <div class="dark:text-gray-300 font-medium mb-2">{getLocalizedLabel(currentLang, title)}</div>
             {links && Array.isArray(links) && links.length > 0 && (
               <ul class="text-sm">
                 {links.map(({ text, href, ariaLabel }) => (
                   <li class="mb-2">
                     <a
                       class="text-muted hover:text-gray-700 hover:underline dark:text-gray-400 transition duration-150 ease-in-out"
-                      href={href}
+                      href={localizeFooterHref(href)}
                       aria-label={ariaLabel}
                     >
-                      <Fragment set:html={text} />
+                      <Fragment set:html={getLocalizedLabel(currentLang, text)} />
                     </a>
                   </li>
                 ))}

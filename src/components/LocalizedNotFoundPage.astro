@@ -1,0 +1,90 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+type Locale = 'en' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+
+const copy = {
+  en: {
+    title: 'Page not found',
+    eyebrow: '404 / route not found.',
+    heading: 'This page is not available.',
+    lead: 'The address may have changed, or the page may no longer be public. Start from the product overview or contact us if you expected something here.',
+    home: 'Back to home',
+    contact: 'Contact CinaGroup',
+  },
+  ja: {
+    title: 'ページが見つかりません',
+    eyebrow: '404 / ページが見つかりません。',
+    heading: 'このページは利用できません。',
+    lead: 'アドレスが変更されたか、ページが公開されていない可能性があります。製品一覧に戻るか、必要な情報がある場合はお問い合わせください。',
+    home: 'ホームに戻る',
+    contact: 'お問い合わせ',
+  },
+  ko: {
+    title: '페이지를 찾을 수 없습니다',
+    eyebrow: '404 / 경로를 찾을 수 없습니다.',
+    heading: '이 페이지는 사용할 수 없습니다.',
+    lead: '주소가 변경되었거나 페이지가 더 이상 공개되지 않을 수 있습니다. 제품 개요로 돌아가거나 필요한 정보가 있다면 문의해 주세요.',
+    home: '홈으로 돌아가기',
+    contact: 'CinaGroup 문의',
+  },
+  ru: {
+    title: 'Страница не найдена',
+    eyebrow: '404 / маршрут не найден.',
+    heading: 'Эта страница недоступна.',
+    lead: 'Адрес мог измениться, или страница больше не опубликована. Вернитесь к обзору продуктов или свяжитесь с нами, если ожидали найти здесь материал.',
+    home: 'На главную',
+    contact: 'Связаться с CinaGroup',
+  },
+  es: {
+    title: 'Página no encontrada',
+    eyebrow: '404 / ruta no encontrada.',
+    heading: 'Esta página no está disponible.',
+    lead: 'La dirección puede haber cambiado o la página ya no es pública. Vuelva al resumen de productos o contáctenos si esperaba encontrar algo aquí.',
+    home: 'Volver al inicio',
+    contact: 'Contactar con CinaGroup',
+  },
+  pt: {
+    title: 'Página não encontrada',
+    eyebrow: '404 / rota não encontrada.',
+    heading: 'Esta página não está disponível.',
+    lead: 'O endereço pode ter mudado ou a página pode não ser mais pública. Volte ao resumo de produtos ou entre em contato se esperava encontrar algo aqui.',
+    home: 'Voltar ao início',
+    contact: 'Falar com a CinaGroup',
+  },
+  fr: {
+    title: 'Page introuvable',
+    eyebrow: '404 / route introuvable.',
+    heading: 'Cette page n’est pas disponible.',
+    lead: 'L’adresse a peut-être changé ou la page n’est plus publique. Revenez à la présentation des produits ou contactez-nous si vous attendiez un contenu ici.',
+    home: 'Retour à l’accueil',
+    contact: 'Contacter CinaGroup',
+  },
+} satisfies Record<Locale, Record<string, string>>;
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const content = copy[lang];
+const prefix = lang === 'en' ? '' : `/${lang}`;
+---
+
+<Layout metadata={{ title: content.title }}>
+  <div class="cg-page">
+    <section class="cg-page-hero" aria-labelledby="not-found-title">
+      <div class="cg-page-shell">
+        <div class="cg-page-hero-copy">
+          <p class="cg-eyebrow">{content.eyebrow}</p>
+          <h1 id="not-found-title">{content.heading}</h1>
+          <p class="cg-page-lead">{content.lead}</p>
+          <div class="cg-page-actions">
+            <a class="cg-page-button cg-page-button-primary" href={prefix || '/'}>{content.home}</a>
+            <a class="cg-page-button" href={`${prefix}/contact`}>{content.contact}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

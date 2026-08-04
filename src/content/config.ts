@@ -47,7 +47,9 @@ const metadataDefinition = () =>
     .optional();
 
 const postCollection = defineCollection({
-  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/post' }),
+  // Publish only the reviewed editorial collection. Automated briefings in
+  // src/data/post remain available for internal review but are not public pages.
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/content/blog' }),
   schema: z.object({
     publishDate: z.date(),
     updateDate: z.date().optional(),

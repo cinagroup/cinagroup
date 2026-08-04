@@ -1,0 +1,136 @@
+---
+import CinaPageHero from '~/components/CinaPageHero.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import type { MetaData } from '~/types';
+
+export interface Props {
+  metadata: MetaData;
+  eyebrow: string;
+  title: string;
+  lead: string;
+  primary: { text: string; href: string };
+  secondary?: { text: string; href: string };
+  capabilities: Array<{ label: string; title: string; description: string }>;
+  workflow: Array<{ title: string; description: string }>;
+  workflowTitle: string;
+  workflowLead: string;
+  codeLabel: string;
+  code: string;
+  principles: Array<{ title: string; description: string }>;
+}
+
+const {
+  metadata,
+  eyebrow,
+  title,
+  lead,
+  primary,
+  secondary,
+  capabilities,
+  workflow,
+  workflowTitle,
+  workflowLead,
+  codeLabel,
+  code,
+  principles,
+} = Astro.props;
+---
+
+<Layout metadata={metadata}>
+  <div class="cg-page">
+    <CinaPageHero {eyebrow} {title} {lead} {primary} {secondary} />
+
+    <section class="cg-page-section" aria-labelledby="capabilities-title">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">Capabilities.</p>
+          <h2 id="capabilities-title">A focused layer for the work your team needs to finish.</h2>
+          <p>
+            Start with the smallest useful workflow, keep its boundaries visible, and expand only when the work calls
+            for it.
+          </p>
+        </div>
+        <div class="cg-card-grid">
+          {
+            capabilities.map((item) => (
+              <article class="cg-card">
+                <p class="cg-card-meta">{item.label}</p>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="cg-page-section cg-page-section-soft" aria-labelledby="workflow-title">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">Workflow.</p>
+          <h2 id="workflow-title">{workflowTitle}</h2>
+          <p>{workflowLead}</p>
+        </div>
+        <div class="cg-list-panel">
+          {
+            workflow.map((item, index) => (
+              <div class="cg-list-row">
+                <strong>
+                  {String(index + 1).padStart(2, '0')} / {item.title}
+                </strong>
+                <span>{item.description}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="cg-page-section cg-page-section-dark" aria-labelledby="technical-title">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">{codeLabel}</p>
+          <h2 id="technical-title">Keep the implementation understandable.</h2>
+          <p>Use explicit inputs, review points, and outputs so the system is easier to operate and change.</p>
+        </div>
+        <pre class="cg-code-panel"><code>{code}</code></pre>
+      </div>
+    </section>
+
+    <section class="cg-page-section" aria-labelledby="principles-title">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading cg-section-heading-center">
+          <p class="cg-eyebrow">Operating principles.</p>
+          <h2 id="principles-title">Built for practical adoption.</h2>
+        </div>
+        <div class="cg-card-grid">
+          {
+            principles.map((item) => (
+              <article class="cg-card">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="cg-page-section cg-page-section-soft" aria-labelledby="product-cta-title">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading cg-section-heading-center">
+          <p class="cg-eyebrow">Next step.</p>
+          <h2 id="product-cta-title">Map this product to one real workflow.</h2>
+          <p>
+            Tell us the work, systems, constraints, and review points your team already has. We will help identify a
+            sensible starting scope.
+          </p>
+          <div class="cg-page-actions">
+            <a class="cg-page-button cg-page-button-primary" href="/contact">Plan a workflow</a>
+            <a class="cg-page-button" href="/">View the product stack</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

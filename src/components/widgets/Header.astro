@@ -7,7 +7,7 @@ import Button from '~/components/ui/Button.astro';
 
 import { trimSlash } from '~/utils/permalinks';
 import type { CallToAction } from '~/types';
-import { changeLangPath, getLangFromUrl, languages, type Lang } from '~/i18n';
+import { changeLangPath, getLangFromUrl, getLocalizedLabel, languages, type Lang } from '~/i18n';
 
 interface Link {
   text?: string;
@@ -136,7 +136,7 @@ const localizeHeaderHref = (href?: string) => {
                     aria-controls={`header-dropdown-${linkIndex}`}
                     data-aw-dropdown-toggle
                   >
-                    {text}{' '}
+                    {getLocalizedLabel(currentLang, text)}{' '}
                     <Icon
                       name="tabler:chevron-down"
                       class="w-3.5 h-3.5 ml-0.5 rtl:ml-0 rtl:mr-0.5"
@@ -159,7 +159,7 @@ const localizeHeaderHref = (href?: string) => {
                             ]}
                             href={localizedHref}
                           >
-                            {text2}
+                            {getLocalizedLabel(currentLang, text2)}
                           </a>
                         </li>
                       );
@@ -174,7 +174,7 @@ const localizeHeaderHref = (href?: string) => {
                   ]}
                   href={localizeHeaderHref(href)}
                 >
-                  {text}
+                  {getLocalizedLabel(currentLang, text)}
                 </a>
               )}
             </li>
@@ -280,7 +280,11 @@ const localizeHeaderHref = (href?: string) => {
           actions?.length ? (
             <span class="ml-4 rtl:ml-0 rtl:mr-4">
               {actions.map((btnProps) => (
-                <Button {...btnProps} class="ml-2 py-2.5 px-5.5 md:px-6 font-semibold shadow-none text-sm w-auto" />
+                <Button
+                  {...btnProps}
+                  text={getLocalizedLabel(currentLang, btnProps.text)}
+                  class="ml-2 py-2.5 px-5.5 md:px-6 font-semibold shadow-none text-sm w-auto"
+                />
               ))}
             </span>
           ) : (

@@ -1,244 +1,142 @@
 ---
+import CinaPageHero from '~/components/CinaPageHero.astro';
 import Layout from '~/layouts/PageLayout.astro';
-import HeroText from '~/components/widgets/HeroText.astro';
-import Prices from '~/components/widgets/Pricing.astro';
-import FAQs from '~/components/widgets/FAQs.astro';
-import Steps from '~/components/widgets/Steps.astro';
-import Features3 from '~/components/widgets/Features3.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
 
 const metadata = {
-  title: 'Pricing',
+  title: 'Pricing — Scope the work before the quote',
+  description:
+    'CinaGroup prices work around the workflow, systems, risk, and acceptance evidence required—not a generic template plan.',
 };
+
+const engagements = [
+  {
+    label: 'Focused audit',
+    title: 'Understand the current state.',
+    note: 'Best for a product, page group, workflow, or technical surface that needs evidence-backed priorities.',
+    items: [
+      'Source and live-state review',
+      'UX, content, accessibility, and technical findings',
+      'Prioritized recommendations',
+      'Acceptance criteria for the next step',
+    ],
+    featured: false,
+  },
+  {
+    label: 'Implementation sprint',
+    title: 'Deliver one coherent change.',
+    note: 'Best when the target, constraints, and desired outcome are understood well enough to build and verify.',
+    items: [
+      'Design and implementation scope',
+      'Shared component and content work',
+      'Responsive and interaction QA',
+      'Build, deployment, and production checks',
+    ],
+    featured: true,
+  },
+  {
+    label: 'Ongoing engineering',
+    title: 'Improve a system over time.',
+    note: 'Best for products that need iterative delivery, integration work, operational follow-through, and release discipline.',
+    items: [
+      'Prioritized delivery queue',
+      'Incremental design and engineering',
+      'Integration and deployment support',
+      'Recurring review and optimization',
+    ],
+    featured: false,
+  },
+];
 ---
 
 <Layout metadata={metadata}>
-  <!-- HeroText Widget ******************* -->
+  <div class="cg-page">
+    <CinaPageHero
+      eyebrow="Pricing / clear scope before commitment."
+      title="Price the work around the outcome, not a template."
+      lead="The right scope depends on the workflow, systems, risk, integration depth, and evidence required for acceptance. We make those inputs visible before quoting."
+      primary={{ text: 'Request a scoped conversation', href: '/contact' }}
+      secondary={{ text: 'Review services', href: '/services' }}
+    />
 
-  <HeroText
-    tagline="Pricing"
-    title="Stellar Pricing for Every Journey"
-    subtitle="Choose the perfect plan that aligns with your cosmic goals."
-  />
+    <section class="cg-page-section" aria-labelledby="engagements-title">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading cg-section-heading-center">
+          <p class="cg-eyebrow">Engagement shapes.</p>
+          <h2 id="engagements-title">Three ways to start.</h2>
+          <p>
+            These are working shapes, not fixed bundles. The scope is confirmed against the actual product and delivery
+            environment.
+          </p>
+        </div>
+        <div class="cg-pricing-grid">
+          {
+            engagements.map((engagement) => (
+              <article class:list={['cg-price-card', { 'cg-price-card-featured': engagement.featured }]}>
+                <p class="cg-card-meta">{engagement.label}</p>
+                <h3>{engagement.title}</h3>
+                <p>{engagement.note}</p>
+                <ul>
+                  {engagement.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+                <a class:list={['cg-page-button', { 'cg-page-button-primary': !engagement.featured }]} href="/contact">
+                  Scope this work
+                </a>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
 
-  <!-- Pricing Widget ******************* -->
+    <section class="cg-page-section cg-page-section-soft" aria-labelledby="scope-factors-title">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">What shapes the quote.</p>
+          <h2 id="scope-factors-title">Make the cost drivers explicit.</h2>
+        </div>
+        <div class="cg-list-panel">
+          <div class="cg-list-row">
+            <strong>Workflow breadth</strong><span
+              >Number of user journeys, page archetypes, roles, locales, and states included in the acceptance scope.</span
+            >
+          </div>
+          <div class="cg-list-row">
+            <strong>System depth</strong><span
+              >Existing architecture, data sources, APIs, authentication, infrastructure, and migration requirements.</span
+            >
+          </div>
+          <div class="cg-list-row">
+            <strong>Risk and review</strong><span
+              >Security, privacy, legal, financial, destructive, or externally visible actions that need stronger
+              controls.</span
+            >
+          </div>
+          <div class="cg-list-row">
+            <strong>Delivery evidence</strong><span
+              >Automated checks, browser coverage, environments, deployment targets, production validation, and
+              documentation.</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <Prices
-    title="Our prices"
-    subtitle="Only pay for what you need"
-    prices={[
-      {
-        title: 'basic',
-        subtitle: 'Optimal choice for personal use',
-        price: 29,
-        period: 'per month',
-        items: [
-          {
-            description: 'Etiam in libero, et volutpat',
-          },
-          {
-            description: 'Aenean ac nunc dolor tristique',
-          },
-          {
-            description: 'Cras scelerisque accumsan lib',
-          },
-          {
-            description: 'In hac habitasse',
-          },
-        ],
-        callToAction: {
-          target: '_blank',
-          text: 'Get started',
-          href: '#',
-        },
-      },
-      {
-        title: 'standard',
-        subtitle: 'Optimal choice for small teams',
-        price: 69,
-        period: 'Per Month',
-        items: [
-          {
-            description: 'Proin vel laoreet',
-          },
-          {
-            description: 'Ut efficitur habitasse egestas',
-          },
-          {
-            description: 'Volutpat hac curabitur',
-          },
-          {
-            description: 'Pellentesque blandit ut nibh',
-          },
-          {
-            description: 'Donec fringilla sem',
-          },
-        ],
-        callToAction: {
-          target: '_blank',
-          text: 'Get started',
-          href: '#',
-        },
-        hasRibbon: true,
-        ribbonTitle: 'popular',
-      },
-      {
-        title: 'premium',
-        subtitle: 'Optimal choice for companies',
-        price: 199,
-        period: 'Per Month',
-        items: [
-          {
-            description: 'Curabitur suscipit risus',
-          },
-          {
-            description: 'Aliquam habitasse malesuada',
-          },
-          {
-            description: 'Suspendisse sit amet blandit',
-          },
-          {
-            description: 'Suspendisse auctor blandit dui',
-          },
-        ],
-        callToAction: {
-          target: '_blank',
-          text: 'Get started',
-          href: '#',
-        },
-      },
-    ]}
-  />
-
-  <!-- Features3 Widget ************** -->
-
-  <Features3
-    title="Price-related features"
-    subtitle="Discover the advantages of choosing our plans"
-    columns={2}
-    items={[
-      {
-        title: 'Tiered Pricing Plans',
-        description: 'Choose from a range of pricing plans designed to accommodate different budgets and requirements.',
-        icon: 'tabler:stairs',
-      },
-      {
-        title: 'Transparent Pricing',
-        description: 'Clearly displayed pricing details for each plan, with no hidden costs or unexpected charges.',
-        icon: 'tabler:flip-vertical',
-      },
-      {
-        title: 'Secure Payment Methods',
-        description: 'Secure payment gateways to protect your financial information during transactions.',
-        icon: 'tabler:shield-lock',
-      },
-      {
-        title: 'Instant Access',
-        description: `Immediate access to your chosen plan's features and templates upon subscription.`,
-        icon: 'tabler:accessible',
-      },
-      {
-        title: 'Upgrade Value',
-        description: 'Upgrade to higher-tier plans to unlock more features and benefits for an enhanced experience.',
-        icon: 'tabler:chevrons-up',
-      },
-      {
-        title: '24H support',
-        description: 'Questions answered via live chat, email or phone, every calendar day.',
-        icon: 'tabler:headset',
-      },
-    ]}
-    classes={{ container: 'max-w-5xl' }}
-  />
-
-  <!-- Steps Widget ****************** -->
-
-  <Steps
-    title="A guided journey from plans to creativity"
-    tagline="simplified process"
-    isReversed={true}
-    items={[
-      {
-        title: 'Explore plans',
-        icon: 'tabler:number-1',
-      },
-      {
-        title: 'Select a plan',
-        icon: 'tabler:number-2',
-      },
-      {
-        title: 'Sign Up / Log In',
-        icon: 'tabler:number-3',
-      },
-      {
-        title: 'Review order',
-        icon: 'tabler:number-4',
-      },
-      {
-        title: 'Enter payment details',
-        icon: 'tabler:number-5',
-      },
-      {
-        title: 'Confirmation',
-        icon: 'tabler:number-6',
-      },
-      {
-        title: 'Download and start using the template(s)',
-        icon: 'tabler:number-7',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1536816579748-4ecb3f03d72a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      alt: 'Steps image',
-    }}
-  />
-
-  <!-- FAQs Widget ******************* -->
-
-  <FAQs
-    title="Pricing FAQs"
-    subtitle="Choosing the right plan is important, and we're here to answer your questions. If you have queries about our pricing options, you're in the right place."
-    columns={1}
-    items={[
-      {
-        title: 'Do the plans come with customer support?',
-        description:
-          'Absolutely, all plans include access to our dedicated customer support to assist you with any queries or concerns.',
-      },
-      {
-        title: 'Is there a trial period for the different plans?',
-        description:
-          "Unfortunately, we don't offer trial periods for the plans. However, you can check out our demo section to preview the quality of our templates.",
-      },
-      {
-        title: 'Can I switch between plans?',
-        description:
-          'Certainly! You can easily upgrade or downgrade your plan, at any time, to find the one that best suits your evolving requirements.',
-      },
-      {
-        title: 'What payment methods do you accept?',
-        description:
-          'We accept major credit cards and online payment methods to ensure a convenient and secure transaction process.',
-      },
-      {
-        title: 'Are there any hidden fees beyond the displayed cost?',
-        description:
-          'No, the subscription cost covers all the features and templates listed under each plan. There are no hidden fees or extra charges.',
-      },
-    ]}
-  />
-
-  <!-- CallToAction Widget *********** -->
-
-  <CallToAction
-    title="Ready to boost your projects?"
-    subtitle="Join our community of satisfied customers who have transformed their work with our templates."
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Get started now',
-        href: '/',
-      },
-    ]}
-  />
+    <section class="cg-page-section cg-page-section-dark" aria-labelledby="pricing-process-title">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">Before a quote.</p>
+          <h2 id="pricing-process-title">A short discovery reduces expensive assumptions.</h2>
+          <p>
+            We confirm the current state, desired outcome, in-scope systems, exclusions, dependencies, and acceptance
+            evidence before proposing the work.
+          </p>
+        </div>
+        <div class="cg-page-actions" style="justify-content: flex-start;">
+          <a class="cg-page-button" href="/contact">Start the conversation</a>
+        </div>
+      </div>
+    </section>
+  </div>
 </Layout>

@@ -1,54 +1,87 @@
 ---
+import CinaPageHero from '~/components/CinaPageHero.astro';
 import Layout from '~/layouts/PageLayout.astro';
-import Hero from '~/components/widgets/Hero.astro';
 
 const metadata = {
-  title: '私たちについて — CinaGroup',
+  title: 'CinaGroup について — 実用的な製品とワークフロー',
   description:
-    'CinaGroup の使命は、AI と Web3 技術を民主化し、すべての人にアクセス可能、手頃な価格、有用にすることです。',
+    'CinaGroup は、検索、自動化、モデルアクセス、再利用可能な機能、接続インフラを実際の仕事に合わせて設計します。',
 };
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    tagline="私たちについて"
-    title={'<span class="text-accent dark:text-white">技術の未来</span> を構築'}
-    subtitle="AI と Web3 技術を民主化し、すべての人にアクセス可能、手頃な価格、有用にすることを使命としています。"
-    image={{
-      src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
-      alt: 'CinaGroup チーム',
-    }}
-  />
+  <div class="cg-page">
+    <CinaPageHero
+      eyebrow="会社 / 仕事を中心に。"
+      title="複雑な技術を、チームが使える明確なワークフローへ。"
+      lead="CinaGroup は、製品名や大きな約束ではなく、ユーザーが完了すべき仕事、必要な文脈、レビュー点、受け入れ条件から設計を始めます。"
+      primary={{ text: 'サービスを見る', href: '/ja/services' }}
+      secondary={{ text: 'お問い合わせ', href: '/ja/contact' }}
+    />
 
-  <section class="py-16 bg-white dark:bg-gray-900">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-bold dark:text-white mb-6">私たちの使命</h2>
-        <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-          「AI と Web3 技術を民主化し、すべての人が利用でき、手頃な価格で、有益なものにすること」
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          <div class="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
-            <div class="text-4xl mb-4">🎯</div>
-            <h3 class="font-bold dark:text-white mb-2">アクセシビリティ</h3>
-            <p class="text-gray-600 dark:text-gray-300 text-sm">
-              技術的障壁を取り除き、誰でも最先端技術を活用できるように
+    <section class="cg-page-section" aria-labelledby="ja-about-mission">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">使命。</p>
+          <h2 id="ja-about-mission">必要な仕事を前に進める、信頼できる製品をつくる。</h2>
+          <p>検索、ワークフロー、API、インフラを別々の話として扱わず、一つの運用体験として設計します。</p>
+        </div>
+        <div class="cg-card-grid">
+          <article class="cg-card">
+            <p class="cg-card-meta">ユーザー。</p><h3>完了すべき仕事から始める。</h3><p>
+              誰が、どの文脈で、どの結果を必要としているかを明確にします。
             </p>
-          </div>
-          <div class="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl">
-            <div class="text-4xl mb-4">💰</div>
-            <h3 class="font-bold dark:text-white mb-2">手頃な価格</h3>
-            <p class="text-gray-600 dark:text-gray-300 text-sm">
-              すべての人に適した価格で企業グレードのソリューションを提供
+          </article>
+          <article class="cg-card">
+            <p class="cg-card-meta">境界。</p><h3>権限とレビューを見える化。</h3><p>
+              アクセス、承認、失敗、復旧を後付けにせず、最初の設計に含めます。
             </p>
+          </article>
+          <article class="cg-card">
+            <p class="cg-card-meta">証拠。</p><h3>観察可能な結果で判断。</h3><p>
+              動作、品質、パフォーマンス、運用状態を確認してから提供範囲を広げます。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cg-page-section cg-page-section-soft" aria-labelledby="ja-about-stack">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">製品群。</p>
+          <h2 id="ja-about-stack">一つの業務フローに合わせて組み合わせます。</h2>
+          <p>CinaSeek、CinaClaw、CinaToken、CinaSkill、CinaChain は、それぞれ明確な責任を持ちます。</p>
+        </div>
+        <div class="cg-list-panel">
+          <div class="cg-list-row">
+            <strong>CinaSeek</strong><span>承認された知識を検索し、根拠と一緒に回答します。</span>
           </div>
-          <div class="p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
-            <div class="text-4xl mb-4">⚡</div>
-            <h3 class="font-bold dark:text-white mb-2">実用性</h3>
-            <p class="text-gray-600 dark:text-gray-300 text-sm">実際の問題を解決する実用的なツールを構築</p>
+          <div class="cg-list-row">
+            <strong>CinaClaw</strong><span>繰り返し作業をレビュー可能なワークフローにします。</span>
+          </div>
+          <div class="cg-list-row">
+            <strong>CinaToken</strong><span>モデルアクセス、ルーティング、利用境界を管理します。</span>
+          </div>
+          <div class="cg-list-row">
+            <strong>CinaSkill</strong><span>小さな機能を定義、レビュー、バージョン管理します。</span>
+          </div>
+          <div class="cg-list-row">
+            <strong>CinaChain</strong><span>検証可能な状態と明確なリリース管理を支えます。</span>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="cg-page-section cg-page-section-dark" aria-labelledby="ja-about-next">
+      <div class="cg-page-shell cg-section-heading cg-section-heading-center">
+        <p class="cg-eyebrow">次のステップ。</p>
+        <h2 id="ja-about-next">実際のワークフローを一つ共有してください。</h2>
+        <p>ユーザー、現在の状態、制約、期待する結果から、最小限の有用な範囲を一緒に定義します。</p>
+        <div class="cg-page-actions">
+          <a class="cg-page-button cg-page-button-primary" href="/ja/contact">お問い合わせ</a>
+        </div>
+      </div>
+    </section>
+  </div>
 </Layout>

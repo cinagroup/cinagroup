@@ -1,0 +1,207 @@
+---
+import CinaPageHero from '~/components/CinaPageHero.astro';
+import Layout from '~/layouts/PageLayout.astro';
+
+type Locale = 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+
+const copy = {
+  ja: {
+    title: 'お問い合わせ — CinaGroup',
+    description: 'ユーザー、現在のワークフロー、制約、期待する結果を CinaGroup に共有してください。',
+    eyebrow: 'お問い合わせ / 仕事から始める。',
+    heroTitle: 'チームが進めたい仕事を教えてください。',
+    heroLead:
+      'ユーザー、現在の流れ、システム、制約、期待する結果を共有してください。最初の現実的な範囲を一緒に考えます。',
+    email: 'メールを作成',
+    services: 'サービスを見る',
+    contextEyebrow: '最初のメッセージ。',
+    contextTitle: '有用な返答に必要な文脈。',
+    contextLead: 'このサイトはメッセージを送信・保存しません。ボタンはお使いのメールアプリで下書きを開きます。',
+    items: [
+      ['ユーザー', '誰が、どの結果を完了する必要がありますか。'],
+      ['現在の状態', '今使っている製品、ページ、ワークフロー、システムは何ですか。'],
+      ['制約', 'アクセス、期限、統合、リスク、デプロイの境界は何ですか。'],
+      ['受け入れ条件', '変更が成功したことを示す観察可能な証拠は何ですか。'],
+    ],
+    directEyebrow: '連絡先。',
+    directTitle: 'info@cinagroup.com',
+    directLead: '製品、サービス、パートナーシップ、サポートに関するお問い合わせにご利用ください。',
+    privacy: 'プライバシーポリシー',
+    terms: '利用規約',
+  },
+  ko: {
+    title: '문의 — CinaGroup',
+    description: '사용자, 현재 워크플로, 제약 및 원하는 결과를 CinaGroup에 알려 주세요.',
+    eyebrow: '문의 / 업무에서 시작합니다.',
+    heroTitle: '팀이 진행하려는 업무를 알려 주세요.',
+    heroLead: '사용자, 현재 흐름, 시스템, 제약 및 원하는 결과를 공유해 주세요. 현실적인 첫 범위를 함께 정하겠습니다.',
+    email: '이메일 작성',
+    services: '서비스 보기',
+    contextEyebrow: '첫 메시지.',
+    contextTitle: '유용한 답변에 필요한 맥락.',
+    contextLead: '이 사이트는 메시지를 전송하거나 저장하지 않습니다. 버튼은 이메일 앱에서 초안을 엽니다.',
+    items: [
+      ['사용자', '누가 어떤 결과를 완료해야 하나요?'],
+      ['현재 상태', '현재 사용 중인 제품, 페이지, 워크플로 또는 시스템은 무엇인가요?'],
+      ['제약', '접근, 일정, 통합, 위험 또는 배포 경계는 무엇인가요?'],
+      ['수용 조건', '변경이 성공했음을 보여 줄 관찰 가능한 증거는 무엇인가요?'],
+    ],
+    directEyebrow: '직접 연락.',
+    directTitle: 'info@cinagroup.com',
+    directLead: '제품, 서비스, 파트너십 및 지원 문의에 이용해 주세요.',
+    privacy: '개인정보 보호정책',
+    terms: '서비스 약관',
+  },
+  ru: {
+    title: 'Контакты — CinaGroup',
+    description: 'Расскажите CinaGroup о пользователе, текущем процессе, ограничениях и желаемом результате.',
+    eyebrow: 'Контакты / начнём с работы.',
+    heroTitle: 'Расскажите, какую работу должна продвинуть команда.',
+    heroLead:
+      'Опишите пользователя, текущий процесс, системы, ограничения и ожидаемый результат. Мы предложим разумный первый объём.',
+    email: 'Написать письмо',
+    services: 'Посмотреть услуги',
+    contextEyebrow: 'Первое сообщение.',
+    contextTitle: 'Контекст, необходимый для полезного ответа.',
+    contextLead: 'Сайт не отправляет и не хранит сообщение. Кнопка открывает черновик в вашем почтовом приложении.',
+    items: [
+      ['Пользователь', 'Кому и какой результат нужно получить?'],
+      ['Текущее состояние', 'Какой продукт, страница, процесс или система используется сейчас?'],
+      ['Ограничения', 'Какие границы доступа, сроков, интеграций, рисков или развёртывания важны?'],
+      ['Приёмка', 'Какие наблюдаемые данные покажут, что изменение сработало?'],
+    ],
+    directEyebrow: 'Прямой контакт.',
+    directTitle: 'info@cinagroup.com',
+    directLead: 'Для вопросов о продуктах, услугах, партнёрствах и поддержке.',
+    privacy: 'Политика конфиденциальности',
+    terms: 'Условия использования',
+  },
+  es: {
+    title: 'Contacto — CinaGroup',
+    description:
+      'Cuente a CinaGroup quién es el usuario, cuál es el flujo actual, las restricciones y el resultado deseado.',
+    eyebrow: 'Contacto / empezar por el trabajo.',
+    heroTitle: 'Cuéntenos qué trabajo necesita mover su equipo.',
+    heroLead:
+      'Comparta el usuario, el flujo actual, los sistemas, las restricciones y el resultado esperado. Buscaremos un primer alcance sensato.',
+    email: 'Redactar correo',
+    services: 'Ver servicios',
+    contextEyebrow: 'Primer mensaje.',
+    contextTitle: 'El contexto necesario para responder con utilidad.',
+    contextLead: 'Este sitio no envía ni almacena el mensaje. El botón abre un borrador en su aplicación de correo.',
+    items: [
+      ['Usuario', '¿Quién necesita el resultado y qué intenta terminar?'],
+      ['Estado actual', '¿Qué producto, página, flujo o sistema existe hoy?'],
+      ['Restricciones', '¿Qué límites de acceso, tiempo, integración, riesgo o despliegue importan?'],
+      ['Aceptación', '¿Qué evidencia observable demostraría que el cambio funcionó?'],
+    ],
+    directEyebrow: 'Contacto directo.',
+    directTitle: 'info@cinagroup.com',
+    directLead: 'Utilice este correo para conversaciones de producto, servicios, colaboración y soporte.',
+    privacy: 'Política de privacidad',
+    terms: 'Términos de servicio',
+  },
+  pt: {
+    title: 'Contato — CinaGroup',
+    description: 'Conte à CinaGroup quem é o usuário, qual é o fluxo atual, as restrições e o resultado desejado.',
+    eyebrow: 'Contato / começar pelo trabalho.',
+    heroTitle: 'Conte qual trabalho sua equipe precisa mover.',
+    heroLead:
+      'Compartilhe o usuário, o fluxo atual, os sistemas, as restrições e o resultado esperado. Vamos encontrar um primeiro escopo sensato.',
+    email: 'Escrever e-mail',
+    services: 'Ver serviços',
+    contextEyebrow: 'Primeira mensagem.',
+    contextTitle: 'O contexto necessário para uma resposta útil.',
+    contextLead: 'Este site não envia nem armazena a mensagem. O botão abre um rascunho no seu aplicativo de e-mail.',
+    items: [
+      ['Usuário', 'Quem precisa do resultado e o que está tentando concluir?'],
+      ['Estado atual', 'Qual produto, página, fluxo ou sistema existe hoje?'],
+      ['Restrições', 'Quais limites de acesso, prazo, integração, risco ou implantação importam?'],
+      ['Aceitação', 'Que evidência observável mostraria que a mudança funcionou?'],
+    ],
+    directEyebrow: 'Contato direto.',
+    directTitle: 'info@cinagroup.com',
+    directLead: 'Use este e-mail para conversas sobre produtos, serviços, parcerias e suporte.',
+    privacy: 'Política de privacidade',
+    terms: 'Termos de serviço',
+  },
+  fr: {
+    title: 'Contact — CinaGroup',
+    description: 'Présentez à CinaGroup l’utilisateur, le flux actuel, les contraintes et le résultat souhaité.',
+    eyebrow: 'Contact / commencer par le travail.',
+    heroTitle: 'Dites-nous quel travail votre équipe doit faire avancer.',
+    heroLead:
+      'Partagez l’utilisateur, le flux actuel, les systèmes, les contraintes et le résultat attendu. Nous chercherons un premier périmètre raisonnable.',
+    email: 'Rédiger un e-mail',
+    services: 'Voir les services',
+    contextEyebrow: 'Premier message.',
+    contextTitle: 'Le contexte nécessaire pour une réponse utile.',
+    contextLead:
+      'Ce site n’envoie ni ne stocke le message. Le bouton ouvre un brouillon dans votre application de messagerie.',
+    items: [
+      ['Utilisateur', 'Qui a besoin du résultat et que cherche-t-il à terminer ?'],
+      ['État actuel', 'Quel produit, page, flux ou système existe aujourd’hui ?'],
+      ['Contraintes', 'Quelles limites d’accès, de délai, d’intégration, de risque ou de déploiement comptent ?'],
+      ['Acceptation', 'Quelle preuve observable montrerait que le changement fonctionne ?'],
+    ],
+    directEyebrow: 'Contact direct.',
+    directTitle: 'info@cinagroup.com',
+    directLead: 'Utilisez cet e-mail pour les échanges sur les produits, services, partenariats et le support.',
+    privacy: 'Politique de confidentialité',
+    terms: 'Conditions d’utilisation',
+  },
+} satisfies Record<Locale, Record<string, unknown>>;
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const content = copy[lang] as (typeof copy)[Locale];
+---
+
+<Layout metadata={{ title: content.title, description: content.description }}>
+  <div class="cg-page">
+    <CinaPageHero
+      eyebrow={content.eyebrow}
+      title={content.heroTitle}
+      lead={content.heroLead}
+      primary={{ text: content.email, href: 'mailto:info@cinagroup.com' }}
+      secondary={{ text: content.services, href: `/${lang}/services` }}
+    />
+
+    <section class="cg-page-section" aria-labelledby="localized-contact-context">
+      <div class="cg-page-shell cg-contact-grid">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">{content.contextEyebrow}</p>
+          <h2 id="localized-contact-context">{content.contextTitle}</h2>
+          <p>{content.contextLead}</p>
+        </div>
+        <div class="cg-list-panel">
+          {
+            content.items.map(([label, description]) => (
+              <div class="cg-list-row">
+                <>
+                  <strong>{label}</strong>
+                  <span>{description}</span>
+                </>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="cg-page-section cg-page-section-soft" aria-labelledby="localized-contact-direct">
+      <div class="cg-page-shell cg-section-heading cg-section-heading-center">
+        <p class="cg-eyebrow">{content.directEyebrow}</p>
+        <h2 id="localized-contact-direct">{content.directTitle}</h2>
+        <p>{content.directLead}</p>
+        <div class="cg-page-actions">
+          <a class="cg-page-button cg-page-button-primary" href="mailto:info@cinagroup.com">{content.email}</a>
+        </div>
+        <p class="cg-form-note"><a href="/privacy">{content.privacy}</a> · <a href="/terms">{content.terms}</a></p>
+      </div>
+    </section>
+  </div>
+</Layout>

@@ -1,0 +1,752 @@
+---
+import CinaPageHero from '~/components/CinaPageHero.astro';
+import Layout from '~/layouts/PageLayout.astro';
+
+type Locale = 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+type Product = 'cinaseek' | 'cinaclaw' | 'cinatoken' | 'cinaskill' | 'cinachain';
+type ProductCopy = {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  capabilities: Array<{ title: string; description: string }>;
+};
+
+const content: Record<
+  Locale,
+  {
+    contact: string;
+    stack: string;
+    capabilitiesEyebrow: string;
+    capabilitiesTitle: string;
+    capabilitiesLead: string;
+    workflowEyebrow: string;
+    workflowTitle: string;
+    steps: Array<{ title: string; description: string }>;
+    nextEyebrow: string;
+    nextTitle: string;
+    products: Record<Product, ProductCopy>;
+  }
+> = {
+  ja: {
+    contact: 'ワークフローを相談する',
+    stack: '製品一覧を見る',
+    capabilitiesEyebrow: '機能。',
+    capabilitiesTitle: 'チームが完了すべき仕事に集中します。',
+    capabilitiesLead: '最小限の有用なワークフローから始め、境界とレビュー点を明確にします。',
+    workflowEyebrow: 'ワークフロー。',
+    workflowTitle: '入力から検証済み結果までを見える化します。',
+    steps: [
+      { title: '仕事を定義', description: 'ユーザー、目的、入力、制約を明確にします。' },
+      { title: '必要な文脈を接続', description: '承認された情報源とシステムだけを使用します。' },
+      { title: '結果をレビュー', description: '重要な判断や外部アクションの前に人が確認します。' },
+      { title: '証拠から改善', description: '失敗、欠落、フィードバックを次の改善に反映します。' },
+    ],
+    nextEyebrow: '次のステップ。',
+    nextTitle: '実際のワークフローに合わせて範囲を決めます。',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / エンタープライズ検索。',
+        title: '新しいポータルを増やさず、業務知識を見つける。',
+        lead: 'CinaSeek は、文書、製品情報、サポート履歴、運用ナレッジを一つの検索フローにまとめます。',
+        capabilities: [
+          {
+            title: '関連する情報源を接続。',
+            description: '検索対象とアクセス境界をチームやプロジェクトごとに定義します。',
+          },
+          { title: '根拠と一緒に回答。', description: '重要な回答に参照元を示し、確認しやすくします。' },
+          { title: '不足した知識を発見。', description: '答えられない質問をナレッジ改善のバックログに変えます。' },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / ワークフローアシスタント。',
+        title: '繰り返し作業を、信頼できるレビュー可能な流れへ。',
+        lead: 'CinaClaw は、依頼の分類、文脈収集、次のアクション準備、承認を一つの運用フローにまとめます。',
+        capabilities: [
+          { title: '依頼を構造化。', description: 'メッセージやイベントを、担当者と必要情報が明確な作業にします。' },
+          { title: 'レビュー可能な提案。', description: '回答やアクション案を、使用した文脈と一緒に提示します。' },
+          { title: '重要な承認を保持。', description: '外部・破壊的・高影響の操作では人の確認を必須にします。' },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / モデルゲートウェイ。',
+        title: 'モデルアクセス、利用量、コストを一つのゲートウェイで制御。',
+        lead: 'CinaToken は、認証情報、モデルルーティング、利用ポリシー、トレース、コスト境界を一つの層にまとめます。',
+        capabilities: [
+          {
+            title: '認証情報を集約。',
+            description: '各アプリにプロバイダーキーを配布せず、管理された境界に保持します。',
+          },
+          {
+            title: '承認済みモデルへルーティング。',
+            description: 'タスク、ポリシー、可用性に応じて経路を選択します。',
+          },
+          { title: '判断を追跡。', description: 'ルーティング、ポリシー、利用情報を運用レビューに残します。' },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / 再利用可能な機能。',
+        title: '小さくレビュー可能な機能を、再利用できる形に。',
+        lead: 'CinaSkill は、タスク固有の機能を定義、レビュー、バージョン管理し、製品やワークフローで再利用できるようにします。',
+        capabilities: [
+          { title: '一つの明確な仕事。', description: '入力、アクション、出力、権限をスキル契約として定義します。' },
+          {
+            title: '変更をバージョン管理。',
+            description: '互換性と依存関係を明示し、利用側が安全に更新できるようにします。',
+          },
+          { title: '所有者を明確に。', description: '保守担当とサポート期待値を再利用可能な機能に含めます。' },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / 接続インフラ。',
+        title: 'アプリケーション状態の動きを隠さずに接続する。',
+        lead: 'CinaChain は、検証可能な状態、サービス接続、明確なリリース管理が必要なアプリケーションを支えます。',
+        capabilities: [
+          { title: '重要な状態を定義。', description: '記録、イベント、所有権、遷移を明確なモデルにします。' },
+          {
+            title: '安定した契約で接続。',
+            description: 'アプリケーションとサービスの境界を保ち、安全に変更できるようにします。',
+          },
+          { title: 'リリースと復旧を計画。', description: '監視、レビュー、段階的提供、復旧経路を最初から含めます。' },
+        ],
+      },
+    },
+  },
+  ko: {
+    contact: '워크플로 상담하기',
+    stack: '제품 스택 보기',
+    capabilitiesEyebrow: '기능.',
+    capabilitiesTitle: '팀이 완료해야 하는 업무에 집중합니다.',
+    capabilitiesLead: '가장 작은 유용한 워크플로에서 시작하고 경계와 검토 지점을 명확히 합니다.',
+    workflowEyebrow: '워크플로.',
+    workflowTitle: '입력에서 검증된 결과까지의 경로를 보이게 합니다.',
+    steps: [
+      { title: '업무 정의', description: '사용자, 목표, 입력 및 제약을 명확히 합니다.' },
+      { title: '필요한 맥락 연결', description: '승인된 정보원과 시스템만 사용합니다.' },
+      { title: '결과 검토', description: '중요한 판단이나 외부 작업 전에 사람이 확인합니다.' },
+      { title: '증거로 개선', description: '실패, 누락 및 피드백을 다음 개선에 반영합니다.' },
+    ],
+    nextEyebrow: '다음 단계.',
+    nextTitle: '실제 워크플로에 맞춰 범위를 정합니다.',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / 엔터프라이즈 검색.',
+        title: '또 다른 포털 없이 운영 지식을 찾으세요.',
+        lead: 'CinaSeek은 문서, 제품 맥락, 지원 이력 및 운영 지식을 하나의 검색 흐름으로 연결합니다.',
+        capabilities: [
+          { title: '관련 정보원 연결.', description: '팀과 프로젝트별로 검색 범위와 접근 경계를 정의합니다.' },
+          { title: '근거와 함께 답변.', description: '중요한 답변에 출처를 표시하여 빠르게 확인할 수 있게 합니다.' },
+          { title: '지식 공백 발견.', description: '답하지 못한 질문을 지식 운영 개선 항목으로 전환합니다.' },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / 워크플로 어시스턴트.',
+        title: '반복 업무를 신뢰할 수 있고 검토 가능한 흐름으로.',
+        lead: 'CinaClaw은 요청 분류, 맥락 수집, 다음 작업 준비 및 승인을 하나의 운영 흐름으로 묶습니다.',
+        capabilities: [
+          { title: '요청 구조화.', description: '메시지와 이벤트를 담당자와 필요한 정보가 명확한 작업으로 바꿉니다.' },
+          { title: '검토 가능한 제안.', description: '사용한 맥락과 함께 응답이나 작업 초안을 제시합니다.' },
+          { title: '중요 승인 유지.', description: '외부, 파괴적 또는 영향이 큰 작업에는 사람의 확인을 요구합니다.' },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / 모델 게이트웨이.',
+        title: '모델 접근, 사용량 및 비용을 하나의 게이트웨이에서 관리하세요.',
+        lead: 'CinaToken은 자격 증명, 모델 라우팅, 사용 정책, 추적 및 비용 경계를 하나의 계층으로 모읍니다.',
+        capabilities: [
+          {
+            title: '자격 증명 중앙화.',
+            description: '각 애플리케이션에 공급자 키를 배포하지 않고 관리 경계에 보관합니다.',
+          },
+          { title: '승인된 모델로 라우팅.', description: '작업, 정책 및 가용성에 따라 경로를 선택합니다.' },
+          { title: '결정 추적.', description: '라우팅, 정책 및 사용 정보를 운영 검토를 위해 기록합니다.' },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / 재사용 가능한 기능.',
+        title: '작고 검토 가능한 기능을 재사용 가능한 형태로.',
+        lead: 'CinaSkill은 작업별 기능을 정의, 검토, 버전 관리하고 제품과 워크플로에서 재사용하도록 돕습니다.',
+        capabilities: [
+          { title: '하나의 명확한 업무.', description: '입력, 작업, 출력 및 권한을 스킬 계약으로 정의합니다.' },
+          {
+            title: '변경 버전 관리.',
+            description: '호환성과 의존성을 명시하여 사용자가 안전하게 업데이트하도록 합니다.',
+          },
+          { title: '소유권 명확화.', description: '유지보수 담당자와 지원 기대치를 재사용 기능에 포함합니다.' },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / 연결형 인프라.',
+        title: '애플리케이션 상태의 이동을 숨기지 않고 연결하세요.',
+        lead: 'CinaChain은 검증 가능한 상태, 연결된 서비스 및 명확한 릴리스 제어가 필요한 애플리케이션을 지원합니다.',
+        capabilities: [
+          { title: '중요한 상태 정의.', description: '레코드, 이벤트, 소유권 및 전이를 명확한 모델로 만듭니다.' },
+          {
+            title: '안정적인 계약으로 연결.',
+            description: '애플리케이션과 서비스 경계를 유지하여 안전하게 변경할 수 있게 합니다.',
+          },
+          { title: '릴리스와 복구 계획.', description: '관찰, 검토, 단계적 제공 및 복구 경로를 처음부터 포함합니다.' },
+        ],
+      },
+    },
+  },
+  ru: {
+    contact: 'Обсудить процесс',
+    stack: 'Посмотреть продукты',
+    capabilitiesEyebrow: 'Возможности.',
+    capabilitiesTitle: 'Фокус на работе, которую команда должна завершить.',
+    capabilitiesLead: 'Начинаем с минимального полезного процесса и сохраняем видимыми его границы и точки проверки.',
+    workflowEyebrow: 'Процесс.',
+    workflowTitle: 'Делаем путь от входных данных до проверенного результата видимым.',
+    steps: [
+      { title: 'Определить работу', description: 'Уточнить пользователя, цель, входные данные и ограничения.' },
+      { title: 'Подключить контекст', description: 'Использовать только разрешённые источники и системы.' },
+      {
+        title: 'Проверить результат',
+        description: 'Сохранить человеческую проверку перед важным решением или внешним действием.',
+      },
+      {
+        title: 'Улучшать по данным',
+        description: 'Использовать ошибки, пробелы и обратную связь для следующего улучшения.',
+      },
+    ],
+    nextEyebrow: 'Следующий шаг.',
+    nextTitle: 'Определим объём по реальному рабочему процессу.',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / корпоративный поиск.',
+        title: 'Находите рабочие знания без ещё одного портала.',
+        lead: 'CinaSeek объединяет документы, продуктовый контекст, историю поддержки и операционные знания в одном поисковом процессе.',
+        capabilities: [
+          {
+            title: 'Подключить нужные источники.',
+            description: 'Определить область поиска и доступ по командам и проектам.',
+          },
+          {
+            title: 'Отвечать с источниками.',
+            description: 'Показывать ссылки для важных ответов, чтобы их было легко проверить.',
+          },
+          {
+            title: 'Находить пробелы знаний.',
+            description: 'Превращать вопросы без ответа в очередь улучшения базы знаний.',
+          },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / помощник процессов.',
+        title: 'Переведите повторяющуюся работу в надёжные проверяемые процессы.',
+        lead: 'CinaClaw объединяет классификацию запросов, сбор контекста, подготовку действия и согласование в один операционный процесс.',
+        capabilities: [
+          {
+            title: 'Структурировать запросы.',
+            description: 'Превращать сообщения и события в задачи с понятным владельцем и контекстом.',
+          },
+          {
+            title: 'Готовить проверяемые предложения.',
+            description: 'Показывать черновик ответа или действия вместе с использованным контекстом.',
+          },
+          {
+            title: 'Сохранять важные согласования.',
+            description: 'Требовать проверку человеком для внешних, разрушительных или значимых действий.',
+          },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / модельный шлюз.',
+        title: 'Управляйте доступом к моделям, использованием и затратами в одном шлюзе.',
+        lead: 'CinaToken объединяет учётные данные, маршрутизацию моделей, политики, трассировки и границы затрат.',
+        capabilities: [
+          {
+            title: 'Централизовать секреты.',
+            description: 'Хранить ключи провайдеров за управляемой границей, а не в каждом приложении.',
+          },
+          {
+            title: 'Маршрутизировать к разрешённым моделям.',
+            description: 'Выбирать путь по задаче, политике и доступности.',
+          },
+          {
+            title: 'Отслеживать решения.',
+            description: 'Сохранять данные маршрутизации, политики и использования для эксплуатации.',
+          },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / повторно используемые возможности.',
+        title: 'Упаковывайте небольшие проверяемые возможности для повторного использования.',
+        lead: 'CinaSkill помогает определять, проверять, версионировать и использовать предметные возможности в продуктах и процессах.',
+        capabilities: [
+          {
+            title: 'Одна ясная задача.',
+            description: 'Определить входы, действие, результат и разрешения в контракте навыка.',
+          },
+          {
+            title: 'Версионировать изменения.',
+            description: 'Показывать совместимость и зависимости для безопасного обновления.',
+          },
+          {
+            title: 'Назначить владельца.',
+            description: 'Включать ответственность за поддержку в повторно используемую возможность.',
+          },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / связанная инфраструктура.',
+        title: 'Соединяйте состояние приложения, не скрывая его переходы.',
+        lead: 'CinaChain поддерживает приложения, которым нужны проверяемое состояние, связанные сервисы и явный контроль релизов.',
+        capabilities: [
+          {
+            title: 'Определить важное состояние.',
+            description: 'Описать записи, события, владельцев и переходы в ясной модели.',
+          },
+          {
+            title: 'Соединить стабильными контрактами.',
+            description: 'Сохранять границы приложений и сервисов для безопасных изменений.',
+          },
+          {
+            title: 'Планировать релиз и восстановление.',
+            description: 'Включать наблюдаемость, проверку, поэтапную поставку и путь отката.',
+          },
+        ],
+      },
+    },
+  },
+  es: {
+    contact: 'Hablar del flujo',
+    stack: 'Ver los productos',
+    capabilitiesEyebrow: 'Capacidades.',
+    capabilitiesTitle: 'Una capa enfocada en el trabajo que el equipo debe terminar.',
+    capabilitiesLead: 'Empezamos por el flujo útil más pequeño y mantenemos visibles sus límites y revisiones.',
+    workflowEyebrow: 'Flujo.',
+    workflowTitle: 'Hacemos visible el camino desde la entrada hasta un resultado revisado.',
+    steps: [
+      {
+        title: 'Definir el trabajo',
+        description: 'Aclarar el usuario, el objetivo, las entradas y las restricciones.',
+      },
+      { title: 'Conectar el contexto', description: 'Usar solo fuentes y sistemas aprobados.' },
+      {
+        title: 'Revisar el resultado',
+        description: 'Mantener la revisión humana antes de decisiones o acciones importantes.',
+      },
+      { title: 'Mejorar con evidencia', description: 'Convertir fallos, vacíos y comentarios en la siguiente mejora.' },
+    ],
+    nextEyebrow: 'Siguiente paso.',
+    nextTitle: 'Definamos el alcance con un flujo real.',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / búsqueda empresarial.',
+        title: 'Encuentra conocimiento operativo sin crear otro portal.',
+        lead: 'CinaSeek conecta documentos, contexto de producto, historial de soporte y conocimiento operativo en un flujo de búsqueda.',
+        capabilities: [
+          {
+            title: 'Conecta las fuentes relevantes.',
+            description: 'Define el alcance y los límites de acceso por equipo y proyecto.',
+          },
+          {
+            title: 'Responde con fuentes.',
+            description: 'Muestra referencias en las respuestas importantes para poder verificarlas.',
+          },
+          {
+            title: 'Detecta vacíos de conocimiento.',
+            description: 'Convierte preguntas sin respuesta en una lista práctica de mejoras.',
+          },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / asistente de flujos.',
+        title: 'Convierte el trabajo repetido en flujos fiables y revisables.',
+        lead: 'CinaClaw reúne clasificación, contexto, preparación de la siguiente acción y aprobación en un flujo operativo.',
+        capabilities: [
+          {
+            title: 'Estructura las solicitudes.',
+            description: 'Convierte mensajes y eventos en trabajo con propietario y contexto claros.',
+          },
+          {
+            title: 'Prepara propuestas revisables.',
+            description: 'Presenta borradores de respuesta o acción junto con el contexto utilizado.',
+          },
+          {
+            title: 'Conserva las aprobaciones clave.',
+            description: 'Exige revisión humana para acciones externas, destructivas o de alto impacto.',
+          },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / pasarela de modelos.',
+        title: 'Controla el acceso, el uso y el gasto desde una sola pasarela.',
+        lead: 'CinaToken reúne credenciales, enrutamiento de modelos, políticas, trazas y límites de coste en una sola capa.',
+        capabilities: [
+          {
+            title: 'Centraliza las credenciales.',
+            description: 'Mantiene las claves de proveedores tras un límite controlado y fuera de cada aplicación.',
+          },
+          {
+            title: 'Enruta a modelos aprobados.',
+            description: 'Selecciona la ruta por tarea, política y disponibilidad.',
+          },
+          {
+            title: 'Registra las decisiones.',
+            description: 'Conserva enrutamiento, políticas y uso para la revisión operativa.',
+          },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / capacidades reutilizables.',
+        title: 'Empaqueta capacidades pequeñas y revisables para reutilizarlas.',
+        lead: 'CinaSkill ayuda a definir, revisar, versionar y reutilizar capacidades específicas en productos y flujos.',
+        capabilities: [
+          {
+            title: 'Un trabajo claro.',
+            description: 'Define entradas, acción, salida y permisos en el contrato de la capacidad.',
+          },
+          {
+            title: 'Versiona los cambios.',
+            description: 'Expone compatibilidad y dependencias para que los usuarios actualicen con seguridad.',
+          },
+          {
+            title: 'Mantén la propiedad visible.',
+            description: 'Incluye responsables y expectativas de mantenimiento.',
+          },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / infraestructura conectada.',
+        title: 'Conecta el estado de la aplicación sin ocultar cómo cambia.',
+        lead: 'CinaChain apoya aplicaciones que necesitan estado verificable, servicios conectados y controles claros de entrega.',
+        capabilities: [
+          {
+            title: 'Define el estado importante.',
+            description: 'Modela registros, eventos, propiedad y transiciones de forma explícita.',
+          },
+          {
+            title: 'Conecta con contratos estables.',
+            description: 'Mantiene claros los límites entre aplicación y servicio para cambiar con seguridad.',
+          },
+          {
+            title: 'Planifica entrega y recuperación.',
+            description: 'Incluye observación, revisión, entrega gradual y una ruta de recuperación.',
+          },
+        ],
+      },
+    },
+  },
+  pt: {
+    contact: 'Conversar sobre o fluxo',
+    stack: 'Ver os produtos',
+    capabilitiesEyebrow: 'Capacidades.',
+    capabilitiesTitle: 'Uma camada focada no trabalho que a equipe precisa concluir.',
+    capabilitiesLead: 'Começamos pelo menor fluxo útil e mantemos seus limites e revisões visíveis.',
+    workflowEyebrow: 'Fluxo.',
+    workflowTitle: 'Tornamos visível o caminho da entrada até um resultado revisado.',
+    steps: [
+      { title: 'Definir o trabalho', description: 'Esclarecer o usuário, o objetivo, as entradas e as restrições.' },
+      { title: 'Conectar o contexto', description: 'Usar somente fontes e sistemas aprovados.' },
+      { title: 'Revisar o resultado', description: 'Manter a revisão humana antes de decisões ou ações importantes.' },
+      { title: 'Melhorar com evidências', description: 'Transformar falhas, lacunas e feedback na próxima melhoria.' },
+    ],
+    nextEyebrow: 'Próximo passo.',
+    nextTitle: 'Vamos definir o escopo com um fluxo real.',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / busca empresarial.',
+        title: 'Encontre conhecimento operacional sem criar outro portal.',
+        lead: 'O CinaSeek conecta documentos, contexto de produto, histórico de suporte e conhecimento operacional em um fluxo de busca.',
+        capabilities: [
+          {
+            title: 'Conecte fontes relevantes.',
+            description: 'Defina o escopo e os limites de acesso por equipe e projeto.',
+          },
+          {
+            title: 'Responda com fontes.',
+            description: 'Mostre referências em respostas importantes para facilitar a verificação.',
+          },
+          {
+            title: 'Descubra lacunas de conhecimento.',
+            description: 'Transforme perguntas sem resposta em uma fila prática de melhorias.',
+          },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / assistente de fluxos.',
+        title: 'Transforme trabalho repetido em fluxos confiáveis e revisáveis.',
+        lead: 'O CinaClaw reúne classificação, contexto, preparação da próxima ação e aprovação em um fluxo operacional.',
+        capabilities: [
+          {
+            title: 'Estruture solicitações.',
+            description: 'Converta mensagens e eventos em trabalho com responsável e contexto claros.',
+          },
+          {
+            title: 'Prepare propostas revisáveis.',
+            description: 'Apresente rascunhos de resposta ou ação junto com o contexto usado.',
+          },
+          {
+            title: 'Mantenha aprovações importantes.',
+            description: 'Exija revisão humana para ações externas, destrutivas ou de alto impacto.',
+          },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / gateway de modelos.',
+        title: 'Controle acesso, uso e gastos em um único gateway.',
+        lead: 'O CinaToken reúne credenciais, roteamento de modelos, políticas, rastros e limites de custo em uma camada.',
+        capabilities: [
+          {
+            title: 'Centralize credenciais.',
+            description: 'Mantenha as chaves dos provedores atrás de um limite controlado e fora de cada aplicação.',
+          },
+          {
+            title: 'Roteie para modelos aprovados.',
+            description: 'Selecione o caminho por tarefa, política e disponibilidade.',
+          },
+          {
+            title: 'Registre decisões.',
+            description: 'Preserve roteamento, políticas e uso para revisão operacional.',
+          },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / capacidades reutilizáveis.',
+        title: 'Empacote capacidades pequenas e revisáveis para reutilização.',
+        lead: 'O CinaSkill ajuda a definir, revisar, versionar e reutilizar capacidades específicas em produtos e fluxos.',
+        capabilities: [
+          {
+            title: 'Um trabalho claro.',
+            description: 'Defina entradas, ação, saída e permissões no contrato da capacidade.',
+          },
+          {
+            title: 'Versione mudanças.',
+            description: 'Exponha compatibilidade e dependências para atualizações seguras.',
+          },
+          {
+            title: 'Mantenha a propriedade visível.',
+            description: 'Inclua responsáveis e expectativas de manutenção.',
+          },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / infraestrutura conectada.',
+        title: 'Conecte o estado da aplicação sem esconder como ele muda.',
+        lead: 'O CinaChain apoia aplicações que precisam de estado verificável, serviços conectados e controles claros de entrega.',
+        capabilities: [
+          {
+            title: 'Defina o estado importante.',
+            description: 'Modele registros, eventos, propriedade e transições de forma explícita.',
+          },
+          {
+            title: 'Conecte com contratos estáveis.',
+            description: 'Mantenha claros os limites entre aplicação e serviço para mudanças seguras.',
+          },
+          {
+            title: 'Planeje entrega e recuperação.',
+            description: 'Inclua observação, revisão, entrega gradual e um caminho de recuperação.',
+          },
+        ],
+      },
+    },
+  },
+  fr: {
+    contact: 'Parler du flux',
+    stack: 'Voir les produits',
+    capabilitiesEyebrow: 'Capacités.',
+    capabilitiesTitle: 'Une couche concentrée sur le travail que l’équipe doit terminer.',
+    capabilitiesLead: 'Nous commençons par le plus petit flux utile et gardons ses limites et contrôles visibles.',
+    workflowEyebrow: 'Flux.',
+    workflowTitle: 'Nous rendons visible le chemin de l’entrée au résultat vérifié.',
+    steps: [
+      {
+        title: 'Définir le travail',
+        description: 'Clarifier l’utilisateur, l’objectif, les entrées et les contraintes.',
+      },
+      { title: 'Connecter le contexte', description: 'Utiliser uniquement les sources et systèmes approuvés.' },
+      {
+        title: 'Vérifier le résultat',
+        description: 'Conserver une revue humaine avant les décisions ou actions importantes.',
+      },
+      {
+        title: 'Améliorer par les preuves',
+        description: 'Transformer les erreurs, lacunes et retours en prochaine amélioration.',
+      },
+    ],
+    nextEyebrow: 'Étape suivante.',
+    nextTitle: 'Définissons le périmètre avec un flux réel.',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / recherche d’entreprise.',
+        title: 'Trouvez les connaissances opérationnelles sans créer un portail de plus.',
+        lead: 'CinaSeek relie documents, contexte produit, historique support et connaissances opérationnelles dans un flux de recherche.',
+        capabilities: [
+          {
+            title: 'Connecter les sources utiles.',
+            description: 'Définir le périmètre et les limites d’accès par équipe et projet.',
+          },
+          {
+            title: 'Répondre avec des sources.',
+            description: 'Afficher les références des réponses importantes pour faciliter leur vérification.',
+          },
+          {
+            title: 'Repérer les lacunes.',
+            description: 'Transformer les questions sans réponse en liste pratique d’améliorations.',
+          },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / assistant de flux.',
+        title: 'Transformez le travail répétitif en flux fiables et vérifiables.',
+        lead: 'CinaClaw réunit classification, collecte du contexte, préparation de l’action suivante et validation dans un flux opérationnel.',
+        capabilities: [
+          {
+            title: 'Structurer les demandes.',
+            description: 'Transformer messages et événements en travail avec responsable et contexte clairs.',
+          },
+          {
+            title: 'Préparer des propositions vérifiables.',
+            description: 'Présenter le brouillon de réponse ou d’action avec le contexte utilisé.',
+          },
+          {
+            title: 'Conserver les validations importantes.',
+            description: 'Exiger une revue humaine pour les actions externes, destructrices ou sensibles.',
+          },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / passerelle de modèles.',
+        title: 'Contrôlez l’accès, l’usage et les coûts depuis une seule passerelle.',
+        lead: 'CinaToken réunit identifiants, routage des modèles, politiques, traces et limites de coût dans une couche.',
+        capabilities: [
+          {
+            title: 'Centraliser les identifiants.',
+            description: 'Garder les clés fournisseurs derrière une limite contrôlée et hors de chaque application.',
+          },
+          {
+            title: 'Router vers les modèles approuvés.',
+            description: 'Choisir le chemin selon la tâche, la politique et la disponibilité.',
+          },
+          {
+            title: 'Tracer les décisions.',
+            description: 'Conserver routage, politiques et usage pour la revue opérationnelle.',
+          },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / capacités réutilisables.',
+        title: 'Regroupez de petites capacités vérifiables pour les réutiliser.',
+        lead: 'CinaSkill aide à définir, revoir, versionner et réutiliser des capacités ciblées dans les produits et flux.',
+        capabilities: [
+          {
+            title: 'Un travail clair.',
+            description: 'Définir les entrées, l’action, la sortie et les droits dans le contrat.',
+          },
+          {
+            title: 'Versionner les changements.',
+            description: 'Rendre visibles compatibilité et dépendances pour des mises à jour sûres.',
+          },
+          {
+            title: 'Garder la responsabilité visible.',
+            description: 'Inclure les responsables et attentes de maintenance.',
+          },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / infrastructure connectée.',
+        title: 'Connectez l’état applicatif sans masquer ses transitions.',
+        lead: 'CinaChain soutient les applications qui ont besoin d’un état vérifiable, de services connectés et de contrôles de livraison clairs.',
+        capabilities: [
+          {
+            title: 'Définir l’état important.',
+            description: 'Modéliser explicitement les enregistrements, événements, propriétaires et transitions.',
+          },
+          {
+            title: 'Connecter avec des contrats stables.',
+            description: 'Garder claires les limites entre application et service pour changer en sécurité.',
+          },
+          {
+            title: 'Prévoir livraison et reprise.',
+            description: 'Inclure observation, revue, livraison progressive et chemin de reprise.',
+          },
+        ],
+      },
+    },
+  },
+};
+
+const codeByProduct: Record<Product, string> = {
+  cinaseek: 'search { sources = "approved"; answer = "source-backed"; review = true; }',
+  cinaclaw: 'workflow { intake = "classify"; context = "gather"; approval = "human"; }',
+  cinatoken: 'gateway { route = "policy"; budget = "team"; trace = true; }',
+  cinaskill: 'skill { input = "defined"; action = "focused"; version = "1.0"; }',
+  cinachain: 'release { state = "verified"; owner = "assigned"; promote = "reviewed"; }',
+};
+
+const { lang, product } = Astro.props as { lang: Locale; product: Product };
+const page = content[lang];
+const item = page.products[product];
+const homeHref = `/${lang}`;
+const contactHref = `/${lang}/contact`;
+---
+
+<Layout metadata={{ title: item.title, description: item.lead }}>
+  <div class="cg-page">
+    <CinaPageHero
+      eyebrow={item.eyebrow}
+      title={item.title}
+      lead={item.lead}
+      primary={{ text: page.contact, href: contactHref }}
+      secondary={{ text: page.stack, href: homeHref }}
+    />
+    <section class="cg-page-section" aria-labelledby="localized-product-capabilities">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">{page.capabilitiesEyebrow}</p><h2 id="localized-product-capabilities">
+            {page.capabilitiesTitle}
+          </h2><p>{page.capabilitiesLead}</p>
+        </div><div class="cg-card-grid">
+          {
+            item.capabilities.map((capability, index) => (
+              <article class="cg-card">
+                <>
+                  <p class="cg-card-meta">{String(index + 1).padStart(2, '0')}</p>
+                  <h3>{capability.title}</h3>
+                  <p>{capability.description}</p>
+                </>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+    <section class="cg-page-section cg-page-section-soft" aria-labelledby="localized-product-workflow">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">{page.workflowEyebrow}</p><h2 id="localized-product-workflow">{page.workflowTitle}</h2>
+        </div><div class="cg-list-panel">
+          {
+            page.steps.map((step, index) => (
+              <div class="cg-list-row">
+                <>
+                  <strong>
+                    {String(index + 1).padStart(2, '0')} / {step.title}
+                  </strong>
+                  <span>{step.description}</span>
+                </>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+    <section class="cg-page-section cg-page-section-dark">
+      <div class="cg-page-shell"><pre class="cg-code-panel"><code>{codeByProduct[product]}</code></pre></div>
+    </section>
+    <section class="cg-page-section">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading cg-section-heading-center">
+          <p class="cg-eyebrow">{page.nextEyebrow}</p><h2>{page.nextTitle}</h2><div class="cg-page-actions">
+            <a class="cg-page-button cg-page-button-primary" href={contactHref}>{page.contact}</a><a
+              class="cg-page-button"
+              href={homeHref}>{page.stack}</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

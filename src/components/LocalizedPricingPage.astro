@@ -1,0 +1,361 @@
+---
+import CinaPageHero from '~/components/CinaPageHero.astro';
+import Layout from '~/layouts/PageLayout.astro';
+
+type Locale = 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+
+const content: Record<
+  Locale,
+  {
+    metadataTitle: string;
+    eyebrow: string;
+    title: string;
+    lead: string;
+    primary: string;
+    secondary: string;
+    sectionEyebrow: string;
+    sectionTitle: string;
+    sectionLead: string;
+    cards: Array<{ label: string; title: string; description: string; items: string[] }>;
+    factorsEyebrow: string;
+    factorsTitle: string;
+    factors: Array<{ title: string; description: string }>;
+  }
+> = {
+  ja: {
+    metadataTitle: '料金 — 見積もり前に範囲を明確に',
+    eyebrow: '料金 / 契約前に明確な範囲を。',
+    title: 'テンプレートではなく、成果に合わせて仕事を見積もります。',
+    lead: '料金は、ワークフロー、既存システム、リスク、統合の深さ、受け入れに必要な証拠によって決まります。',
+    primary: '範囲を相談する',
+    secondary: 'サービスを見る',
+    sectionEyebrow: '開始方法。',
+    sectionTitle: '3 つの進め方。',
+    sectionLead: '固定パッケージではなく、実際の製品と提供環境に合わせて確認します。',
+    cards: [
+      {
+        label: '集中監査',
+        title: '現状を理解する。',
+        description: '優先順位を証拠に基づいて整理したい製品、ページ群、またはワークフロー向け。',
+        items: ['ソースと本番状態の確認', 'UX・コンテンツ・技術上の指摘', '優先順位付き提案'],
+      },
+      {
+        label: '実装スプリント',
+        title: '一つのまとまった変更を届ける。',
+        description: '目標と制約が明確で、設計・実装・検証まで進められる場合に適しています。',
+        items: ['設計と実装範囲', '共有パターンとコンテンツ', 'レスポンシブ QA とデプロイ確認'],
+      },
+      {
+        label: '継続エンジニアリング',
+        title: '時間をかけて改善する。',
+        description: '反復的な提供、統合、運用フォローが必要な製品向け。',
+        items: ['優先順位付きキュー', '反復的な設計と実装', '継続的な検証と最適化'],
+      },
+    ],
+    factorsEyebrow: '見積もり要因。',
+    factorsTitle: 'コスト要因を明確にします。',
+    factors: [
+      { title: 'ワークフロー範囲', description: 'ユーザージャーニー、ページ種類、役割、言語、状態の数。' },
+      { title: 'システムの深さ', description: '既存アーキテクチャ、データ、API、認証、移行要件。' },
+      { title: 'リスクと証拠', description: '必要なレビュー、テスト、デプロイ、本番検証。' },
+    ],
+  },
+  ko: {
+    metadataTitle: '가격 — 견적 전에 범위 확인',
+    eyebrow: '가격 / 약정 전에 명확한 범위.',
+    title: '템플릿이 아니라 결과를 기준으로 업무를 산정합니다.',
+    lead: '가격은 워크플로, 기존 시스템, 위험, 통합 깊이 및 수용 증거에 따라 달라집니다.',
+    primary: '범위 상담하기',
+    secondary: '서비스 보기',
+    sectionEyebrow: '시작 방식.',
+    sectionTitle: '세 가지 시작점.',
+    sectionLead: '고정 패키지가 아니라 실제 제품과 제공 환경에 맞춰 범위를 확인합니다.',
+    cards: [
+      {
+        label: '집중 감사',
+        title: '현재 상태 이해.',
+        description: '제품, 페이지 그룹 또는 워크플로에 근거 기반 우선순위가 필요할 때 적합합니다.',
+        items: ['소스 및 프로덕션 상태 검토', 'UX, 콘텐츠 및 기술 발견 사항', '우선순위 권고안'],
+      },
+      {
+        label: '구현 스프린트',
+        title: '하나의 일관된 변경 제공.',
+        description: '목표와 제약이 충분히 명확하여 설계, 구현 및 검증이 가능할 때 적합합니다.',
+        items: ['설계 및 구현 범위', '공유 패턴과 콘텐츠', '반응형 QA 및 배포 확인'],
+      },
+      {
+        label: '지속 엔지니어링',
+        title: '시간에 따라 시스템 개선.',
+        description: '반복 제공, 통합 및 운영 후속 작업이 필요한 제품에 적합합니다.',
+        items: ['우선순위 제공 큐', '반복 설계 및 구현', '지속 검증 및 최적화'],
+      },
+    ],
+    factorsEyebrow: '견적 요소.',
+    factorsTitle: '비용 요인을 명확히 합니다.',
+    factors: [
+      { title: '워크플로 범위', description: '사용자 여정, 페이지 유형, 역할, 언어 및 상태의 수.' },
+      { title: '시스템 깊이', description: '기존 아키텍처, 데이터, API, 인증 및 마이그레이션 요구 사항.' },
+      { title: '위험과 증거', description: '필요한 검토, 테스트, 배포 및 프로덕션 검증.' },
+    ],
+  },
+  ru: {
+    metadataTitle: 'Стоимость — определить объём до предложения',
+    eyebrow: 'Стоимость / ясный объём до обязательств.',
+    title: 'Оцениваем работу по результату, а не по шаблону.',
+    lead: 'Стоимость зависит от процесса, существующих систем, рисков, глубины интеграции и доказательств приёмки.',
+    primary: 'Обсудить объём',
+    secondary: 'Посмотреть услуги',
+    sectionEyebrow: 'Форматы работы.',
+    sectionTitle: 'Три способа начать.',
+    sectionLead: 'Это не фиксированные пакеты: объём подтверждается по реальному продукту и среде доставки.',
+    cards: [
+      {
+        label: 'Точечный аудит',
+        title: 'Понять текущее состояние.',
+        description: 'Для продукта, группы страниц или процесса, которому нужны приоритеты, основанные на фактах.',
+        items: ['Проверка кода и production', 'UX, контент и технические выводы', 'Приоритетные рекомендации'],
+      },
+      {
+        label: 'Спринт реализации',
+        title: 'Поставить одно цельное изменение.',
+        description: 'Когда цель и ограничения достаточно ясны для проектирования, реализации и проверки.',
+        items: ['План дизайна и реализации', 'Общие шаблоны и контент', 'Адаптивный QA и проверка развёртывания'],
+      },
+      {
+        label: 'Постоянная инженерия',
+        title: 'Улучшать систему со временем.',
+        description: 'Для итерационной доставки, интеграций и операционного сопровождения.',
+        items: ['Приоритетная очередь', 'Итерационный дизайн и разработка', 'Регулярная проверка и оптимизация'],
+      },
+    ],
+    factorsEyebrow: 'Факторы оценки.',
+    factorsTitle: 'Делаем факторы стоимости явными.',
+    factors: [
+      {
+        title: 'Ширина процесса',
+        description: 'Количество пользовательских путей, типов страниц, ролей, языков и состояний.',
+      },
+      { title: 'Глубина системы', description: 'Архитектура, данные, API, аутентификация и требования миграции.' },
+      {
+        title: 'Риск и доказательства',
+        description: 'Необходимые проверки, тесты, развёртывание и контроль production.',
+      },
+    ],
+  },
+  es: {
+    metadataTitle: 'Precios — definir el alcance antes de cotizar',
+    eyebrow: 'Precios / alcance claro antes del compromiso.',
+    title: 'Valoramos el trabajo según el resultado, no según una plantilla.',
+    lead: 'El precio depende del flujo, los sistemas existentes, el riesgo, la profundidad de integración y la evidencia de aceptación.',
+    primary: 'Hablar del alcance',
+    secondary: 'Ver servicios',
+    sectionEyebrow: 'Formas de empezar.',
+    sectionTitle: 'Tres puntos de partida.',
+    sectionLead: 'No son paquetes fijos: el alcance se confirma con el producto y el entorno de entrega reales.',
+    cards: [
+      {
+        label: 'Auditoría enfocada',
+        title: 'Entender el estado actual.',
+        description: 'Para un producto, grupo de páginas o flujo que necesita prioridades respaldadas por evidencia.',
+        items: [
+          'Revisión del código y producción',
+          'Hallazgos de UX, contenido y tecnología',
+          'Recomendaciones priorizadas',
+        ],
+      },
+      {
+        label: 'Sprint de implementación',
+        title: 'Entregar un cambio coherente.',
+        description: 'Cuando el objetivo y las restricciones permiten diseñar, construir y verificar.',
+        items: [
+          'Alcance de diseño e implementación',
+          'Patrones y contenido compartidos',
+          'QA responsive y comprobación del despliegue',
+        ],
+      },
+      {
+        label: 'Ingeniería continua',
+        title: 'Mejorar el sistema con el tiempo.',
+        description: 'Para entrega iterativa, integraciones y seguimiento operativo.',
+        items: ['Cola priorizada', 'Diseño e ingeniería iterativos', 'Revisión y optimización recurrentes'],
+      },
+    ],
+    factorsEyebrow: 'Factores de alcance.',
+    factorsTitle: 'Hacemos explícitos los factores de coste.',
+    factors: [
+      { title: 'Amplitud del flujo', description: 'Número de recorridos, tipos de página, roles, idiomas y estados.' },
+      {
+        title: 'Profundidad del sistema',
+        description: 'Arquitectura, datos, API, autenticación y requisitos de migración.',
+      },
+      {
+        title: 'Riesgo y evidencia',
+        description: 'Revisiones, pruebas, despliegues y verificación en producción requeridos.',
+      },
+    ],
+  },
+  pt: {
+    metadataTitle: 'Preços — definir o escopo antes da proposta',
+    eyebrow: 'Preços / escopo claro antes do compromisso.',
+    title: 'Precificamos o trabalho pelo resultado, não por um modelo.',
+    lead: 'O preço depende do fluxo, dos sistemas existentes, dos riscos, da profundidade da integração e das evidências de aceitação.',
+    primary: 'Conversar sobre o escopo',
+    secondary: 'Ver serviços',
+    sectionEyebrow: 'Formas de começar.',
+    sectionTitle: 'Três pontos de partida.',
+    sectionLead: 'Não são pacotes fixos: o escopo é confirmado com o produto e o ambiente de entrega reais.',
+    cards: [
+      {
+        label: 'Auditoria focada',
+        title: 'Entender o estado atual.',
+        description: 'Para um produto, grupo de páginas ou fluxo que precisa de prioridades baseadas em evidências.',
+        items: ['Revisão do código e produção', 'Achados de UX, conteúdo e tecnologia', 'Recomendações priorizadas'],
+      },
+      {
+        label: 'Sprint de implementação',
+        title: 'Entregar uma mudança coerente.',
+        description: 'Quando o objetivo e as restrições permitem projetar, construir e verificar.',
+        items: [
+          'Escopo de design e implementação',
+          'Padrões e conteúdo compartilhados',
+          'QA responsivo e verificação da implantação',
+        ],
+      },
+      {
+        label: 'Engenharia contínua',
+        title: 'Melhorar o sistema ao longo do tempo.',
+        description: 'Para entrega iterativa, integrações e acompanhamento operacional.',
+        items: ['Fila priorizada', 'Design e engenharia iterativos', 'Revisão e otimização recorrentes'],
+      },
+    ],
+    factorsEyebrow: 'Fatores de escopo.',
+    factorsTitle: 'Deixamos os fatores de custo explícitos.',
+    factors: [
+      { title: 'Amplitude do fluxo', description: 'Número de jornadas, tipos de página, funções, idiomas e estados.' },
+      {
+        title: 'Profundidade do sistema',
+        description: 'Arquitetura, dados, APIs, autenticação e requisitos de migração.',
+      },
+      {
+        title: 'Risco e evidência',
+        description: 'Revisões, testes, implantações e verificação em produção necessárias.',
+      },
+    ],
+  },
+  fr: {
+    metadataTitle: 'Tarification — cadrer le travail avant le devis',
+    eyebrow: 'Tarification / un périmètre clair avant l’engagement.',
+    title: 'Nous chiffrons le travail selon le résultat, pas selon un modèle.',
+    lead: 'Le prix dépend du flux, des systèmes existants, du risque, de la profondeur d’intégration et des preuves de réception.',
+    primary: 'Parler du périmètre',
+    secondary: 'Voir les services',
+    sectionEyebrow: 'Formats de départ.',
+    sectionTitle: 'Trois façons de commencer.',
+    sectionLead:
+      'Ce ne sont pas des forfaits fixes : le périmètre est confirmé avec le produit et l’environnement de livraison réels.',
+    cards: [
+      {
+        label: 'Audit ciblé',
+        title: 'Comprendre l’état actuel.',
+        description:
+          'Pour un produit, un groupe de pages ou un flux qui a besoin de priorités fondées sur des preuves.',
+        items: [
+          'Revue du code et de la production',
+          'Constats UX, contenu et techniques',
+          'Recommandations priorisées',
+        ],
+      },
+      {
+        label: 'Sprint de mise en œuvre',
+        title: 'Livrer un changement cohérent.',
+        description: 'Quand la cible et les contraintes permettent de concevoir, construire et vérifier.',
+        items: [
+          'Périmètre design et implémentation',
+          'Modèles et contenu partagés',
+          'QA responsive et contrôle du déploiement',
+        ],
+      },
+      {
+        label: 'Ingénierie continue',
+        title: 'Améliorer le système dans le temps.',
+        description: 'Pour la livraison itérative, les intégrations et le suivi opérationnel.',
+        items: ['File de livraison priorisée', 'Design et ingénierie itératifs', 'Revue et optimisation récurrentes'],
+      },
+    ],
+    factorsEyebrow: 'Facteurs de cadrage.',
+    factorsTitle: 'Nous rendons les facteurs de coût explicites.',
+    factors: [
+      { title: 'Étendue du flux', description: 'Nombre de parcours, types de pages, rôles, langues et états.' },
+      {
+        title: 'Profondeur du système',
+        description: 'Architecture, données, API, authentification et besoins de migration.',
+      },
+      { title: 'Risque et preuves', description: 'Revues, tests, déploiements et vérification de production requis.' },
+    ],
+  },
+};
+
+const { lang } = Astro.props as { lang: Locale };
+const page = content[lang];
+const contactHref = `/${lang}/contact`;
+const servicesHref = `/${lang}/services`;
+---
+
+<Layout metadata={{ title: page.metadataTitle }}>
+  <div class="cg-page">
+    <CinaPageHero
+      eyebrow={page.eyebrow}
+      title={page.title}
+      lead={page.lead}
+      primary={{ text: page.primary, href: contactHref }}
+      secondary={{ text: page.secondary, href: servicesHref }}
+    />
+    <section class="cg-page-section" aria-labelledby="localized-pricing-title">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading cg-section-heading-center">
+          <p class="cg-eyebrow">{page.sectionEyebrow}</p><h2 id="localized-pricing-title">{page.sectionTitle}</h2><p>
+            {page.sectionLead}
+          </p>
+        </div><div class="cg-pricing-grid">
+          {
+            page.cards.map((card, index) => (
+              <article class:list={['cg-price-card', { 'cg-price-card-featured': index === 1 }]}>
+                <>
+                  <p class="cg-card-meta">{card.label}</p>
+                  <h3>{card.title}</h3>
+                  <p>{card.description}</p>
+                  <ul>
+                    {card.items.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                  <a class:list={['cg-page-button', { 'cg-page-button-primary': index !== 1 }]} href={contactHref}>
+                    {page.primary}
+                  </a>
+                </>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+    <section class="cg-page-section cg-page-section-soft" aria-labelledby="localized-factors-title">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">{page.factorsEyebrow}</p><h2 id="localized-factors-title">{page.factorsTitle}</h2>
+        </div><div class="cg-list-panel">
+          {
+            page.factors.map((factor) => (
+              <div class="cg-list-row">
+                <>
+                  <strong>{factor.title}</strong>
+                  <span>{factor.description}</span>
+                </>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

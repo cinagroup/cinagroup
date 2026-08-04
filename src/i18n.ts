@@ -14,144 +14,171 @@ export type Lang = keyof typeof languages;
 
 export const supportedLocales: Lang[] = ['en', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'];
 
-export const ui = {
-  en: {
-    // Navigation
-    'nav.products': 'Products',
-    'nav.solutions': 'Solutions',
-    'nav.resources': 'Resources',
-    'nav.company': 'Company',
-    'nav.blog': 'Blog',
-    'nav.documentation': 'Documentation',
-    'nav.apiReference': 'API Reference',
-
-    // Hero Section
-    'hero.welcome': 'Welcome to CinaGroup',
-    'hero.title': 'Building the Future of {0} & {1}',
-    'hero.ai': 'AI',
-    'hero.web3': 'Web3',
-    'hero.subtitle':
-      'We provide cutting-edge solutions in AI search, intelligent robots, skill platforms, and blockchain infrastructure. Empowering businesses and developers worldwide.',
-    'hero.exploreProducts': 'Explore Products',
-    'hero.contactUs': 'Contact Us',
-
-    // Business Lines
-    'business.title': 'Our Business Lines',
-    'business.subtitle': 'Five powerful platforms working together to deliver comprehensive AI and Web3 solutions',
-    'business.cinaseek.title': 'CinaSeek',
-    'business.cinaseek.tagline': 'Intelligent Search',
-    'business.cinaseek.desc': 'AI-driven enterprise search solution with multi-source data aggregation',
-    'business.cinaseek.action': 'Learn More',
-    'business.cinaclaw.title': 'CinaClaw',
-    'business.cinaclaw.tagline': 'AI Assistant',
-    'business.cinaclaw.desc': '24/7 AI assistant with multi-platform integration and workflow automation',
-    'business.cinaclaw.action': 'Try Demo',
-    'business.cinaskill.title': 'CinaSkill',
-    'business.cinaskill.tagline': 'Skills Platform',
-    'business.cinaskill.desc': 'Create, share, and discover robot skills with unlimited possibilities',
-    'business.cinaskill.action': 'Browse Skills',
-    'business.cinachain.title': 'CinaChain',
-    'business.cinachain.tagline': 'Blockchain Network',
-    'business.cinachain.desc': 'High-performance, low-cost Web3 infrastructure with smart contracts and DeFi',
-    'business.cinachain.action': 'View Network',
-    'business.cinatoken.title': 'CinaToken',
-    'business.cinatoken.tagline': 'AI API Gateway',
-    'business.cinatoken.desc': 'Unified API gateway for Claude, GPT, Gemini, and 100+ AI models',
-    'business.cinatoken.action': 'Get API Key',
-
-    // Why Choose Us
-    'why.title': 'Why Choose Us',
-    'why.subtitle': 'Technology That Drives Innovation',
-    'why.description': 'Built on cutting-edge technology with a focus on performance, security, and scalability',
-    'why.ai.title': 'AI-Powered Intelligence',
-    'why.ai.desc': 'Advanced machine learning models power our search, robotics, and automation solutions.',
-    'why.security.title': 'Blockchain Security',
-    'why.security.desc': 'Enterprise-grade security with decentralized architecture and cryptographic protection.',
-    'why.developer.title': 'Developer First',
-    'why.developer.desc': 'Comprehensive APIs, SDKs, and documentation to accelerate your development.',
-    'why.infrastructure.title': 'Scalable Infrastructure',
-    'why.infrastructure.desc': 'Cloud-native architecture that scales seamlessly with your growing needs.',
-    'why.realtime.title': 'Real-time Processing',
-    'why.realtime.desc': 'Low-latency data processing and real-time analytics for time-critical applications.',
-    'why.support.title': '24/7 Support',
-    'why.support.desc': 'Round-the-clock technical support and comprehensive knowledge base.',
-
-    // Stats (placeholder values — update with real metrics)
-    'stats.users': 'Active Users',
-    'stats.apiCalls': 'API Calls/Day',
-    'stats.skills': 'Skills Available',
-    'stats.nodes': 'Network Nodes',
-
-    // How It Works
-    'how.title': 'How It Works',
-    'how.subtitle': 'Get started in three simple steps',
-    'how.step1.title': 'Choose Your Product',
-    'how.step1.desc': 'Select from our four business lines based on your needs',
-    'how.step2.title': 'Integrate & Deploy',
-    'how.step2.desc': 'Use our APIs and SDKs to integrate with your existing systems',
-    'how.step3.title': 'Scale & Optimize',
-    'how.step3.desc': 'Monitor performance and scale as your usage grows',
-
-    // Testimonials (placeholder — replace with real customer quotes)
-    'testimonials.title': 'What Our Clients Say',
-    'testimonials.quote1':
-      'CinaSeek has transformed how our team accesses information. The AI-powered search is incredibly accurate and saves us hours every day.',
-    'testimonials.author1': '—',
-    'testimonials.role1': '[Company], [Title]',
-    'testimonials.quote2':
-      'CinaClaw automated our customer service workflows. The integration was smooth and the results exceeded our expectations.',
-    'testimonials.author2': '—',
-    'testimonials.role2': '[Company], [Title]',
-    'testimonials.quote3':
-      'The CinaChain infrastructure is reliable and well-documented. A solid foundation for our Web3 applications.',
-    'testimonials.author3': '—',
-    'testimonials.role3': '[Company], [Title]',
-
-    // CTA
-    'cta.title': 'Ready to {0} Your Business?',
-    'cta.transform': 'Transform',
-    'cta.subtitle':
-      'Join thousands of companies using CinaGroup solutions.{0}Start your journey today with our free tier.',
-    'cta.getStarted': 'Get Started Free',
-    'cta.talkToSales': 'Talk to Sales',
-
-    // Footer
-    'footer.products': 'Products',
-    'footer.developers': 'Developers',
-    'footer.support': 'Support',
-    'footer.company': 'Company',
-    'footer.about': 'About Us',
-    'footer.careers': 'Careers',
-    'footer.press': 'Press Kit',
-    'footer.contact': 'Contact',
-    'footer.helpCenter': 'Help Center',
-    'footer.community': 'Community',
-    'footer.systemStatus': 'System Status',
-    'footer.sdkTools': 'SDK & Tools',
-    'footer.grants': 'Grants Program',
-    'footer.developerBlog': 'Developer Blog',
-    'footer.rights': '© 2026 By CinaClaw@CinaSeek.AI All Rights Reserved.',
+const navigationLabels: Partial<Record<Lang, Record<string, string>>> = {
+  ja: {
+    Products: '製品',
+    Solutions: 'ソリューション',
+    Resources: 'リソース',
+    Company: '会社情報',
+    Enterprise: 'エンタープライズ',
+    Developers: '開発者',
+    Support: 'サポート',
+    Startups: 'スタートアップ',
+    Blog: 'ブログ',
+    About: '会社概要',
+    Contact: 'お問い合わせ',
+    Login: 'ログイン',
+    Signup: '登録',
+    'CinaSeek — Intelligent Search': 'CinaSeek — インテリジェント検索',
+    'CinaClaw — AI Assistant': 'CinaClaw — AI アシスタント',
+    'CinaToken — AI API Gateway': 'CinaToken — AI API ゲートウェイ',
+    'CinaSkill — Skills Platform': 'CinaSkill — スキルプラットフォーム',
+    'CinaChain — Blockchain Network': 'CinaChain — 接続インフラ',
+    'Developer Blog': '開発者ブログ',
+    'Contact Support': 'サポートへ連絡',
+    'About Us': '会社概要',
+    'Terms of Service': '利用規約',
+    'Privacy Policy': 'プライバシーポリシー',
   },
-} as const;
+  ko: {
+    Products: '제품',
+    Solutions: '솔루션',
+    Resources: '리소스',
+    Company: '회사',
+    Enterprise: '엔터프라이즈',
+    Developers: '개발자',
+    Support: '지원',
+    Startups: '스타트업',
+    Blog: '블로그',
+    About: '회사 소개',
+    Contact: '문의',
+    Login: '로그인',
+    Signup: '가입',
+    'CinaSeek — Intelligent Search': 'CinaSeek — 지능형 검색',
+    'CinaClaw — AI Assistant': 'CinaClaw — AI 어시스턴트',
+    'CinaToken — AI API Gateway': 'CinaToken — AI API 게이트웨이',
+    'CinaSkill — Skills Platform': 'CinaSkill — 스킬 플랫폼',
+    'CinaChain — Blockchain Network': 'CinaChain — 연결 인프라',
+    'Developer Blog': '개발자 블로그',
+    'Contact Support': '지원 문의',
+    'About Us': '회사 소개',
+    'Terms of Service': '서비스 약관',
+    'Privacy Policy': '개인정보 보호정책',
+  },
+  ru: {
+    Products: 'Продукты',
+    Solutions: 'Решения',
+    Resources: 'Ресурсы',
+    Company: 'Компания',
+    Enterprise: 'Для компаний',
+    Developers: 'Разработчикам',
+    Support: 'Поддержка',
+    Startups: 'Стартапам',
+    Blog: 'Блог',
+    About: 'О компании',
+    Contact: 'Контакты',
+    Login: 'Войти',
+    Signup: 'Регистрация',
+    'CinaSeek — Intelligent Search': 'CinaSeek — корпоративный поиск',
+    'CinaClaw — AI Assistant': 'CinaClaw — помощник процессов',
+    'CinaToken — AI API Gateway': 'CinaToken — модельный шлюз',
+    'CinaSkill — Skills Platform': 'CinaSkill — повторно используемые возможности',
+    'CinaChain — Blockchain Network': 'CinaChain — связанная инфраструктура',
+    'Developer Blog': 'Блог разработчиков',
+    'Contact Support': 'Связаться с поддержкой',
+    'About Us': 'О компании',
+    'Terms of Service': 'Условия использования',
+    'Privacy Policy': 'Политика конфиденциальности',
+  },
+  es: {
+    Products: 'Productos',
+    Solutions: 'Soluciones',
+    Resources: 'Recursos',
+    Company: 'Empresa',
+    Enterprise: 'Empresas',
+    Developers: 'Desarrolladores',
+    Support: 'Soporte',
+    Startups: 'Startups',
+    Blog: 'Blog',
+    About: 'Quiénes somos',
+    Contact: 'Contacto',
+    Login: 'Entrar',
+    Signup: 'Registro',
+    'CinaSeek — Intelligent Search': 'CinaSeek — búsqueda empresarial',
+    'CinaClaw — AI Assistant': 'CinaClaw — asistente de flujo',
+    'CinaToken — AI API Gateway': 'CinaToken — gateway de modelos',
+    'CinaSkill — Skills Platform': 'CinaSkill — capacidades reutilizables',
+    'CinaChain — Blockchain Network': 'CinaChain — infraestructura conectada',
+    'Developer Blog': 'Blog para desarrolladores',
+    'Contact Support': 'Contactar con soporte',
+    'About Us': 'Quiénes somos',
+    'Terms of Service': 'Términos de servicio',
+    'Privacy Policy': 'Política de privacidad',
+  },
+  pt: {
+    Products: 'Produtos',
+    Solutions: 'Soluções',
+    Resources: 'Recursos',
+    Company: 'Empresa',
+    Enterprise: 'Empresas',
+    Developers: 'Desenvolvedores',
+    Support: 'Suporte',
+    Startups: 'Startups',
+    Blog: 'Blog',
+    About: 'Sobre',
+    Contact: 'Contato',
+    Login: 'Entrar',
+    Signup: 'Cadastro',
+    'CinaSeek — Intelligent Search': 'CinaSeek — busca empresarial',
+    'CinaClaw — AI Assistant': 'CinaClaw — assistente de fluxo',
+    'CinaToken — AI API Gateway': 'CinaToken — gateway de modelos',
+    'CinaSkill — Skills Platform': 'CinaSkill — capacidades reutilizáveis',
+    'CinaChain — Blockchain Network': 'CinaChain — infraestrutura conectada',
+    'Developer Blog': 'Blog para desenvolvedores',
+    'Contact Support': 'Falar com o suporte',
+    'About Us': 'Sobre',
+    'Terms of Service': 'Termos de serviço',
+    'Privacy Policy': 'Política de privacidade',
+  },
+  fr: {
+    Products: 'Produits',
+    Solutions: 'Solutions',
+    Resources: 'Ressources',
+    Company: 'Entreprise',
+    Enterprise: 'Entreprises',
+    Developers: 'Développeurs',
+    Support: 'Support',
+    Startups: 'Startups',
+    Blog: 'Blog',
+    About: 'À propos',
+    Contact: 'Contact',
+    Login: 'Connexion',
+    Signup: 'Inscription',
+    'CinaSeek — Intelligent Search': 'CinaSeek — recherche d’entreprise',
+    'CinaClaw — AI Assistant': 'CinaClaw — assistant de flux',
+    'CinaToken — AI API Gateway': 'CinaToken — passerelle de modèles',
+    'CinaSkill — Skills Platform': 'CinaSkill — capacités réutilisables',
+    'CinaChain — Blockchain Network': 'CinaChain — infrastructure connectée',
+    'Developer Blog': 'Blog développeurs',
+    'Contact Support': 'Contacter le support',
+    'About Us': 'À propos',
+    'Terms of Service': 'Conditions d’utilisation',
+    'Privacy Policy': 'Politique de confidentialité',
+  },
+};
 
-type TranslationKey = keyof typeof ui.en;
-const dictionaries: Partial<Record<Lang, typeof ui.en>> = ui;
-
-export function useTranslations(lang: Lang) {
-  const dictionary = dictionaries[lang] ?? ui.en;
-
-  return function t(key: TranslationKey) {
-    return dictionary[key] || ui.en[key];
-  };
+export function getLocalizedLabel(lang: Lang, label?: string) {
+  if (!label) return label;
+  return navigationLabels[lang]?.[label] ?? label;
 }
 
 export function getLangFromUrl(url: URL) {
   const [, lang] = url.pathname.split('/');
-  if (lang in languages) return lang as keyof typeof languages;
+  if (lang in languages) return lang as Lang;
   return defaultLang;
 }
 
-export function changeLangPath(url: URL, newLang: keyof typeof languages) {
+export function changeLangPath(url: URL, newLang: Lang) {
   const parts = url.pathname.split('/').filter(Boolean);
 
   if (parts[0] in languages) {

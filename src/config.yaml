@@ -9,14 +9,13 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: CinaGroup — AI & Web3 Solutions | Intelligent Search, Robotics & Blockchain
+    default: CinaGroup — Search, automation, APIs, and infrastructure
     template: '%s — CinaGroup'
-  description: 'CinaGroup delivers enterprise-grade AI & Web3 solutions: CinaSeek (AI search), CinaClaw (intelligent robots), CinaSkill (skills platform), CinaToken (AI API gateway), and CinaChain (blockchain infrastructure). Empowering 50K+ users worldwide.'
+  description: 'CinaGroup builds practical tools for search, workflow automation, model access, reusable skills, and connected infrastructure.'
   keywords:
     - 'AI search'
-    - 'intelligent robot'
-    - 'blockchain'
-    - 'Web3'
+    - 'workflow automation'
+    - 'developer infrastructure'
     - 'CinaSeek'
     - 'CinaClaw'
     - 'CinaSkill'
@@ -24,11 +23,7 @@ metadata:
     - 'CinaChain'
     - 'AI API gateway'
     - 'automation'
-    - 'smart contracts'
     - 'enterprise AI'
-    - 'machine learning'
-    - 'DeFi'
-    - 'robot skills'
     - 'AI assistant'
     - 'multi-model API'
   robots:
@@ -37,10 +32,10 @@ metadata:
   openGraph:
     site_name: CinaGroup
     images:
-      - url: '~/assets/images/default.png'
+      - url: '~/assets/images/cinagroup-system-hero-v1.png'
         width: 1200
-        height: 628
-        alt: 'CinaGroup - AI & Web3 Solutions'
+        height: 675
+        alt: 'CinaGroup product system — search, automation, APIs, and infrastructure'
     type: website
     locale: en_US
   twitter:
@@ -53,7 +48,7 @@ metadata:
     - name: 'publisher'
       content: 'CinaGroup'
     - name: 'theme-color'
-      content: '#3b82f6'
+      content: '#171717'
     - name: 'application-name'
       content: 'CinaGroup'
 
@@ -112,4 +107,4 @@ analytics:
       token: null
 
 ui:
-  theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
+  theme: 'light:only' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
