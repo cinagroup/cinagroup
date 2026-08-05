@@ -5,7 +5,7 @@ CinaGroup 官方网站，基于 [Astro](https://astro.build) 5 + [Tailwind CSS](
 ## 🌐 访问地址
 
 - **生产环境**: https://cinagroup.com
-- **预览环境**: https://cinagroup-homepage.pages.dev
+- **预览环境**: https://homepage.pages.dev
 
 ## 🏢 产品线
 

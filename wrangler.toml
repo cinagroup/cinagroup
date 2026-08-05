@@ -1,7 +1,9 @@
 # Cloudflare Wrangler 配置
 # 用于本地开发和高级配置
 
-name = "cinagroup-homepage"
+# The Cloudflare Pages project name hosting cinagroup.com (dashboard: Account Home -> Workers & Pages).
+# NOTE: this is `homepage`, NOT `cinagroup-homepage` (that project no longer exists).
+name = "homepage"
 compatibility_date = "2024-01-01"
 pages_build_output_dir = "./dist"
 
