@@ -1,0 +1,74 @@
+# Deploy to Cloudflare Pages via GitHub Actions
+#
+# History:
+# - Old workflows (cloudflare-deploy.yml / deploy.yml / actions.yaml) were removed in
+#   bd487cb (2026-05-26) after repeated "Input required and not supplied: accountId"
+#   failures — the CLOUDFLARE_ACCOUNT_ID secret was never supplied to the deploy action.
+# - Cloudflare Pages direct Git integration took over deployments (works today).
+# - This workflow restores a single, correctly-configured pipeline:
+#     build (test) -> verify secrets -> deploy to Cloudflare Pages.
+#
+# Required repository secrets (Settings -> Secrets and variables -> Actions):
+#   - CLOUDFLARE_API_TOKEN   (Cloudflare API token with "Cloudflare Pages: Edit" permission)
+#   - CLOUDFLARE_ACCOUNT_ID  (Cloudflare account id, e.g. 7ea8e46d8210bad342fa7595f7935fea)
+
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    name: Build and Deploy to Cloudflare Pages
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      # Fails fast with a clear, API-visible error when the deploy secrets are missing,
+      # instead of the cryptic "Input required and not supplied: accountId" from before.
+      - name: Verify Cloudflare secrets are configured
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN == '' || secrets.CLOUDFLARE_ACCOUNT_ID == '' }}
+        run: |
+          echo "::error::Cloudflare deploy secrets missing. Add these under Settings -> Secrets and variables -> Actions, then re-run:"
+          echo "  - CLOUDFLARE_API_TOKEN  configured: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}"
+          echo "  - CLOUDFLARE_ACCOUNT_ID configured: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}"
+          exit 1
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=cinagroup-homepage --branch=main
+
+      - name: Deployment summary
+        run: |
+          echo "✅ Deployment completed successfully!"
+          echo "🌐 Production URL: https://cinagroup.com"
+          echo "📊 Preview URL: https://cinagroup-homepage.pages.dev"
