@@ -52,13 +52,19 @@ jobs:
 
       # Fails fast with a clear, API-visible error when the deploy secrets are missing,
       # instead of the cryptic "Input required and not supplied: accountId" from before.
+      # (The `secrets` context is not allowed inside step-level `if:` expressions, so
+      # secret presence is mapped into env vars and checked in the shell instead.)
       - name: Verify Cloudflare secrets are configured
-        if: ${{ secrets.CLOUDFLARE_API_TOKEN == '' || secrets.CLOUDFLARE_ACCOUNT_ID == '' }}
+        env:
+          CF_TOKEN_SET: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+          CF_ACCOUNT_SET: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
         run: |
-          echo "::error::Cloudflare deploy secrets missing. Add these under Settings -> Secrets and variables -> Actions, then re-run:"
-          echo "  - CLOUDFLARE_API_TOKEN  configured: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}"
-          echo "  - CLOUDFLARE_ACCOUNT_ID configured: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}"
-          exit 1
+          if [ "$CF_TOKEN_SET" != "true" ] || [ "$CF_ACCOUNT_SET" != "true" ]; then
+            echo "::error::Cloudflare deploy secrets missing. Add these under Settings -> Secrets and variables -> Actions, then re-run:"
+            echo "  - CLOUDFLARE_API_TOKEN  configured: $CF_TOKEN_SET"
+            echo "  - CLOUDFLARE_ACCOUNT_ID configured: $CF_ACCOUNT_SET"
+            exit 1
+          fi
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
