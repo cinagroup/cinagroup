@@ -13,7 +13,7 @@
       "config": {
         "owner": "cinagroup",
         "owner_id": "224764184",
-        "repo_name": "homepage",
+        "repo_name": "cinagroup",
         "repo_id": "1184981294",
         "production_branch": "main",
         "pr_comments_enabled": true,
@@ -59,17 +59,17 @@
       }
     },
     "latest_deployment": {
-      "id": "dcf3519b-b091-4259-9df9-e5c13f0ff70a",
-      "short_id": "dcf3519b",
+      "id": "eabc2f3b-4252-40a1-a01f-ddd501575704",
+      "short_id": "eabc2f3b",
       "project_id": "630a00f2-75b4-48e1-a83a-82a92c75e5a9",
       "project_name": "homepage",
       "environment": "production",
-      "url": "https://dcf3519b.homepage-cj7.pages.dev",
-      "created_on": "2026-08-29T14:59:09.692693Z",
-      "modified_on": "2026-08-29T14:59:09.884751Z",
+      "url": "https://eabc2f3b.homepage-cj7.pages.dev",
+      "created_on": "2026-08-29T15:02:31.248402Z",
+      "modified_on": "2026-08-29T15:02:31.423266Z",
       "latest_stage": {
         "name": "queued",
-        "started_on": "2026-08-29T14:59:09.883008Z",
+        "started_on": "2026-08-29T15:02:31.418306Z",
         "ended_on": null,
         "status": "active"
       },
@@ -77,15 +77,15 @@
         "type": "github:push",
         "metadata": {
           "branch": "main",
-          "commit_hash": "5bf759d909143ba0950b1ca9bdee7333d118403b",
-          "commit_message": "chore: add temporary CF pages git integration check",
+          "commit_hash": "2290de093ed8098f5e85810b4a7cbb483e985154",
+          "commit_message": "chore: recheck cf pages integration after manual reconnect",
           "commit_dirty": false
         }
       },
       "stages": [
         {
           "name": "queued",
-          "started_on": "2026-08-29T14:59:09.883008Z",
+          "started_on": "2026-08-29T15:02:31.418306Z",
           "ended_on": null,
           "status": "active"
         },
@@ -126,7 +126,7 @@
         "type": "github",
         "config": {
           "owner": "cinagroup",
-          "repo_name": "homepage",
+          "repo_name": "cinagroup",
           "production_branch": "main",
           "pr_comments_enabled": false
         }
@@ -142,33 +142,33 @@
       "uses_functions": null
     },
     "canonical_deployment": {
-      "id": "71f6f0e1-8790-4d4a-be63-a5cfb22bc844",
-      "short_id": "71f6f0e1",
+      "id": "cc7ec246-91a9-4163-ae1a-7bdca8ec5d97",
+      "short_id": "cc7ec246",
       "project_id": "630a00f2-75b4-48e1-a83a-82a92c75e5a9",
       "project_name": "homepage",
       "environment": "production",
-      "url": "https://71f6f0e1.homepage-cj7.pages.dev",
-      "created_on": "2026-08-29T14:53:09.682045Z",
-      "modified_on": "2026-08-29T14:55:13.764091Z",
+      "url": "https://cc7ec246.homepage-cj7.pages.dev",
+      "created_on": "2026-08-29T15:01:07.709398Z",
+      "modified_on": "2026-08-29T15:01:09.413011Z",
       "latest_stage": {
         "name": "deploy",
         "started_on": null,
-        "ended_on": "2026-08-29T14:55:13.764091Z",
+        "ended_on": "2026-08-29T15:01:09.413011Z",
         "status": "success"
       },
       "deployment_trigger": {
-        "type": "github:push",
+        "type": "ad_hoc",
         "metadata": {
           "branch": "main",
-          "commit_hash": "e5bd1429777a80824d3e9ec45f0f2ab991e78f5e",
-          "commit_message": "Merge pull request #1 from cinagroup/codex/rename-repository\n\nRename repository to cinagroup",
-          "commit_dirty": false
+          "commit_hash": "5bf759d909143ba0950b1ca9bdee7333d118403b",
+          "commit_message": "chore: add temporary CF pages git integration check",
+          "commit_dirty": true
         }
       },
       "stages": [
         {
           "name": "queued",
-          "started_on": "2026-08-29T14:55:12.453993Z",
+          "started_on": "2026-08-29T15:01:07.709398Z",
           "ended_on": null,
           "status": "active"
         },
@@ -193,7 +193,7 @@
         {
           "name": "deploy",
           "started_on": null,
-          "ended_on": "2026-08-29T14:55:13.764091Z",
+          "ended_on": "2026-08-29T15:01:09.413011Z",
           "status": "success"
         }
       ],
@@ -204,15 +204,6 @@
         "root_dir": "",
         "web_analytics_tag": null,
         "web_analytics_token": null
-      },
-      "source": {
-        "type": "github",
-        "config": {
-          "owner": "cinagroup",
-          "repo_name": "homepage",
-          "production_branch": "main",
-          "pr_comments_enabled": false
-        }
       },
       "env_vars": {},
       "compatibility_date": "2026-03-18",
