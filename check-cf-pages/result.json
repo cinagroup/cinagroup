@@ -1,0 +1,241 @@
+{
+  "result": {
+    "id": "630a00f2-75b4-48e1-a83a-82a92c75e5a9",
+    "name": "homepage",
+    "subdomain": "homepage-cj7.pages.dev",
+    "domains": [
+      "homepage-cj7.pages.dev",
+      "cinagroup.com",
+      "xn--v6qq4kq7wvy1b.xn--fiqs8s"
+    ],
+    "source": {
+      "type": "github",
+      "config": {
+        "owner": "cinagroup",
+        "owner_id": "224764184",
+        "repo_name": "homepage",
+        "repo_id": "1184981294",
+        "production_branch": "main",
+        "pr_comments_enabled": true,
+        "deployments_enabled": true,
+        "production_deployments_enabled": true,
+        "preview_deployment_setting": "all",
+        "preview_branch_includes": [
+          "*"
+        ],
+        "preview_branch_excludes": [],
+        "path_includes": [
+          "*"
+        ],
+        "path_excludes": []
+      }
+    },
+    "build_config": {
+      "build_command": "npm run build",
+      "destination_dir": "dist",
+      "build_caching": false,
+      "root_dir": "",
+      "web_analytics_tag": null,
+      "web_analytics_token": null
+    },
+    "deployment_configs": {
+      "preview": {
+        "env_vars": null,
+        "fail_open": true,
+        "always_use_latest_compatibility_date": false,
+        "compatibility_date": "2026-03-18",
+        "compatibility_flags": [],
+        "build_image_major_version": 3,
+        "usage_model": "standard"
+      },
+      "production": {
+        "env_vars": null,
+        "fail_open": true,
+        "always_use_latest_compatibility_date": false,
+        "compatibility_date": "2026-03-18",
+        "compatibility_flags": [],
+        "build_image_major_version": 3,
+        "usage_model": "standard"
+      }
+    },
+    "latest_deployment": {
+      "id": "dcf3519b-b091-4259-9df9-e5c13f0ff70a",
+      "short_id": "dcf3519b",
+      "project_id": "630a00f2-75b4-48e1-a83a-82a92c75e5a9",
+      "project_name": "homepage",
+      "environment": "production",
+      "url": "https://dcf3519b.homepage-cj7.pages.dev",
+      "created_on": "2026-08-29T14:59:09.692693Z",
+      "modified_on": "2026-08-29T14:59:09.884751Z",
+      "latest_stage": {
+        "name": "queued",
+        "started_on": "2026-08-29T14:59:09.883008Z",
+        "ended_on": null,
+        "status": "active"
+      },
+      "deployment_trigger": {
+        "type": "github:push",
+        "metadata": {
+          "branch": "main",
+          "commit_hash": "5bf759d909143ba0950b1ca9bdee7333d118403b",
+          "commit_message": "chore: add temporary CF pages git integration check",
+          "commit_dirty": false
+        }
+      },
+      "stages": [
+        {
+          "name": "queued",
+          "started_on": "2026-08-29T14:59:09.883008Z",
+          "ended_on": null,
+          "status": "active"
+        },
+        {
+          "name": "initialize",
+          "started_on": null,
+          "ended_on": null,
+          "status": "idle"
+        },
+        {
+          "name": "clone_repo",
+          "started_on": null,
+          "ended_on": null,
+          "status": "idle"
+        },
+        {
+          "name": "build",
+          "started_on": null,
+          "ended_on": null,
+          "status": "idle"
+        },
+        {
+          "name": "deploy",
+          "started_on": null,
+          "ended_on": null,
+          "status": "idle"
+        }
+      ],
+      "build_config": {
+        "build_command": "npm run build",
+        "destination_dir": "dist",
+        "build_caching": false,
+        "root_dir": "",
+        "web_analytics_tag": null,
+        "web_analytics_token": null
+      },
+      "source": {
+        "type": "github",
+        "config": {
+          "owner": "cinagroup",
+          "repo_name": "homepage",
+          "production_branch": "main",
+          "pr_comments_enabled": false
+        }
+      },
+      "env_vars": {},
+      "compatibility_date": "2026-03-18",
+      "compatibility_flags": [],
+      "build_image_major_version": 3,
+      "usage_model": null,
+      "aliases": null,
+      "is_skipped": false,
+      "production_branch": "main",
+      "uses_functions": null
+    },
+    "canonical_deployment": {
+      "id": "71f6f0e1-8790-4d4a-be63-a5cfb22bc844",
+      "short_id": "71f6f0e1",
+      "project_id": "630a00f2-75b4-48e1-a83a-82a92c75e5a9",
+      "project_name": "homepage",
+      "environment": "production",
+      "url": "https://71f6f0e1.homepage-cj7.pages.dev",
+      "created_on": "2026-08-29T14:53:09.682045Z",
+      "modified_on": "2026-08-29T14:55:13.764091Z",
+      "latest_stage": {
+        "name": "deploy",
+        "started_on": null,
+        "ended_on": "2026-08-29T14:55:13.764091Z",
+        "status": "success"
+      },
+      "deployment_trigger": {
+        "type": "github:push",
+        "metadata": {
+          "branch": "main",
+          "commit_hash": "e5bd1429777a80824d3e9ec45f0f2ab991e78f5e",
+          "commit_message": "Merge pull request #1 from cinagroup/codex/rename-repository\n\nRename repository to cinagroup",
+          "commit_dirty": false
+        }
+      },
+      "stages": [
+        {
+          "name": "queued",
+          "started_on": "2026-08-29T14:55:12.453993Z",
+          "ended_on": null,
+          "status": "active"
+        },
+        {
+          "name": "initialize",
+          "started_on": null,
+          "ended_on": null,
+          "status": "idle"
+        },
+        {
+          "name": "clone_repo",
+          "started_on": null,
+          "ended_on": null,
+          "status": "idle"
+        },
+        {
+          "name": "build",
+          "started_on": null,
+          "ended_on": null,
+          "status": "idle"
+        },
+        {
+          "name": "deploy",
+          "started_on": null,
+          "ended_on": "2026-08-29T14:55:13.764091Z",
+          "status": "success"
+        }
+      ],
+      "build_config": {
+        "build_command": "npm run build",
+        "destination_dir": "dist",
+        "build_caching": false,
+        "root_dir": "",
+        "web_analytics_tag": null,
+        "web_analytics_token": null
+      },
+      "source": {
+        "type": "github",
+        "config": {
+          "owner": "cinagroup",
+          "repo_name": "homepage",
+          "production_branch": "main",
+          "pr_comments_enabled": false
+        }
+      },
+      "env_vars": {},
+      "compatibility_date": "2026-03-18",
+      "compatibility_flags": [],
+      "build_image_major_version": 3,
+      "usage_model": null,
+      "aliases": [
+        "https://cinagroup.com",
+        "https://xn--v6qq4kq7wvy1b.xn--fiqs8s"
+      ],
+      "is_skipped": false,
+      "production_branch": "main",
+      "uses_functions": false
+    },
+    "created_on": "2026-03-18T07:53:36.660136Z",
+    "production_branch": "main",
+    "production_script_name": "pages-worker--11827931-production",
+    "preview_script_name": "pages-worker--11827931-preview",
+    "uses_functions": false,
+    "framework": "astro",
+    "framework_version": "5.12.9"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
