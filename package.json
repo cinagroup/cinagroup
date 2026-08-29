@@ -1,5 +1,5 @@
 {
-  "name": "@cinagroup/homepage",
+  "name": "@cinagroup/cinagroup",
   "version": "1.0.0",
   "description": "CinaGroup official website — built with Astro 5 and Tailwind CSS",
   "type": "module",
