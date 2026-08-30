@@ -7,6 +7,9 @@
 # - Cloudflare Pages direct Git integration took over deployments (works today).
 # - This workflow restores a single, correctly-configured pipeline:
 #     build (test) -> verify secrets -> deploy to Cloudflare Pages.
+# - 2026-08-30: Pages project renamed `homepage` -> `cinagroup` (matches the
+#   renamed repo cinagroup/cinagroup). Deploy target updated accordingly.
+#   pages.dev subdomain retained: homepage-cj7.pages.dev.
 #
 # Required repository secrets (Settings -> Secrets and variables -> Actions):
 #   - CLOUDFLARE_API_TOKEN   (Cloudflare API token with "Cloudflare Pages: Edit" permission)
@@ -71,10 +74,10 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=homepage --branch=main
+          command: pages deploy dist --project-name=cinagroup --branch=main
 
       - name: Deployment summary
         run: |
           echo "✅ Deployment completed successfully!"
           echo "🌐 Production URL: https://cinagroup.com"
-          echo "📊 Preview URL: https://cinagroup-homepage.pages.dev"
+          echo "📊 Preview URL: https://homepage-cj7.pages.dev"

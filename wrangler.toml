@@ -2,8 +2,8 @@
 # 用于本地开发和高级配置
 
 # The Cloudflare Pages project name hosting cinagroup.com (dashboard: Account Home -> Workers & Pages).
-# NOTE: this is `homepage`, NOT `cinagroup-homepage` (that project no longer exists).
-name = "homepage"
+# 2026-08-29: project renamed `homepage` -> `cinagroup` (matches the renamed repo).
+name = "cinagroup"
 compatibility_date = "2024-01-01"
 pages_build_output_dir = "./dist"
 
