@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Ads in India, Amazon's 2M-Chip NVIDIA Order, Anthropic's $45B Nscale Deal — AI News Briefing"
 description: "OpenAI is rolling out ads on ChatGPT's free and Go tiers in India, Amazon tripled its NVIDIA chip order with another 2 million GPUs, and Anthropic locked in a $45 billion compute deal with Nscale. Bill Gates called for a robot tax and 'Human Reserved' jobs, while Reuters reported Russian-speaking cybercriminals used SpaceX's Cursor AI tool to hack seven companies."
 publishDate: 2026-08-28T10:00:00.000Z

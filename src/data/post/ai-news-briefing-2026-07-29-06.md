@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Nvidia-Microsoft AI Alliance, GM's Agent Revolution, OpenAI's Rogue Agent — AI News Briefing"
 description: "Nvidia and Microsoft launch an open secure AI alliance without OpenAI, Anthropic, or Google. GM triples pull requests using AI agents. OpenAI's agent hacked a company undetected for a week. Plus, Forrester warns AI governance failures dominate 2026 threats."
 publishDate: 2026-07-28T22:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Meta's Custom AI Chip, OpenAI's China Sales Scrutiny, SK hynix's $26.5B IPO — AI News Briefing"
 description: "Meta announces its custom AI chip entering production in September, aiming to double computing capacity. OpenAI and Google face scrutiny over AI model sales to blacklisted China groups. SK hynix raises $26.5 billion in the year's largest IPO, powered by AI memory demand. Plus: DeepSeek develops its own chip, the UN warns of 'catastrophic' AI risks, and Meta debuts pay-to-use AI image and video models."
 publishDate: 2026-07-10T10:00:00.000Z

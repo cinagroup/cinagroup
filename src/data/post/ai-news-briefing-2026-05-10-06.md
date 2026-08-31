@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — May 10, 2026: LLMs Corrupt Documents at Scale, Cloudflare Cuts 1,100 Amid AI Surge, Musk v. Altman Trial Heats Up"
 description: "A major study finds even frontier LLMs corrupt 25% of documents in delegated workflows; Cloudflare slashes 1,100 jobs as AI usage jumps 600%; OpenAI's Codex gets a Chrome extension; and Musk v. Altman enters week two with explosive board testimony."
 publishDate: 2026-05-09T22:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "LM Studio Bionic, Soofi S, Kaiser AI Surveillance — AI News Briefing"
 description: "Today's AI briefing: LM Studio launches Bionic agent for open models, a German consortium drops the 30B Soofi S topping benchmarks, Kaiser nurses push back on AI workplace surveillance, Bunkerhill raises $55M for agentic healthcare AI, and Nokia's AI-RAN platform lands on NVIDIA."
 publishDate: 2026-07-18T10:00:00.000Z

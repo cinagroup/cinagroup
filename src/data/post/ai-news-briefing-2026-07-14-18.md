@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Apple Sues OpenAI, Satya Nadella Warns on AI Risks, PixVerse Raises $439M — AI News Briefing"
 description: "Apple files a bombshell trade secrets lawsuit against OpenAI; Microsoft CEO Satya Nadella issues a stark warning to enterprises using proprietary AI models; PixVerse joins the AI video gold rush with a $439M raise at a $2B+ valuation; and Nous Research eyes a $1.5B valuation. Here's your July 14 AI news roundup."
 publishDate: 2026-07-14T10:00:00.000Z

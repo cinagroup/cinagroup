@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — May 6, 2026: Chrome's Silent 4GB Model Install, Musk v. OpenAI Trial, Anthropic Finance Agents"
 description: "Google Chrome caught silently installing a 4GB AI model; Greg Brockman testifies in the Musk v. OpenAI trial with explosive revelations; Anthropic launches 10 finance agent templates with Microsoft 365 integration; Gemma 4 gets 3x faster inference via multi-token prediction."
 publishDate: 2026-05-05T22:00:00.000Z

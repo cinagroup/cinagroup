@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "UK's AISI Warns AI Cyber Skills Doubling Every 4.7 Months, Microsoft's AI Finds 16 Zero-Days, 26M-Parameter Tool-Calling Model Goes Viral — AI News Briefing"
 description: "The UK's AI Safety Institute reports frontier AI cyber capabilities have doubled every 4.7 months, with Claude Mythos Preview and GPT-5.5 shattering all previous trends. Microsoft's multi-model agentic system MDASH discovered 16 CVEs including 4 critical remote code execution flaws. A 26M-parameter tool-calling model distilled from Gemini hits 675 upvotes on Hacker News."
 publishDate: 2026-05-14T10:00:00.000Z

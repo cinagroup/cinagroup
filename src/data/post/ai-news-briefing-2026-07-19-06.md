@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "GPT-5.6 Breakthrough, Kimi K3 Moment, DeepMind Bioresilience — AI News Briefing"
 description: "OpenAI's GPT-5.6 cracks a 30-year optimization problem with a single prompt, Kimi K3 shakes up the LLM leaderboard, Google DeepMind and Isomorphic Labs unveil a joint bioresilience strategy, Databricks hits $188B, and GPU financiers pivot to inference chips in a $400M deal."
 publishDate: 2026-07-18T22:00:00.000Z

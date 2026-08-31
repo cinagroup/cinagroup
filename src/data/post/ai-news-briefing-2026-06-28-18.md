@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "GPT-5.6 Restricted, Anthropic Mythos Released, OpenAI's Jalapeño Chip — AI News Briefing"
 description: "Openai limits GPT-5.6 rollout at government request, Trump admin releases Anthropic Mythos 5 to 100+ US agencies, OpenAI unveils its first custom AI chip built with Broadcom, and Asian startups launch Mythos-like models as export ban reshapes the market."
 publishDate: 2026-06-28T10:00:00.000Z

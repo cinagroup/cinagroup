@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google I/O Reshapes Search and AI Agents, Trump Halts AI Executive Order, Apple Opens iOS to Third-Party AI — AI News Briefing"
 description: "Google's I/O 2026 delivers Gemini 3.5, personal AI agents, and the biggest Search redesign in 25 years. Trump abruptly halts a planned AI executive order over China competition fears. Apple opens Apple Intelligence to Anthropic, Google, and OpenAI models in iOS 27. OpenAI prepares confidential IPO filing with $850B+ valuation. Pentagon excludes Anthropic from classified AI deals. Karpathy joins Anthropic."
 publishDate: 2026-05-21T22:00:00.000Z

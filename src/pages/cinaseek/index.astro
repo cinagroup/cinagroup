@@ -2,90 +2,94 @@
 import CinaProductPage from '~/components/CinaProductPage.astro';
 
 const metadata = {
-  title: 'CinaSeek — Search across the work your team already has',
+  title: 'CinaSeek — Secure AI productivity environment',
   description:
-    'CinaSeek helps teams search documents, product context, support history, and operating knowledge from one focused workflow.',
+    'CinaSeek is an early-access environment for AI agents and sandboxed personal apps built on Cloudflare Workers and workerd.',
 };
 
-const code = `search "release-readiness" {
-  sources = ["docs", "support", "runbooks"]
-  answer  = "source-backed"
-  review  = "required"
+const code = `gadget "planning-workspace" {
+  sandbox = "isolated"
+  access  = ["introduced-resources"]
+  actions = "review-required"
 }`;
 ---
 
 <CinaProductPage
+  product="cinaseek"
   {metadata}
-  eyebrow="CinaSeek / enterprise search."
-  title="Find operational knowledge without building another portal."
-  lead="CinaSeek gives teams a focused search layer across documents, product notes, support history, and internal references."
-  primary={{ text: 'Discuss a search workflow', href: '/contact' }}
+  eyebrow="CinaSeek / early-access AI productivity environment."
+  title="Build and run private AI-assisted apps inside capability-based sandboxes."
+  lead="CinaSeek combines agent chat, personal applications called Gadgets, and scoped Gatekeepers. The project is early access; production readiness depends on the release and deployment configuration."
+  primary={{ text: 'Discuss an early-access evaluation', href: '/contact/' }}
   secondary={{ text: 'View the full stack', href: '/' }}
   capabilities={[
     {
-      label: 'Connect.',
-      title: 'Bring relevant sources together.',
+      label: 'Agent.',
+      title: 'Work through an agent chat UI.',
       description:
-        'Define the document sets, knowledge stores, and operational references that belong in one search scope.',
+        'Ask an agent to complete tasks or build a focused personal application for the work in front of you.',
     },
     {
-      label: 'Retrieve.',
-      title: 'Search by the work in front of you.',
-      description:
-        'Start from a support question, product decision, or operating task instead of browsing another folder tree.',
+      label: 'Build.',
+      title: 'Create private Gadgets.',
+      description: 'Generate small applications whose client and server run in isolated, per-user boundaries.',
     },
     {
-      label: 'Ground.',
-      title: 'Keep answers tied to sources.',
-      description: 'Make the supporting references visible so people can check context before acting.',
+      label: 'Share.',
+      title: 'Collaborate through explicit sharing.',
+      description:
+        'Keep each Gadget private by default, then grant access to named users or through a deliberate share link.',
     },
     {
       label: 'Scope.',
-      title: 'Separate audiences and access.',
-      description: 'Shape search boundaries around teams, projects, and the information they are permitted to use.',
+      title: 'Introduce only approved resources.',
+      description: 'Use Gatekeepers to narrow authorization to the specific external resources a user intended.',
     },
     {
       label: 'Review.',
-      title: 'Keep judgment in the loop.',
-      description: 'Use search to prepare evidence and next steps while people retain the final decision.',
+      title: 'Inspect actions before release.',
+      description: 'Log external actions and preserve human approval for operations with side effects.',
     },
     {
-      label: 'Improve.',
-      title: 'Learn from missing answers.',
-      description: 'Turn unanswered queries and weak sources into a practical backlog for better knowledge operations.',
+      label: 'Deploy.',
+      title: 'Develop locally, deploy through the documented path.',
+      description: 'Use workerd for local development and the documented Cloudflare path for production deployment.',
     },
   ]}
-  workflowTitle="Move from a question to a source-backed answer."
-  workflowLead="A compact search workflow keeps the query, retrieval scope, citations, and review step visible."
+  workflowTitle="Move from a request to a sandboxed personal app."
+  workflowLead="A reference evaluation keeps the requested job, generated Gadget, introduced resources, and review queue visible."
   workflow={[
     {
-      title: 'Frame the question',
-      description: 'Capture the user intent, team context, and decision the answer needs to support.',
+      title: 'Define the job',
+      description: 'Describe the result, intended users, data sensitivity, and external resources required.',
     },
     {
-      title: 'Search approved sources',
-      description: 'Retrieve only from the collections and access boundaries configured for that workflow.',
+      title: 'Build the Gadget',
+      description: 'Let the agent generate the focused client/server application inside its isolated workspace.',
     },
     {
-      title: 'Assemble the answer',
-      description: 'Present the concise answer together with the supporting references and uncertainty.',
+      title: 'Introduce resources',
+      description: 'Connect only the approved external resources through Gatekeepers and explicit capabilities.',
     },
     {
-      title: 'Review and refine',
-      description: 'Let the user confirm the result, open the source, or tighten the query without losing context.',
+      title: 'Review and share',
+      description: 'Inspect queued side effects, test the result, and choose whether to keep it private or share it.',
     },
   ]}
-  codeLabel="Search contract."
+  codeLabel="Illustrative Gadget contract."
   {code}
   principles={[
-    { title: 'Source visibility.', description: 'Answers should make it easy to see where important facts came from.' },
     {
-      title: 'Clear boundaries.',
-      description: 'Search scopes, access rules, and retention choices should be explicit.',
+      title: 'Capability boundaries.',
+      description: 'Agents and Gadgets begin without ambient access to external resources.',
     },
     {
-      title: 'Useful feedback.',
-      description: 'Low-confidence results and missing knowledge should become actionable signals.',
+      title: 'Private by default.',
+      description: 'Each Gadget runs in an isolated boundary and is shared only through an explicit user action.',
+    },
+    {
+      title: 'Visible review.',
+      description: 'Actions with side effects should remain logged and available for human approval.',
     },
   ]}
 />

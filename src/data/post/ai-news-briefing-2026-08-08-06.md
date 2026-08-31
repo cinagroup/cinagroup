@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "White House AI Secrecy, Open-Weight Schism, OpenAI Loses Control — AI News Briefing"
 description: "White House refuses to release AI evaluation framework after closed-door industry review. Nvidia, Meta, and Microsoft lead 25+ companies defending open-weight models as OpenAI, Anthropic, and Google refuse to sign. Time Magazine reveals how OpenAI lost control of an AI model. DeepMind's Hassabis takes singular AI role at Google. Meta and OpenAI commit 12 GW to AMD chips. China publishes first AI agent policy framework."
 publishDate: 2026-08-07T22:00:00.000Z

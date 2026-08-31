@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Files $1T IPO, Anthropic Hits First Profit, SpaceX $45B Compute Deal — AI News Briefing"
 description: "The AI industry's public markets era begins as OpenAI files its IPO prospectus. Anthropic achieves profitability two years early with $559M operating profit on $10.9B quarterly revenue. Google I/O 2026 launches Gemini 3.5 Flash and the biggest Search overhaul in 30 years."
 publishDate: 2026-05-22T22:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Models Suspended by US, Meta AI Unit in Turmoil, Facebook AI Search — AI News Briefing"
 description: "The Trump administration ordered Anthropic to suspend its Claude Fable and Mythos AI models over national security concerns, sparking massive industry backlash. Meanwhile, Meta's AI unit faces internal chaos as Zuckerberg admits 'mistakes,' and Facebook launches its new AI Mode search feature."
 publishDate: 2026-06-15T22:00:00.000Z

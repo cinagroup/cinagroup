@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Claude Sonnet 5 Ships, Gemini Spark Lands on Mac, MANGOS Era Begins — AI News Briefing"
 description: "Anthropic ships Claude Sonnet 5 as a cheaper, more agentic model. Google's Gemini Spark lands on Mac. Nvidia challenger Etched hits a $5B valuation. Plus: Meta monetizes excess AI compute, Trump lifts Anthropic export restrictions, Wall Street launches MANGOS ETFs, and Amazon creates a $1B AI org."
 publishDate: 2026-07-01T22:00:00.000Z

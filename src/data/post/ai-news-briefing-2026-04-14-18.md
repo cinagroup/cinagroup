@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Replit Agent Expands to Multi-Agent Development Workflows · Midjourney v7 Introduces Consistent Character Generation · S"
 description: "AI digest covering 2026-04-14 06:00 to 2026-04-14 18:00"
 publishDate: 2026-04-14T10:00:00.000Z

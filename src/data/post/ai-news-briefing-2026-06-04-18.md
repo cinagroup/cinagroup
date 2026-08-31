@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Files for IPO, Trump Signs AI Executive Order, NVIDIA Vera CPU — AI News Briefing"
 description: "Anthropic officially files for its IPO ahead of OpenAI, the White House issues a new AI executive order targeting frontier models, Microsoft unveils independent AI models to reduce OpenAI reliance, and NVIDIA doubles down on agentic AI with its Vera CPU architecture."
 publishDate: 2026-06-04T10:00:00.000Z

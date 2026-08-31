@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Launches Opus 4.8, Google AI Agents Spend Your Money, Liquid AI's 38T Token Model — AI News Briefing"
 description: "Anthropic releases Claude Opus 4.8 with honesty as its killer feature. Google introduces Universal Cart for AI agent shopping. Liquid AI unveils an 8B MoE model trained on 38T tokens. Robinhood enables AI agents to trade stocks. Mistral AI hosts its Now Summit in Paris."
 publishDate: 2026-05-29T22:00:00.000Z

@@ -1,0 +1,61 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { localizedLegalCopy, type LegalDocument, type LocalizedLang } from '~/i18n/legal-content';
+
+interface Props {
+  lang: LocalizedLang;
+  document: LegalDocument;
+}
+
+const { lang, document } = Astro.props;
+const content = localizedLegalCopy[lang][document];
+const metadata = {
+  title: content.title,
+  description: content.description,
+  language: lang,
+};
+---
+
+<Layout {metadata}>
+  <div class="cg-page">
+    <section class="cg-page-hero" aria-labelledby="document-title">
+      <div class="cg-page-shell">
+        <p class="cg-eyebrow">CinaGroup / {document === 'privacy' ? 'privacy' : 'terms'}.</p>
+        <h1 id="document-title">{content.title}</h1>
+        <p>{content.updated}</p>
+      </div>
+    </section>
+
+    <section class="cg-page-section">
+      <div class="cg-page-shell">
+        <article class="cg-prose">
+          <aside class="cg-card" aria-labelledby="translation-notice-title">
+            <h2 id="translation-notice-title">{content.noticeTitle}</h2>
+            <p>{content.notice}</p>
+            <p><a href={`/${document}/`} hreflang="en">{content.englishLink}</a></p>
+          </aside>
+
+          <p>{content.intro}</p>
+
+          {
+            content.sections.map((section, index) => (
+              <section aria-labelledby={`legal-section-${index + 1}`}>
+                <h2 id={`legal-section-${index + 1}`}>{section.heading}</h2>
+                {section.paragraphs.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+                {section.bullets && (
+                  <ul>
+                    {section.bullets.map((bullet) => (
+                      <li>{bullet}</li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+            ))
+          }
+        </article>
+      </div>
+    </section>
+  </div>
+</Layout>

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Apple WWDC 2026 June Date · AI Advancements Teased"
 description: "12-hour AI digest: Apple WWDC 2026 AI teaser, Helion-OpenAI fusion deal, Air Street $232M fund, Elizabeth Warren on Anthropic"
 publishDate: 2026-03-24T10:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Surpasses OpenAI at $965B, OpenAI Governance Framework, Meta AI Subscriptions — AI News Briefing"
 description: "Anthropic overtakes OpenAI as the world's most valuable AI startup at $965B valuation. OpenAI unveils its Frontier Governance Framework and commits $250M to workforce impact research. Nvidia bets $150B on Taiwan, Meta launches AI chatbot subscriptions, and Illinois passes landmark AI regulation."
 publishDate: 2026-05-28T22:00:00.000Z

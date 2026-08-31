@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "SoftBank $40B Bridge Loan for OpenAI"
 description: "12-hour AI digest: SoftBank $40B OpenAI investment, Apple opens Siri to rival AIs, NeurIPS reverses paper ban after China boycott"
 publishDate: 2026-03-27T16:00:00.000Z

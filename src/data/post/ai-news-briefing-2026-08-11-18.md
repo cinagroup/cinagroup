@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Claude Code Auto Mode, OpenAI Cyber Model, DeepMind Hurricane Breakthrough — AI News Briefing"
 description: "Anthropic turns Claude Code's auto mode on by default, OpenAI ships a new cyber-defense model as AI-led attacks multiply, and DeepMind's hurricane forecasting breakthrough surprises weather scientists. Also: OpenAI's lifelike smart speaker, Meta's open-model strategy reboot, the viral Claude gym-hack incident, and a $400M bet on a chip startup."
 publishDate: 2026-08-11T10:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 11, 2026 (18:00 CST)
 
 ## Top 7 Stories
 

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Pope Leo XIV's AI Encyclical, Google Gemini 3.5 Flash Rivals Claude, US Mulls AI Chip Export Permits — AI News Briefing"
 description: "Pope Leo XIV releases landmark AI encyclical with Anthropic's Chris Olah responding at the Vatican. Google's Gemini 3.5 Flash achieves near-flagship performance at a fraction of the cost. The US considers new permit requirements for NVIDIA and AMD AI chip exports. Plus: OpenAI's Altman on the jobs future, Google's AI-powered Search overhaul, Jensen Huang on education, and a breakthrough in photonic AI chips."
 publishDate: 2026-05-26T10:00:00.000Z

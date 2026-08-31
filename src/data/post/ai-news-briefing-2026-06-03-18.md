@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Microsoft's Independent AI Models, Florida Sues OpenAI, Claude Goes Offline, Anthropic Nears $1T Valuation — AI News Briefing"
 description: "Microsoft unveils its own AI models to reduce OpenAI dependence, Florida AG sues OpenAI over safety concerns, Anthropic's Claude suffers a global outage, and NVIDIA pushes beyond GPUs with new RTX Spark and Vera AI platforms. Plus: OpenAI lands on AWS, plans finance/legal tools, and UK banks get OpenAI offers after a rival cyber tool ban."
 publishDate: 2026-06-03T10:00:00.000Z

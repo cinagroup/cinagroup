@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Export Ban Lifted, Claude Sonnet 5 Drops, UN Inequality Warning — AI News Briefing"
 description: "The Trump administration lifts its two-week export ban on Anthropic's Fable and Mythos models after a security deal is reached. Anthropic simultaneously launches Claude Sonnet 5, a cheaper agentic model, and Claude Science for researchers. Plus: the UN warns AI is worsening global inequality, and Google AI Overviews are shown to cut publisher clicks by nearly 40%."
 publishDate: 2026-07-01T10:00:00.000Z

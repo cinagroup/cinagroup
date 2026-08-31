@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Models Suspended by US Government, ChatGPT Hits 1B Users, Meta AI Search — AI News Briefing"
 description: "The Trump administration forced Anthropic to suspend its Claude Fable and Mythos models over national security concerns, while ChatGPT crossed 1 billion monthly users ahead of OpenAI's planned superapp overhaul. Meta launched AI-powered search to challenge Google, and France committed €655M to government AI services."
 publishDate: 2026-06-16T10:00:00.000Z

@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cinagroup",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2026-03-18",
+  "d1_databases": [
+    {
+      "binding": "CONTACT_DB",
+      "database_name": "cinagroup-contact-submissions",
+      "database_id": "0cfb1da1-2079-411b-bb21-f5a04fed292b",
+    },
+  ],
+  "env": {
+    "preview": {
+      "d1_databases": [
+        {
+          "binding": "CONTACT_DB",
+          "database_name": "cinagroup-contact-submissions-preview",
+          "database_id": "a24a999d-f784-4ee1-8dcd-888a7be43e7c",
+        },
+      ],
+    },
+  },
+}

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google AI Liability Ruling, NVIDIA Agentic Benchmark, SpaceX IPO Impact — AI News Briefing"
 description: "Google challenges German court ruling holding it liable for AI-generated false claims, NVIDIA Blackwell tops first agentic AI infrastructure benchmark, SpaceX IPO reshapes OpenAI and Anthropic valuations, and Meta curbs internal AI usage as costs balloon."
 publishDate: 2026-06-12T22:00:00.000Z

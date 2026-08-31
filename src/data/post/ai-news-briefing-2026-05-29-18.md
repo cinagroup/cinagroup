@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Raises $65B Toward $1T Valuation, Opus 4.8 Launches, Google Remakes Search with Agentic AI — AI News Briefing"
 description: "Anthropic's mega-round nears unicorn status, Google plans agentic search overhaul in 2026, Apple integrates Gemini into iPhone for next-gen Siri, YouTube auto-labels AI videos, Asana acquires StackAI, and Illinois passes landmark AI regulation."
 publishDate: 2026-05-29T10:00:00.000Z

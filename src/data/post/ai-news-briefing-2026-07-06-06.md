@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Restrictions Lifted, China's AI Surge, Tesla Autopilot Charges — AI News Briefing"
 description: "The US government lifts restrictions on Anthropic's most powerful models, Chinese AI labs close the gap with frontier US models, Tesla's Autopilot faces manslaughter charges in a landmark case, and Meta's Threads surpasses 500 million users — your July 6, 2026 AI news briefing."
 publishDate: 2026-07-05T22:00:00.000Z

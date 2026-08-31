@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "LangGraph Enables Production-Ready Agentic Workflows · Berkeley Lab Creates AI for Real-Time Climate Modeling · Apache F"
 description: "AI digest covering 2026-04-01 18:00 to 2026-04-02 06:00"
 publishDate: 2026-04-01T22:00:00.000Z

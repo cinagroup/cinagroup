@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "DeepSeek Ignites AI Pricing War, Anthropic Buys Stainless for $300M, Meta-NVIDIA Expand Chip Deal — AI News Briefing"
 description: "DeepSeek makes its 75% API discount permanent, pressuring OpenAI, Anthropic, and Google on pricing. Anthropic acquires Stainless for over $300M to strengthen AI agent infrastructure. Meta and NVIDIA expand their GPU partnership with millions of additional AI chips. Google I/O 2026 unveils new AI models and personal agents. AI agent safety benchmarks reveal alarming results as none of 13 tested agents cleared a 40% safe completion rate."
 publishDate: 2026-05-26T22:00:00.000Z

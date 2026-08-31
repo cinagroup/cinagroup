@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Calls for Government AI Blocks, Google Liable for Hallucinations, OpenAI-Visa Agent Payments — AI News Briefing"
 description: "Anthropic's CEO urges government intervention to block dangerous AI systems, while a landmark German court ruling holds Google liable for AI hallucinations. OpenAI partners with Visa to enable AI agent purchases, and Meta faces security challenges as bugs expose Instagram accounts."
 publishDate: 2026-06-10T22:00:00.000Z

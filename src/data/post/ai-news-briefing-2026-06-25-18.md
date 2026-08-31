@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI-Broadcom Inference Chip, Claude Tag, Meta Glasses — AI News Briefing"
 description: "OpenAI and Broadcom unveil a custom LLM-optimized inference chip, Anthropic launches Claude Tag for structured outputs, Meta partners with EssilorLuxottica on AI-powered smart glasses, and a new study reveals most enterprises have already experienced AI agent failures."
 publishDate: 2026-06-25T10:00:00.000Z

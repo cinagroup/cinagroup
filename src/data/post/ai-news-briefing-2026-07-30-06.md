@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Meta Shares Plunge on AI Spending, OpenAI Breach Debate, Anthropic's China Warning — AI News Briefing"
 description: "Meta shares tumble 11% as investors balk at ballooning AI costs reaching $145B. OpenAI's Hugging Face breach reignites the alignment vs. control debate. Dario Amodei warns on Chinese AI while signaling nuance on open-weight models. Plus: a landmark AI math breakthrough, China's Moonshot AI circumvents NVIDIA chip export controls, and a $1B acquisition to secure the agent era."
 publishDate: 2026-07-29T22:00:00.000Z

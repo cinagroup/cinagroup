@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "White House National AI Framework · Preempting State Regulations"
 description: "24-hour AI digest: White House releases national AI framework, IBM completes Confluent acquisition, NASA Mars rover achieves AI autonomous driving"
 publishDate: 2026-03-21T06:00:00.000Z

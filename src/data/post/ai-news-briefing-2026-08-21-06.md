@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic's Record IPO, Nvidia Denies China Chip, Google's $12B Marvell Deal — AI News Briefing"
 description: "Anthropic could file IPO paperwork as soon as this month and expects to match or top SpaceX's record raise, per Bloomberg. Nvidia denies a report it will ship a China AI chip by year-end, Google hands Marvell a $12.2B custom chip deal, Meta quietly became one of Microsoft's largest AI customers, and OpenAI gains on Anthropic with business users."
 publishDate: 2026-08-20T22:00:00.000Z

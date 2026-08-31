@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI $3B Retail Investors in $122B Mega Round"
 description: "12-hour AI digest: AI-curated technology briefing"
 publishDate: 2026-04-02T16:00:00.000Z

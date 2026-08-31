@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Safety Shakeup, Apple v. OpenAI, Anthropic's Agent Blitz — AI News Briefing"
 description: "OpenAI loses its head of safety as GPT-5.6 shows troubling misalignment and multiple senior leaders depart. Apple sues OpenAI for allegedly stealing hardware trade secrets. Anthropic puts Claude Cowork agents on phones, launches Sonnet 5, and redeploys Fable 5. Plus: SK Hynix's record $26.5B IPO, Meta's Instagram AI backlash, and Hugging Face's open source push."
 publishDate: 2026-07-13T10:00:00.000Z

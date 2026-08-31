@@ -1,0 +1,504 @@
+---
+type Locale = 'en' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+
+const copy = {
+  en: {
+    name: 'Name',
+    email: 'Email',
+    company: 'Company or team',
+    optional: 'optional',
+    subject: 'Area',
+    choose: 'Choose an area',
+    subjects: [
+      'Product workflow',
+      'Search and knowledge',
+      'Automation',
+      'API and model gateway',
+      'Infrastructure and delivery',
+      'Other',
+    ],
+    message: 'Workflow and desired outcome',
+    submit: 'Send inquiry',
+    sending: 'Recording your inquiry…',
+    success: 'Your inquiry was securely recorded.',
+    reference: 'Reference',
+    error: 'We could not record the inquiry. Review the fields and try again.',
+    errorSummary: 'Please correct these fields:',
+    fieldError: 'Check this value.',
+    network: 'The connection failed before confirmation. Retry with the same reference, or email info@cinagroup.com.',
+    noteBefore: 'By submitting, you confirm that CinaGroup may process this inquiry as described in the',
+    privacy: 'Privacy Policy',
+    and: '; the',
+    terms: 'Terms of Service',
+    noteAfter: ' apply.',
+    challenge: 'Security verification',
+    noScript: 'Enable JavaScript to use this protected form, or email us directly at',
+    direct: 'If the form is unavailable, email info@cinagroup.com directly.',
+  },
+  ja: {
+    name: 'お名前',
+    email: 'メールアドレス',
+    company: '会社・チーム',
+    optional: '任意',
+    subject: '分野',
+    choose: '分野を選択',
+    subjects: [
+      'プロダクトワークフロー',
+      '検索とナレッジ',
+      '自動化',
+      'API・モデルゲートウェイ',
+      'インフラとデリバリー',
+      'その他',
+    ],
+    message: 'ワークフローと期待する結果',
+    submit: 'お問い合わせを送信',
+    sending: 'お問い合わせを記録しています…',
+    success: 'お問い合わせを安全に記録しました。',
+    reference: '受付番号',
+    error: 'お問い合わせを記録できませんでした。入力内容を確認して再試行してください。',
+    errorSummary: '次の項目を修正してください：',
+    fieldError: '入力内容を確認してください。',
+    network: '確認前に接続が切れました。同じ受付番号で再試行するか、info@cinagroup.com へメールしてください。',
+    noteBefore: '送信すると、このお問い合わせが',
+    privacy: 'プライバシーポリシー',
+    and: 'に記載のとおり処理され、',
+    terms: '利用規約',
+    noteAfter: 'が適用されることを確認します。',
+    challenge: 'セキュリティ確認',
+    noScript: 'この保護されたフォームを使用するには JavaScript を有効にするか、こちらへ直接メールしてください：',
+    direct: 'フォームを利用できない場合は、info@cinagroup.com へ直接メールしてください。',
+  },
+  ko: {
+    name: '이름',
+    email: '이메일',
+    company: '회사 또는 팀',
+    optional: '선택',
+    subject: '분야',
+    choose: '분야 선택',
+    subjects: ['제품 워크플로', '검색 및 지식', '자동화', 'API 및 모델 게이트웨이', '인프라 및 배포', '기타'],
+    message: '워크플로와 원하는 결과',
+    submit: '문의 보내기',
+    sending: '문의를 기록하는 중…',
+    success: '문의가 안전하게 기록되었습니다.',
+    reference: '참조 번호',
+    error: '문의를 기록하지 못했습니다. 입력 내용을 확인하고 다시 시도해 주세요.',
+    errorSummary: '다음 항목을 수정해 주세요:',
+    fieldError: '입력 값을 확인해 주세요.',
+    network:
+      '확인 전에 연결이 끊겼습니다. 같은 참조 번호로 다시 시도하거나 info@cinagroup.com으로 이메일을 보내 주세요.',
+    noteBefore: '제출하면 이 문의가',
+    privacy: '개인정보 보호정책',
+    and: '에 설명된 대로 처리되며',
+    terms: '서비스 약관',
+    noteAfter: '이 적용됨을 확인합니다.',
+    challenge: '보안 확인',
+    noScript: '보호된 양식을 사용하려면 JavaScript를 활성화하거나 다음 주소로 직접 이메일을 보내 주세요:',
+    direct: '양식을 사용할 수 없으면 info@cinagroup.com으로 직접 이메일을 보내 주세요.',
+  },
+  ru: {
+    name: 'Имя',
+    email: 'Электронная почта',
+    company: 'Компания или команда',
+    optional: 'необязательно',
+    subject: 'Направление',
+    choose: 'Выберите направление',
+    subjects: [
+      'Продуктовый процесс',
+      'Поиск и знания',
+      'Автоматизация',
+      'API и шлюз моделей',
+      'Инфраструктура и поставка',
+      'Другое',
+    ],
+    message: 'Процесс и желаемый результат',
+    submit: 'Отправить запрос',
+    sending: 'Сохраняем запрос…',
+    success: 'Запрос надёжно сохранён.',
+    reference: 'Номер обращения',
+    error: 'Не удалось сохранить запрос. Проверьте поля и повторите попытку.',
+    errorSummary: 'Исправьте следующие поля:',
+    fieldError: 'Проверьте это значение.',
+    network:
+      'Соединение прервалось до подтверждения. Повторите попытку с тем же номером или напишите на info@cinagroup.com.',
+    noteBefore: 'Отправляя форму, вы подтверждаете обработку запроса в соответствии с',
+    privacy: 'Политикой конфиденциальности',
+    and: '; применяются',
+    terms: 'Условия использования',
+    noteAfter: '.',
+    challenge: 'Проверка безопасности',
+    noScript: 'Включите JavaScript, чтобы использовать защищённую форму, или напишите напрямую на адрес',
+    direct: 'Если форма недоступна, напишите напрямую на info@cinagroup.com.',
+  },
+  es: {
+    name: 'Nombre',
+    email: 'Correo electrónico',
+    company: 'Empresa o equipo',
+    optional: 'opcional',
+    subject: 'Área',
+    choose: 'Elija un área',
+    subjects: [
+      'Flujo de producto',
+      'Búsqueda y conocimiento',
+      'Automatización',
+      'API y gateway de modelos',
+      'Infraestructura y entrega',
+      'Otro',
+    ],
+    message: 'Flujo y resultado deseado',
+    submit: 'Enviar consulta',
+    sending: 'Registrando la consulta…',
+    success: 'Su consulta se registró de forma segura.',
+    reference: 'Referencia',
+    error: 'No pudimos registrar la consulta. Revise los campos e inténtelo de nuevo.',
+    errorSummary: 'Corrija estos campos:',
+    fieldError: 'Revise este valor.',
+    network:
+      'La conexión falló antes de la confirmación. Reintente con la misma referencia o escriba a info@cinagroup.com.',
+    noteBefore: 'Al enviar, confirma que CinaGroup puede tratar esta consulta según la',
+    privacy: 'Política de privacidad',
+    and: '; se aplican los',
+    terms: 'Términos de servicio',
+    noteAfter: '.',
+    challenge: 'Verificación de seguridad',
+    noScript: 'Active JavaScript para usar este formulario protegido o escriba directamente a',
+    direct: 'Si el formulario no está disponible, escriba directamente a info@cinagroup.com.',
+  },
+  pt: {
+    name: 'Nome',
+    email: 'E-mail',
+    company: 'Empresa ou equipe',
+    optional: 'opcional',
+    subject: 'Área',
+    choose: 'Escolha uma área',
+    subjects: [
+      'Fluxo de produto',
+      'Busca e conhecimento',
+      'Automação',
+      'API e gateway de modelos',
+      'Infraestrutura e entrega',
+      'Outro',
+    ],
+    message: 'Fluxo e resultado desejado',
+    submit: 'Enviar solicitação',
+    sending: 'Registrando a solicitação…',
+    success: 'Sua solicitação foi registrada com segurança.',
+    reference: 'Referência',
+    error: 'Não foi possível registrar a solicitação. Revise os campos e tente novamente.',
+    errorSummary: 'Corrija estes campos:',
+    fieldError: 'Revise este valor.',
+    network:
+      'A conexão falhou antes da confirmação. Tente novamente com a mesma referência ou envie e-mail para info@cinagroup.com.',
+    noteBefore: 'Ao enviar, você confirma que a CinaGroup pode tratar esta solicitação conforme a',
+    privacy: 'Política de Privacidade',
+    and: '; aplicam-se os',
+    terms: 'Termos de Serviço',
+    noteAfter: '.',
+    challenge: 'Verificação de segurança',
+    noScript: 'Ative o JavaScript para usar este formulário protegido ou envie um e-mail diretamente para',
+    direct: 'Se o formulário estiver indisponível, envie um e-mail diretamente para info@cinagroup.com.',
+  },
+  fr: {
+    name: 'Nom',
+    email: 'E-mail',
+    company: 'Entreprise ou équipe',
+    optional: 'facultatif',
+    subject: 'Domaine',
+    choose: 'Choisissez un domaine',
+    subjects: [
+      'Flux de produit',
+      'Recherche et connaissances',
+      'Automatisation',
+      'API et passerelle de modèles',
+      'Infrastructure et livraison',
+      'Autre',
+    ],
+    message: 'Flux et résultat souhaité',
+    submit: 'Envoyer la demande',
+    sending: 'Enregistrement de la demande…',
+    success: 'Votre demande a été enregistrée de manière sécurisée.',
+    reference: 'Référence',
+    error: 'Nous n’avons pas pu enregistrer la demande. Vérifiez les champs et réessayez.',
+    errorSummary: 'Corrigez les champs suivants :',
+    fieldError: 'Vérifiez cette valeur.',
+    network:
+      'La connexion a échoué avant confirmation. Réessayez avec la même référence ou écrivez à info@cinagroup.com.',
+    noteBefore: 'En envoyant ce formulaire, vous confirmez que CinaGroup peut traiter cette demande selon la',
+    privacy: 'Politique de confidentialité',
+    and: '; les',
+    terms: 'Conditions d’utilisation',
+    noteAfter: ' s’appliquent.',
+    challenge: 'Vérification de sécurité',
+    noScript: 'Activez JavaScript pour utiliser ce formulaire protégé ou écrivez directement à',
+    direct: 'Si le formulaire est indisponible, écrivez directement à info@cinagroup.com.',
+  },
+} satisfies Record<Locale, Record<string, string | string[]>>;
+
+const subjectValues = [
+  'product-workflow',
+  'search-knowledge',
+  'automation',
+  'api-model-gateway',
+  'infrastructure-delivery',
+  'other',
+] as const;
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'en' } = Astro.props;
+const content = copy[lang];
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY?.trim() || '0x4AAAAAAEigqtYgQBcKUhpa';
+---
+
+<form
+  id="contact-form"
+  class="cg-form-card"
+  action="/api/contact"
+  method="POST"
+  enctype="application/x-www-form-urlencoded"
+  accept-charset="UTF-8"
+  data-contact-submission
+  data-sending={content.sending}
+  data-success={content.success}
+  data-reference={content.reference}
+  data-error={content.error}
+  data-error-summary={content.errorSummary}
+  data-field-error={content.fieldError}
+  data-network={content.network}
+  aria-busy="false"
+>
+  <input type="hidden" name="locale" value={lang} />
+  <input type="hidden" name="submission_id" value="" />
+
+  <div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
+    <label for={`contact-website-${lang}`}>Website</label>
+    <input id={`contact-website-${lang}`} name="website" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div class="cg-field">
+    <label for={`contact-name-${lang}`}>{content.name}</label>
+    <input
+      id={`contact-name-${lang}`}
+      name="name"
+      type="text"
+      autocomplete="name"
+      minlength="2"
+      maxlength="100"
+      aria-describedby={`contact-name-error-${lang}`}
+      required
+    />
+    <p
+      id={`contact-name-error-${lang}`}
+      class="m-0 text-sm text-red-700 dark:text-red-300"
+      data-field-error-for="name"
+      hidden
+    >
+    </p>
+  </div>
+  <div class="cg-field">
+    <label for={`contact-email-${lang}`}>{content.email}</label>
+    <input
+      id={`contact-email-${lang}`}
+      name="email"
+      type="email"
+      autocomplete="email"
+      maxlength="254"
+      aria-describedby={`contact-email-error-${lang}`}
+      required
+    />
+    <p
+      id={`contact-email-error-${lang}`}
+      class="m-0 text-sm text-red-700 dark:text-red-300"
+      data-field-error-for="email"
+      hidden
+    >
+    </p>
+  </div>
+  <div class="cg-field">
+    <label for={`contact-company-${lang}`}>{content.company} <span>({content.optional})</span></label>
+    <input
+      id={`contact-company-${lang}`}
+      name="company"
+      type="text"
+      autocomplete="organization"
+      maxlength="120"
+      aria-describedby={`contact-company-error-${lang}`}
+    />
+    <p
+      id={`contact-company-error-${lang}`}
+      class="m-0 text-sm text-red-700 dark:text-red-300"
+      data-field-error-for="company"
+      hidden
+    >
+    </p>
+  </div>
+  <div class="cg-field">
+    <label for={`contact-subject-${lang}`}>{content.subject}</label>
+    <select id={`contact-subject-${lang}`} name="subject" aria-describedby={`contact-subject-error-${lang}`} required>
+      <option value="">{content.choose}</option>
+      {subjectValues.map((value, index) => <option value={value}>{content.subjects[index]}</option>)}
+    </select>
+    <p
+      id={`contact-subject-error-${lang}`}
+      class="m-0 text-sm text-red-700 dark:text-red-300"
+      data-field-error-for="subject"
+      hidden
+    >
+    </p>
+  </div>
+  <div class="cg-field">
+    <label for={`contact-message-${lang}`}>{content.message}</label>
+    <textarea
+      id={`contact-message-${lang}`}
+      name="message"
+      rows="7"
+      minlength="20"
+      maxlength="4000"
+      aria-describedby={`contact-message-error-${lang}`}
+      required></textarea>
+    <p
+      id={`contact-message-error-${lang}`}
+      class="m-0 text-sm text-red-700 dark:text-red-300"
+      data-field-error-for="message"
+      hidden
+    >
+    </p>
+  </div>
+  <div
+    class="cf-turnstile"
+    data-sitekey={turnstileSiteKey}
+    data-action="contact"
+    data-language={lang}
+    role="group"
+    aria-label={content.challenge}
+    data-contact-turnstile
+  >
+  </div>
+  <button class="cg-page-button cg-page-button-primary" type="submit">{content.submit}</button>
+  <p class="cg-form-note">
+    {content.noteBefore}
+    <a href="/privacy/">{content.privacy}</a>
+    {content.and}
+    <a href="/terms/">{content.terms}</a>{content.noteAfter}
+  </p>
+  <noscript>
+    <p class="cg-form-note">{content.noScript} <a href="mailto:info@cinagroup.com">info@cinagroup.com</a>.</p>
+  </noscript>
+  <p class="cg-form-note">{content.direct}</p>
+  <p class="cg-form-status" role="status" aria-live="polite" tabindex="-1" data-contact-status hidden></p>
+</form>
+
+<script>
+  const resetContactTurnstile = (form: HTMLFormElement) => {
+    const widget = form.querySelector('[data-contact-turnstile]');
+    const turnstile = (
+      window as Window & {
+        turnstile?: { reset(container?: string | HTMLElement): void };
+      }
+    ).turnstile;
+    if (widget instanceof HTMLElement && turnstile) turnstile.reset(widget);
+  };
+
+  const initializeContactForms = () => {
+    document.querySelectorAll('form[data-contact-submission]').forEach((element) => {
+      if (!(element instanceof HTMLFormElement) || element.dataset.initialized === 'true') return;
+      element.dataset.initialized = 'true';
+
+      element.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!element.reportValidity()) return;
+
+        const status = element.querySelector('[data-contact-status]');
+        const button = element.querySelector('button[type="submit"]');
+        const submissionId = element.elements.namedItem('submission_id');
+        if (!(status instanceof HTMLElement) || !(button instanceof HTMLButtonElement)) return;
+
+        if (submissionId instanceof HTMLInputElement && !submissionId.value && 'randomUUID' in crypto) {
+          submissionId.value = crypto.randomUUID();
+        }
+
+        const fieldErrorNodes = [...element.querySelectorAll('[data-field-error-for]')].filter(
+          (node) => node instanceof HTMLElement
+        );
+        element.querySelectorAll('[aria-invalid="true"]').forEach((field) => field.removeAttribute('aria-invalid'));
+        fieldErrorNodes.forEach((node) => {
+          node.hidden = true;
+          node.textContent = '';
+        });
+        status.setAttribute('role', 'status');
+        status.hidden = false;
+        status.textContent = element.dataset.sending || '';
+        element.setAttribute('aria-busy', 'true');
+        button.disabled = true;
+
+        try {
+          const body = new URLSearchParams();
+          new FormData(element).forEach((value, key) => {
+            if (typeof value === 'string') body.append(key, value);
+          });
+          const response = await fetch(element.action, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            },
+            body: body.toString(),
+          });
+          const payload = await response.json().catch(() => null);
+
+          if (!response.ok || !payload?.ok) {
+            const fields = payload?.error?.fields;
+            const visibleLabels: string[] = [];
+            if (fields && typeof fields === 'object' && !Array.isArray(fields)) {
+              Object.keys(fields).forEach((fieldName) => {
+                const field = element.elements.namedItem(fieldName);
+                if (
+                  field instanceof HTMLInputElement ||
+                  field instanceof HTMLSelectElement ||
+                  field instanceof HTMLTextAreaElement
+                ) {
+                  if (field.type === 'hidden') return;
+                  field.setAttribute('aria-invalid', 'true');
+                  const label = field.labels?.[0]?.textContent?.trim() || fieldName;
+                  visibleLabels.push(label);
+                  const errorNode = fieldErrorNodes.find((node) => node.dataset.fieldErrorFor === fieldName);
+                  if (errorNode) {
+                    errorNode.hidden = false;
+                    errorNode.textContent = `${label}: ${element.dataset.fieldError || ''}`;
+                  }
+                }
+              });
+            }
+            status.setAttribute('role', 'alert');
+            status.textContent = visibleLabels.length
+              ? `${element.dataset.errorSummary || ''} ${visibleLabels.join(', ')}`
+              : element.dataset.error || '';
+            resetContactTurnstile(element);
+            status.focus();
+            return;
+          }
+
+          status.setAttribute('role', 'status');
+          status.textContent = `${element.dataset.success || ''} ${element.dataset.reference || ''}: ${payload.submissionId}`;
+          element.reset();
+          resetContactTurnstile(element);
+        } catch {
+          status.setAttribute('role', 'alert');
+          status.textContent = element.dataset.network || '';
+          resetContactTurnstile(element);
+          status.focus();
+        } finally {
+          element.setAttribute('aria-busy', 'false');
+          button.disabled = false;
+        }
+      });
+    });
+  };
+
+  initializeContactForms();
+  document.addEventListener('astro:page-load', initializeContactForms);
+</script>
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>

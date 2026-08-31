@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Cuts Off Cursor, Music Giants Sue Anthropic, Nvidia Backs Off Cloud Financing — AI News Briefing"
 description: "OpenAI pulled its models from Cursor after SpaceX acquired the coding startup, deepening the feud with Elon Musk, while Sony Music and Warner Chappell sued Anthropic over alleged mass copyright infringement of song lyrics. Nvidia scaled back an AI cloud financing plan amid antitrust scrutiny, Anthropic warned of session-hijacking malware, and Washington's scramble to regulate AI shows no sign of slowing."
 publishDate: 2026-08-30T22:00:00.000Z

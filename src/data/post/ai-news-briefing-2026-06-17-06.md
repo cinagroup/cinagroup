@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "G7 AI Summit, OpenAI & Anthropic IPO Race, NVIDIA $25B Bond Sale — AI News Briefing"
 description: "For the first time, the CEOs of OpenAI, Anthropic, and Google DeepMind appeared together before G7 world leaders in France to discuss frontier AI risks. Meanwhile, both OpenAI and Anthropic filed for IPOs in the same week at combined valuations exceeding $1.8 trillion, and NVIDIA completed a record $25 billion bond sale as the AI infrastructure spending race intensifies."
 publishDate: 2026-06-16T22:00:00.000Z

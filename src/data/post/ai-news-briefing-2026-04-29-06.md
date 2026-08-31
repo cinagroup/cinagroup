@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google Signs Classified AI Deal With Pentagon · China Blocks Meta-Manus Acquisition · Amazon Deploys Agentic Software for Mass Hiring"
 description: "AI digest covering 2026-04-28 18:00 to 2026-04-29 06:00"
 publishDate: 2026-04-28T22:00:00.000Z

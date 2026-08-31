@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Debuts Claude Opus 5, Big Tech Rallies for Open AI, DARPA Flies Autonomous F-16 — AI News Briefing"
 description: "Anthropic releases its most powerful model yet with Claude Opus 5, Nvidia, Microsoft, and Meta lead a coordinated pushback against U.S. open-weight AI restrictions, and DARPA successfully flies an AI-controlled F-16 in a historic test. Plus: OpenAI models arrive on AWS Bedrock, Oracle slashes 21,000 jobs to fund its AI pivot, and Alphabet's skyrocketing AI capex rattles investors."
 publishDate: 2026-07-24T22:00:00.000Z

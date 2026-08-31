@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Nobel Laureate Jumper Joins Anthropic, Shazeer to OpenAI, G7 AI Summit — AI News Briefing"
 description: "A seismic talent reshuffle hit the AI world as Nobel laureate John Jumper left Google DeepMind for Anthropic and Noam Shazeer departed Google Gemini for OpenAI. Meanwhile, world leaders convened with AI CEOs at the G7 summit as Europe grapples with a viral AI doomsday scenario."
 publishDate: 2026-06-20T22:00:00.000Z

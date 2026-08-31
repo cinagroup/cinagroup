@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Apple Sues OpenAI Over Trade Secrets, GPT-5.6 Launch, Meta's Muse Spark — AI News Briefing"
 description: "Apple files a bombshell trade secrets lawsuit against OpenAI as the company launches GPT-5.6 with ChatGPT Work. Meta enters the AI coding race with Muse Spark 1.1, Anthropic localizes pricing for India, and Microsoft's CEO issues a stark warning on AI adoption."
 publishDate: 2026-07-13T22:00:00.000Z

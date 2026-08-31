@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI GPT-5.4 Thinking Model Launches"
 description: "12-hour AI digest: OpenAI GPT-5.4 Thinking launches, Anthropic Claude Code 2.1.76 with MCP elicitation, Morgan Stanley predicts AI breakthrough, US states advance AI legislation"
 publishDate: 2026-03-22T06:00:00.000Z

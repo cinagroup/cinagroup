@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI GPT-5.6 Sol, Google Computer Use, Meta Agents — AI News Briefing"
 description: "OpenAI launches GPT-5.6 Sol cybersecurity AI, Google brings computer use to Gemini 3.5 Flash, Meta's new research chief bets on agents, Austria seeks to host Anthropic in Europe, Google restricts Meta's Gemini access, South Korea plans $576B AI-chip investment, and the BIS warns of AI bubble risks."
 publishDate: 2026-06-29T10:00:00.000Z

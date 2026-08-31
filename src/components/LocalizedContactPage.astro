@@ -1,5 +1,6 @@
 ---
 import CinaPageHero from '~/components/CinaPageHero.astro';
+import ContactSubmissionForm from '~/components/ContactSubmissionForm.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 type Locale = 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
@@ -12,11 +13,11 @@ const copy = {
     heroTitle: 'チームが進めたい仕事を教えてください。',
     heroLead:
       'ユーザー、現在の流れ、システム、制約、期待する結果を共有してください。最初の現実的な範囲を一緒に考えます。',
-    email: 'メールを作成',
+    email: 'お問い合わせを始める',
     services: 'サービスを見る',
     contextEyebrow: '最初のメッセージ。',
     contextTitle: '有用な返答に必要な文脈。',
-    contextLead: 'このサイトはメッセージを送信・保存しません。ボタンはお使いのメールアプリで下書きを開きます。',
+    contextLead: '送信は安全に記録された後にのみ確定します。返される受付番号を保管してください。',
     items: [
       ['ユーザー', '誰が、どの結果を完了する必要がありますか。'],
       ['現在の状態', '今使っている製品、ページ、ワークフロー、システムは何ですか。'],
@@ -35,11 +36,11 @@ const copy = {
     eyebrow: '문의 / 업무에서 시작합니다.',
     heroTitle: '팀이 진행하려는 업무를 알려 주세요.',
     heroLead: '사용자, 현재 흐름, 시스템, 제약 및 원하는 결과를 공유해 주세요. 현실적인 첫 범위를 함께 정하겠습니다.',
-    email: '이메일 작성',
+    email: '문의 시작',
     services: '서비스 보기',
     contextEyebrow: '첫 메시지.',
     contextTitle: '유용한 답변에 필요한 맥락.',
-    contextLead: '이 사이트는 메시지를 전송하거나 저장하지 않습니다. 버튼은 이메일 앱에서 초안을 엽니다.',
+    contextLead: '문의는 안전하게 기록된 뒤에만 접수됩니다. 반환되는 참조 번호를 보관해 주세요.',
     items: [
       ['사용자', '누가 어떤 결과를 완료해야 하나요?'],
       ['현재 상태', '현재 사용 중인 제품, 페이지, 워크플로 또는 시스템은 무엇인가요?'],
@@ -59,11 +60,11 @@ const copy = {
     heroTitle: 'Расскажите, какую работу должна продвинуть команда.',
     heroLead:
       'Опишите пользователя, текущий процесс, системы, ограничения и ожидаемый результат. Мы предложим разумный первый объём.',
-    email: 'Написать письмо',
+    email: 'Начать запрос',
     services: 'Посмотреть услуги',
     contextEyebrow: 'Первое сообщение.',
     contextTitle: 'Контекст, необходимый для полезного ответа.',
-    contextLead: 'Сайт не отправляет и не хранит сообщение. Кнопка открывает черновик в вашем почтовом приложении.',
+    contextLead: 'Запрос подтверждается только после надёжного сохранения. Сохраните полученный номер обращения.',
     items: [
       ['Пользователь', 'Кому и какой результат нужно получить?'],
       ['Текущее состояние', 'Какой продукт, страница, процесс или система используется сейчас?'],
@@ -84,11 +85,11 @@ const copy = {
     heroTitle: 'Cuéntenos qué trabajo necesita mover su equipo.',
     heroLead:
       'Comparta el usuario, el flujo actual, los sistemas, las restricciones y el resultado esperado. Buscaremos un primer alcance sensato.',
-    email: 'Redactar correo',
+    email: 'Iniciar consulta',
     services: 'Ver servicios',
     contextEyebrow: 'Primer mensaje.',
     contextTitle: 'El contexto necesario para responder con utilidad.',
-    contextLead: 'Este sitio no envía ni almacena el mensaje. El botón abre un borrador en su aplicación de correo.',
+    contextLead: 'La consulta solo se confirma después de registrarse de forma segura. Guarde la referencia recibida.',
     items: [
       ['Usuario', '¿Quién necesita el resultado y qué intenta terminar?'],
       ['Estado actual', '¿Qué producto, página, flujo o sistema existe hoy?'],
@@ -108,11 +109,11 @@ const copy = {
     heroTitle: 'Conte qual trabalho sua equipe precisa mover.',
     heroLead:
       'Compartilhe o usuário, o fluxo atual, os sistemas, as restrições e o resultado esperado. Vamos encontrar um primeiro escopo sensato.',
-    email: 'Escrever e-mail',
+    email: 'Iniciar contato',
     services: 'Ver serviços',
     contextEyebrow: 'Primeira mensagem.',
     contextTitle: 'O contexto necessário para uma resposta útil.',
-    contextLead: 'Este site não envia nem armazena a mensagem. O botão abre um rascunho no seu aplicativo de e-mail.',
+    contextLead: 'A solicitação só é confirmada após ser registrada com segurança. Guarde a referência recebida.',
     items: [
       ['Usuário', 'Quem precisa do resultado e o que está tentando concluir?'],
       ['Estado atual', 'Qual produto, página, fluxo ou sistema existe hoje?'],
@@ -132,12 +133,11 @@ const copy = {
     heroTitle: 'Dites-nous quel travail votre équipe doit faire avancer.',
     heroLead:
       'Partagez l’utilisateur, le flux actuel, les systèmes, les contraintes et le résultat attendu. Nous chercherons un premier périmètre raisonnable.',
-    email: 'Rédiger un e-mail',
+    email: 'Commencer une demande',
     services: 'Voir les services',
     contextEyebrow: 'Premier message.',
     contextTitle: 'Le contexte nécessaire pour une réponse utile.',
-    contextLead:
-      'Ce site n’envoie ni ne stocke le message. Le bouton ouvre un brouillon dans votre application de messagerie.',
+    contextLead: 'La demande n’est confirmée qu’après son enregistrement sécurisé. Conservez la référence reçue.',
     items: [
       ['Utilisateur', 'Qui a besoin du résultat et que cherche-t-il à terminer ?'],
       ['État actuel', 'Quel produit, page, flux ou système existe aujourd’hui ?'],
@@ -166,29 +166,32 @@ const content = copy[lang] as (typeof copy)[Locale];
       eyebrow={content.eyebrow}
       title={content.heroTitle}
       lead={content.heroLead}
-      primary={{ text: content.email, href: 'mailto:info@cinagroup.com' }}
-      secondary={{ text: content.services, href: `/${lang}/services` }}
+      primary={{ text: content.email, href: '#contact-form' }}
+      secondary={{ text: content.services, href: `/${lang}/services/` }}
     />
 
     <section class="cg-page-section" aria-labelledby="localized-contact-context">
       <div class="cg-page-shell cg-contact-grid">
-        <div class="cg-section-heading">
-          <p class="cg-eyebrow">{content.contextEyebrow}</p>
-          <h2 id="localized-contact-context">{content.contextTitle}</h2>
-          <p>{content.contextLead}</p>
+        <div>
+          <div class="cg-section-heading">
+            <p class="cg-eyebrow">{content.contextEyebrow}</p>
+            <h2 id="localized-contact-context">{content.contextTitle}</h2>
+            <p>{content.contextLead}</p>
+          </div>
+          <div class="cg-list-panel">
+            {
+              content.items.map(([label, description]) => (
+                <div class="cg-list-row">
+                  <>
+                    <strong>{label}</strong>
+                    <span>{description}</span>
+                  </>
+                </div>
+              ))
+            }
+          </div>
         </div>
-        <div class="cg-list-panel">
-          {
-            content.items.map(([label, description]) => (
-              <div class="cg-list-row">
-                <>
-                  <strong>{label}</strong>
-                  <span>{description}</span>
-                </>
-              </div>
-            ))
-          }
-        </div>
+        <ContactSubmissionForm lang={lang} />
       </div>
     </section>
 
@@ -200,7 +203,7 @@ const content = copy[lang] as (typeof copy)[Locale];
         <div class="cg-page-actions">
           <a class="cg-page-button cg-page-button-primary" href="mailto:info@cinagroup.com">{content.email}</a>
         </div>
-        <p class="cg-form-note"><a href="/privacy">{content.privacy}</a> · <a href="/terms">{content.terms}</a></p>
+        <p class="cg-form-note"><a href="/privacy/">{content.privacy}</a> · <a href="/terms/">{content.terms}</a></p>
       </div>
     </section>
   </div>

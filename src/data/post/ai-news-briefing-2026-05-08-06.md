@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — May 8, 2026: Anthropic Opens Claude's Black Box, AlphaEvolve Reshapes Science, and Cloudflare Axes 1,100 Jobs"
 description: "Anthropic's Natural Language Autoencoders translate Claude's internal thoughts into readable text. DeepMind's AlphaEvolve now optimizes TPUs and solves Erdős problems. The Musk v. Altman trial reaches dramatic new testimony as Cloudflare announces mass layoffs driven by AI adoption."
 publishDate: 2026-05-07T22:00:00.000Z

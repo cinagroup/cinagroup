@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Revenue $30B · 3.5 GW Compute Deal"
 description: "12-hour AI digest: Anthropic revenue hits $30B, Zhipu releases GLM-5.1 open-source model, Chinese LLMs lead global usage for fifth consecutive week"
 publishDate: 2026-04-08T10:00:00.000Z

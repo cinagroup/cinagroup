@@ -1,10 +1,18 @@
 import { access, readFile, readdir, stat } from 'node:fs/promises';
+import { execFile } from 'node:child_process';
 import path from 'node:path';
+import { promisify } from 'node:util';
+
+import { hasTopLevelMarkdownHeading } from './normalize-markdown-headings.mjs';
 
 const root = process.cwd();
+const execFileAsync = promisify(execFile);
 const distDir = path.join(root, 'dist');
 const automatedSourceDir = path.join(root, 'src', 'data', 'post');
+const curatedSourceDir = path.join(root, 'src', 'content', 'blog');
 const origin = 'https://cinagroup.com';
+const turnstileScriptUrl = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+const contactRoutePattern = /^\/(?:(?:ja|ko|ru|es|pt|fr)\/)?contact$/;
 const failures = [];
 const maxCssFileBytes = 64 * 1024;
 const requiredHeaderFragments = [
@@ -19,8 +27,16 @@ const requiredHeaderFragments = [
 ];
 
 const attributeValue = (tag, name) => {
-  const match = tag.match(new RegExp(`\\b${name}="([^"]*)"`, 'i'));
-  return match?.[1] ?? null;
+  const match = tag.match(new RegExp(`\\b${name}=(?:"([^"]*)"|'([^']*)'|([^\\s>]+))`, 'i'));
+  return match?.[1] ?? match?.[2] ?? match?.[3] ?? null;
+};
+
+const linkHref = (html, relName) => {
+  for (const match of html.matchAll(/<link\b[^>]*>/gi)) {
+    const rel = attributeValue(match[0], 'rel')?.toLowerCase().split(/\s+/) || [];
+    if (rel.includes(relName.toLowerCase())) return attributeValue(match[0], 'href');
+  }
+  return null;
 };
 
 const metaContent = (html, name) => {
@@ -71,10 +87,29 @@ const targetExists = async (pathname) => {
 const distFiles = await walk(distDir);
 const htmlFiles = distFiles.filter((file) => file.endsWith('.html'));
 const cssFiles = distFiles.filter((file) => file.endsWith('.css'));
-const automatedSources = (await readdir(automatedSourceDir)).filter((file) => /\.mdx?$/.test(file));
-let automatedPages = 0;
+const blogSourceFiles = (
+  await Promise.all(
+    [automatedSourceDir, curatedSourceDir].map(async (directory) =>
+      (await readdir(directory))
+        .filter((file) => /\.mdx?$/.test(file))
+        .map((file) => path.join(directory, file))
+    )
+  )
+).flat();
+let archivedPages = 0;
+let turnstileContactPages = 0;
+const archivedCanonicals = new Set();
 let checkedLinks = 0;
 let totalCssBytes = 0;
+
+for (const file of blogSourceFiles) {
+  const source = await readFile(file, 'utf8');
+  const body = source.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
+
+  if (hasTopLevelMarkdownHeading(body)) {
+    failures.push(`${path.relative(root, file)}: blog post body must not contain an h1 heading`);
+  }
+}
 
 const headersFile = await readFile(path.join(distDir, '_headers'), 'utf8');
 for (const fragment of requiredHeaderFragments) {
@@ -108,6 +143,10 @@ for (const file of htmlFiles) {
   }
 
   for (const match of html.matchAll(/\s(?:src|srcset|action|poster)="(https?:\/\/[^\"]+)"/gi)) {
+    if (match[1] === turnstileScriptUrl && contactRoutePattern.test(route)) {
+      turnstileContactPages += 1;
+      continue;
+    }
     failures.push(`${route}: unexpected external resource ${match[1]}`);
   }
 
@@ -119,12 +158,26 @@ for (const file of htmlFiles) {
     }
   }
 
-  if (route.startsWith('/blog/ai-news-briefing-')) {
-    automatedPages += 1;
+  const isArchivedArticle = /data-content-kind=(?:["']historical-archive["']|historical-archive(?:\s|>))/i.test(html);
+  const hasArchivedSummaries = /data-content-kind=(?:["']historical-archive-summary["']|historical-archive-summary(?:\s|>))/i.test(html);
+
+  if (isArchivedArticle) {
+    archivedPages += 1;
     if (metaContent(html, 'robots') !== 'noindex,follow') {
-      failures.push(`${route}: automated briefing is not noindex,follow`);
+      failures.push(`${route}: historical archive is not noindex,follow`);
     }
-    if (!html.includes('Automated briefing archive.')) failures.push(`${route}: missing automated briefing disclosure`);
+    if (!/\bclass=["'][^"']*\bcg-briefing-notice\b/i.test(html)) {
+      failures.push(`${route}: missing historical archive disclosure`);
+    }
+
+    const canonical = linkHref(html, 'canonical');
+    if (canonical) archivedCanonicals.add(canonical);
+    else failures.push(`${route}: historical archive canonical is missing`);
+  }
+
+  const isTaxonomyPage = /data-blog-collection=(?:["'](?:category|tag)["']|(?:category|tag)(?:\s|>))/i.test(html);
+  if (isTaxonomyPage && hasArchivedSummaries && metaContent(html, 'robots') !== 'noindex,follow') {
+    failures.push(`${route}: taxonomy containing historical archives is not noindex,follow`);
   }
 
   for (const match of html.matchAll(/\shref="([^"]+)"/gi)) {
@@ -145,25 +198,29 @@ for (const file of htmlFiles) {
   }
 }
 
-if (automatedPages !== automatedSources.length) {
-  failures.push(`automated archive: expected ${automatedSources.length} pages, found ${automatedPages}`);
-}
-
-const blogIndex = await readFile(path.join(distDir, 'blog', 'index.html'), 'utf8');
-if (!blogIndex.includes('restored archive of automated briefings')) failures.push('/blog: archive disclosure missing');
-if (!blogIndex.includes('Automated briefing')) failures.push('/blog: automated briefing badges missing');
-
-const categoryIndex = await readFile(path.join(distDir, 'category', 'ai-news', 'index.html'), 'utf8');
-if (metaContent(categoryIndex, 'robots') !== 'noindex,follow') {
-  failures.push('/category/ai-news: automated category is not noindex,follow');
+if (turnstileContactPages !== 7) {
+  failures.push(`expected Turnstile only on 7 localized contact pages, found ${turnstileContactPages}`);
 }
 
 const sitemapFiles = (await walk(distDir)).filter((file) => /sitemap.*\.xml$/.test(file));
 for (const sitemapFile of sitemapFiles) {
   const sitemap = await readFile(sitemapFile, 'utf8');
-  if (sitemap.includes('/blog/ai-news-briefing-')) {
-    failures.push(`${path.basename(sitemapFile)}: automated briefings must not appear in the sitemap`);
+  for (const canonical of archivedCanonicals) {
+    if (sitemap.includes(canonical)) {
+      failures.push(`${path.basename(sitemapFile)}: historical archive ${canonical} must not appear in the sitemap`);
+    }
   }
+}
+
+let blogStructuredDataSummary = '';
+try {
+  const { stdout } = await execFileAsync(process.execPath, [path.join(root, 'scripts', 'audit-blog-structured-data.mjs')], {
+    cwd: root,
+  });
+  blogStructuredDataSummary = stdout.trim();
+} catch (error) {
+  const detail = error && typeof error === 'object' && 'stderr' in error ? String(error.stderr).trim() : String(error);
+  failures.push(`blog structured data audit: ${detail}`);
 }
 
 if (failures.length) {
@@ -174,5 +231,6 @@ if (failures.length) {
 }
 
 console.log(
-  `Build audit passed: ${htmlFiles.length} HTML pages, ${automatedPages} automated briefings, ${checkedLinks} internal links, ${cssFiles.length} CSS files (${totalCssBytes} bytes).`
+  `Build audit passed: ${htmlFiles.length} HTML pages, ${archivedPages} historical archives, ${checkedLinks} internal links, ${cssFiles.length} CSS files (${totalCssBytes} bytes).`
 );
+if (blogStructuredDataSummary) console.log(blogStructuredDataSummary);

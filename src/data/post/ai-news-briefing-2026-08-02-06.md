@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Meta's AI Agent Push, Gemini Robotics 2, Copilot Super App — AI News Briefing"
 description: "Meta's Mark Zuckerberg reveals plans for a major push into personal AI agents that act on users' behalf. Google DeepMind unveils Gemini Robotics 2, capable of controlling a humanoid robot's entire body. Microsoft confirms an AI 'super app' is in the works, Apple hints at iCloud Plus AI tiers, and OpenAI is building a family of hardware devices."
 publishDate: 2026-08-01T22:00:00.000Z

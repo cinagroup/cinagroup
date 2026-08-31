@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI's 5% Stake Offer, Google's $225B Wipeout, Meta's AWS Pivot — AI News Briefing"
 description: "OpenAI proposes giving the US government a 5% equity stake to ease regulatory pressure ahead of its IPO, Google sheds $225B in market value as Gemini 3.5 Pro slips to July, Meta pivots to Amazon AI CPUs in a multi-billion dollar deal, and the 'tokenmaxxing' era ends as enterprises confront AI's real cost problem."
 publishDate: 2026-07-09T10:00:00.000Z

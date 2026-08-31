@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "SAP Introduces Joule AI Copilot for Business Process Automation · GitHub Copilot Workspace Graduates to General Availabi"
 description: "AI digest covering 2026-04-10 18:00 to 2026-04-11 06:00"
 publishDate: 2026-04-10T22:00:00.000Z

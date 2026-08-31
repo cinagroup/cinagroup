@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Cerebras Pops 108% in Historic IPO, Musk v. Altman Trial Wraps Up, OpenAI Launches ChatGPT Finance — AI News Briefing"
 description: "Cerebras delivers 2026's first mega tech IPO with a staggering $5.5B raise and 108% stock surge. The Musk v. Altman trial enters jury deliberation. OpenAI launches personal finance features, reorganizes product leadership under Greg Brockman, and prepares Codex for mobile. Plus, Cisco cuts 4,000 jobs to fund AI bets, Anthropic expands Claude Code access, and Amazon workers resort to 'tokenmaxxing'."
 publishDate: 2026-05-16T10:00:00.000Z

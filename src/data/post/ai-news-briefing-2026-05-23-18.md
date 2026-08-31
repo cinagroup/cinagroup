@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Trump Cancels AI Executive Order, Microsoft Drops Claude Over Cost, White House Funds $9B Spy AI — AI News Briefing"
 description: "Trump abruptly cancels a planned AI oversight executive order hours before signing. Microsoft cancels internal Claude licenses after discovering AI costs exceed human labor expenses. The White House approves $9 billion for intelligence community AI. California signs a first-of-its-kind AI worker protection order."
 publishDate: 2026-05-23T10:00:00.000Z

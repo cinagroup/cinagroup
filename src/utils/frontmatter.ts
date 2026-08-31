@@ -14,6 +14,29 @@ export const readingTimeRemarkPlugin: RemarkPlugin = () => {
   };
 };
 
+/**
+ * Blog post layouts own the document's single h1. Keep author-supplied body
+ * headings below that level, including content produced by automated jobs.
+ */
+export const blogPostHeadingsRemarkPlugin: RemarkPlugin = () => {
+  return function (tree, file) {
+    const sourcePath = String(file.path || file.history?.[0] || '').replaceAll('\\', '/');
+    const isBlogPost = /\/src\/(?:content\/blog|data\/post)\//.test(sourcePath);
+
+    if (!isBlogPost) return;
+
+    let hasBodyH1 = false;
+    visit(tree, 'heading', function (node) {
+      if (node.depth === 1) hasBodyH1 = true;
+    });
+    if (!hasBodyH1) return;
+
+    visit(tree, 'heading', function (node) {
+      node.depth = Math.min(6, node.depth + 1) as typeof node.depth;
+    });
+  };
+};
+
 export const responsiveTablesRehypePlugin: RehypePlugin = () => {
   return function (tree) {
     if (!tree.children) return;

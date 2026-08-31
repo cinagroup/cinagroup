@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Air Street $232M Fund · Europe Solo VC Rise"
 description: "12-hour AI digest: Air Street $232M fund, Apple WWDC 2026 AI advancements, Helion-OpenAI power deal, Trump AI framework"
 publishDate: 2026-03-23T22:00:00.000Z

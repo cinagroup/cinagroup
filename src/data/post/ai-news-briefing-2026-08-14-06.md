@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Passes $40B Run Rate, Anthropic Eyes $2T IPO, Google Launches Gemini 3.7 Flash — AI News Briefing"
 description: "Bloomberg reports OpenAI's revenue run rate has topped $40 billion ahead of its anticipated IPO, even as the company replaces its chief revenue officer after just eight months. Anthropic investors are targeting a roughly $2 trillion valuation for an October debut, Google unveiled Gemini 3.7 Flash for coding and agent workflows, and Nvidia teamed up with Wall Street firms on a $500 billion AI data-center financing venture. Plus: Meta ships an on-device model, Anthropic's agents start a 'turf war,' and a German advocacy group files a criminal complaint over Meta AI glasses."
 publishDate: 2026-08-13T22:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 14, 2026 (06:00 CST)
 
 ## Top 7 Stories
 

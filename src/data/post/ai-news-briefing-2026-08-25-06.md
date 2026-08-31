@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Meta's Hatch Platform, OpenAI Agent Push, Hugging Face $13B Talks — AI News Briefing"
 description: "Meta is preparing to launch its Hatch AI agent platform, while OpenAI doubles down on workplace agents with ChatGPT Work and urges California to strengthen its AI safety law. Hugging Face is reportedly in talks to be acquired for $13B+, and Nvidia is spending billions to counter Chinese AI — a busy 24 hours across AI agents, policy, and infrastructure."
 publishDate: 2026-08-24T22:00:00.000Z

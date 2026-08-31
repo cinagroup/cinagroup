@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Claude Cowork Memory, Stability AI's $76M Raise, SEC Probes AI Hedge Fund — AI News Briefing"
 description: "Anthropic's Claude Cowork gains persistent memory of chat context, while Stability AI raises $76 million in fresh funding for its Stable Diffusion franchise. A $3B robotics round, a web-indexing play for AI agents, an SEC probe into a star AI hedge fund, and mounting privacy concerns around the Instinct assistant round out a busy 24 hours."
 publishDate: 2026-08-26T10:00:00.000Z

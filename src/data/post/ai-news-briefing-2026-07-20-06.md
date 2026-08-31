@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Gemini Delayed, Apple AI Cleared for China, Databricks $188B — AI News Briefing"
 description: "Google's Gemini launch hits internal roadblocks, Apple Intelligence secures China approval with Alibaba and Baidu, and Databricks reaches a staggering $188 billion valuation — plus Chrome's stealth 4GB AI install, Current AI's open infrastructure push, Bunkerhill's agentic healthcare raise, and Kimi 3 closing in on Opus 4.8."
 publishDate: 2026-07-19T22:00:00.000Z

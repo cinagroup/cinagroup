@@ -18,19 +18,17 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths> & { category: Record
 const { page, category } = Astro.props as Props;
 
 const currentPage = page.currentPage ?? 1;
-const isAutomatedArchive = category.slug === 'ai-news';
-
 const metadata = {
   title: `Category '${category.title}' ${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
   robots: {
-    index: isAutomatedArchive ? false : blogCategoryRobots?.index,
+    index: blogCategoryRobots?.index,
     follow: blogCategoryRobots?.follow,
   },
 };
 ---
 
 <Layout metadata={metadata}>
-  <section class="cg-blog-index">
+  <section class="cg-blog-index" data-blog-collection="category">
     <Headline>Category: {category.title}</Headline>
     <BlogList posts={page.data} />
     <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />

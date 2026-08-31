@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Acquires Ona, NVIDIA Agentic Benchmark, Visa AI Payments — AI News Briefing"
 description: "OpenAI acquires cloud platform Ona to power Codex agents in enterprise environments, NVIDIA's Blackwell tops the first agentic AI infrastructure benchmark, and Visa partners with OpenAI to let AI agents make purchases on behalf of users."
 publishDate: 2026-06-13T10:00:00.000Z

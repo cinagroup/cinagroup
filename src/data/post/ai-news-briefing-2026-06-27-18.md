@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Mythos Release, OpenAI Restrictions, Meta Smart Glasses — AI News Briefing"
 description: "US approves Anthropic's Mythos AI for trusted organizations, tells OpenAI to restrict its most powerful model, Anthropic accuses Alibaba of scraping Claude, Meta launches $299 AI smart glasses, Google delays Gemini 3.5 Pro, and Five Eyes warns of devastating AI attacks months away."
 publishDate: 2026-06-27T10:00:00.000Z

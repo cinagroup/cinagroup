@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Apple Siri AI, OpenAI $852B IPO, Google-SpaceX $920M Deal — AI News Briefing"
 description: "Apple unveils a ground-up Siri AI rebuild at WWDC 2026, OpenAI files for IPO targeting an $852 billion valuation, Google strikes a $920M/month compute deal with SpaceX, and Anthropic ships Claude Fable 5 and Mythos 5."
 publishDate: 2026-06-09T22:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Goldman Sachs $700B AI Capex Projection for 2026"
 description: "12-hour AI digest: Goldman Sachs projects $700B AI capex, UK delays OpenAI trial, identity sales for AI training, rogue OpenClaw AI incident, AI Action Firewall development, FBI surveillance concerns"
 publishDate: 2026-03-22T18:00:00.000Z

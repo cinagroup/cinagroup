@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI $12.2B Funding · Anthropic $30B Revenue · Meta AGI Strategy"
 description: "12-hour AI digest: OpenAI $12.2B funding round, Anthropic revenue surge, Meta AGI strategy"
 publishDate: 2026-04-08T04:00:00.000Z

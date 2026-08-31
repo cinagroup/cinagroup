@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Stripe-OpenRouter Deal, Nvidia's $1.5B Data Center Bet, Groq's Neocloud Pivot — AI News Briefing"
 description: "Stripe is reportedly acquiring AI gateway OpenRouter for $7B+, while Nvidia pours $1.5B into a SoftBank-backed data center developer behind OpenAI projects. Groq pivots to a neocloud model with a fresh $350M raise, Amazon faces backlash over destroying rare texts for AI training, and Anthropic frames the AI backlash as a crisis of trust while detailing Claude's new watermarks."
 publishDate: 2026-08-17T22:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 18, 2026 (06:00 CST)
 
 ## Top 7 Stories
 

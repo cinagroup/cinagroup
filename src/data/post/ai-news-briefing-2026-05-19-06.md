@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Musk Loses OpenAI Trial, OpenAI Shuffles Executives for AI Agents, Gemini Eyes Full Copilot — AI News Briefing"
 description: "A jury dismisses all claims in the Musk v. Altman trial, OpenAI restructures its leadership to compete in the AI agent race, and Google's Gemini strategy draws comparisons to Microsoft's Copilot missteps ahead of I/O 2026."
 publishDate: 2026-05-19T22:00:00.000Z

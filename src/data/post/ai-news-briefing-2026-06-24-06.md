@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic's Claude Tag, SpaceX-Reflection AI Deal, Hollywood Bends to OpenAI — AI News Briefing"
 description: "Anthropic launches Claude Tag, an always-on AI teammate for Slack that learns organizational context. SpaceX signs a $150M/month compute deal with open-source AI lab Reflection AI. Hollywood studios pass on an anti-OpenAI film, while Oracle cuts 21,000 jobs to fund AI infrastructure and Meta launches standalone smart glasses without Ray-Ban."
 publishDate: 2026-06-23T22:00:00.000Z

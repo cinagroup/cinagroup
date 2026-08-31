@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic IPO Filing, Google-SpaceX $920M Deal, G7 AI Summit — AI News Briefing"
 description: "Anthropic confidentially files for IPO as the AI race heats up, Google signs a massive $920M/month compute deal with SpaceX-xAI, and world leaders convene with OpenAI, Anthropic, and Google CEOs at the G7/VivaTech summit in France."
 publishDate: 2026-06-18T10:00:00.000Z

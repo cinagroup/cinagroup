@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Export Ban, Google Talent Exodus, Meta AI Delays — AI News Briefing"
 description: "The US imposes an export ban on Anthropic's latest AI models, straining international alliances. Google faces a significant AI talent exodus as top executives depart. Meta continues to delay its new AI model releases while navigating internal shakeups."
 publishDate: 2026-06-21T10:00:00.000Z

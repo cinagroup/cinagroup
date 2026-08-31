@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Establishes New AI Safety Research Lab in Geneva · Berkeley Lab Creates AI for Real-Time Climate Modeling · DeepM"
 description: "AI digest covering 2026-04-23 06:00 to 2026-04-23 18:00"
 publishDate: 2026-04-23T10:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Calls Global AI Pause, OpenAI ChatGPT Superapp, NVIDIA PC AI Chip — AI News Briefing"
 description: "Anthropic urges a global pause on AI development over loss-of-control fears. OpenAI plans a ChatGPT superapp overhaul ahead of its IPO. NVIDIA unveils a new AI chip for personal computers. Plus: AI mega-deals raise investor concerns, model routing challenges Big AI revenue, and more."
 publishDate: 2026-06-07T22:00:00.000Z

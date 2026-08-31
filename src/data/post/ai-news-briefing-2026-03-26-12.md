@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google TurboQuant · Kleiner Perkins $3.5B Fund · Harvey $11B"
 description: "12-hour AI digest: Google TurboQuant memory compression, Kleiner Perkins $3.5B AI fund, Anthropic Claude Code enhancements, Google Lyria 3 Pro music model, Harvey $11B valuation"
 publishDate: 2026-03-26T04:00:00.000Z

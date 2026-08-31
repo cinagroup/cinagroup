@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "GitHub AI Agent Leaks Private Repos, Mews Cuts Staff for AI, ZML Accelerates Inference — AI News Briefing"
 description: "Security researchers trick GitHub's AI agent into leaking private repositories, hospitality platform Mews slashes 15% of its workforce citing AI automation, ZML releases a free cross-platform LLM acceleration toolkit, and the US Treasury issues new warnings about AI systemic risk ahead of OpenAI's IPO."
 publishDate: 2026-07-08T10:00:00.000Z

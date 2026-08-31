@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Gemini 3.5 Flash Goes GA, China Restricts AI Talent, NVIDIA Beats Earnings — AI News Briefing"
 description: "Google's Gemini 3.5 Flash becomes generally available; China imposes travel restrictions on AI researchers at Alibaba and DeepSeek; NVIDIA's revenue blows past Wall Street expectations as AI boom accelerates; OpenAI prepares confidential IPO filing; Anthropic's Code with Claude showcases the future of AI-assisted development."
 publishDate: 2026-05-27T10:00:00.000Z

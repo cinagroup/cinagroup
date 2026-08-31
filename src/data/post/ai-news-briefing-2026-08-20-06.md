@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Zero Data Retention, Google Study Tools, Meta AI Mac App — AI News Briefing"
 description: "OpenAI rolls out zero data retention for frontier models in a privacy play aimed squarely at Anthropic's enterprise tier, while researchers say the company revoked their access to its limited cyber program. Google packs Search and Gemini with new AI study tools and a student hub, Meta AI lands on Mac, and Cognition's CEO denies a reported SpaceX acquisition approach."
 publishDate: 2026-08-19T22:00:00.000Z

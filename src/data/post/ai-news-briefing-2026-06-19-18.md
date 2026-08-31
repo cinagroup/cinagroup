@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "SpaceX Acquires Cursor for $60B, OpenAI Price War, Meta Muse Spark — AI News Briefing"
 description: "SpaceX makes its first post-IPO acquisition with a $60 billion deal for AI coding startup Cursor. OpenAI considers drastic price cuts as an AI price war with Anthropic intensifies. Meta unveils Muse Spark, its first new AI model since hiring Alexandr Wang."
 publishDate: 2026-06-19T10:00:00.000Z

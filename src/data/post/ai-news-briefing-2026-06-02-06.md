@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Files for IPO, Alphabet Raises $80B for AI, Florida Sues OpenAI — AI News Briefing"
 description: "Anthropic confidentially files its S-1 for an IPO. Alphabet announces a massive $80B equity raise to fund AI infrastructure. Florida sues OpenAI and Sam Altman over AI safety concerns. Intel challenges NVIDIA with a new cheaper AI chip. Plus: G7 AI openness vision, Stanford AI agent guidelines, and AI's reality check."
 publishDate: 2026-06-01T22:00:00.000Z

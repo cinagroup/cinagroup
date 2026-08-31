@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic-PI Rumors, OpenAI's Hugging Face Breach, Google's Gemini Drop — AI News Briefing"
 description: "Anthropic-Physical Intelligence acquisition rumors ignite AI Twitter, OpenAI's pre-release models accidentally breach Hugging Face, and Google ships three new Gemini models but skips 3.5 Pro. Plus: US threatens sanctions on Chinese AI, Jack Dorsey's Buzz challenges Slack, and Meta tests AI bedtime stories."
 publishDate: 2026-07-22T10:00:00.000Z

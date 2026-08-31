@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Nvidia Prints Money, Anthropic's Physical-AI Standard, Google Expands AI Mode — AI News Briefing"
 description: "Nvidia says it can keep funding the AI boom while reportedly circling Perplexity and Hugging Face, and Anthropic previewed a standard for letting AI agents safely operate physical hardware. South Korea moved to give every citizen free AI access, Google pushed AI Mode further into Search, and Workday's earnings showed AI agents now drive 25% of new revenue."
 publishDate: 2026-08-30T10:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Meta's AI Pivot, Japan's Patent Ruling, Nvidia Compute Gold Rush — AI News Briefing"
 description: "Meta's AI chief claims its next LLM has caught up with OpenAI's flagship model while Zuckerberg admits AI agent development is moving slower than expected. Japan's top court rules AI cannot be a patent inventor, and a third AI firm commits $6.3B to SpaceX for Nvidia compute access. Plus: AI data centers' hidden water crisis and Meta caps internal token spending."
 publishDate: 2026-07-03T22:00:00.000Z

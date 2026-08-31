@@ -5,7 +5,7 @@
   "type": "module",
   "private": true,
   "engines": {
-    "node": "^18.17.1 || ^20.3.0 || >= 21.0.0"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "dev": "astro dev",
@@ -18,6 +18,16 @@
     "check:eslint": "eslint .",
     "check:prettier": "prettier --check .",
     "audit:build": "node scripts/audit-build.mjs",
+    "audit:blog": "node scripts/audit-blog-structured-data.mjs",
+    "audit:blog:source": "node scripts/audit-blog-structured-data.mjs --source-only",
+    "audit:content": "node scripts/audit-content-governance.mjs",
+    "audit:content:source": "node scripts/audit-content-governance.mjs --source-only",
+    "audit:evidence": "node scripts/audit-public-evidence.mjs",
+    "audit:evidence:source": "node scripts/audit-public-evidence.mjs --source-only",
+    "audit:i18n": "node scripts/audit-i18n-routes.mjs",
+    "audit:source": "npm run audit:blog:source && npm run audit:content:source && npm run audit:evidence:source && npm run audit:i18n",
+    "check:cloudflare": "wrangler types worker-configuration.d.ts --env-interface CloudflareEnv --include-runtime false --check && tsc -p functions/tsconfig.json --noEmit && wrangler pages functions build --outdir .wrangler/functions-build",
+    "test:contact": "node --test tests/contact-core.test.mjs",
     "fix": "npm run fix:eslint && npm run fix:prettier",
     "fix:eslint": "eslint --fix .",
     "fix:prettier": "prettier -w ."
@@ -40,6 +50,7 @@
     "@astrojs/mdx": "^4.3.3",
     "@astrojs/partytown": "^2.1.4",
     "@astrojs/tailwind": "^5.1.5",
+    "@cloudflare/workers-types": "5.20260830.1",
     "@eslint/js": "^9.33.0",
     "@iconify-json/flat-color-icons": "^1.2.1",
     "@iconify-json/tabler": "^1.2.20",
@@ -64,6 +75,7 @@
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.39.0",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.0.0",
+    "wrangler": "4.127.1"
   }
 }

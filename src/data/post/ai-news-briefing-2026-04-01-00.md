@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Ollama Powered by MLX on Apple Silicon Preview"
 description: "12-hour AI digest: AI-curated technology briefing"
 publishDate: 2026-03-31T16:00:00.000Z

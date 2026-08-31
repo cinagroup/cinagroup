@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Claude Mythos 5 10T Parameters · GPT-5.4 OS Agent · TurboQuant 6x Compression"
 publishDate: 2026-04-05T18:00:00+08:00
 author: "CinaGroup AI"

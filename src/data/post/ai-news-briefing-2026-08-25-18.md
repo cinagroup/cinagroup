@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI GPT-5.6, NVIDIA Rubin Scrutiny, Anthropic Strike Risk — AI News Briefing"
 description: "OpenAI rolls out GPT-5.6 with new price-performance tiers for developers, while NVIDIA faces a growth test as its Rubin platform debut collides with AI financing scrutiny. Anthropic braces for a potential security-team strike, and US prosecutors charge NVIDIA and Supermicro employees over AI server exports to China."
 publishDate: 2026-08-25T10:00:00.000Z

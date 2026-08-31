@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Pulls Fable 5 & Mythos 5, Apple's Gemini Siri, Bezos's $12B Prometheus — AI News Briefing"
 description: "The U.S. government orders Anthropic to suspend foreign access to Claude Fable 5 and Mythos 5, Apple unveils a Gemini-powered Siri overhaul at WWDC 2026, and Jeff Bezos's Prometheus raises $12B to build an 'artificial general engineer' for the physical world."
 publishDate: 2026-06-13T22:00:00.000Z

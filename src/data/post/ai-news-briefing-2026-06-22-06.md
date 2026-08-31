@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "G7 AI Summit, SpaceX-Google $30B Deal, Bioweapons Warning — AI News Briefing"
 description: "World leaders meet with AI CEOs at G7 to discuss global standards, while SpaceX lands massive $30B Google compute deal and AI leaders warn Congress about bioweapons risks."
 publishDate: 2026-06-21T22:00:00.000Z

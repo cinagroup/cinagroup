@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Ex-OpenAI Researcher: AI Could Cause Human Extinction in 5 Years"
 description: "12-hour AI digest: OpenAI researcher extinction warning, SaaS death prediction, Coca-Cola/Walmart CEOs resign over AI, AI music copyright lawsuit, Google AI search privacy issues"
 publishDate: 2026-03-29T04:00:00.000Z

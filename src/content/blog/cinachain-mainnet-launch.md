@@ -1,10 +1,14 @@
 ---
+status: published
+origin: editorial
 title: 'CinaChain 设计原则：让状态、边界与恢复路径可见'
 excerpt: '连接型基础设施不应隐藏关键状态。本文介绍 CinaChain 在状态建模、服务契约、发布控制和恢复设计上的基本原则。'
 publishDate: 2026-03-20
 category: 'Engineering'
 tags: ['CinaChain', 'Infrastructure', 'Architecture']
 author: 'CinaChain Team'
+authorType: Organization
+language: zh-CN
 draft: false
 ---
 

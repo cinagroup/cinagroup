@@ -2,93 +2,92 @@
 import CinaProductPage from '~/components/CinaProductPage.astro';
 
 const metadata = {
-  title: 'CinaChain — Connected infrastructure for application workflows',
+  title: 'CinaChain — Base Sepolia Web3 collection beta',
   description:
-    'CinaChain supports applications that need verifiable state, connected services, and explicit release controls.',
+    'CinaChain is a beta Web3 collection project configured for Base Sepolia testnet, with NFT gallery, minting, wallet, and Cloudflare edge surfaces.',
 };
 
-const code = `release "connected-service" {
-  state    = "verified"
-  contract = "checked"
-  owner    = "assigned"
-  promote  = "reviewed"
+const code = `mint "testnet-collection" {
+  network   = "base-sepolia"
+  phase     = "whitelist-or-public"
+  assetType = "testnet-only"
 }`;
 ---
 
 <CinaProductPage
+  product="cinachain"
   {metadata}
-  eyebrow="CinaChain / connected infrastructure."
-  title="Connect application state without obscuring how it moves."
-  lead="CinaChain supports teams that need verifiable state, connected services, and a clear path from application workflow to reviewed release."
-  primary={{ text: 'Discuss an infrastructure path', href: '/contact' }}
+  eyebrow="CinaChain / Base Sepolia beta."
+  title="Evaluate a Web3 collection flow with testnet assets."
+  lead="CinaChain’s repository includes an NFT DApp, portal, documentation, smart contracts, and Cloudflare edge services. The current release scope is Base Sepolia testnet; documented domains are not proof of a live production deployment."
+  primary={{ text: 'Discuss a testnet evaluation', href: '/contact/' }}
   secondary={{ text: 'View the full stack', href: '/' }}
   capabilities={[
     {
-      label: 'Model.',
-      title: 'Define the state that matters.',
-      description: 'Start with the records, events, and ownership rules the application actually needs to coordinate.',
+      label: 'Browse.',
+      title: 'Render an NFT collection gallery.',
+      description: 'Display collection assets with documented multi-gateway IPFS image fallback.',
     },
     {
-      label: 'Connect.',
-      title: 'Link services through clear contracts.',
-      description: 'Keep application, service, and infrastructure boundaries explicit so teams can change them safely.',
+      label: 'Wallet.',
+      title: 'Connect a Base Sepolia wallet.',
+      description: 'Use Reown AppKit with wagmi and viem against one explicit test network.',
+    },
+    {
+      label: 'Mint.',
+      title: 'Exercise whitelist or public mint phases.',
+      description: 'Run the repository’s Merkle-tree whitelist and public-phase paths with testnet assets.',
+    },
+    {
+      label: 'Admin.',
+      title: 'Operate documented collection controls.',
+      description: 'Use the included admin surfaces for whitelist management and contract operations.',
+    },
+    {
+      label: 'Edge.',
+      title: 'Separate Pages and Worker surfaces.',
+      description: 'Keep portal, DApp, docs, billing, and whitelist units explicit in the Cloudflare release topology.',
     },
     {
       label: 'Verify.',
-      title: 'Check important transitions.',
-      description: 'Validate the data and conditions required before a workflow advances to its next state.',
-    },
-    {
-      label: 'Observe.',
-      title: 'Make system state inspectable.',
-      description: 'Expose the status, owner, and supporting context operators need to understand what is happening.',
-    },
-    {
-      label: 'Release.',
-      title: 'Promote changes deliberately.',
-      description:
-        'Use review gates and staged delivery for changes that affect connected applications or shared state.',
-    },
-    {
-      label: 'Recover.',
-      title: 'Plan for reversibility.',
-      description: 'Design ownership, retries, and recovery paths before the system becomes difficult to operate.',
+      title: 'Treat deployment claims as evidence-based.',
+      description: 'Run quality gates and verify custom domains and live revisions after each release.',
     },
   ]}
-  workflowTitle="Move connected services through explicit states."
-  workflowLead="Treat state, validation, ownership, and release as visible parts of the product rather than hidden infrastructure details."
+  workflowTitle="Move a testnet mint through explicit checks."
+  workflowLead="A reference evaluation keeps the selected network, wallet, phase, contract state, and explorer result visible."
   workflow={[
     {
-      title: 'Define the state model',
-      description: 'Document the records, transitions, and ownership boundaries the workflow needs.',
+      title: 'Select Base Sepolia',
+      description: 'Confirm the configured test network and testnet-only asset scope before connecting a wallet.',
     },
     {
-      title: 'Connect the services',
-      description: 'Link application actions to the smallest set of stable service contracts.',
+      title: 'Connect the wallet',
+      description: 'Establish the Reown AppKit connection and display the expected account and network.',
     },
     {
-      title: 'Validate the transition',
-      description: 'Check inputs, permissions, and current state before committing a change.',
+      title: 'Validate the mint phase',
+      description: 'Check whitelist eligibility or public-phase state before submitting the test transaction.',
     },
     {
-      title: 'Review the release',
-      description: 'Promote the change with observable status and a defined recovery path.',
+      title: 'Review the transaction',
+      description: 'Inspect the Base Sepolia result and confirm gallery metadata through the configured storage paths.',
     },
   ]}
-  codeLabel="Release contract."
+  codeLabel="Illustrative testnet contract."
   {code}
   principles={[
     {
-      title: 'Explicit state.',
-      description: 'Important transitions should be inspectable and understandable to operators.',
+      title: 'Testnet honesty.',
+      description: 'Beta and Base Sepolia scope should stay visible wherever the product is described.',
     },
     {
-      title: 'Stable contracts.',
-      description: 'Application and infrastructure boundaries should remain clear as the system evolves.',
+      title: 'Visible contracts.',
+      description: 'Network, mint phase, contract, and explorer links should remain inspectable.',
     },
     {
-      title: 'Safe change.',
-      description: 'Review, observability, and recovery belong in the delivery path from the beginning.',
+      title: 'Verified releases.',
+      description: 'Repository configuration must be paired with post-deploy domain and revision checks.',
     },
   ]}
 />

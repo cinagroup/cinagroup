@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google Unveils Gemini 3.5 and Agentic Era at I/O 2026, Meta Shifts 7,000 Workers Into AI Amid 8,000 Layoffs, Anthropic Challenges Pentagon Blacklisting — AI News Briefing"
 description: "Google I/O 2026 ushers in the agentic AI era with Gemini 3.5 and AI-powered Search. Meta cuts 8,000 jobs while moving 7,000 employees into AI roles. Anthropic faces off against the Pentagon in court over a controversial blacklisting. Plus: Co-Scientist multi-agent research system, AI passes the Turing Test, and Alexa+ generates on-demand podcasts."
 publishDate: 2026-05-20T10:00:00.000Z

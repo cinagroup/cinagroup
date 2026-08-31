@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Musk v. Altman Trial Delivers Damning Testimony, Anthropic Targets Small Business with Claude AI, OpenAI Backs Kids Safety Act — AI News Briefing"
 description: "The Musk v. Altman trial delivers explosive courtroom moments — including a 'jackass trophy' as evidence and testimony that Musk wanted to 'race toward AGI' unsafely. Anthropic launches Claude for Small Business with agentic workflows across QuickBooks, PayPal, and HubSpot. OpenAI publicly endorses the Kids Online Safety Act."
 publishDate: 2026-05-13T22:00:00.000Z

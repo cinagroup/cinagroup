@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic's California Deal, Gemini Interactions API, Claude Lands on Azure — AI News Briefing"
 description: "Anthropic secures landmark California government partnership, Google unveils the Interactions API as the primary interface for Gemini agents, and Claude becomes generally available in Microsoft Foundry. Plus: the White House greenlights Anthropic's cyber-capable model, Amazon shops for AI alternatives, and bots officially outnumber humans online."
 publishDate: 2026-06-30T10:00:00.000Z

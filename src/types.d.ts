@@ -1,6 +1,13 @@
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import type { HTMLAttributes, ImageMetadata } from 'astro/types';
 import type { Lang } from './i18n';
+import type {
+  PostAuthorType,
+  PostLanguage,
+  PostOrigin,
+  PostStatus,
+  PostVerificationStatus,
+} from './utils/blog-content.js';
 
 declare global {
   interface Window {
@@ -51,12 +58,37 @@ export interface Post {
   tags?: Taxonomy[];
   /**  */
   author?: string;
+  /** Schema.org author identity type. */
+  authorType: PostAuthorType;
+  /** Optional canonical profile or organization URL. */
+  authorUrl?: string;
+  /** The primary language of the article content. */
+  language: PostLanguage;
+
+  /** Editorial lifecycle. Only `published` entries appear in public collections. */
+  status: PostStatus;
+  /** How the content entered the repository. */
+  origin?: PostOrigin;
+  /** Reviewable citations supplied in frontmatter. */
+  sources?: Array<PostSource | string>;
+  /** Verification record supplied in frontmatter. */
+  verification?: PostVerification;
+  review?: PostReview;
+  correction?: PostCorrection;
+  reviewedBy?: string;
+  reviewedAt?: Date;
+  correctionNote?: string;
+  aliases?: string[];
 
   /**  */
   metadata?: MetaData;
 
   /**  */
   draft?: boolean;
+  /** Legacy compatibility flag; archived records may retain a noindex detail route. */
+  archived?: boolean;
+  /** Legacy compatibility flag; it never authorizes publication without `status: published`. */
+  published?: boolean;
 
   /**  */
   Content?: AstroComponentFactory;
@@ -64,6 +96,34 @@ export interface Post {
 
   /**  */
   readingTime?: number;
+}
+
+export interface PostSource {
+  title: string;
+  url: string;
+  kind?: 'primary' | 'secondary' | 'press_release' | 'dataset' | 'other';
+  publisher?: string;
+  publishedAt?: Date;
+  accessedAt?: Date;
+}
+
+export interface PostVerification {
+  status: PostVerificationStatus;
+  verifiedBy?: string;
+  verifiedAt?: Date;
+  note?: string;
+}
+
+export interface PostReview {
+  status?: 'pending' | 'changes_requested' | 'approved';
+  reviewedBy?: string;
+  reviewedAt?: Date;
+  note?: string;
+}
+
+export interface PostCorrection {
+  note: string;
+  correctedAt?: Date;
 }
 
 export interface Taxonomy {
@@ -76,6 +136,7 @@ export interface MetaData {
   ignoreTitleTemplate?: boolean;
 
   canonical?: string;
+  omitCanonical?: boolean;
 
   robots?: MetaDataRobots;
 
@@ -87,6 +148,8 @@ export interface MetaData {
 
   // Structured data for rich snippets (Schema.org JSON-LD)
   structuredData?: Record<string, unknown>;
+  /** Overrides the URL-derived document language for content such as blog posts. */
+  language?: PostLanguage | Lang;
 }
 
 export interface MetaDataRobots {

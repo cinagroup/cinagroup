@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Cognition Raises $1B, Meta Launches Subscriptions, Snowflake Signs $6B AWS Deal — AI News Briefing"
 description: "AI coding startup Cognition hits $25B valuation with a $1B raise, Meta rolls out paid subscriptions across Instagram, Facebook, and WhatsApp, Snowflake secures a $6B AWS chip deal, Robinhood opens AI agent trading, YouTube auto-labels AI videos, and DuckDuckGo surges 30% amid Google Search backlash."
 publishDate: 2026-05-27T22:00:00.000Z

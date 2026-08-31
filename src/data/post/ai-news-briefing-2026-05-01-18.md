@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Shai-Hulud Malware Compromises PyTorch Lightning · Claude Code Blocks 'OpenClaw' Commits · Musk v. Altman Trial Enters Second Week"
 description: "AI digest covering 2026-04-30 06:00 to 2026-05-01 18:00"
 publishDate: 2026-05-01T10:00:00.000Z

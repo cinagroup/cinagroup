@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "GPT-5.6 Launches, Anthropic Mythos Standoff, OpenAI Jalapeño Chip — AI News Briefing"
 description: "OpenAI launches GPT-5.6 under Trump administration oversight while Anthropic's Mythos models remain locked in a 14-day regulatory standoff. Plus: OpenAI's first AI processor, Claude Tag joins Slack, and Hollywood stars back a new AI consent standard."
 publishDate: 2026-06-26T22:00:00.000Z

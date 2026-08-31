@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "China's Kimi K3 Stuns Silicon Valley, Xi Pitches Global AI Order — AI News Briefing"
 description: "China's Moonshot AI unveils Kimi K3, an open-weight model rivaling OpenAI and Anthropic, as Xi Jinping calls for a multipolar AI world. Meta bets on custom chips, OpenAI's $39B loss leaks ahead of IPO, and Australia becomes the first nation to put environmental brakes on AI data centers."
 publishDate: 2026-07-17T10:00:00.000Z

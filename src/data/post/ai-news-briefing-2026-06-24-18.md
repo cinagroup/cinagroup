@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Five Eyes AI Warning, NSA-Anthropic Dispute, Claude Tag Launch — AI News Briefing"
 description: "Five Eyes intelligence agencies warn that devastating AI attacks are months away, the NSA loses access to a powerful Anthropic model, and Anthropic launches Claude Tag for Slack as enterprise AI adoption accelerates."
 publishDate: 2026-06-24T10:00:00.000Z

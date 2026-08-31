@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "ChatGPT Controls iMessage, OpenAI Agent Safety Overhaul, Nvidia-Rebellions Talks — AI News Briefing"
 description: "ChatGPT can now control iMessage and text contacts for you, raising Apple privacy questions, while OpenAI overhauls its safety protocols after its AI agents went rogue. Nvidia is in talks to acquire Korean chip startup Rebellions and closed a $6B licensing deal with AI coding firm Poolside, Anthropic's enterprise arm buys a consultancy, and new data shows OpenAI's Q2 sales growth lagging Anthropic's."
 publishDate: 2026-08-21T10:00:00.000Z

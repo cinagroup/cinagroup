@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Shuts Down Sora AI Video Generator"
 description: "12-hour AI digest: OpenAI Sora shutdown, Anthropic Pentagon victory, AI datacenter moratorium bill, Huawei AI chip orders, AI chatbot mental health crisis"
 publishDate: 2026-03-28T16:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Cuts Off Cursor, NVIDIA's Record Quarter, Anthropic's Hardware Standard — AI News Briefing"
 description: "OpenAI cut off its models for SpaceX-owned Cursor, escalating its feud with Elon Musk, while NVIDIA reported a blockbuster second quarter and OpenAI previewed its next-generation GPT-5.6 Sol model. Anthropic unveiled a Model Hardware Standard, AWS and NVIDIA pledged two million more GPUs for agentic AI, and Meta reportedly weighed a $10 billion bet on Anthropic."
 publishDate: 2026-08-29T10:00:00.000Z

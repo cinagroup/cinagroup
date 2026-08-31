@@ -29,7 +29,7 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <section class="cg-blog-index">
+  <section class="cg-blog-index" data-blog-collection="tag">
     <Headline>Tag: {tag.title}</Headline>
     <BlogList posts={page.data} />
     <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />

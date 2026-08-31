@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Claude Code CLI Architecture · 35K+ Lines Code Analysis"
 description: "12-hour AI digest: Claude Code CLI architecture deep dive - 35K+ lines production code analysis"
 publishDate: 2026-04-02T10:00:00.000Z

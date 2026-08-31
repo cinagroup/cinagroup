@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Pledges $250M for Displaced Workers, Microsoft Revises Partnership, Meta's Manus Deal Blocked — AI News Briefing"
 description: "OpenAI Foundation commits $250 million to cushion AI's economic disruption, Microsoft renegotiates its OpenAI partnership terms, China blocks Meta's $2B Manus acquisition, Anthropic expands compute deals with Google and Broadcom, Google unveils new AI chips challenging NVIDIA, and Meta faces controversy over employee surveillance for AI training."
 publishDate: 2026-05-28T10:00:00.000Z

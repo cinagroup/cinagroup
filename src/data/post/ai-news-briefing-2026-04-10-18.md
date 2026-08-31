@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Microsoft Autogen Adds Human-in-the-Loop Agent Coordination · OpenAI Releases GPT-4.5 Turbo with 200K Context Window · U"
 description: "AI digest covering 2026-04-10 06:00 to 2026-04-10 18:00"
 publishDate: 2026-04-10T10:00:00.000Z

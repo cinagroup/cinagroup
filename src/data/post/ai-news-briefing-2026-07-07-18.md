@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic's $19B Deal, OpenAI's Sovereign Wealth Proposal, Zuckerberg on AI Agents — AI News Briefing"
 description: "Anthropic locks in a record $19 billion infrastructure lease with TeraWulf, OpenAI floats a 5% equity stake for a US sovereign wealth fund, Mark Zuckerberg admits AI agents are behind schedule, and Illinois passes the nation's first sweeping AI safety law. Plus: Microsoft spins up a $2.5B AI deployment company and Anthropic sets its sights on drug discovery."
 publishDate: 2026-07-07T10:00:00.000Z

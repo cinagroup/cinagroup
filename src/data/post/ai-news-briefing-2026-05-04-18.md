@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — May 4, 2026 (PM): VS Code's Controversial Copilot Default, Chinese Models Top Coding Benchmarks, and California Tickets Driverless Cars"
 description: "Microsoft enables 'Co-Authored-by Copilot' in VS Code by default, sparking developer backlash; Kimi K2.6 and MiMo V2-Pro beat Western models in AI coding contest; California DMV announces first-in-nation rules to ticket autonomous vehicles; AI hiring tools show 67–82% self-preference bias against human resumes."
 publishDate: 2026-05-04T10:00:00.000Z

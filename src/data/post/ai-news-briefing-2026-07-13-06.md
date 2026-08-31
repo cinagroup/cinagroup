@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI GPT-5.6, Apple v. OpenAI, Meta AI Backlash — AI News Briefing"
 description: "OpenAI launches the GPT-5.6 model family as Apple files a trade-secret lawsuit. Meta pulls its AI image tool after a privacy firestorm, protesters gather at AI offices in San Francisco, and an AI agent startup closes a $100M round run entirely by its own agent."
 publishDate: 2026-07-12T22:00:00.000Z

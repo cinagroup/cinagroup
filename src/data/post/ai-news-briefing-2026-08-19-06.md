@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Cursor Origin, OpenAI's Post-Breach Safeguards, Etched Hits $21B — AI News Briefing"
 description: "Cursor launches Origin, a GitHub rival built for the AI coding era, while OpenAI tightens security after the Hugging Face breach. Etched's valuation doubles to $21B in a month, Groq raises $350M for its neocloud pivot, and Relay's team lands at Google's Chrome group — as Amazon faces backlash for destroying rare books to train AI."
 publishDate: 2026-08-18T22:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 19, 2026 (06:00 CST)
 
 ## Top 7 Stories
 

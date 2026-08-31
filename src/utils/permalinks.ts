@@ -15,6 +15,11 @@ const createPath = (...params: string[]) => {
 
 const BASE_PATHNAME = SITE.base || '/';
 
+const splitPathSuffix = (value: string): [string, string] => {
+  const suffixIndex = value.search(/[?#]/);
+  return suffixIndex === -1 ? [value, ''] : [value.slice(0, suffixIndex), value.slice(suffixIndex)];
+};
+
 export const cleanSlug = (text = '') =>
   trimSlash(text)
     .split('/')
@@ -29,28 +34,24 @@ export const POST_PERMALINK_PATTERN = trimSlash(APP_BLOG?.post?.permalink || `${
 
 /** */
 export const getCanonical = (path = ''): string | URL => {
-  const url = String(new URL(path, SITE.site));
-  if (SITE.trailingSlash == false && path && url.endsWith('/')) {
-    return url.slice(0, -1);
-  } else if (SITE.trailingSlash == true && path && !url.endsWith('/')) {
-    return url + '/';
+  const url = new URL(path, SITE.site);
+  if (SITE.trailingSlash === false && path && url.pathname !== '/') {
+    url.pathname = url.pathname.replace(/\/+$/, '');
+  } else if (SITE.trailingSlash === true && path && !url.pathname.endsWith('/')) {
+    url.pathname += '/';
   }
-  return url;
+  return String(url);
 };
 
 /** */
 export const getPermalink = (slug = '', type = 'page'): string => {
   let permalink: string;
 
-  if (
-    slug.startsWith('https://') ||
-    slug.startsWith('http://') ||
-    slug.startsWith('://') ||
-    slug.startsWith('#') ||
-    slug.startsWith('javascript:')
-  ) {
+  if (slug.startsWith('//') || slug.startsWith('#') || /^[a-z][a-z\d+.-]*:/i.test(slug)) {
     return slug;
   }
+
+  const [pathname, suffix] = splitPathSuffix(slug);
 
   switch (type) {
     case 'home':
@@ -62,28 +63,27 @@ export const getPermalink = (slug = '', type = 'page'): string => {
       break;
 
     case 'asset':
-      permalink = getAsset(slug);
-      break;
+      return getAsset(pathname) + suffix;
 
     case 'category':
-      permalink = createPath(CATEGORY_BASE, trimSlash(slug));
+      permalink = createPath(CATEGORY_BASE, trimSlash(pathname));
       break;
 
     case 'tag':
-      permalink = createPath(TAG_BASE, trimSlash(slug));
+      permalink = createPath(TAG_BASE, trimSlash(pathname));
       break;
 
     case 'post':
-      permalink = createPath(trimSlash(slug));
+      permalink = createPath(trimSlash(pathname));
       break;
 
     case 'page':
     default:
-      permalink = createPath(slug);
+      permalink = createPath(pathname);
       break;
   }
 
-  return definitivePermalink(permalink);
+  return definitivePermalink(permalink) + suffix;
 };
 
 /** */

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google Launches Googlebook AI Laptops, Gallup Explores AI-Simulated Polling, AI Psychosis Cases Surge — AI News Briefing"
 description: "Google unveils Googlebook — a new AI-native laptop category with Magic Pointer — as Gallup partners with Simile on synthetic survey responses, Princeton abandons its 133-year honor code over AI cheating, and a growing number of ChatGPT users experience AI-induced delusions."
 publishDate: 2026-05-13T10:00:00.000Z

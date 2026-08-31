@@ -5,25 +5,28 @@ CinaGroup 官方网站，基于 [Astro](https://astro.build) 5 + [Tailwind CSS](
 ## 🌐 访问地址
 
 - **生产环境**: https://cinagroup.com
-- **预览环境**: https://homepage.pages.dev
+- **Cloudflare Pages**: https://homepage-cj7.pages.dev
 
 ## 🏢 产品线
 
-| 产品          | 描述                     |
-| ------------- | ------------------------ |
-| **CinaSeek**  | AI 驱动的企业搜索        |
-| **CinaClaw**  | 24/7 AI 智能助手         |
-| **CinaSkill** | 机器人技能创建与分享平台 |
-| **CinaToken** | 统一 AI API 网关         |
-| **CinaChain** | 高性能 Web3 基础设施     |
+| 产品          | 当前可验证的公开范围                   |
+| ------------- | -------------------------------------- |
+| **CinaSeek**  | 早期访问的智能体工作区与隔离式小应用   |
+| **CinaClaw**  | 开源、本地优先的 Gateway、CLI 与工作区 |
+| **CinaSkill** | CinaClaw 使用的 `SKILL.md` 能力格式    |
+| **CinaToken** | 开源、可自托管的统一模型网关           |
+| **CinaChain** | Base Sepolia 测试网 NFT DApp（Beta）   |
 
 ## 🚀 部署
 
-通过 Cloudflare Pages 自动部署，push 到 main 分支后由 Cloudflare 连接的仓库构建发布。
+唯一受支持的生产部署链是 [GitHub Actions](./.github/workflows/deploy.yml)：PR 只执行检查，只有 push 到
+`main` 才会在所有检查、测试、构建和审计通过后发布到 Cloudflare Pages 项目 `cinagroup`。Cloudflare
+Dashboard 的 Pages Git Integration 必须保持断开，否则同一个 commit 会触发重复部署。完整运维说明见
+[docs/deployment.md](./docs/deployment.md)。
 
 ```bash
 # 本地开发
-npm install
+npm ci
 npm run dev
 ```
 
@@ -39,13 +42,10 @@ src/
 └── config.yaml    # 站点配置
 ```
 
-## ⚠️ 待办
+## 🔎 公开证据
 
-- [ ] 替换客户评价为真实数据
-- [ ] 更新首页统计数据（活跃用户、API 调用量等）
-- [ ] 配置 Google Analytics
-- [ ] 替换 Hero 图片和头像
-- [ ] 补充各产品子页面
+[`/work/`](https://cinagroup.com/work/) 说明公开证据的分层和案例发布标准。当前没有获准公开的客户案例；
+网站不会用虚构客户、第三方 logo、匿名评价或缺少方法说明的指标代替真实证据。
 
 ---
 

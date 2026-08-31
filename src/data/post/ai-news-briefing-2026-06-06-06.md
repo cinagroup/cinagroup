@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Calls for AI Pause, OpenAI Token Cost Crisis, Meta's Muse Spark — AI News Briefing"
 description: "Anthropic urges industry coordination for an AI development 'pause' if risks escalate. OpenAI's Sam Altman acknowledges token costs as a 'huge issue.' Meta unveils Muse Spark AI model as Nvidia launches AI-agent PCs. A federal AI bill proposes three-year state preemption."
 publishDate: 2026-06-05T22:00:00.000Z

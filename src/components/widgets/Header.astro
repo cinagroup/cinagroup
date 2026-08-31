@@ -5,9 +5,8 @@ import ToggleTheme from '~/components/common/ToggleTheme.astro';
 import ToggleMenu from '~/components/common/ToggleMenu.astro';
 import Button from '~/components/ui/Button.astro';
 
-import { trimSlash } from '~/utils/permalinks';
 import type { CallToAction } from '~/types';
-import { changeLangPath, getLangFromUrl, getLocalizedLabel, languages, type Lang } from '~/i18n';
+import { changeLangPath, getLangFromUrl, getLocalizedLabel, languages, localizeInternalHref, type Lang } from '~/i18n';
 
 interface Link {
   text?: string;
@@ -45,44 +44,22 @@ const {
   position = 'center',
 } = Astro.props;
 
-const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
+const currentPath = Astro.url.pathname === '/' ? '/' : `${Astro.url.pathname.replace(/\/+$/, '')}/`;
 const currentLang = getLangFromUrl(Astro.url);
 
-const localizedPagePaths = new Set([
-  '/',
-  '/cinaseek',
-  '/cinaclaw',
-  '/cinatoken',
-  '/cinaskill',
-  '/cinachain',
-  '/contact',
-  '/pricing',
-  '/services',
-]);
+const languageOptions = Object.entries(languages).map(([lang, label]) => {
+  const targetLang = lang as Lang;
 
-const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
-if (pathSegments[0] in languages) pathSegments.shift();
-const pathWithoutLocale = pathSegments.length ? `/${pathSegments.join('/')}` : '/';
-
-const switcherUrl = new URL(Astro.url);
-if (!localizedPagePaths.has(pathWithoutLocale)) switcherUrl.pathname = '/';
-
-const languageOptions = Object.entries(languages).map(([lang, label]) => ({
-  lang: lang as Lang,
-  label,
-  href: changeLangPath(switcherUrl, lang as Lang),
-}));
+  return {
+    lang: targetLang,
+    label,
+    href: changeLangPath(Astro.url, targetLang),
+  };
+});
 
 const homeHref = changeLangPath(new URL('/', Astro.url), currentLang);
 
-const localizeHeaderHref = (href?: string) => {
-  if (!href || currentLang === 'en' || !href.startsWith('/') || href.startsWith('//')) return href;
-
-  const [path, hash = ''] = href.split('#');
-  if (!localizedPagePaths.has(path || '/')) return href;
-
-  return `/${currentLang}${path === '/' ? '' : path}${hash ? `#${hash}` : ''}`;
-};
+const localizeHeaderHref = (href?: string) => localizeInternalHref(href, currentLang);
 ---
 
 <header
@@ -170,7 +147,7 @@ const localizeHeaderHref = (href?: string) => {
                 <a
                   class:list={[
                     'hover:text-link dark:hover:text-white px-4 py-3 flex items-center whitespace-nowrap',
-                    { 'aw-link-active': href === currentPath },
+                    { 'aw-link-active': localizeHeaderHref(href) === currentPath },
                   ]}
                   href={localizeHeaderHref(href)}
                 >

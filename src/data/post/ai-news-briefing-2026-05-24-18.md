@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Big Tech Reshapes Trump's AI Order, Zoom Scores $1B on Anthropic Bet, DeepSeek Slashes Prices — AI News Briefing"
 description: "Trump signs a heavily industry-favored AI executive order after big tech lobbying. Zoom's Anthropic investment pays off with a $1 billion windfall. DeepSeek announces a permanent 75% price cut on its V4-Pro model. Plus: Nvidia's Jensen Huang signals a major pivot, Meta reshuffles 7,000 staff into AI, and Apple prepares a Gen AI website ahead of WWDC."
 publishDate: 2026-05-24T10:00:00.000Z

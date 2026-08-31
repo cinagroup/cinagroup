@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Noam Shazeer Joins OpenAI, Google-Microsoft Alliance, G7 AI Coalition — AI News Briefing"
 description: "Transformer co-creator Noam Shazeer leaves Google DeepMind for OpenAI in a major talent coup. Google and Microsoft form a strategic alliance to counter OpenAI and Anthropic. AI CEOs push for a U.S.-led global AI coalition at the G7 summit."
 publishDate: 2026-06-18T22:00:00.000Z

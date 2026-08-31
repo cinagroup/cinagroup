@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Apple Sues OpenAI, Meta's AI Pivot, SpaceX's $6.3B AI Deal — AI News Briefing"
 description: "This week in AI: Apple files a trade secrets lawsuit against OpenAI, Meta unveils a dramatic new AI strategy while reining in a controversial Instagram tool, SpaceX inks a $6.3 billion compute deal with AI startup Reflection, and protesters march on SF tech HQs demanding an end to the AI race."
 publishDate: 2026-07-12T10:00:00.000Z

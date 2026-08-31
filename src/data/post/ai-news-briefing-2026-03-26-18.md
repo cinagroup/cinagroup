@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Shuts Down Sora · Google Personal Intelligence · iOS 26.4"
 description: "12-hour AI digest: OpenAI shuts down Sora, Google expands Personal Intelligence, iOS 26.4 released"
 publishDate: 2026-03-26T10:00:00.000Z

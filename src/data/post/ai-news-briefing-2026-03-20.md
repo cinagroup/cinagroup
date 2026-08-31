@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "GPT-5 Rumors · Stable Diffusion 3.5 · Chinese AI Funding Record"
 description: "12-hour AI digest: GPT-5 rumors resurface, Stable Diffusion 3.5 released, Chinese AI startup funding hits record"
 publishDate: 2026-03-20T18:00:00.000Z

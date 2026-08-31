@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "$7T AI Infrastructure Check · Meta Open-Source · Oracle 30K Layoffs"
 description: "12-hour AI digest: AI infrastructure reality check, Meta open-source plans, Oracle layoffs"
 publishDate: 2026-04-07T10:00:00.000Z

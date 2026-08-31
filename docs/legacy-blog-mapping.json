@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "policy": "read_only_inventory",
+  "legacyRoot": "blog/",
+  "collectionRoot": "src/data/post/",
+  "summary": {
+    "total": 21,
+    "counterpartPresent": 15,
+    "uniqueLegacy": 6
+  },
+  "records": [
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-21.md",
+      "legacySha256": "e02f79d1fc0fa1ac270fff154f1d2975e50d488b3606575dc9229915571f4b04",
+      "slug": "ai-news-briefing-2026-03-21",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-21/",
+      "collectionPath": null,
+      "collectionSha256": null,
+      "relationship": "no_collection_counterpart",
+      "recommendedAction": "Preserve for provenance review; do not import or publish until sources and ownership are verified."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-22.md",
+      "legacySha256": "1a7a235e68db0be310bb81b6897bc196d92612bbbe4e06f764288b222918fda5",
+      "slug": "ai-news-briefing-2026-03-22",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-22/",
+      "collectionPath": null,
+      "collectionSha256": null,
+      "relationship": "no_collection_counterpart",
+      "recommendedAction": "Preserve for provenance review; do not import or publish until sources and ownership are verified."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-23-18.md",
+      "legacySha256": "dd177646d673a28c31d6ca93b66853b5d6a936cea455b3c6ee641d44137d18be",
+      "slug": "ai-news-briefing-2026-03-23-18",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-23-18/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-03-23-18.md",
+      "collectionSha256": "38add3cf2d15ebb97e0a062e4300ec4c89a59c93dc6d3e7e7e73cdc39bf91b9b",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-23.md",
+      "legacySha256": "9d1aeb130e46747eced25492551281735b4088660fad6ed54bd10e87b8b95c9a",
+      "slug": "ai-news-briefing-2026-03-23",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-23/",
+      "collectionPath": null,
+      "collectionSha256": null,
+      "relationship": "no_collection_counterpart",
+      "recommendedAction": "Preserve for provenance review; do not import or publish until sources and ownership are verified."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-27-12.md",
+      "legacySha256": "4141b00f26d6ec0868b4de0d51346d159a5c91d1e5ac62af4cfa56f1688816b3",
+      "slug": "ai-news-briefing-2026-03-27-12",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-27-12/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-03-27-12.md",
+      "collectionSha256": "9dc33df10298e80b5f1b0da51ee6d65f55e79505ad186d0ff6e72af9680f6015",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-28-00.md",
+      "legacySha256": "b5760bd1635f96bca3c4ce7f53a9e95c821884bc63ec3945f6e9b63bf8af15c8",
+      "slug": "ai-news-briefing-2026-03-28-00",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-28-00/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-03-28-00.md",
+      "collectionSha256": "d5d2cb236df565d17f99b8134956bd9a16b292824f969d462e60b5de45361d0c",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-28-06.md",
+      "legacySha256": "df78fcd2445f52c80ceba38429e6896cf6cbf751ba5f93eacc17cc7b323a1100",
+      "slug": "ai-news-briefing-2026-03-28-06",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-28-06/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-03-28-06.md",
+      "collectionSha256": "8149563c89bcce4ef561d45d8df497d19657127142adc5bd87349ed42ef56b20",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-28-12.md",
+      "legacySha256": "cbd020861c03fc043b3f069842e5bb8eaa7f407c881bff20dffc6e75269b9a36",
+      "slug": "ai-news-briefing-2026-03-28-12",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-28-12/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-03-28-12.md",
+      "collectionSha256": "aede8f460a7df4d196893a9f633fef1bd1eb97efc1fff8b94c66aef702b6b90a",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-28-18.md",
+      "legacySha256": "2b0c0254b18cb083630955a89662ed20b3cd6fbba5d79ea7e13c3f0ef0b99491",
+      "slug": "ai-news-briefing-2026-03-28-18",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-28-18/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-03-28-18.md",
+      "collectionSha256": "db8d64469b1e69b89048464de0b97df8aece3b8d68070ec65154dd5fd684f6d3",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-29-00.md",
+      "legacySha256": "2959ca8d6124487ad66daf4e785f082390304242e15bdb883c138aee538f055d",
+      "slug": "ai-news-briefing-2026-03-29-00",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-29-00/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-03-29-00.md",
+      "collectionSha256": "2a857374f5e922a9cfea4b974ad083dafb03e1d6daac3f86a831814221f7c7e1",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-29-06.md",
+      "legacySha256": "05b80d1e3588c8ca15108ea6f3d6fc40595b80dfd0cd82042dc034f2c18fc1e0",
+      "slug": "ai-news-briefing-2026-03-29-06",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-29-06/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-03-29-06.md",
+      "collectionSha256": "fa69de62e6a2330f1ebcd357d0e907ecf3c696c4a763ac219ce4ad840acebad4",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-29-12.md",
+      "legacySha256": "6fe7bba8237fc090978deb355471021d4d064c4faa568d52d9a84be7bc8b0769",
+      "slug": "ai-news-briefing-2026-03-29-12",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-29-12/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-03-29-12.md",
+      "collectionSha256": "df8522f337b1f645d18d5aa0f115721c79bfc587c6b6540a364b935b5866e998",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-29-evening.md",
+      "legacySha256": "716452934d9661f45c35940a43dde11689f15382b83a39de57f352aff014a485",
+      "slug": "ai-news-briefing-2026-03-29-evening",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-29-evening/",
+      "collectionPath": null,
+      "collectionSha256": null,
+      "relationship": "no_collection_counterpart",
+      "recommendedAction": "Preserve for provenance review; do not import or publish until sources and ownership are verified."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-03-31-00.md",
+      "legacySha256": "b915ff17916389ad9e16cb42122ba480ce17ebc1e6760b269936c9a9b0e2a42a",
+      "slug": "ai-news-briefing-2026-03-31-00",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-03-31-00/",
+      "collectionPath": null,
+      "collectionSha256": null,
+      "relationship": "no_collection_counterpart",
+      "recommendedAction": "Preserve for provenance review; do not import or publish until sources and ownership are verified."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-04-01-00.md",
+      "legacySha256": "ddb1df7e76b5f3751630fe9bd40dc2c37856ee9c3284fd974e7d4425cfae6f0a",
+      "slug": "ai-news-briefing-2026-04-01-00",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-04-01-00/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-04-01-00.md",
+      "collectionSha256": "d86e0f4a5b425a4076f2014acb40934b28c663bd2b138f1fb17c60236a47c6a5",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-04-03-00.md",
+      "legacySha256": "fb7fe66f108ea7f2215b8d8a08935032ab53392fc2670d6e090b0761f986844c",
+      "slug": "ai-news-briefing-2026-04-03-00",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-04-03-00/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-04-03-00.md",
+      "collectionSha256": "a7e0964f5edfc82af56071330fa245c87bb52929bf4ca38009e0770c521beb3a",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-04-04-18.md",
+      "legacySha256": "0d9e84b6ccf3a168058a49a3de274898a6e8a6b3a0e9070b2fa6c401fe3b4865",
+      "slug": "ai-news-briefing-2026-04-04-18",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-04-04-18/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-04-04-18.md",
+      "collectionSha256": "0ad35cecd53f3b44f36f7e6aae6986df21bf85a1f9d2009fdb7ef83e1ecd1948",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-04-07-12.md",
+      "legacySha256": "2b0c0ce95b37e99b07e7139d2f748e6554e3002cfee2ddb9a904c775a9958636",
+      "slug": "ai-news-briefing-2026-04-07-12",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-04-07-12/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-04-07-12.md",
+      "collectionSha256": "5bb7d07deed28dce26136e7251cc09ee8f45a31b80e1652568cf1bb3d8f44ab9",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-04-07-18.md",
+      "legacySha256": "961b308306a0aa011e0b698b9dfed25f297260e239c08e068299cedf3c96ac79",
+      "slug": "ai-news-briefing-2026-04-07-18",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-04-07-18/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-04-07-18.md",
+      "collectionSha256": "ce053adf205af499dc6971a2325e8b6291ceae2cd4ba828b6f96fc17dcc82846",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/ai-news-briefing-2026-04-12-00.md",
+      "legacySha256": "55a73f8a8147374581bbed36fe1dce33514cd2a5604dfa5a2fc2516b2af14475",
+      "slug": "ai-news-briefing-2026-04-12-00",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-04-12-00/",
+      "collectionPath": "src/data/post/ai-news-briefing-2026-04-12-00.md",
+      "collectionSha256": "96feb7294466467ff6e480c1cc6192a2953ad176bec30d6bfbf121db6df221af",
+      "relationship": "counterpart_present_content_variant",
+      "recommendedAction": "Keep the legacy file outside the build; review provenance before declaring an alias or deleting either copy."
+    },
+    {
+      "legacyPath": "blog/src/data/post/ai-news-briefing-2026-04-15-00.md",
+      "legacySha256": "0bd768806ac6d72b57b63a6d9ecb9a2c17139f5fdba0b569f5decb8be822c012",
+      "slug": "ai-news-briefing-2026-04-15-00",
+      "candidateHistoricalUrl": "/blog/ai-news-briefing-2026-04-15-00/",
+      "collectionPath": null,
+      "collectionSha256": null,
+      "relationship": "no_collection_counterpart",
+      "recommendedAction": "Preserve for provenance review; do not import or publish until sources and ownership are verified."
+    }
+  ]
+}

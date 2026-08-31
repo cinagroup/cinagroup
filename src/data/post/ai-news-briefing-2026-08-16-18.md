@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Decart Deal, Qwen Hits 3B Downloads, Bio-Weapons Filter Outage — AI News Briefing"
 description: "Anthropic is closing in on a $7 billion investment in AI video startup Decart after beating Nvidia to the table, while a Reuters exclusive says its IPO valuation hinges on a $190-200 billion 2028 revenue forecast. Alibaba's Qwen surpassed 3 billion downloads to claim the open-source crown, Anthropic's bio-weapons filter was down for nearly a year exposing 133 million requests, and the US is telling partners they must pick sides in the AI race with China. Nvidia also scaled back its funding guarantee for the OpenAI Ohio data center as infrastructure financing math shifts."
 publishDate: 2026-08-16T10:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 16, 2026 (18:00 CST)
 
 ## Top 7 Stories
 

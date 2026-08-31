@@ -2,46 +2,84 @@
 import CinaProductPage from '~/components/CinaProductPage.astro';
 
 const metadata = {
-  title: 'CinaSkill — Package reusable capabilities for teams and assistants',
-  description: 'CinaSkill helps teams define, review, version, and reuse task-specific capabilities across products and workflows.',
+  title: 'CinaSkill — Reusable capability format for CinaClaw',
+  description:
+    'CinaSkill describes focused SKILL.md-based capabilities used with CinaClaw workspaces; it is not presented as a standalone hosted service.',
 };
 
-const code = `skill "support-handoff" {
-  input    = "reviewed-case"
-  action   = "prepare-handoff"
-  owner    = "support-lead"
-  version  = "1.0"
+const code = `skill "release-check" {
+  contract    = "SKILL.md"
+  permissions = "explicit"
+  resources   = ["runbook", "verification"]
+  version     = "visible"
 }`;
 ---
 
 <CinaProductPage
+  product="cinaskill"
   {metadata}
-  eyebrow="CinaSkill / reusable capabilities."
-  title="Package repeatable capabilities without hiding their boundaries."
-  lead="CinaSkill helps teams define, review, version, and reuse task-specific capabilities across products, assistants, and operational workflows."
-  primary={{ text: 'Plan a skill workflow', href: '/contact' }}
+  eyebrow="CinaSkill / integrated capability format."
+  title="Package focused instructions and resources for reuse in CinaClaw."
+  lead="CinaSkill is the SKILL.md-based capability format used by bundled, managed, and workspace skills in CinaClaw. It does not claim a separate hosted service or standalone release."
+  primary={{ text: 'Map a reusable capability', href: '/contact/' }}
   secondary={{ text: 'View the full stack', href: '/' }}
   capabilities={[
-    { label: 'Define.', title: 'Give each skill one clear job.', description: 'Document the inputs, action, output, and operating boundary before packaging the capability.' },
-    { label: 'Review.', title: 'Inspect behavior before reuse.', description: 'Make permissions, dependencies, and review points visible to the teams adopting the skill.' },
-    { label: 'Version.', title: 'Change capabilities deliberately.', description: 'Track compatible changes and preserve a stable contract for the workflows that depend on them.' },
-    { label: 'Compose.', title: 'Combine small skills into workflows.', description: 'Reuse focused capabilities across products without turning one skill into an opaque all-purpose agent.' },
-    { label: 'Own.', title: 'Keep responsibility visible.', description: 'Assign maintainers and support expectations so reusable capabilities do not become abandoned dependencies.' },
-    { label: 'Measure.', title: 'Learn from real workflow use.', description: 'Use adoption, failures, and review feedback to improve the skill where it matters.' },
+    {
+      label: 'Contract.',
+      title: 'Keep the entry point explicit.',
+      description: 'Use SKILL.md to describe when the capability applies, what it needs, and how it should operate.',
+    },
+    {
+      label: 'Scope.',
+      title: 'Focus on one repeatable job.',
+      description: 'Separate a useful capability from unrelated workflows, permissions, and tools.',
+    },
+    {
+      label: 'Resources.',
+      title: 'Attach only required support files.',
+      description: 'Reference runbooks, templates, scripts, or examples that the skill actually needs.',
+    },
+    {
+      label: 'Location.',
+      title: 'Load from documented skill sources.',
+      description: 'Use bundled, managed, or workspace skill directories according to the CinaClaw setup.',
+    },
+    {
+      label: 'Review.',
+      title: 'Make permissions inspectable.',
+      description: 'State the tools, external systems, and side effects the capability can require.',
+    },
+    {
+      label: 'Maintain.',
+      title: 'Keep loading order and version visible.',
+      description: 'Document the workspace location, version, and runtime or resource assumptions the capability carries.',
+    },
   ]}
-  workflowTitle="Move from a task boundary to a reusable capability."
-  workflowLead="A useful skill is small enough to understand, explicit enough to review, and stable enough to reuse."
+  workflowTitle="Move one recurring job into a reviewable skill contract."
+  workflowLead="A reference skill starts with a real task, narrows the required resources and permissions, and is tested inside its intended CinaClaw workspace."
   workflow={[
-    { title: 'Define the contract', description: 'Specify the inputs, output, permissions, and owner for one task.' },
-    { title: 'Test the behavior', description: 'Exercise representative cases and confirm the review and failure paths.' },
-    { title: 'Package and version', description: 'Publish the capability with a stable contract and clear compatibility notes.' },
-    { title: 'Adopt and observe', description: 'Use the skill in a real workflow and improve it from operator feedback.' },
+    {
+      title: 'Define the trigger',
+      description: 'Write the task and the conditions under which the skill should be selected.',
+    },
+    {
+      title: 'Specify the contract',
+      description: 'Describe required inputs, instructions, tools, resources, and expected output in SKILL.md.',
+    },
+    {
+      title: 'Test in one workspace',
+      description: 'Exercise the skill with representative inputs and review any tool or permission boundary.',
+    },
+    {
+      title: 'Version and maintain',
+      description: 'Keep compatibility, supporting resources, and workspace loading behavior clear as the workflow changes.',
+    },
   ]}
-  codeLabel="Skill contract."
+  codeLabel="Illustrative skill contract."
   {code}
   principles={[
-    { title: 'Small by design.', description: 'A skill should solve one task well and compose cleanly with other capabilities.' },
-    { title: 'Reviewable by default.', description: 'Permissions, dependencies, and expected behavior stay visible to adopters.' },
-    { title: 'Owned over time.', description: 'Versioning and maintenance responsibility are part of the product surface.' },
+    { title: 'One clear job.', description: 'A skill should remain small enough for its behavior and permissions to be reviewed.' },
+    { title: 'Explicit resources.', description: 'Supporting files and tools should be present because the task requires them.' },
+    { title: 'No standalone claim.', description: 'CinaSkill is described as a format integrated with CinaClaw, not an independent hosted product.' },
   ]}
 />

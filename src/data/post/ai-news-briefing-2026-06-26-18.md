@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "NVIDIA Vera CPU, SpaceX & OpenAI IPO Wave, Google 8th Gen TPU — AI News Briefing"
 description: "NVIDIA unveils the Vera CPU and NemoClaw agent toolkit at Computex 2026. The MANGOS era takes shape as SpaceX, OpenAI, and Anthropic eye blockbuster IPOs. Google counters with 8th gen TPUs and new AI agents, while Trump signs an executive order on AI model oversight and world leaders convene with AI CEOs at the G7."
 publishDate: 2026-06-26T10:00:00.000Z

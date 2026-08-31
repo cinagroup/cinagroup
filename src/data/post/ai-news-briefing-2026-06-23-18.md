@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Five Eyes AI Warning, Google Talent Exodus, Groq $650M Raise — AI News Briefing"
 description: "Five Eyes intelligence agencies issue rare warning that AI models capable of devastating attacks on governments and businesses are months away. Google loses top AI researchers to rivals as the talent war intensifies. AI chipmaker Groq confirms $650M raise following Nvidia's $20B not-acqui-hire deal, while OpenAI launches a new initiative to secure open source software."
 publishDate: 2026-06-23T10:00:00.000Z

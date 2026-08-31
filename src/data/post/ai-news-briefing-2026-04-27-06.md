@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "NVIDIA Unveils RTX 6000 Ada Successor · Anthropic Claude 4.8 Rumored · Meta AI Agents Enter Enterprise"
 description: "AI digest covering 2026-04-26 18:00 to 2026-04-27 06:00"
 publishDate: 2026-04-26T22:00:00.000Z

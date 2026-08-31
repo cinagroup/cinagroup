@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — May 10, 2026 (18:00 CST)"
 description: "Cloudflare cuts 1,100 jobs as AI demand surges 600%; Musk v. Altman trial enters week two; Meta staff morale hits new lows amid AI mandates; Gemini API gets multimodal file search; Mozilla discloses 271 Firefox bugs found by Claude."
 publishDate: 2026-05-10T10:00:00.000Z

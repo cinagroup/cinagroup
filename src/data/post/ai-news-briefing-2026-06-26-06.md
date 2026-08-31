@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Delays IPO, Anthropic-Alibaba Clash, NVIDIA Halos — AI News Briefing"
 description: "OpenAI pushes IPO to 2027 while unveiling its first custom chip with Broadcom. Anthropic accuses Alibaba of massive AI distillation attack using 25,000 fake accounts. Google delays Gemini 3.5 Pro as California launches AI workforce monitoring."
 publishDate: 2026-06-25T22:00:00.000Z

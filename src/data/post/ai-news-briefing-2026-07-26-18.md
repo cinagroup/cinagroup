@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Hugging Face CEO Demands OpenAI Logs, Open-Weights Coalition Grows, AI Kill Switch Bill — AI News Briefing"
 description: "Hugging Face's CEO publicly demands OpenAI release rogue model logs and commit $100M to open-source safety. The open-weights coalition doubles to 50 signatories while Amazon and Anthropic remain holdouts. Lawmakers draft an AI 'kill switch' bill as Uber slashes 10% of customer service jobs to AI."
 publishDate: 2026-07-26T10:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Elon Musk Loses $150B OpenAI Lawsuit, Pope Leo Publishes 'Magnifica Humanitas,' Anthropic Launches $1.5B AI Services Venture — AI News Briefing"
 description: "A federal jury dismisses Elon Musk's $150 billion lawsuit against OpenAI, clearing the path for its IPO. Pope Leo XIV publishes his first encyclical 'Magnifica humanitas' on AI and human dignity. Anthropic launches a $1.5 billion enterprise AI services company with Blackstone and Goldman Sachs. Plus: OpenAI unveils its Deployment Company, AI reshapes consulting pricing models, and Singapore's economy surges 6% on AI chip demand."
 publishDate: 2026-05-25T10:00:00.000Z

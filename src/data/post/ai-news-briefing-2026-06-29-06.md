@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "DeepMind Exodus, Claude Tag Launches, OpenAI Splits With White House — AI News Briefing"
 description: "Billions wiped off Alphabet as top AI scientists defect to rivals; Anthropic launches Claude Tag, a persistent AI teammate in Slack; OpenAI diverges from White House on AI safety rules; Nvidia posts record $58.3B profit and $40B in AI equity bets."
 publishDate: 2026-06-28T22:00:00.000Z

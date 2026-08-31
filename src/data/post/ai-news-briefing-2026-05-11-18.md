@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — Sony and TSMC Form AI Image Sensor JV, xAI Rebrands as SpaceXAI, Golden Globes Set AI Acting Rules"
 description: "Sony-TSMC joint venture targets physical AI in robotics; xAI absorbs X branding; Golden Globes allow AI cosmetic enhancements for acting awards; Perplexity distanced from social media clipping campaigns; local AI gains momentum on HN; actors exploited by AI deepfake ads; Digg relaunches as AI news tracker."
 publishDate: 2026-05-11T10:00:00.000Z

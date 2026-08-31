@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "LangChain Ecosystem Reaches 5 Million Weekly Downloads · Perplexity AI Launches Enterprise Knowledge Assistant · Cerebra"
 description: "AI digest covering 2026-04-21 18:00 to 2026-04-22 06:00"
 publishDate: 2026-04-21T22:00:00.000Z

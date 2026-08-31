@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic GitHub Incident · Cognichip $60M · Baidu Robotaxi"
 description: "12-hour AI digest: Anthropic GitHub incident, Cognichip $60M raise, Baidu robotaxi failure"
 publishDate: 2026-04-02T04:00:00.000Z

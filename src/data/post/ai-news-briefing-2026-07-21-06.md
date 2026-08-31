@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI Safety Chief Resigns, Meta-Anthropic $10B Deal, Google's 'Frozen' Chip — AI News Briefing"
 description: "The head of the US AI safety agency resigns after just three months. Meta and Anthropic discuss a landmark $10 billion compute deal. Alphabet's Google is developing a new 'Frozen' chip for radically more efficient AI inference — and more in today's roundup."
 publishDate: 2026-07-20T22:00:00.000Z

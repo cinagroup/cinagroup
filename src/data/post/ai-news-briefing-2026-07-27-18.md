@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Nvidia-OpenAI $250B Deal, Anthropic Claude Opus 5, China's Kimi K3 Goes Open-Weight — AI News Briefing"
 description: "Nvidia is in talks to guarantee $250 billion in financing for OpenAI's massive data center buildout, deepening the two companies' intertwined fates. Anthropic releases Claude Opus 5, its most efficient flagship model yet, as China's Moonshot AI prepares to open-weight the Kimi K3 model. Alphabet's quarterly AI spend hits $45 billion with no signs of slowing."
 publishDate: 2026-07-27T10:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "1,100 AI Workers Demand Global Pacing, Nvidia Forms Security Alliance, Altman Declares Singularity — AI News Briefing"
 description: "Over 1,100 employees from OpenAI, Anthropic, Meta, and Google call for a global effort to pace AI development. Nvidia launches a 37-member Open Secure AI Alliance notably excluding the three frontier labs. Sam Altman claims the AI singularity has arrived as Silicon Valley fractures over open-weight models and China narrows the gap."
 publishDate: 2026-07-29T10:00:00.000Z

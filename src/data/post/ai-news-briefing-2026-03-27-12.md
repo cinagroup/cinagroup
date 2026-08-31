@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Shuts Down Sora · Disney Exits $1B Partnership"
 description: "12-hour AI digest: OpenAI shuts down Sora, NSF AI-Ready initiative, White House pushes federal AI law, MIT social AI for teens"
 publishDate: 2026-03-27T04:00:00.000Z

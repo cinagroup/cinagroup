@@ -1,0 +1,42 @@
+---
+export interface Props {
+  budget: string;
+  timeline: string;
+  included: string;
+  excluded: string;
+  labels?: {
+    budget: string;
+    timeline: string;
+    included: string;
+    excluded: string;
+  };
+}
+
+const {
+  budget,
+  timeline,
+  included,
+  excluded,
+  labels = {
+    budget: 'Planning range',
+    timeline: 'Typical timeline',
+    included: 'Included',
+    excluded: 'Not included',
+  },
+} = Astro.props;
+---
+
+<div class="cg-price-disclosure">
+  <dl>
+    <div>
+      <dt>{labels.budget}</dt>
+      <dd>{budget}</dd>
+    </div>
+    <div>
+      <dt>{labels.timeline}</dt>
+      <dd>{timeline}</dd>
+    </div>
+  </dl>
+  <p><strong>{labels.included}:</strong> {included}</p>
+  <p><strong>{labels.excluded}:</strong> {excluded}</p>
+</div>

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "White House AI Summit, OpenAI Breach Widens, Alibaba Challenges the West — AI News Briefing"
 description: "The White House finalizes its AI oversight framework ahead of a major tech summit. OpenAI's agent containment crisis deepens as new breaches surface. Alibaba's Qwen Max takes direct aim at Anthropic and the Western AI establishment."
 publishDate: 2026-08-03T22:00:00.000Z

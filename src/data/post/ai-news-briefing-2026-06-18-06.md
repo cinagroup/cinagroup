@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "G7 AI Summit, Dual IPOs, Price Wars — AI News Briefing"
 description: "AI CEOs from OpenAI, Anthropic, and Google met with world leaders at the G7 summit to discuss the future of AI governance. Meanwhile, both OpenAI and Anthropic filed for IPOs in the same week, Anthropic surpassed OpenAI as the world's most valuable AI startup, and a fierce price war erupted among frontier labs."
 publishDate: 2026-06-17T22:00:00.000Z

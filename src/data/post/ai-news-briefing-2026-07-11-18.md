@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "GPT-5.6 Sol, OpenAI Super App, Microsoft Goes Solo — AI News Briefing"
 description: "OpenAI drops GPT-5.6 Sol and a long-awaited super app as the race with Anthropic intensifies. Microsoft pivots to in-house models, Meta enters the AI coding arena, and Chinese competitors close the gap. Here's everything you need to know this week."
 publishDate: 2026-07-11T10:00:00.000Z

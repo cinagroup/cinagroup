@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "CuspAI Raises £334M, Moonshot Pauses Subscriptions, US Tests AI Models — AI News Briefing"
 description: "Bezos-backed CuspAI raises £334M for AI materials discovery, China's Moonshot AI halts new Kimi subscriptions amid surging demand ahead of IPO, and US public health agencies begin testing OpenAI and Anthropic models — plus NVIDIA's $20T vision, Europe's anti-AI-slop platform, and TSMC's blockbuster AI-driven results."
 publishDate: 2026-07-20T10:00:00.000Z

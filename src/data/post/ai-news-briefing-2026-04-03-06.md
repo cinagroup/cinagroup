@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Establishes New AI Safety Research Lab in Geneva · Replit Agent Expands to Multi-Agent Development Workflows · Ca"
 description: "AI digest covering 2026-04-02 18:00 to 2026-04-03 06:00"
 publishDate: 2026-04-02T22:00:00.000Z

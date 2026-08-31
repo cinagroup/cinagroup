@@ -2,89 +2,93 @@
 import CinaProductPage from '~/components/CinaProductPage.astro';
 
 const metadata = {
-  title: 'CinaClaw — Reviewable workflow automation',
+  title: 'CinaClaw — Local-first personal AI assistant',
   description:
-    'CinaClaw helps teams turn repeatable operational work into assistant-led workflows with visible review points.',
+    'CinaClaw is an open-source personal AI assistant with a local-first Gateway, channel adapters, skills, and companion apps.',
 };
 
-const code = `workflow "support-triage" {
-  intake   = "classify"
-  context  = "gather"
-  draft    = "prepare"
-  approval = "human"
+const code = `assistant "local" {
+  gateway  = "self-hosted"
+  channels = ["webchat", "configured-adapters"]
+  dmPolicy = "pairing"
 }`;
 ---
 
 <CinaProductPage
+  product="cinaclaw"
   {metadata}
-  eyebrow="CinaClaw / workflow assistant."
-  title="Move repeated work into dependable, reviewable flows."
-  lead="CinaClaw helps teams triage requests, gather context, prepare next actions, and keep recurring work moving without hiding the review step."
-  primary={{ text: 'Plan an automation workflow', href: '/contact' }}
+  eyebrow="CinaClaw / open-source personal AI assistant."
+  title="Run an assistant through your own local-first Gateway."
+  lead="CinaClaw provides an installable CLI, Gateway, Control UI, messaging adapters, skills, and optional companion apps. Channel access and model credentials remain configuration the operator controls."
+  primary={{ text: 'Plan a CinaClaw setup', href: '/contact/' }}
   secondary={{ text: 'View the full stack', href: '/' }}
   capabilities={[
     {
-      label: 'Intake.',
-      title: 'Turn requests into structured work.',
-      description: 'Normalize messages, forms, and events into a clear task with the context the workflow needs.',
+      label: 'Onboard.',
+      title: 'Install through the guided CLI.',
+      description: 'Configure the Gateway, workspace, models, channels, and skills from a documented onboarding path.',
     },
     {
-      label: 'Context.',
-      title: 'Gather the right evidence first.',
-      description: 'Pull relevant search results, account details, and operating notes before drafting an action.',
+      label: 'Gateway.',
+      title: 'Keep the control plane local-first.',
+      description: 'Run sessions, channels, tools, and events through a Gateway under the operator’s control.',
     },
     {
-      label: 'Draft.',
-      title: 'Prepare a useful next step.',
-      description: 'Create a response, summary, checklist, or action proposal that a person can inspect quickly.',
+      label: 'Channels.',
+      title: 'Connect documented messaging adapters.',
+      description: 'Use WebChat or configure supported adapters such as Telegram, Slack, Discord, Signal, and others.',
     },
     {
-      label: 'Review.',
-      title: 'Place approval where it matters.',
-      description: 'Require human confirmation for sensitive, external, destructive, or high-impact actions.',
+      label: 'Access.',
+      title: 'Pair unknown direct-message senders.',
+      description:
+        'Keep the default pairing policy for common messaging channels unless the operator explicitly changes it.',
     },
     {
-      label: 'Route.',
-      title: 'Send work to the right system.',
-      description: 'Connect approved outputs to the tools and owners already responsible for the process.',
+      label: 'Skills.',
+      title: 'Load focused workspace capabilities.',
+      description: 'Use bundled, managed, or workspace skills with explicit instructions and supporting resources.',
     },
     {
-      label: 'Audit.',
-      title: 'Keep the workflow explainable.',
-      description: 'Preserve inputs, decisions, approvals, and outcomes so operators can understand what happened.',
+      label: 'Apps.',
+      title: 'Add optional companion surfaces.',
+      description: 'Connect documented Windows, macOS, Linux, iOS, or Android surfaces when the setup requires them.',
     },
   ]}
-  workflowTitle="Keep automation legible from intake to approval."
-  workflowLead="A good workflow exposes its inputs, context, proposed action, and owner instead of collapsing everything into one opaque step."
+  workflowTitle="Move from install to one deliberately configured assistant path."
+  workflowLead="A reference setup confirms the local Gateway, one model, one channel, and the applicable access policy before expanding."
   workflow={[
     {
-      title: 'Classify the request',
-      description: 'Identify the workflow type, urgency, ownership, and information still needed.',
+      title: 'Run onboarding',
+      description: 'Install the CLI and configure the Gateway, workspace, model authentication, and daemon mode.',
     },
     {
-      title: 'Gather context',
-      description: 'Retrieve relevant knowledge and system state within the permitted scope.',
+      title: 'Connect one channel',
+      description: 'Start with WebChat or one supported adapter and keep its inbound access policy explicit.',
     },
-    { title: 'Prepare the action', description: 'Draft the next step and explain what the workflow used to reach it.' },
     {
-      title: 'Review and release',
-      description: 'Route the proposal to the right person before any external or high-impact action.',
+      title: 'Add a focused skill',
+      description: 'Introduce only the instructions and tools required for the first job.',
+    },
+    {
+      title: 'Verify and operate',
+      description: 'Check Gateway status, exercise the channel, and use the security runbook before remote exposure.',
     },
   ]}
-  codeLabel="Workflow contract."
+  codeLabel="Illustrative local configuration."
   {code}
   principles={[
     {
-      title: 'Human control.',
-      description: 'Approval points remain visible and proportionate to the impact of the action.',
+      title: 'Operator control.',
+      description: 'The operator chooses the models, channels, tools, access policies, and exposure path.',
     },
     {
-      title: 'Small workflows.',
-      description: 'Each automation should do one operational job clearly before it grows.',
+      title: 'Secure defaults.',
+      description: 'Pairing, allowlists, sandbox settings, and exposure guidance should be reviewed before use.',
     },
     {
-      title: 'Traceable outcomes.',
-      description: 'Operators should be able to inspect the path from request to result.',
+      title: 'Incremental setup.',
+      description: 'Validate one model, channel, and skill path before adding more integrations.',
     },
   ]}
 />

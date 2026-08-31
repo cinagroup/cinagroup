@@ -69,9 +69,10 @@ interface Props {
 const { lang } = Astro.props;
 const content = copy[lang];
 const prefix = lang === 'en' ? '' : `/${lang}`;
+const homeHref = prefix ? `${prefix}/` : '/';
 ---
 
-<Layout metadata={{ title: content.title }}>
+<Layout metadata={{ title: content.title, robots: { index: false, follow: true }, omitCanonical: true }}>
   <div class="cg-page">
     <section class="cg-page-hero" aria-labelledby="not-found-title">
       <div class="cg-page-shell">
@@ -80,8 +81,8 @@ const prefix = lang === 'en' ? '' : `/${lang}`;
           <h1 id="not-found-title">{content.heading}</h1>
           <p class="cg-page-lead">{content.lead}</p>
           <div class="cg-page-actions">
-            <a class="cg-page-button cg-page-button-primary" href={prefix || '/'}>{content.home}</a>
-            <a class="cg-page-button" href={`${prefix}/contact`}>{content.contact}</a>
+            <a class="cg-page-button cg-page-button-primary" href={homeHref}>{content.home}</a>
+            <a class="cg-page-button" href={`${prefix}/contact/`}>{content.contact}</a>
           </div>
         </div>
       </div>

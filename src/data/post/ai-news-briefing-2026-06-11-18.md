@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI & Anthropic IPOs, Google's $45B Anthropic Deal, AI Election Plans — AI News Briefing"
 description: "Major developments shake the AI industry as OpenAI and Anthropic file for IPOs in the same week, Google backs a $45 billion chip deal for Anthropic, and leading AI companies outline their 2026 election strategies. Plus: Apple's Siri AI overhaul arrives late to the party."
 publishDate: 2026-06-11T10:00:00.000Z

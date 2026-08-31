@@ -10,6 +10,7 @@ import ToBlogLink from '~/components/blog/ToBlogLink.astro';
 import { getCanonical, getPermalink } from '~/utils/permalinks';
 import { getStaticPathsBlogPost, blogPostRobots } from '~/utils/blog';
 import { findImage } from '~/utils/images';
+import { getArticleStructuredData } from '~/utils/article-schema';
 import type { MetaData } from '~/types';
 
 export const prerender = true;
@@ -22,35 +23,45 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { post } = Astro.props as Props;
 
-const url = getCanonical(getPermalink(post.permalink, 'post'));
+const defaultCanonical = String(getCanonical(getPermalink(post.permalink, 'post')));
 const image = (await findImage(post.image)) as ImageMetadata | string | undefined;
-const isAutomatedBriefing = post.slug.startsWith('ai-news-briefing-');
+const archivedUnverified = post.status === 'archived_unverified';
 
 const metadata = merge(
   {
     title: post.title,
     description: post.excerpt,
+    canonical: defaultCanonical,
     robots: {
       index: blogPostRobots?.index,
       follow: blogPostRobots?.follow,
     },
     openGraph: {
       type: 'article',
+      url: defaultCanonical,
       ...(image
         ? { images: [{ url: image, width: (image as ImageMetadata)?.width, height: (image as ImageMetadata)?.height }] }
         : {}),
     },
+    language: post.language,
   },
-  { ...(post?.metadata ? { ...post.metadata, canonical: post.metadata?.canonical || url } : {}) }
+  post?.metadata || {}
 ) as MetaData;
 
-if (isAutomatedBriefing) {
+const effectiveCanonical = String(metadata.canonical || defaultCanonical);
+metadata.canonical = effectiveCanonical;
+metadata.openGraph = { ...(metadata.openGraph || {}), url: effectiveCanonical };
+metadata.language = post.language;
+if (archivedUnverified) {
   metadata.robots = { index: false, follow: true };
+  metadata.structuredData = undefined;
+} else {
+  metadata.structuredData = getArticleStructuredData({ post, canonical: effectiveCanonical, image });
 }
 ---
 
 <Layout metadata={metadata}>
-  <SinglePost post={{ ...post, image: image }} url={url}>
+  <SinglePost post={{ ...post, image: image }} url={effectiveCanonical}>
     <article>
       {post.Content ? <post.Content /> : <Fragment set:html={post.content || ''} />}
     </article>

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "LangGraph Enables Production-Ready Agentic Workflows · Nature Paper: AI Outperforms Humans in Scientific Literature Revi"
 description: "AI digest covering 2026-04-11 06:00 to 2026-04-11 18:00"
 publishDate: 2026-04-11T10:00:00.000Z

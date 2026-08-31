@@ -1,18 +1,22 @@
-export const languages = {
-  en: 'English',
-  ja: '日本語',
-  ko: '한국어',
-  ru: 'Русский',
-  es: 'Español',
-  pt: 'Português',
-  fr: 'Français',
-} as const;
+import type { Lang } from './i18n/routing';
 
-export const defaultLang: keyof typeof languages = 'en';
-
-export type Lang = keyof typeof languages;
-
-export const supportedLocales: Lang[] = ['en', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'];
+export {
+  changeLangPath,
+  defaultLang,
+  getBaseRoute,
+  getLangFromUrl,
+  getLanguageAlternates,
+  getLocalizedRoutePath,
+  getPath,
+  getRouteLocales,
+  isKnownRoute,
+  isRouteAvailable,
+  languages,
+  localizeInternalHref,
+  routeMatrix,
+  supportedLocales,
+} from './i18n/routing';
+export type { Lang, LanguageAlternate, RouteKey } from './i18n/routing';
 
 const navigationLabels: Partial<Record<Lang, Record<string, string>>> = {
   ja: {
@@ -25,15 +29,16 @@ const navigationLabels: Partial<Record<Lang, Record<string, string>>> = {
     Support: 'サポート',
     Startups: 'スタートアップ',
     Blog: 'ブログ',
+    Evidence: '検証可能な証拠',
     About: '会社概要',
     Contact: 'お問い合わせ',
     Login: 'ログイン',
     Signup: '登録',
-    'CinaSeek — Intelligent Search': 'CinaSeek — インテリジェント検索',
-    'CinaClaw — AI Assistant': 'CinaClaw — AI アシスタント',
-    'CinaToken — AI API Gateway': 'CinaToken — AI API ゲートウェイ',
-    'CinaSkill — Skills Platform': 'CinaSkill — スキルプラットフォーム',
-    'CinaChain — Blockchain Network': 'CinaChain — 接続インフラ',
+    'CinaSeek — Agent Workspace': 'CinaSeek — エージェントワークスペース',
+    'CinaClaw — Local-first Agent Gateway': 'CinaClaw — ローカルファースト・エージェントゲートウェイ',
+    'CinaToken — Open-source Model Gateway': 'CinaToken — オープンソース・モデルゲートウェイ',
+    'CinaSkill — CinaClaw SKILL.md Format': 'CinaSkill — CinaClaw SKILL.md 形式',
+    'CinaChain — Base Sepolia NFT DApp Beta': 'CinaChain — Base Sepolia NFT DApp ベータ',
     'Developer Blog': '開発者ブログ',
     'Contact Support': 'サポートへ連絡',
     'About Us': '会社概要',
@@ -50,15 +55,16 @@ const navigationLabels: Partial<Record<Lang, Record<string, string>>> = {
     Support: '지원',
     Startups: '스타트업',
     Blog: '블로그',
+    Evidence: '검증 가능한 증거',
     About: '회사 소개',
     Contact: '문의',
     Login: '로그인',
     Signup: '가입',
-    'CinaSeek — Intelligent Search': 'CinaSeek — 지능형 검색',
-    'CinaClaw — AI Assistant': 'CinaClaw — AI 어시스턴트',
-    'CinaToken — AI API Gateway': 'CinaToken — AI API 게이트웨이',
-    'CinaSkill — Skills Platform': 'CinaSkill — 스킬 플랫폼',
-    'CinaChain — Blockchain Network': 'CinaChain — 연결 인프라',
+    'CinaSeek — Agent Workspace': 'CinaSeek — 에이전트 워크스페이스',
+    'CinaClaw — Local-first Agent Gateway': 'CinaClaw — 로컬 우선 에이전트 게이트웨이',
+    'CinaToken — Open-source Model Gateway': 'CinaToken — 오픈 소스 모델 게이트웨이',
+    'CinaSkill — CinaClaw SKILL.md Format': 'CinaSkill — CinaClaw SKILL.md 형식',
+    'CinaChain — Base Sepolia NFT DApp Beta': 'CinaChain — Base Sepolia NFT DApp 베타',
     'Developer Blog': '개발자 블로그',
     'Contact Support': '지원 문의',
     'About Us': '회사 소개',
@@ -75,15 +81,16 @@ const navigationLabels: Partial<Record<Lang, Record<string, string>>> = {
     Support: 'Поддержка',
     Startups: 'Стартапам',
     Blog: 'Блог',
+    Evidence: 'Проверяемые доказательства',
     About: 'О компании',
     Contact: 'Контакты',
     Login: 'Войти',
     Signup: 'Регистрация',
-    'CinaSeek — Intelligent Search': 'CinaSeek — корпоративный поиск',
-    'CinaClaw — AI Assistant': 'CinaClaw — помощник процессов',
-    'CinaToken — AI API Gateway': 'CinaToken — модельный шлюз',
-    'CinaSkill — Skills Platform': 'CinaSkill — повторно используемые возможности',
-    'CinaChain — Blockchain Network': 'CinaChain — связанная инфраструктура',
+    'CinaSeek — Agent Workspace': 'CinaSeek — агентское workspace',
+    'CinaClaw — Local-first Agent Gateway': 'CinaClaw — local-first шлюз агентов',
+    'CinaToken — Open-source Model Gateway': 'CinaToken — open-source шлюз моделей',
+    'CinaSkill — CinaClaw SKILL.md Format': 'CinaSkill — формат CinaClaw SKILL.md',
+    'CinaChain — Base Sepolia NFT DApp Beta': 'CinaChain — бета NFT DApp в Base Sepolia',
     'Developer Blog': 'Блог разработчиков',
     'Contact Support': 'Связаться с поддержкой',
     'About Us': 'О компании',
@@ -100,15 +107,16 @@ const navigationLabels: Partial<Record<Lang, Record<string, string>>> = {
     Support: 'Soporte',
     Startups: 'Startups',
     Blog: 'Blog',
+    Evidence: 'Evidencia verificable',
     About: 'Quiénes somos',
     Contact: 'Contacto',
     Login: 'Entrar',
     Signup: 'Registro',
-    'CinaSeek — Intelligent Search': 'CinaSeek — búsqueda empresarial',
-    'CinaClaw — AI Assistant': 'CinaClaw — asistente de flujo',
-    'CinaToken — AI API Gateway': 'CinaToken — gateway de modelos',
-    'CinaSkill — Skills Platform': 'CinaSkill — capacidades reutilizables',
-    'CinaChain — Blockchain Network': 'CinaChain — infraestructura conectada',
+    'CinaSeek — Agent Workspace': 'CinaSeek — workspace de agentes',
+    'CinaClaw — Local-first Agent Gateway': 'CinaClaw — gateway de agentes local-first',
+    'CinaToken — Open-source Model Gateway': 'CinaToken — gateway de modelos abierto',
+    'CinaSkill — CinaClaw SKILL.md Format': 'CinaSkill — formato CinaClaw SKILL.md',
+    'CinaChain — Base Sepolia NFT DApp Beta': 'CinaChain — NFT DApp beta en Base Sepolia',
     'Developer Blog': 'Blog para desarrolladores',
     'Contact Support': 'Contactar con soporte',
     'About Us': 'Quiénes somos',
@@ -125,15 +133,16 @@ const navigationLabels: Partial<Record<Lang, Record<string, string>>> = {
     Support: 'Suporte',
     Startups: 'Startups',
     Blog: 'Blog',
+    Evidence: 'Evidência verificável',
     About: 'Sobre',
     Contact: 'Contato',
     Login: 'Entrar',
     Signup: 'Cadastro',
-    'CinaSeek — Intelligent Search': 'CinaSeek — busca empresarial',
-    'CinaClaw — AI Assistant': 'CinaClaw — assistente de fluxo',
-    'CinaToken — AI API Gateway': 'CinaToken — gateway de modelos',
-    'CinaSkill — Skills Platform': 'CinaSkill — capacidades reutilizáveis',
-    'CinaChain — Blockchain Network': 'CinaChain — infraestrutura conectada',
+    'CinaSeek — Agent Workspace': 'CinaSeek — workspace de agentes',
+    'CinaClaw — Local-first Agent Gateway': 'CinaClaw — gateway de agentes local-first',
+    'CinaToken — Open-source Model Gateway': 'CinaToken — gateway de modelos aberto',
+    'CinaSkill — CinaClaw SKILL.md Format': 'CinaSkill — formato CinaClaw SKILL.md',
+    'CinaChain — Base Sepolia NFT DApp Beta': 'CinaChain — NFT DApp beta na Base Sepolia',
     'Developer Blog': 'Blog para desenvolvedores',
     'Contact Support': 'Falar com o suporte',
     'About Us': 'Sobre',
@@ -150,15 +159,16 @@ const navigationLabels: Partial<Record<Lang, Record<string, string>>> = {
     Support: 'Support',
     Startups: 'Startups',
     Blog: 'Blog',
+    Evidence: 'Preuves vérifiables',
     About: 'À propos',
     Contact: 'Contact',
     Login: 'Connexion',
     Signup: 'Inscription',
-    'CinaSeek — Intelligent Search': 'CinaSeek — recherche d’entreprise',
-    'CinaClaw — AI Assistant': 'CinaClaw — assistant de flux',
-    'CinaToken — AI API Gateway': 'CinaToken — passerelle de modèles',
-    'CinaSkill — Skills Platform': 'CinaSkill — capacités réutilisables',
-    'CinaChain — Blockchain Network': 'CinaChain — infrastructure connectée',
+    'CinaSeek — Agent Workspace': 'CinaSeek — espace d’agents',
+    'CinaClaw — Local-first Agent Gateway': 'CinaClaw — passerelle d’agents local-first',
+    'CinaToken — Open-source Model Gateway': 'CinaToken — passerelle de modèles open source',
+    'CinaSkill — CinaClaw SKILL.md Format': 'CinaSkill — format CinaClaw SKILL.md',
+    'CinaChain — Base Sepolia NFT DApp Beta': 'CinaChain — NFT DApp bêta sur Base Sepolia',
     'Developer Blog': 'Blog développeurs',
     'Contact Support': 'Contacter le support',
     'About Us': 'À propos',
@@ -170,30 +180,4 @@ const navigationLabels: Partial<Record<Lang, Record<string, string>>> = {
 export function getLocalizedLabel(lang: Lang, label?: string) {
   if (!label) return label;
   return navigationLabels[lang]?.[label] ?? label;
-}
-
-export function getLangFromUrl(url: URL) {
-  const [, lang] = url.pathname.split('/');
-  if (lang in languages) return lang as Lang;
-  return defaultLang;
-}
-
-export function changeLangPath(url: URL, newLang: Lang) {
-  const parts = url.pathname.split('/').filter(Boolean);
-
-  if (parts[0] in languages) {
-    parts.shift();
-  }
-
-  const path = parts.length ? `/${parts.join('/')}` : '';
-  const localizedPath = newLang === defaultLang ? path || '/' : `/${newLang}${path}`;
-
-  return `${localizedPath}${url.search}${url.hash}`;
-}
-
-export function getPath(path: string, lang: string = defaultLang) {
-  if (lang === defaultLang) {
-    return path;
-  }
-  return `/${lang}${path}`;
 }

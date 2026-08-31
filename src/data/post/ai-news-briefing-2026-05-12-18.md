@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — Claude Platform Goes GA on AWS, GitLab Restructures for 'Agentic Era', Buzzfeed Names President of AI"
 description: "Anthropic's Claude Platform reaches general availability on AWS with full feature parity; GitLab announces major restructuring centered on AI agents, flattening management, and cutting countries; Hacker News erupts over 'If AI writes your code, why use Python?'; Thinking Machines reveals real-time interaction models; Gemini gets smart home optimization boost; FTC prepares to enforce Take It Down Act against AI deepfakes; BuzzFeed pivots its CEO into a new AI-focused role."
 publishDate: 2026-05-12T10:00:00.000Z

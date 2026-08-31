@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Berkeley Lab Creates AI for Real-Time Climate Modeling · Perplexity AI Launches Enterprise Knowledge Assistant · LangCha"
 description: "AI digest covering 2026-04-04 06:00 to 2026-04-04 18:00"
 publishDate: 2026-04-04T10:00:00.000Z

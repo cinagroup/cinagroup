@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google Gemini Workspace Upgrade · EU AI Food Safety Tool"
 description: "12-hour AI digest: Google Gemini upgrades Workspace, EU launches AI food safety tool, AI usage surge in tech companies"
 publishDate: 2026-03-21T18:00:00.000Z

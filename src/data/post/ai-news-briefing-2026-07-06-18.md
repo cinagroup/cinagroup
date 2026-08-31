@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "SpaceX Acquires Cursor for $60B, First AI Ransomware Attack, UN Warns of 'Catastrophic Harm' — AI News Briefing"
 description: "SpaceX drops $60 billion on AI coding startup Cursor to rival OpenAI and Anthropic. The world's first AI-run ransomware attack signals a dangerous new cyber threat landscape. UN leaders warn AI poses a 'Hiroshima'-style risk without global governance. Plus: NVIDIA powers Anthropic's Claude Science, Takeda's $600M AI drug discovery deal, and Britain's controversial AI growth zones."
 publishDate: 2026-07-06T10:00:00.000Z

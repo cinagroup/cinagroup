@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import { SITE } from 'astrowind:config';
 import { getHomePermalink } from '~/utils/permalinks';
-import { changeLangPath, getLangFromUrl, getLocalizedLabel } from '~/i18n';
+import { changeLangPath, getLangFromUrl, getLocalizedLabel, localizeInternalHref } from '~/i18n';
 
 interface Link {
   text?: string;
@@ -27,23 +27,7 @@ export interface Props {
 const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme = 'light' } = Astro.props;
 const currentLang = getLangFromUrl(Astro.url);
 const homeHref = changeLangPath(new URL('/', Astro.url), currentLang);
-const localizedFooterPaths = new Set([
-  '/',
-  '/cinaseek',
-  '/cinaclaw',
-  '/cinatoken',
-  '/cinaskill',
-  '/cinachain',
-  '/contact',
-  '/pricing',
-  '/services',
-]);
-const localizeFooterHref = (href?: string) => {
-  if (!href || currentLang === 'en' || !href.startsWith('/') || href.startsWith('//')) return href;
-  const [path, hash = ''] = href.split('#');
-  if (!localizedFooterPaths.has(path || '/')) return href;
-  return `/${currentLang}${path === '/' ? '' : path}${hash ? `#${hash}` : ''}`;
-};
+const localizeFooterHref = (href?: string) => localizeInternalHref(href, currentLang);
 ---
 
 <footer class:list={[{ dark: theme === 'dark' }, 'relative border-t border-gray-200 dark:border-slate-800 not-prose']}>

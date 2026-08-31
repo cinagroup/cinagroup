@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Judge Blocks Pentagon Anthropic Blacklist"
 description: "12-hour AI digest: Anthropic legal victory, AI sycophancy study, Wikipedia bans AI content, OpenAI Safety Bug Bounty, $500 GPU beats Claude, agent pair programming"
 publishDate: 2026-03-28T04:00:00.000Z

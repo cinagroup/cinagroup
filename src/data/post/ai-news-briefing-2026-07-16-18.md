@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI's Hardware Play, Microsoft's AI Betrayal, Google's Compute Squeeze — AI News Briefing"
 description: "OpenAI launches a $230 Codex keyboard amid hardware ambitions, Microsoft trains salespeople to undermine its own AI partners, Google restricts Meta's Gemini compute access, and Anthropic bets $1 trillion on AI implementation over models. Plus: Meta sued over AI-biased layoffs, Suno's YouTube scraping scandal, and SpaceXAI's codebase privacy breach."
 publishDate: 2026-07-16T10:00:00.000Z

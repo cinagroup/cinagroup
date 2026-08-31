@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — May 9, 2026"
 description: "OpenAI v. Musk trial enters critical testimony phase, Anthropic reveals Claude's inner thoughts, Cloudflare cuts 20% of staff as AI demand explodes, and Google's AlphaEvolve reshapes science."
 publishDate: 2026-05-08T22:00:00.000Z

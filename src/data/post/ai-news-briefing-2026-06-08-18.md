@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Apple's Siri Rebuild on Gemini, Google-SpaceX $920M AI Deal, Microsoft's AI Stack — AI News Briefing"
 description: "Apple unveils a major Siri overhaul powered by Google Gemini at WWDC 2026. Google signs a landmark $920M/month deal with SpaceX for AI compute capacity. Microsoft builds its own AI stack to reduce OpenAI dependence. Plus: Trump's new AI executive order, Anthropic clarifies its global pause call, a new federal AI bill, and Deepseek's rise in enterprise adoption."
 publishDate: 2026-06-08T10:00:00.000Z

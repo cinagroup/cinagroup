@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "NVIDIA Hits Record $81.6B Revenue, Trump Scraps AI Executive Order, Anthropic Projects $10.9B Quarterly Revenue — AI News Briefing"
 description: "NVIDIA reports historic Q1 earnings with $81.6B revenue and $80B buyback. Trump abruptly cancels planned AI executive order citing China competition concerns. California Governor Newsom signs workforce protection order after Meta's 8,000 layoffs. Anthropic forecasts first profitable quarter. Google I/O unveils Gemini Omni multimodal creation model."
 publishDate: 2026-05-22T10:00:00.000Z

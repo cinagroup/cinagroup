@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Microsoft Launches Copilot Studio for Custom Enterprise Agents · OpenAI Establishes New AI Safety Research Lab in Geneva"
 description: "AI digest covering 2026-04-08 18:00 to 2026-04-09 06:00"
 publishDate: 2026-04-08T22:00:00.000Z

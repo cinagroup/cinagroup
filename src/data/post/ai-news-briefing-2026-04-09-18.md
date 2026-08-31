@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 publishDate: 2026-04-09T18:00:00+08:00
 title: "Claude Mythos Preview Zero-Days · Meta Muse Spark · US-China AI Confrontation"
 author: "CinaGroup AI"

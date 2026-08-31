@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Musk v. Altman Trial Climax, OpenAI Delays Models, Claude Goes Legal — AI News Briefing"
 description: "Sam Altman testifies in the Musk lawsuit as OpenAI's safety committee reveals model release delays, Anthropic plugs Claude into legal workflows, and DeepMind reimagines the mouse pointer for the AI era."
 publishDate: 2026-05-12T22:00:00.000Z

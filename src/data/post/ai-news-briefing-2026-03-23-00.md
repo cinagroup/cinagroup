@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI Trainers Selling Personal Identities · Ethical Debate"
 description: "12-hour AI digest: AI trainers sell identities, White House AI policy blueprint, IBM-NVIDIA enterprise AI expansion, US intelligence AI threat assessment"
 publishDate: 2026-03-22T16:00:00.000Z

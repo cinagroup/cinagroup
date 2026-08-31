@@ -1,5 +1,6 @@
 ---
 import CinaPageHero from '~/components/CinaPageHero.astro';
+import PricingDisclosure from '~/components/PricingDisclosure.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
@@ -19,6 +20,10 @@ const engagements = [
       'Prioritized recommendations',
       'Acceptance criteria for the next step',
     ],
+    budget: 'Written quote after scope confirmation',
+    timeline: 'Usually 1–3 weeks',
+    included: 'The agreed review surface, findings, a readout, and prioritized next steps.',
+    excluded: 'Implementation, third-party testing fees, travel, and paid tools unless written into scope.',
     featured: false,
   },
   {
@@ -31,6 +36,10 @@ const engagements = [
       'Responsive and interaction QA',
       'Build, deployment, and production checks',
     ],
+    budget: 'Written quote after scope confirmation',
+    timeline: 'Usually 4–10 weeks',
+    included: 'One agreed outcome, implementation, review, QA, and release evidence for the named environments.',
+    excluded: 'New product areas, ongoing operations, external licenses, data migration, and support outside scope.',
     featured: true,
   },
   {
@@ -43,6 +52,10 @@ const engagements = [
       'Integration and deployment support',
       'Recurring review and optimization',
     ],
+    budget: 'Written quote after scope confirmation',
+    timeline: 'Monthly planning; often a 3-month initial window',
+    included: 'An agreed capacity band, prioritized delivery queue, recurring review, and release support.',
+    excluded: 'Unused capacity rollover, vendor charges, 24/7 support, hardware, travel, and unplanned major projects.',
     featured: false,
   },
 ];
@@ -54,8 +67,8 @@ const engagements = [
       eyebrow="Pricing / clear scope before commitment."
       title="Price the work around the outcome, not a template."
       lead="The right scope depends on the workflow, systems, risk, integration depth, and evidence required for acceptance. We make those inputs visible before quoting."
-      primary={{ text: 'Request a scoped conversation', href: '/contact' }}
-      secondary={{ text: 'Review services', href: '/services' }}
+      primary={{ text: 'Request a scoped conversation', href: '/contact/' }}
+      secondary={{ text: 'Review services', href: '/services/' }}
     />
 
     <section class="cg-page-section" aria-labelledby="engagements-title">
@@ -75,18 +88,29 @@ const engagements = [
                 <p class="cg-card-meta">{engagement.label}</p>
                 <h3>{engagement.title}</h3>
                 <p>{engagement.note}</p>
+                <PricingDisclosure
+                  budget={engagement.budget}
+                  timeline={engagement.timeline}
+                  included={engagement.included}
+                  excluded={engagement.excluded}
+                />
                 <ul>
                   {engagement.items.map((item) => (
                     <li>{item}</li>
                   ))}
                 </ul>
-                <a class:list={['cg-page-button', { 'cg-page-button-primary': !engagement.featured }]} href="/contact">
+                <a class:list={['cg-page-button', { 'cg-page-button-primary': !engagement.featured }]} href="/contact/">
                   Scope this work
                 </a>
               </article>
             ))
           }
         </div>
+        <p class="cg-pricing-terms">
+          All engagements are proposal-based. After scope, dependencies, acceptance criteria, and delivery location are
+          confirmed, the written proposal will state the quote, currency, applicable taxes, and any third-party charges
+          before work begins.
+        </p>
       </div>
     </section>
 
@@ -134,7 +158,7 @@ const engagements = [
           </p>
         </div>
         <div class="cg-page-actions" style="justify-content: flex-start;">
-          <a class="cg-page-button" href="/contact">Start the conversation</a>
+          <a class="cg-page-button" href="/contact/">Start the conversation</a>
         </div>
       </div>
     </section>

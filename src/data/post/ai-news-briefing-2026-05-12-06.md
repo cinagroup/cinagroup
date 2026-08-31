@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — OpenAI Launches $14B Deployment Company, Musk v. Altman Trial Reaches Key Testimony, Hackers Use AI to Find Critical Software Flaw"
 description: "OpenAI spins out a $14B deployment arm with 19 global investors; Sutskever and Nadella testify in Musk v. Altman trial; Google finds criminals used AI to discover a major software vulnerability; Meta employees report misery amid AI push and layoffs; Nvidia releases official Rust-to-CUDA compiler; OpenAI faces lawsuit over ChatGPT's alleged role in FSU shooting; new Interfaze architecture targets high-accuracy scaling."
 publishDate: 2026-05-11T22:00:00.000Z

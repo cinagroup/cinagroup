@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Apple Trains China AI Model with Alibaba, US Tells Partners to Pick Sides, Anthropic Disables Top Models — AI News Briefing"
 description: "Reuters reports Apple has trained its own AI model for China with Alibaba's support, a major strategy shift in its biggest overseas market. The US is telling partners they must pick sides in the AI race with China, and Washington ordered Anthropic to disable its most powerful models for foreign nationals. OpenAI previews Ultrafast mode at 14x speed, faces a talent exodus ahead of its IPO, and Anthropic says AI risks are rising while Cognition eyes a $40B valuation."
 publishDate: 2026-08-14T22:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 15, 2026 (06:00 CST)
 
 ## Top 7 Stories
 

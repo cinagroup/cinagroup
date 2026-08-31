@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "NVIDIA Price Hikes, Anthropic IPO Buzz, OpenAI Safety Push — AI News Briefing"
 description: "NVIDIA customers are bracing for AI-related price hikes above 15%, Anthropic is reportedly eyeing a $100 billion IPO, and OpenAI is urging California to strengthen its AI safety bill. Meta launched an AI Mac app, Google's trade-secret case took a new turn, and AI agents are starting to pay with stablecoins."
 publishDate: 2026-08-22T22:00:00.000Z

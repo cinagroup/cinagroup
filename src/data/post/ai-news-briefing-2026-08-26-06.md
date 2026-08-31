@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Nvidia's AI Banking, OpenAI's Jalapeño Chip, Apple's M6 — AI News Briefing"
 description: "Nvidia's growing role as financier to the AI boom draws scrutiny ahead of earnings, while OpenAI publishes industry-leading benchmark results for its Broadcom-built Jalapeño inference chip. Apple brings M6 and M5 Ultra desktops to local AI development, Perplexity and Nvidia ship a fully local AI agent device, and Google expands Gemini Enterprise into the legal market."
 publishDate: 2026-08-25T22:00:00.000Z

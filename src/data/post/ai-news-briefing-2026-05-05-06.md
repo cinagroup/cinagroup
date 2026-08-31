@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Musk v. Altman Trial Heats Up · Kimi K2.6 Beats Western Frontier Models"
 description: "12-hour AI digest: Greg Brockman's explosive testimony, OpenAI o1 outperforms ER doctors in Harvard trial, Kimi K2.6 dominates coding challenge, DeepClaude slashes Claude Code costs 17x"
 publishDate: 2026-05-04T22:00:00.000Z

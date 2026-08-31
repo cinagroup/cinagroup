@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Claude Sonnet 5, Meta's Muse Spark, SpaceX Acquires Cursor — AI News Briefing"
 description: "Anthropic unveils Claude Sonnet 5 and a bold drug-development play; Meta pivots past Llama with proprietary Muse Spark; SpaceX drops $60B on Cursor. Plus: OpenAI's 5% proposal to Trump, NVIDIA's compute-for-equity push, and Zuckerberg's sobering take on AI agents."
 publishDate: 2026-07-05T10:00:00.000Z

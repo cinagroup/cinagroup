@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Altman Declares Singularity, Pentagon Snubs Anthropic, Record $1.1B Seed — AI News Briefing"
 description: "OpenAI's Sam Altman claims the AI singularity has arrived, the Pentagon awards major AI contracts to OpenAI, Google, Microsoft, and Nvidia while cutting out Anthropic, and a former DeepMind researcher raises a record $1.1 billion seed round for a superintelligence startup. Plus: Meta's AI safety chief loses control of her own agent, and Anthropic files for IPO."
 publishDate: 2026-07-28T10:00:00.000Z

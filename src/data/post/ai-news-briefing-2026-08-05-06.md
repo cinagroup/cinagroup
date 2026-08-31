@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic $10B Cloud Deal, White House AI Whipsaw, NVIDIA Vera Rubin — AI News Briefing"
 description: "Anthropic signs a landmark $10 billion deal with AI cloud startup Volta. The White House sends mixed signals on AI rules, baffling Silicon Valley. NVIDIA unveils Vera Rubin, a seven-chip AI platform with OpenAI, Anthropic, and Meta on board. Plus: Google-Meta chip alliance challenges NVIDIA, China's open-model blitz, and Texas halts new data centers."
 publishDate: 2026-08-04T22:00:00.000Z

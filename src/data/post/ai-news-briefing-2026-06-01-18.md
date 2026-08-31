@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Surpasses OpenAI at $965B Valuation, Gemini 3.5 Flash Launches, NVIDIA Enters PC Chips — AI News Briefing"
 description: "Anthropic overtakes OpenAI as the most valuable AI startup with a $965B valuation and releases Claude Opus 4.8, Google launches Gemini 3.5 Flash that beats GPT-5.5 in agentic benchmarks, NVIDIA unveils its first Arm-based PC SoC, Meta rolls out AI-powered subscription tiers across social apps, a study finds major AI models violate EU regulations, the Pentagon pushes battlefield AI amid military pushback, and Apollo and Blackstone arrange $36B in debt for Google chips destined for Anthropic."
 publishDate: 2026-06-01T10:00:00.000Z

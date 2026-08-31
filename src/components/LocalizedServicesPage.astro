@@ -258,8 +258,8 @@ const content: Record<
 
 const { lang } = Astro.props as { lang: Locale };
 const page = content[lang];
-const homeHref = `/${lang}`;
-const contactHref = `/${lang}/contact`;
+const homeHref = `/${lang}/`;
+const contactHref = `/${lang}/contact/`;
 ---
 
 <Layout metadata={{ title: page.metadataTitle }}>

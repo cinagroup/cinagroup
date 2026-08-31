@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "GPT-5 Gov't Intervention, Anthropic Alibaba Theft, DOJ Backs xAI — AI News Briefing"
 description: "OpenAI announces GPT-5 as US government mandates staggered release; Anthropic accuses Alibaba of using 25K accounts to mine Claude; DOJ files unprecedented motion backing xAI over Clean Air Act; Meta faces surveillance lawsuit; Chinese hedge funds warn AI bubble poised to burst; supply chain attacks target AI coding agents; Peppa Pig studio sparks voice cloning controversy."
 publishDate: 2026-06-27T22:00:00.000Z

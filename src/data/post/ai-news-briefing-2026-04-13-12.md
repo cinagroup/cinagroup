@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI $852B Valuation · Mythos Gated · Zhipu Open-Source"
 description: "12-hour AI digest: OpenAI $852B valuation, Anthropic Mythos gated, Zhipu open-sources coding champion"
 publishDate: 2026-04-13T03:30:00.000Z

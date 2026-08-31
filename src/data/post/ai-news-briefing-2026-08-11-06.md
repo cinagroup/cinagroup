@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "NVIDIA's $500B Wall Street Deal, House Presses Labs on Rogue Agents, OpenAI Expands Daybreak — AI News Briefing"
 description: "NVIDIA partners with Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs and KKR to mobilize over $500 billion for AI infrastructure, while US House Democrats press Anthropic and OpenAI over rogue AI agents. OpenAI expands its Daybreak cyber-defense initiative, Bernie Sanders calls for an AI development pause, and Meta's new Glimmer model hints at Zuckerberg's personal-intelligence vision."
 publishDate: 2026-08-10T22:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 11, 2026 (06:00 CST)
 
 ## Top 7 Stories
 

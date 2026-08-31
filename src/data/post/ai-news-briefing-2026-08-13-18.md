@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic in Talks to Buy Decart, Hassabis Pitched AI Oversight, Apple to Pay Publishers — AI News Briefing"
 description: "Anthropic is in talks to acquire AI infrastructure startup Decart for about $6 billion in what would be its biggest deal yet, while WSJ reports Demis Hassabis pitched an AI-oversight body before Google's leadership shake-up — and Sergey Brin is pressing DeepMind to move faster on Gemini. The White House moves to expand its AI policy, Apple explores paying publishers to improve Siri, IBM and OpenAI team up on secure enterprise AI, SMIC's profit more than triples on AI chip demand, and California's governor signs an executive order aimed at protecting workers from AI."
 publishDate: 2026-08-13T10:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 13, 2026 (18:00 CST)
 
 ## Top 7 Stories
 

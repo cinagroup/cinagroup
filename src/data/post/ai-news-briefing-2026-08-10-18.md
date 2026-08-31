@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Meta Open-Sources Its Flagship Model, OpenAI Locks Down Astra, Google DeepMind Reshuffle — AI News Briefing"
 description: "Meta releases an open-weight version of its most powerful AI model as Mark Zuckerberg argues concentration of control is AI's biggest risk, while OpenAI tightens safeguards on its Astra model over critical cyber capabilities. Google DeepMind undergoes a leadership reshuffle with Demis Hassabis handing over to Koray Kavukcuoglu and Jeff Dean exiting, TSMC reports 44.7% revenue growth on AI demand, and Anthropic pushes Claude Code toward full autonomy."
 publishDate: 2026-08-10T10:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 10, 2026 (18:00 CST)
 
 ## Top 7 Stories
 

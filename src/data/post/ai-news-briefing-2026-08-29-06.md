@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Judge Blocks Pentagon's Anthropic Blacklist, Anthropic's Automated Alignment Researchers, A16Z's Machine Age Fund — AI News Briefing"
 description: "A federal judge ruled the Pentagon's blacklisting of Anthropic unlawful, and Anthropic published research showing automated researchers can reliably mitigate alignment failures. Andreessen Horowitz launched a 'Machine Age' fund to tackle AI supply bottlenecks, while Marvell's $120 billion Google AI chip deal rattled investors and South Korea moved to give every citizen free AI access."
 publishDate: 2026-08-28T22:00:00.000Z

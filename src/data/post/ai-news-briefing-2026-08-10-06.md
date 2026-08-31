@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Slows Astra, Anthropic Defaults Claude Code Auto Mode, China's $28T AI Push — AI News Briefing"
 description: "OpenAI has slowed development of its Astra model over security concerns while snapping up presentation startup NextSlide, and Anthropic is turning Claude Code's autonomous auto mode on by default. Meanwhile, a CNBC investigation links a small Israeli startup to rogue AI hacks at OpenAI, Anthropic and Meta, and China unveils a $28 trillion capital-markets push to challenge US AI dominance."
 publishDate: 2026-08-09T22:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 10, 2026 (06:00 CST)
 
 ## Top 7 Stories
 

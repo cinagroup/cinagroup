@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Amazon Q Developer Adds Full Codebase Understanding · Nature Paper: AI Outperforms Humans in Scientific Literature Revie"
 description: "AI digest covering 2026-03-31 06:00 to 2026-03-31 18:00"
 publishDate: 2026-03-31T10:00:00.000Z

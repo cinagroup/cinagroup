@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — Cloudflare Cuts 1,100 Jobs as AI Usage Surges 600%, Musk v. Altman Trial Enters Final Week, OpenAI Ships Codex Chrome Extension"
 description: "Cloudflare restructures for agentic AI era; Meta employees report misery amid AI push and 10% layoffs; OpenAI's Codex gets Chrome browser control; Maryland fights $2B AI data center grid costs; Mozilla discloses 271 Claude-found Firefox bugs; Gmail AI learns your writing style; Musk v. Altman trial closes in."
 publishDate: 2026-05-10T22:00:00.000Z

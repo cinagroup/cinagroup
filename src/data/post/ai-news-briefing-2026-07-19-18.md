@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Meta-Anthropic $10B Deal, Apple Sues OpenAI, AI Suppresses Critical Thinking — AI News Briefing"
 description: "Meta negotiates a potential $10 billion compute deal with Anthropic, Apple files a trade secrets lawsuit against OpenAI targeting former employees, and a new study finds AI advice makes people less willing to admit ignorance — plus Anthropic's 1M-line code migration, Netflix's $587M AI acquisition, SpaceX Pentagon talks, and more."
 publishDate: 2026-07-19T10:00:00.000Z

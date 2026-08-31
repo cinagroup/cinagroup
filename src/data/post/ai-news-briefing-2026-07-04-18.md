@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic's Claude Sonnet 5, OpenAI GPT-5.6 Sol, NVIDIA's Revenue-Share Gambit — AI News Briefing"
 description: "Anthropic launches Claude Sonnet 5 with breakthrough coding and reasoning benchmarks while OpenAI counters with a GPT-5.6 Sol preview. NVIDIA pivots to revenue-share deals with startups as Google delays Gemini 3.5 Pro. Meta commits $135B to AI in 2026, employers regret AI-driven layoffs, and a new 'agentjacking' attack targets AI coding tools."
 publishDate: 2026-07-04T10:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Nvidia's AI Future, Big Tech's Backlash Race, Harvey Adds Memory — AI News Briefing"
 description: "Nvidia pushes to spur the AI boom into its next phase while Big Tech scrambles to quell a growing public backlash, per Bloomberg and WSJ. Harvey remakes its AI legal platform with memory, Alibaba cloud revenue jumps 45%, and Binance lets AI agents trade as China's military weighs AI's limits in command."
 publishDate: 2026-08-20T10:00:00.000Z

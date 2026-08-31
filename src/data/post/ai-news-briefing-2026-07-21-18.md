@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "China's Open-Weight Surge, Kimi Work Launch, Agent Swarm Economics — AI News Briefing"
 description: "China's open-weights AI strategy dominates discussion as open models gain ground on proprietary alternatives. Moonshot AI unveils Kimi Work, Cursor explores agent swarm economics, Qwen drops Image 3.0, and US tech giants' AI debt hits $1.65 trillion amid the infrastructure spending race."
 publishDate: 2026-07-21T10:00:00.000Z

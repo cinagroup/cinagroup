@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI COO Departs, NVIDIA Nemotron 4, Gemini Hits 1B Users — AI News Briefing"
 description: "OpenAI COO Brad Lightcap steps down as a leadership shake-up continues, NVIDIA pushes toward a 1-trillion-parameter Nemotron 4 open model and mobilizes $500B+ with Wall Street for AI infrastructure, and Google's Gemini app crosses 1 billion users. Also: Anthropic's no-opt-out Claude watermarking, a $9B Riot-Anthropic deal, and ChatGPT arrives on Linux."
 publishDate: 2026-08-11T22:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 12, 2026 (06:00 CST)
 
 ## Top 7 Stories
 

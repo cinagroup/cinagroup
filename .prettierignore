@@ -1,6 +1,7 @@
 dist
 node_modules
 .astro
+.wrangler
 .github
 .agents
 .backups
@@ -16,3 +17,4 @@ vendor
 wechat-official-account
 package-lock.json
 src/data/post
+worker-configuration.d.ts

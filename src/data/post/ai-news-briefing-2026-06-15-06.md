@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Files for IPO, Microsoft Launches MAI Models, Google-SpaceX $30B Deal — AI News Briefing"
 description: "OpenAI files confidential IPO paperwork at a potential $1 trillion valuation, Microsoft unveils its own MAI model family to reduce OpenAI dependence, and Google signs a $30 billion compute deal with SpaceX as the AI infrastructure race intensifies."
 publishDate: 2026-06-14T22:00:00.000Z

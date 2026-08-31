@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Files for IPO, G7 AI Summit, Anthropic Self-Build Warning — AI News Briefing"
 description: "OpenAI confidentially files for IPO following Anthropic, world leaders convene with AI CEOs at the G7 summit, and Anthropic warns that AI could soon build itself without human involvement."
 publishDate: 2026-06-20T10:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Security Lapse · Unreleased Model Details Exposed"
 description: "12-hour AI digest: Anthropic security lapse, Google AI search privacy lawsuit, Wikipedia AI ban, OpenAI Sora post-mortem, Apple-Gemini distillation deal, Meta AI layoffs"
 publishDate: 2026-03-28T22:00:00.000Z

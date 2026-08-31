@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Meta Glasses Privacy Backlash, OpenAI Urges Stronger CA AI Laws, Nvidia Hits ARC-AGI-3 Milestone — AI News Briefing"
 description: "Meta AI glasses face a mounting privacy backlash as covert recordings spread, while OpenAI publicly urges California lawmakers to pass stronger AI regulation. Nvidia's AVO agent architecture hits 100% on ARC-AGI-3, the FTC is urged to investigate AI firms over destroyed books, and Anthropic prepares an IPO filing that flags AI backlash as a risk factor."
 publishDate: 2026-08-21T22:00:00.000Z

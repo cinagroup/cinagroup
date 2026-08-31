@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "EU AI Act Implementation Timeline"
 description: "12-hour AI digest: EU AI Act timeline revealed, OpenAI enterprise pivot accelerates, Google Personal Intelligence expansion, iOS 26.4 AI features"
 publishDate: 2026-03-27T10:00:00.000Z

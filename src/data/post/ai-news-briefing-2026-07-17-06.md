@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Nvidia Vera Rubin, AI IPO Race, Google Android Order — AI News Briefing"
 description: "Nvidia unveils Vera Rubin chips and signals end of AI lab investments. SpaceX, OpenAI, and Anthropic race toward IPOs. The EU orders Google to open Android to AI rivals, while the Pentagon excludes Anthropic from classified AI deals."
 publishDate: 2026-07-16T22:00:00.000Z

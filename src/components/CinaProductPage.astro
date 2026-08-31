@@ -1,9 +1,11 @@
 ---
 import CinaPageHero from '~/components/CinaPageHero.astro';
+import ProductEvidence from '~/components/ProductEvidence.astro';
 import Layout from '~/layouts/PageLayout.astro';
 import type { MetaData } from '~/types';
 
 export interface Props {
+  product: 'cinaseek' | 'cinaclaw' | 'cinatoken' | 'cinaskill' | 'cinachain';
   metadata: MetaData;
   eyebrow: string;
   title: string;
@@ -20,6 +22,7 @@ export interface Props {
 }
 
 const {
+  product,
   metadata,
   eyebrow,
   title,
@@ -40,14 +43,17 @@ const {
   <div class="cg-page">
     <CinaPageHero {eyebrow} {title} {lead} {primary} {secondary} />
 
+    <ProductEvidence {product} />
+
     <section class="cg-page-section" aria-labelledby="capabilities-title">
       <div class="cg-page-shell">
         <div class="cg-section-heading">
           <p class="cg-eyebrow">Capabilities.</p>
           <h2 id="capabilities-title">A focused layer for the work your team needs to finish.</h2>
           <p>
-            Start with the smallest useful workflow, keep its boundaries visible, and expand only when the work calls
-            for it.
+            These are reference workflow patterns, not a promise that every capability is enabled in every release or
+            deployment. Start with the smallest useful workflow and confirm current availability against the evidence
+            above.
           </p>
         </div>
         <div class="cg-card-grid">
@@ -126,7 +132,7 @@ const {
             sensible starting scope.
           </p>
           <div class="cg-page-actions">
-            <a class="cg-page-button cg-page-button-primary" href="/contact">Plan a workflow</a>
+            <a class="cg-page-button cg-page-button-primary" href="/contact/">Plan a workflow</a>
             <a class="cg-page-button" href="/">View the product stack</a>
           </div>
         </div>

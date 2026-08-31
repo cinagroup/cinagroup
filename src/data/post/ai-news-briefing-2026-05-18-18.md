@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Launches Cybersecurity Model, Musk v. Altman Trial Enters Critical Phase, OpenClaw Founder Joins OpenAI — AI News Briefing"
 description: "Anthropic unveils Project Glasswing and Claude Mythos Preview, finding vulnerabilities across every major OS and browser. Microsoft cancels Claude Code licenses in favor of Copilot CLI. The Musk v. Altman trial sees Nadella testify. OpenClaw's Peter Steinberger joins OpenAI for multi-agent work."
 publishDate: 2026-05-18T10:00:00.000Z

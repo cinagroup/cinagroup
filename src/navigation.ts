@@ -7,23 +7,23 @@ export const headerData = {
       text: 'Products',
       links: [
         {
-          text: 'CinaSeek — Intelligent Search',
+          text: 'CinaSeek — Agent Workspace',
           href: getPermalink('/cinaseek'),
         },
         {
-          text: 'CinaClaw — AI Assistant',
+          text: 'CinaClaw — Local-first Agent Gateway',
           href: getPermalink('/cinaclaw'),
         },
         {
-          text: 'CinaToken — AI API Gateway',
+          text: 'CinaToken — Open-source Model Gateway',
           href: getPermalink('/cinatoken'),
         },
         {
-          text: 'CinaSkill — Skills Platform',
+          text: 'CinaSkill — CinaClaw SKILL.md Format',
           href: getPermalink('/cinaskill'),
         },
         {
-          text: 'CinaChain — Blockchain Network',
+          text: 'CinaChain — Base Sepolia NFT DApp Beta',
           href: getPermalink('/cinachain'),
         },
       ],
@@ -52,6 +52,10 @@ export const headerData = {
           text: 'Blog',
           href: getBlogPermalink(),
         },
+        {
+          text: 'Evidence',
+          href: getPermalink('/work'),
+        },
       ],
     },
     {
@@ -79,11 +83,11 @@ export const footerData = {
     {
       title: 'Products',
       links: [
-        { text: 'CinaSeek — Intelligent Search', href: '/cinaseek' },
-        { text: 'CinaClaw — AI Assistant', href: '/cinaclaw' },
-        { text: 'CinaToken — AI API Gateway', href: '/cinatoken' },
-        { text: 'CinaSkill — Skills Platform', href: '/cinaskill' },
-        { text: 'CinaChain — Blockchain Network', href: '/cinachain' },
+        { text: 'CinaSeek — Agent Workspace', href: '/cinaseek/' },
+        { text: 'CinaClaw — Local-first Agent Gateway', href: '/cinaclaw/' },
+        { text: 'CinaToken — Open-source Model Gateway', href: '/cinatoken/' },
+        { text: 'CinaSkill — CinaClaw SKILL.md Format', href: '/cinaskill/' },
+        { text: 'CinaChain — Base Sepolia NFT DApp Beta', href: '/cinachain/' },
       ],
     },
     {
@@ -98,6 +102,7 @@ export const footerData = {
       title: 'Company',
       links: [
         { text: 'About Us', href: '/about' },
+        { text: 'Evidence', href: '/work' },
         { text: 'Blog', href: '/blog' },
         { text: 'Contact', href: '/contact' },
       ],

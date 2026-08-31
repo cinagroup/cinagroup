@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Nvidia Eyes Perplexity, OpenAI Urges Stronger CA AI Law, Anthropic Goes In-House on Chips — AI News Briefing"
 description: "Nvidia is in talks to back Perplexity at a $30 billion-plus valuation, deepening its push into the AI application layer. OpenAI is urging California to strengthen its newly passed AI safety law, Anthropic hired Google's former TPU chief to pursue in-house silicon, and Meta poached an OpenAI veteran — while export-control and rogue-model stories raise fresh governance questions."
 publishDate: 2026-08-24T10:00:00.000Z

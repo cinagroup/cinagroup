@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "GPT-5.6 Launch, Anthropic's Project Glasswing, Meta's AI Coding Push — AI News Briefing"
 description: "OpenAI releases GPT-5.6 with breakthrough coding capabilities and launches ChatGPT Work for the enterprise. Anthropic unveils Project Glasswing cybersecurity initiative backed by NVIDIA and Microsoft, while Meta enters the AI coding assistant market. Plus: Anthropic's $30B raise, EU Chat Control, and OpenAI's IPO signals."
 publishDate: 2026-07-09T22:00:00.000Z

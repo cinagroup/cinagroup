@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Why OpenAI Killed Sora · Post-Mortem Analysis"
 description: "12-hour AI digest: OpenAI Sora post-mortem, Anthropic security lapse, Google AI privacy lawsuit, Wikipedia AI ban, Apple-Gemini distillation, Meta AI layoffs"
 publishDate: 2026-03-29T10:00:00.000Z

@@ -5,10 +5,10 @@ import Image from '~/components/common/Image.astro';
 const heroSystemImage = '~/assets/images/cinagroup-system-hero-v1.png';
 
 const metadata = {
-  title: 'CinaGroup | Search, automation, APIs, and infrastructure',
+  title: 'CinaGroup | Agent workspaces, gateways, skills, and testnet apps',
   ignoreTitleTemplate: true,
   description:
-    'CinaGroup helps teams solve work across search, workflow automation, model access, reusable skills, and chain-connected infrastructure.',
+    'CinaGroup builds an early-access agent workspace, local-first and model gateways, the CinaClaw SKILL.md format, and a Base Sepolia NFT DApp beta.',
   keywords: [
     'CinaGroup',
     'CinaSeek',
@@ -16,7 +16,7 @@ const metadata = {
     'CinaSkill',
     'CinaToken',
     'CinaChain',
-    'enterprise search',
+    'agent workspace',
     'workflow automation',
     'model gateway',
     'developer infrastructure',
@@ -62,24 +62,24 @@ const capabilityTabs = [
 
 const scenarioRows = [
   {
-    label: 'Enterprise search',
+    label: 'Early-access agent workspace',
     product: 'CinaSeek',
-    title: 'Find operational knowledge without building another portal.',
-    text: 'CinaSeek gives teams a search layer across documents, product notes, support history, and internal references.',
-    href: '/cinaseek',
+    title: 'Build private Gadgets inside capability-based sandboxes.',
+    text: 'CinaSeek combines agent chat, personal apps called Gadgets, and scoped Gatekeepers in an early-access workspace.',
+    href: '/cinaseek/',
     cta: 'Explore CinaSeek',
-    visualTitle: 'Knowledge index',
-    visualRows: ['docs/handbook.md', 'support/escalations', 'product/release-notes', 'runbooks/search'],
-    output: 'Answer ready in 1 source-backed view',
+    visualTitle: 'Illustrative Gadget flow',
+    visualRows: ['request defined', 'Gadget sandboxed', 'Gatekeeper scoped', 'human review queued'],
+    output: 'Illustrative result — not a live deployment',
   },
   {
-    label: 'Workflow automation',
+    label: 'Local-first agent gateway',
     product: 'CinaClaw',
-    title: 'Turn repeatable work into assistant-led workflows.',
-    text: 'CinaClaw helps teams triage requests, prepare next actions, and keep recurring operations moving without losing review control.',
-    href: '/cinaclaw',
+    title: 'Run an agent through an operator-controlled Gateway.',
+    text: 'CinaClaw provides a local-first Gateway, CLI, channel adapters, skills, and optional companion apps.',
+    href: '/cinaclaw/',
     cta: 'Explore CinaClaw',
-    visualTitle: 'Automation run',
+    visualTitle: 'Illustrative local setup',
     visualRows: ['intake classified', 'context gathered', 'draft action prepared', 'human review queued'],
     output: '4 steps completed, 1 waiting on approval',
   },
@@ -88,40 +88,50 @@ const scenarioRows = [
     product: 'CinaToken',
     title: 'Control model access, usage, and spend from one gateway.',
     text: 'CinaToken gives builders a single routing layer for model access, API keys, usage policy, and cost visibility.',
-    href: '/cinatoken',
+    href: '/cinatoken/',
     cta: 'Explore CinaToken',
-    visualTitle: 'Gateway policy',
+    visualTitle: 'Illustrative gateway policy',
     visualRows: ['route: coding tasks', 'limit: team budget', 'fallback: secondary model', 'log: request trace'],
     output: 'Policy applied before request leaves the app',
   },
   {
-    label: 'Infrastructure',
-    product: 'CinaChain + CinaSkill',
-    title: 'Ship connected services with reusable skills behind them.',
-    text: 'CinaChain and CinaSkill support teams that need trusted infrastructure, reusable capabilities, and a path from prototype to production.',
-    href: '/cinachain',
-    cta: 'Explore infrastructure',
-    visualTitle: 'Release path',
-    visualRows: ['skill packaged', 'service linked', 'contract checked', 'release promoted'],
-    output: 'Prototype moved to a production route',
+    label: 'Base Sepolia NFT DApp beta',
+    product: 'CinaChain',
+    title: 'Evaluate an NFT gallery and mint flow on testnet.',
+    text: 'CinaChain is a beta NFT DApp configured for Base Sepolia testnet; it is not presented as a production blockchain network.',
+    href: '/cinachain/',
+    cta: 'Explore CinaChain',
+    visualTitle: 'Illustrative testnet mint',
+    visualRows: ['Base Sepolia selected', 'wallet connected', 'mint phase checked', 'test transaction reviewed'],
+    output: 'Illustrative testnet result — no production claim',
   },
 ];
 
 const productRows = [
-  ['CinaSeek', 'Search layer', 'Find answers across internal knowledge and live product context.', '/cinaseek'],
+  ['CinaSeek', 'Early-access agent workspace', 'Agent chat, private Gadgets, and scoped Gatekeepers.', '/cinaseek/'],
   [
     'CinaClaw',
-    'Workflow assistant',
-    'Coordinate repeatable operational work with reviewable next actions.',
-    '/cinaclaw',
+    'Local-first agent gateway',
+    'Run agents through an operator-controlled Gateway, channels, and skills.',
+    '/cinaclaw/',
   ],
-  ['CinaToken', 'Model gateway', 'Manage model routing, API keys, policy, logs, and cost boundaries.', '/cinatoken'],
-  ['CinaSkill', 'Reusable skills', 'Package task-specific abilities for teams, robots, and operators.', '/cinaskill'],
+  [
+    'CinaToken',
+    'Open-source, self-hosted model gateway',
+    'Manage model routing, API keys, policy, logs, and cost boundaries.',
+    '/cinatoken/',
+  ],
+  [
+    'CinaSkill',
+    'CinaClaw SKILL.md format',
+    'Package instructions and resources loaded as CinaClaw skills.',
+    '/cinaskill/',
+  ],
   [
     'CinaChain',
-    'Connected infrastructure',
-    'Support applications that need chain-aware services and reliable rails.',
-    '/cinachain',
+    'Base Sepolia NFT DApp beta',
+    'Evaluate an NFT gallery and mint flow with testnet-only assets.',
+    '/cinachain/',
   ],
 ];
 
@@ -168,7 +178,7 @@ const releaseCode = `workflow "support-review" {
         </p>
         <div class="cg-actions" aria-label="Primary actions">
           <a class="cg-button cg-button-primary" href="#scenarios">See the workflows</a>
-          <a class="cg-button cg-button-secondary" href="/contact">Talk to us</a>
+          <a class="cg-button cg-button-secondary" href="/contact/">Talk to us</a>
         </div>
         <div class="cg-preview" aria-label="CinaGroup workflow preview">
           <div class="cg-preview-top">
@@ -263,13 +273,13 @@ const releaseCode = `workflow "support-review" {
             more serious.
           </p>
           <div class="cg-actions">
-            <a class="cg-button cg-button-invert" href="/contact">Plan a workflow</a>
-            <a class="cg-button cg-button-dark-secondary" href="/blog">Read the notes</a>
+            <a class="cg-button cg-button-invert" href="/contact/">Plan a workflow</a>
+            <a class="cg-button cg-button-dark-secondary" href="/blog/">Read the notes</a>
           </div>
         </div>
-        <div class="cg-code-panel" aria-label="Release checklist preview">
+        <div class="cg-code-panel" aria-label="Illustrative release checklist preview">
           <div class="cg-code-top">
-            <span>release.config</span>
+            <span>Illustrative release.config</span>
             <span>main</span>
           </div>
           <pre><code>{releaseCode}</code></pre>
@@ -297,8 +307,8 @@ const releaseCode = `workflow "support-review" {
           infrastructure.
         </p>
         <div class="cg-actions">
-          <a class="cg-button cg-button-primary" href="/contact">Contact CinaGroup</a>
-          <a class="cg-button cg-button-secondary" href="/pricing">View pricing</a>
+          <a class="cg-button cg-button-primary" href="/contact/">Contact CinaGroup</a>
+          <a class="cg-button cg-button-secondary" href="/pricing/">View pricing</a>
         </div>
       </div>
     </section>
@@ -313,7 +323,7 @@ const releaseCode = `workflow "support-review" {
   .cg-home {
     --cg-ink: #171717;
     --cg-body: #4d4d4d;
-    --cg-muted: #888888;
+    --cg-muted: #666666;
     --cg-hairline: #ebebeb;
     --cg-canvas: #ffffff;
     --cg-soft: #fafafa;

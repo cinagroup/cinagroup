@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "House Unveils AI Preemption Bill, Meta Launches Enterprise Agents, Anthropic Files for IPO — AI News Briefing"
 description: "Congress introduces federal AI legislation preempting state laws, Meta enters the enterprise AI agent market, Anthropic files for its IPO at a $965B valuation, Broadcom shares tumble on weak AI outlook, and the Trump administration moves to pre-check major AI models."
 publishDate: 2026-06-05T10:00:00.000Z

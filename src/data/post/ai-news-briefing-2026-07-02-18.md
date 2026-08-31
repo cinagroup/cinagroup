@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Claude Sonnet 5, Chinese AI Models Surge, Claude Science — AI News Briefing"
 description: "Anthropic drops Claude Sonnet 5 with dramatically lower agent costs, Chinese AI models close the gap with Western leaders, and Claude Science brings AI agents into the lab with NVIDIA. Plus: Meta's cloud ambitions, U.S. lifts Anthropic export controls, and a new benchmark raises the bar for AI coding agents."
 publishDate: 2026-07-02T10:00:00.000Z

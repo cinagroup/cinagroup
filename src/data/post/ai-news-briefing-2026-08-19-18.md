@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Cyber Safeguards, Etched's $21B Round, Cursor vs GitHub — AI News Briefing"
 description: "OpenAI argues for pacing model development as capabilities go cyber-critical and rolls out new safeguards plus a dedicated ChatGPT for Teens; Etched's valuation doubles to $21B as Jane Street deploys its first AI cluster; Cursor launches a GitHub rival while Anthropic's Claude writes a macOS driver in a viral agent demo. Meta's blockbuster trial, meanwhile, draws comparisons to big tobacco litigation."
 publishDate: 2026-08-19T10:00:00.000Z

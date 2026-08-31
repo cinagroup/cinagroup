@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Agentic Commerce Protocol · ChatGPT Visual Shopping"
 description: "12-hour AI digest: OpenAI launches Agentic Commerce Protocol for shopping, Microsoft deploying 100+ AI agents company-wide, OpenAI suddenly kills Sora, Nudge Security tackles shadow AI agents, Meta offers stock options to retain AI talent"
 publishDate: 2026-03-25T10:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Groq Raises $650M After Nvidia's $20B Deal, Coders Refuse to Work Without AI, Apple Brings Gemini to iPhone — AI News Briefing"
 description: "Groq raises $650M pivoting to AI inference after Nvidia's $20B deal. Developers refuse to work without AI tools, raising quality concerns. Cognition's Scott Wu says AI coding agents shouldn't replace humans. Apple reportedly integrating Google Gemini into iPhone for new Siri. Illinois passes landmark AI regulation."
 publishDate: 2026-05-30T10:00:00.000Z

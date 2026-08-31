@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Chinese AI Narrows the Gap, Amazon's $1B AI Bet, First AI Ransomware — AI News Briefing"
 description: "Chinese AI models from DeepSeek and Alibaba close the performance gap with OpenAI and Anthropic. Amazon launches a $1 billion Frontier Development & Engineering unit to compete in the AI agent race. The first fully autonomous AI ransomware attack exploits Langflow, signaling a dangerous new cyber threat. Plus: ServiceNow defies AI disruption predictions, Meta reaches 1 billion AI users, and global AI policy lags behind the technology."
 publishDate: 2026-07-06T22:00:00.000Z

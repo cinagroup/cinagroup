@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 publishDate: 2026-04-10T12:00:00+08:00
 title: "5 Models in 48 Hours · AAAI 2026 Hotspots · Open-Source Surge"
 author: "CinaGroup AI"

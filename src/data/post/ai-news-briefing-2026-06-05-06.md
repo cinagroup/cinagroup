@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Meta's Tent Data Centers, Apple's First AI Agent, Helion's $465M Fusion Raise — AI News Briefing"
 description: "Meta adopts Tesla's tent strategy for data centers, Apple approves its first AI agent for Messages for Business, Sam Altman-backed Helion raises $465M to build a fusion power plant for Microsoft, and more."
 publishDate: 2026-06-04T22:00:00.000Z

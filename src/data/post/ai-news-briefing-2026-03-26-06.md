@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "GPT-5.4 GDPVal 83% · 1M Token Context Window"
 description: "12-hour AI digest: OpenAI GPT-5.4 dominates benchmarks, Anthropic Claude auto-mode launches, Google Gemini hits 750M users, Nvidia bets big on AI agents, Microsoft 100+ agents in production"
 publishDate: 2026-03-25T22:00:00.000Z

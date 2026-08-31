@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 publishDate: 2026-04-05T06:00:00+08:00
 title: "OpenAI $122B Record Funding · Microsoft $10B Japan AI · Utah AI Prescriptions"
 author: "CinaGroup AI"

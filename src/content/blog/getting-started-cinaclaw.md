@@ -1,10 +1,14 @@
 ---
+status: published
+origin: editorial
 title: '设计第一个 CinaClaw 工作流：从任务边界开始'
 excerpt: '一份面向产品与运营团队的范围定义指南：先明确用户、输入、权限、人工复核和可观察结果，再讨论自动化。'
 publishDate: 2026-03-20
 category: 'Guide'
 tags: ['CinaClaw', 'Workflow', 'Automation']
 author: 'CinaClaw Team'
+authorType: Organization
+language: zh-CN
 draft: false
 ---
 

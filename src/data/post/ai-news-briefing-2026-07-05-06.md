@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic-Samsung Chip Talks, OpenAI's $42.6B Equity Play, Meta's AI Reset — AI News Briefing"
 description: "Anthropic explores custom AI chips with Samsung, OpenAI proposes a $42.6 billion equity stake to the US government, Meta admits its AI agent restructuring fell short, and the White House races to finalize AI model rules — your July 5, 2026 AI news briefing."
 publishDate: 2026-07-04T22:00:00.000Z

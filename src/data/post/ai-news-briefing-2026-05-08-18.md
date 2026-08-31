@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — May 8, 2026: OpenAI Codex Goes Browser-Native, Mozilla Exposes 271 Claude-Found Firefox Bugs, and Snap Drops Perplexity"
 description: "OpenAI launches a Codex Chrome extension for browser automation. Mozilla publicly discloses 271 Firefox vulnerabilities found by Claude Mythos Preview. Google personalizes Gmail AI drafting. Snap confirms its Perplexity AI search deal fell through. And the Musk v. Altman trial adds explosive new testimony."
 publishDate: 2026-05-08T10:00:00.000Z

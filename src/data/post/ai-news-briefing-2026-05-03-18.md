@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Kimi K2.6 Beats Claude and GPT-5.5 in Coding Challenge, Uber Burns Full AI Budget on Claude Code, Anthropic Launches Enterprise Security Scanner"
 description: "Moonshot AI's open-weights model dominates AI Coding Contest; Uber blows through its entire 2026 AI budget in four months on Claude Code and Cursor; Anthropic rolls out Claude Security for enterprise codebase scanning. Plus: Spotify adds human artist verification, California to ticket driverless cars, OpenAI adds passkey support for high-risk users."
 publishDate: 2026-05-03T10:00:00.000Z

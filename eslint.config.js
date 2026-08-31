@@ -58,6 +58,7 @@ export default [
       'dist',
       'node_modules',
       '.astro',
+      '.wrangler',
       '.github',
       '.agents',
       '.backups',

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "EU Nude App Ban · AI Act Delay"
 description: "12-hour AI digest: EU delays AI rules, OpenAI shelves erotic chatbot, Meta pivots to AI with layoffs, South Korea invests in AI chips"
 publishDate: 2026-03-27T00:00:00.000Z

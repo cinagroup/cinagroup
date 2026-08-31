@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "DeepMind Solves Protein Folding for Entire Human Proteome · OpenAI Releases GPT-4.5 Turbo with 200K Context Window · Rep"
 description: "AI digest covering 2026-04-20 18:00 to 2026-04-21 06:00"
 publishDate: 2026-04-20T22:00:00.000Z

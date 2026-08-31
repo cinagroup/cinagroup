@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Microsoft and OpenAI End Revenue-Sharing Deal · Alibaba Launches Qwen 3 · Huawei Targets Nvidia with New AI Chip"
 description: "AI digest covering 2026-04-28 06:00 to 2026-04-28 18:00"
 publishDate: 2026-04-28T10:00:00.000Z

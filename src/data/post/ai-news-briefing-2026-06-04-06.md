@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google's $85B AI Raise, Anthropic's Claude Mythos Expansion, Trump's New AI Executive Order — AI News Briefing"
 description: "Alphabet raises a record $85B for Google's AI business; Anthropic scales Claude Mythos to critical infrastructure across 15+ countries; Trump signs a narrower AI oversight executive order. Plus Meta's WhatsApp Business AI agent goes global, OpenAI launches Codex tools for white-collar work, Google debuts deepfake call detection, and Microsoft launches Scout personal assistant."
 publishDate: 2026-06-03T22:00:00.000Z

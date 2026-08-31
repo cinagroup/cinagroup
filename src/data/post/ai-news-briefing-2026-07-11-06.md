@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Apple Sues OpenAI, GPT-5.6 Launches, SK Hynix $26.5B IPO — AI News Briefing"
 description: "Apple files a trade secrets lawsuit against OpenAI, GPT-5.6 and 'ChatGPT Work' go live after regulatory greenlight, SK Hynix pulls off the largest foreign IPO in US history, and Fidji Simo steps down from OpenAI's leadership as the AI world braces for a turbulent summer."
 publishDate: 2026-07-10T22:00:00.000Z

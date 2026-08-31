@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 publishDate: 2026-04-10T06:00:00+08:00
 title: "OpenAI vs Anthropic Memo · Zhipu GLM-5.1 Open-Source · Google Gemma 4"
 author: "CinaGroup AI"

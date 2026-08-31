@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Nvidia Scales Back OpenAI Guarantee, Qwen Passes 3B Downloads, Anthropic Revenue Surges — AI News Briefing"
 description: "Nvidia downsizes its planned $250 billion guarantee for OpenAI's Ohio data center and discloses a $21 billion SpaceX stake, while Alibaba's Qwen models pass 3 billion downloads to overtake Meta and Google. Anthropic's revenue surges past $11.5 billion as it rolls out Claude text watermarking, and OpenAI's upheaval mounts ahead of the IPO push."
 publishDate: 2026-08-15T10:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 15, 2026 (18:00 CST)
 
 ## Top 7 Stories
 

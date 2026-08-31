@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Notion AI Expands to Full Document Generation · Apache Foundation Accepts AI/ML Project Incubation Pipeline · TSMC Begin"
 description: "AI digest covering 2026-04-11 18:00 to 2026-04-12 06:00"
 publishDate: 2026-04-11T22:00:00.000Z

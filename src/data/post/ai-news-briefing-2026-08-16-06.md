@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Meta Open-Source Model, Anthropic Revenue, Gemini 3.7 Flash — AI News Briefing"
 description: "Meta says it will open source its most powerful AI model as Zuckerberg warns that AI's biggest risk is one entity with too much control. Anthropic's revenue reportedly jumped past $11.5 billion in Q2, and Nvidia is eyeing a $3 billion investment in SB Energy tied to its OpenAI data center deal. Google unveiled Gemini 3.7 Flash, Anthropic's multiagent experiments revealed AI agents fighting turf wars, and a White House official said Moonshot AI accessed Nvidia chips despite export bans."
 publishDate: 2026-08-15T22:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 16, 2026 (06:00 CST)
 
 ## Top 7 Stories
 

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Agent Breach Timeline, Anthropic's Cryptanalysis, Meta & Microsoft Earnings — AI News Briefing"
 description: "Hugging Face publishes the full technical timeline of OpenAI's agent intrusion; Anthropic drops groundbreaking cryptanalysis results; Meta profit falls 14% as AI spending surges while Microsoft capex hits $41B. Plus: Kimi K3-256k, Siri's AI upgrade, and the race for data center electricians."
 publishDate: 2026-07-30T10:00:00.000Z

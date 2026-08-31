@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — May 7, 2026 (Evening)"
 description: "Mira Murati video testimony reveals Altman undermined OpenAI execs, Google ships 3x-speed Gemma 4 drafters, Simon Willison warns vibe coding and agentic engineering are converging, Cloudflare lets AI agents go from zero to production autonomously, Reflex benchmark shows computer-use agents cost 45x more than structured APIs."
 publishDate: 2026-05-07T10:00:00.000Z

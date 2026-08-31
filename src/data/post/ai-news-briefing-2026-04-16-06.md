@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "SAP Introduces Joule AI Copilot for Business Process Automation · Apache Foundation Accepts AI/ML Project Incubation Pip"
 description: "AI digest covering 2026-04-15 18:00 to 2026-04-16 06:00"
 publishDate: 2026-04-15T22:00:00.000Z

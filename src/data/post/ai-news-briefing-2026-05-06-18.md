@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — May 6, 2026: Meta's 'Hatch' Agent, Cloudflare Agent Deployments, OpenAI Low-Latency Voice Architecture"
 description: "Meta internally builds a consumer AI agent called Hatch; Cloudflare enables AI agents to create accounts, buy domains, and deploy autonomously; OpenAI reveals its WebRTC rearchitecture for 900M+ weekly voice AI users; AMD Q1 data center revenue surges 38%."
 publishDate: 2026-05-06T10:00:00.000Z

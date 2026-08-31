@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Cursor Kimi Integration · AI Coding Tool Controversy"
 description: "12-hour AI digest: Cursor admits Kimi foundation, Bezos $100B AI manufacturing plan, Microsoft rolls back Copilot, Meta rogue AI agents"
 publishDate: 2026-03-23T10:00:00.000Z

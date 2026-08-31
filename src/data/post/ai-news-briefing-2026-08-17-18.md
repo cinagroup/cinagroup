@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Meta's AI Pitch Draws Skepticism, OpenAI Hires New CRO, IBM Deepens OpenAI Partnership — AI News Briefing"
 description: "Meta faces a credibility gap as analysts question whether Zuckerberg's AI vision will win over users, while OpenAI names a new chief revenue officer amid an executive shake-up ahead of its expected IPO. IBM is doubling down on OpenAI for enterprise AI, OpenAI ships an 'Ultrafast' mode for GPT-5.6 Sol, and Microsoft is pruning failed AI features as it merges its Copilot apps."
 publishDate: 2026-08-17T10:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 17, 2026 (18:00 CST)
 
 ## Top 7 Stories
 

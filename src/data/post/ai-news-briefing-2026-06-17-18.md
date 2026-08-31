@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Price War Retreat, U.S. AI Export Controls, Jensen Huang's Social Norms Warning — AI News Briefing"
 description: "Anthropic reversed its controversial billing overhaul as the OpenAI price war intensifies ahead of dual IPOs. The U.S. imposed new export controls on Anthropic's advanced models, while NVIDIA CEO Jensen Huang warned that society needs 'new social norms' for the AI era. Markets surged as the Nikkei 225 broke 70,000 on AI momentum."
 publishDate: 2026-06-17T10:00:00.000Z

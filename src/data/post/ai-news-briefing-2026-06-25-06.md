@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google Brain Drain to Rivals, GPT-5.5 Tops Mythos, G7 AI Summit — AI News Briefing"
 description: "Google DeepMind loses top AI scientists including a Nobel laureate to Anthropic and OpenAI as Alphabet shares drop 6%, OpenAI's GPT-5.5 surpasses Anthropic's Mythos on key benchmarks, and world leaders convene at the G7 AI Summit with Big Tech CEOs."
 publishDate: 2026-06-24T22:00:00.000Z

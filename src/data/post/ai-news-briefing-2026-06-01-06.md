@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Codex Expands to Windows, Illinois Passes Major AI Safety Bill, Gemini Spark Agent Goes Live — AI News Briefing"
 description: "OpenAI's Codex agent gains Windows support, Illinois passes America's strongest AI safety legislation, Google's Gemini Spark AI agent arrives, Meta launches cross-platform subscriptions with AI tiers, Microsoft reportedly builds a super app, Huawei's chip chief challenges Moore's Law, and Anthropic draws attention from the Vatican."
 publishDate: 2026-05-31T22:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Acquires TBPN · Microsoft 3 New Models · Google Vids"
 description: "12-hour AI digest: OpenAI acquires TBPN, Microsoft launches 3 new models, Google Vids avatar controls"
 publishDate: 2026-04-03T04:00:00.000Z

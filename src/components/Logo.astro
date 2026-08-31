@@ -1,12 +1,27 @@
 ---
 import { SITE } from 'astrowind:config';
+
+export interface Props {
+  showName?: boolean;
+  imageAlt?: string;
+}
+
+const { showName = true, imageAlt = SITE?.name ?? 'CinaGroup' } = Astro.props;
 ---
 
 <div class="flex items-center">
-  <img src="/logo.png" alt={SITE?.name} class="h-10 w-auto object-contain rounded-[5px]" width="120" height="40" />
-  <span
-    class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white"
-  >
-    {SITE?.name}
-  </span>
+  <img
+    src="/logo.png"
+    alt={showName ? '' : imageAlt}
+    class="h-10 w-auto object-contain rounded-[5px]"
+    width="120"
+    height="40"
+  />
+  {
+    showName && (
+      <span class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white">
+        {SITE?.name}
+      </span>
+    )
+  }
 </div>

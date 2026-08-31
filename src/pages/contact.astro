@@ -1,5 +1,6 @@
 ---
 import CinaPageHero from '~/components/CinaPageHero.astro';
+import ContactSubmissionForm from '~/components/ContactSubmissionForm.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
@@ -14,8 +15,8 @@ const metadata = {
       eyebrow="Contact / start with the work."
       title="Tell us what your team is trying to move."
       lead="Share the user, workflow, current systems, constraints, and outcome. We will use that context to identify a sensible first scope."
-      primary={{ text: 'Email info@cinagroup.com', href: 'mailto:info@cinagroup.com' }}
-      secondary={{ text: 'Review services', href: '/services' }}
+      primary={{ text: 'Start an inquiry', href: '#contact-form' }}
+      secondary={{ text: 'Review services', href: '/services/' }}
     />
 
     <section class="cg-page-section" aria-labelledby="contact-form-title">
@@ -24,7 +25,10 @@ const metadata = {
           <div class="cg-section-heading">
             <p class="cg-eyebrow">A useful first message.</p>
             <h2 id="contact-form-title">Give us enough context to respond usefully.</h2>
-            <p>The form opens a draft in your email app. This website does not submit or store the message.</p>
+            <p>
+              A submission is confirmed only after it has been securely recorded. Keep the returned reference for
+              follow-up.
+            </p>
           </div>
           <div class="cg-list-panel">
             <div class="cg-list-row">
@@ -44,53 +48,7 @@ const metadata = {
           </div>
         </div>
 
-        <form
-          class="cg-form-card"
-          action="mailto:info@cinagroup.com"
-          method="POST"
-          enctype="text/plain"
-          data-contact-form
-        >
-          <div class="cg-field">
-            <label for="name">Name</label><input id="name" name="name" type="text" autocomplete="name" required />
-          </div>
-          <div class="cg-field">
-            <label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required />
-          </div>
-          <div class="cg-field">
-            <label for="company">Company or team <span>(optional)</span></label><input
-              id="company"
-              name="company"
-              type="text"
-              autocomplete="organization"
-            />
-          </div>
-          <div class="cg-field">
-            <label for="subject">Area</label><select id="subject" name="subject" required
-              ><option value="">Choose an area</option><option value="Product workflow">Product workflow</option><option
-                value="Search and knowledge">Search and knowledge</option
-              ><option value="Automation">Automation</option><option value="API and model gateway"
-                >API and model gateway</option
-              ><option value="Infrastructure and delivery">Infrastructure and delivery</option><option value="Other"
-                >Other</option
-              ></select
-            >
-          </div>
-          <div class="cg-field">
-            <label for="message">Workflow and desired outcome</label><textarea
-              id="message"
-              name="message"
-              rows="7"
-              required></textarea>
-          </div>
-          <button class="cg-page-button cg-page-button-primary" type="submit">Open email draft</button>
-          <p class="cg-form-note">
-            By continuing, you choose what to send through your email provider. Read the <a href="/privacy"
-              >Privacy Policy</a
-            > and <a href="/terms">Terms of Service</a>.
-          </p>
-          <p id="contact-form-status" class="cg-form-status" aria-live="polite" hidden></p>
-        </form>
+        <ContactSubmissionForm lang="en" />
       </div>
     </section>
 
@@ -116,35 +74,4 @@ const metadata = {
       </div>
     </section>
   </div>
-
-  <script is:inline>
-    (() => {
-      const initContactForm = () => {
-        const form = /** @type {HTMLFormElement | null} */ (document.querySelector('form[data-contact-form]'));
-        if (!form || form.dataset.initialized) return;
-        form.dataset.initialized = 'true';
-        form.addEventListener('submit', (event) => {
-          event.preventDefault();
-          if (!form.reportValidity()) return;
-          const data = new FormData(form);
-          const subject = `[CinaGroup] ${String(data.get('subject') || 'Project inquiry')}`;
-          const body = [
-            `Name: ${String(data.get('name') || '')}`,
-            `Email: ${String(data.get('email') || '')}`,
-            `Company or team: ${String(data.get('company') || 'Not provided')}`,
-            '',
-            String(data.get('message') || ''),
-          ].join('\n');
-          const status = document.getElementById('contact-form-status');
-          if (status) {
-            status.hidden = false;
-            status.textContent = 'Your email draft is opening. If nothing happens, email info@cinagroup.com directly.';
-          }
-          window.location.href = `mailto:info@cinagroup.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        });
-      };
-      initContactForm();
-      document.addEventListener('astro:page-load', initContactForm);
-    })();
-  </script>
 </Layout>

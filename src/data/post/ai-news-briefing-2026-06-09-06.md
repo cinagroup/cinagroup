@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Nears $1T Valuation, Google Launches AI Agents, Microsoft Cuts OpenAI Ties — AI News Briefing"
 description: "Anthropic overtakes OpenAI as the world's most valuable AI startup at $965 billion, Google unveils personal AI agents and new Gemini models, and Microsoft builds its own AI models to reduce dependence on OpenAI. Plus: the Pentagon tests rival AI models, Big AI unites against Chinese model copying, NVIDIA ships AI-agent PCs, and new AI policy moves reshape the regulatory landscape."
 publishDate: 2026-06-08T22:00:00.000Z

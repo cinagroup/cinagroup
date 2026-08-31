@@ -1,7 +1,7 @@
 #!/bin/bash
 # OpenClaw Memory Backup & Sync System
 # Encrypted cloud backup for memory files
-# Supports: Local, S3, GitHub, WebDAV
+# Supports: Local, S3, WebDAV. Repository-based sync is intentionally retired.
 
 set -e
 
@@ -40,12 +40,6 @@ init_config() {
     "local": {
       "enabled": true,
       "path": "/root/.openclaw/workspace/.backups/memory"
-    },
-    "github": {
-      "enabled": false,
-      "repo": "username/memory-backup",
-      "branch": "main",
-      "path": "backups/"
     },
     "s3": {
       "enabled": false,
@@ -176,50 +170,10 @@ EOF
     success "Backup created: $archive_file"
 }
 
-# Sync to GitHub
+# Repository sync is retired. Backup jobs must not mutate application repositories.
 sync_github() {
-    local backup_file="$1"
-    local github_config=$(jq -r '.destinations.github' "$CONFIG_FILE" 2>/dev/null)
-    local enabled=$(echo "$github_config" | jq -r '.enabled' 2>/dev/null || echo "false")
-    
-    if [[ "$enabled" != "true" ]]; then
-        log "GitHub sync disabled, skipping"
-        return 0
-    fi
-    
-    local repo=$(echo "$github_config" | jq -r '.repo')
-    local branch=$(echo "$github_config" | jq -r '.branch')
-    local path=$(echo "$github_config" | jq -r '.path')
-    
-    log "Syncing to GitHub: $repo/$path"
-    
-    # Clone or pull backup repo
-    local backup_repo_dir="$WORKSPACE_DIR/.backups/github-repo"
-    
-    if [[ -d "$backup_repo_dir/.git" ]]; then
-        cd "$backup_repo_dir"
-        git pull origin "$branch" 2>/dev/null || true
-    else
-        git clone "https://github.com/$repo.git" "$backup_repo_dir" 2>/dev/null || {
-            error "Failed to clone GitHub repo"
-            return 1
-        }
-        cd "$backup_repo_dir"
-    fi
-    
-    # Copy backup file
-    mkdir -p "$path"
-    cp "$backup_file" "$path/"
-    
-    # Commit and push
-    git add "$path"
-    git commit -m "🧠 Memory backup: $(basename "$backup_file")" || true
-    git push origin "$branch" 2>/dev/null || {
-        warn "Failed to push to GitHub"
-    }
-    
-    cd - > /dev/null
-    success "Synced to GitHub"
+    warn "Repository sync is retired; configure S3 or WebDAV for remote backups"
+    return 0
 }
 
 # Sync to S3
@@ -439,7 +393,7 @@ show_status() {
     printf "Enabled:          %s\n" "$(jq -r '.enabled' "$CONFIG_FILE")"
     printf "Encryption:       %s\n" "$(jq -r '.encryption.enabled' "$CONFIG_FILE")"
     printf "Local Backup:     %s\n" "$(jq -r '.destinations.local.enabled' "$CONFIG_FILE")"
-    printf "GitHub Sync:      %s\n" "$(jq -r '.destinations.github.enabled' "$CONFIG_FILE")"
+    printf "Repository Sync:  retired\n"
     printf "S3 Sync:          %s\n" "$(jq -r '.destinations.s3.enabled' "$CONFIG_FILE")"
     printf "WebDAV Sync:      %s\n" "$(jq -r '.destinations.webdav.enabled' "$CONFIG_FILE")"
     printf "Retention (D/W/M): %s/%s/%s days\n" \

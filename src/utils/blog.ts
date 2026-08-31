@@ -4,6 +4,14 @@ import type { CollectionEntry } from 'astro:content';
 import type { Post } from '~/types';
 import { APP_BLOG } from 'astrowind:config';
 import { cleanSlug, trimSlash, BLOG_BASE, POST_PERMALINK_PATTERN, CATEGORY_BASE, TAG_BASE } from './permalinks';
+import {
+  inferPostLanguage,
+  isAutomatedBriefing,
+  isPublicPostStatus,
+  isRoutablePostStatus,
+  normalizePostAuthorInfo,
+  resolvePostStatus,
+} from './blog-content.js';
 
 const generatePermalink = async ({
   id,
@@ -47,20 +55,48 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   const {
     publishDate: rawPublishDate = new Date(),
     updateDate: rawUpdateDate,
+    updated: rawUpdated,
     title,
     excerpt,
     description,
     image,
     tags: rawTags = [],
     category: rawCategory,
-    author,
+    author: rawAuthor,
+    authorType: rawAuthorType,
+    authorUrl: rawAuthorUrl,
+    language: rawLanguage,
+    status: rawStatus,
+    origin,
+    sources,
+    verification,
+    review,
+    correction,
+    reviewedBy,
+    reviewedAt,
+    correctionNote,
+    aliases,
     draft = false,
+    archive = false,
+    archived: rawArchived = false,
+    published: rawPublished,
     metadata = {},
   } = data;
 
   const slug = cleanSlug(id); // cleanSlug(rawSlug.split('/').pop());
   const publishDate = new Date(rawPublishDate);
-  const updateDate = rawUpdateDate ? new Date(rawUpdateDate) : undefined;
+  const rawLastUpdated = rawUpdateDate || rawUpdated;
+  const updateDate = rawLastUpdated ? new Date(rawLastUpdated.valueOf()) : undefined;
+  const body = 'body' in post && typeof post.body === 'string' ? post.body : '';
+  const language = rawLanguage || inferPostLanguage([title, excerpt, description, body].filter(Boolean).join('\n'));
+  const automatedBriefing = isAutomatedBriefing(slug);
+  const author = normalizePostAuthorInfo(rawAuthor, rawAuthorType, automatedBriefing);
+  const authorUrl = rawAuthorUrl || author.url;
+  const status = resolvePostStatus(
+    { status: rawStatus, draft, archive, archived: rawArchived, published: rawPublished },
+    automatedBriefing
+  );
+  const archived = status === 'archived_unverified';
 
   const category = rawCategory
     ? {
@@ -88,9 +124,24 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
 
     category: category,
     tags: tags,
-    author: author,
+    author: author.name,
+    authorType: author.type,
+    authorUrl: authorUrl,
+    language: language,
+    status,
+    origin,
+    sources,
+    verification,
+    review,
+    correction,
+    reviewedBy,
+    reviewedAt,
+    correctionNote,
+    aliases,
 
     draft: draft,
+    archived: archived,
+    published: isPublicPostStatus(status),
 
     metadata,
 
@@ -105,13 +156,14 @@ const load = async function (): Promise<Array<Post>> {
   const posts = await getCollection('post');
   const normalizedPosts = posts.map(async (post) => await getNormalizedPost(post));
 
-  const results = (await Promise.all(normalizedPosts))
-    .sort((a, b) => b.publishDate.valueOf() - a.publishDate.valueOf())
-    .filter((post) => !post.draft);
+  const results = (await Promise.all(normalizedPosts)).sort(
+    (a, b) => b.publishDate.valueOf() - a.publishDate.valueOf()
+  );
 
   return results;
 };
 
+let _allPosts: Array<Post>;
 let _posts: Array<Post>;
 
 /** */
@@ -132,10 +184,16 @@ export const blogPostsPerPage = APP_BLOG?.postsPerPage;
 /** */
 export const fetchPosts = async (): Promise<Array<Post>> => {
   if (!_posts) {
-    _posts = await load();
+    _posts = (await fetchAllPosts()).filter((post) => isPublicPostStatus(post.status));
   }
 
   return _posts;
+};
+
+/** All governed sources, including entries that must not appear in public indexes. */
+export const fetchAllPosts = async (): Promise<Array<Post>> => {
+  if (!_allPosts) _allPosts = await load();
+  return _allPosts;
 };
 
 /** */
@@ -186,12 +244,14 @@ export const getStaticPathsBlogList = async ({ paginate }: { paginate: PaginateF
 /** */
 export const getStaticPathsBlogPost = async () => {
   if (!isBlogEnabled || !isBlogPostRouteEnabled) return [];
-  return (await fetchPosts()).flatMap((post) => ({
-    params: {
-      blog: post.permalink,
-    },
-    props: { post },
-  }));
+  return (await fetchAllPosts())
+    .filter((post) => isRoutablePostStatus(post.status))
+    .flatMap((post) => ({
+      params: {
+        blog: post.permalink,
+      },
+      props: { post },
+    }));
 };
 
 /** */

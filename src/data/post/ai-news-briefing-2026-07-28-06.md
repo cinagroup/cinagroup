@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Kimi-K3 on HuggingFace, AI Companies Shredding Rare Books, Record AI Lobbying — AI News Briefing"
 description: "Moonshot AI releases Kimi-K3 to massive developer reception as AI companies face backlash for destroying rare books for training data. Washington sees record AI lobbying spend while Apple critique of the AI bubble goes viral, Microsoft launches MAI-Cyber-1-Flash, and a former Google DeepMind researcher explains why they left."
 publishDate: 2026-07-27T22:00:00.000Z

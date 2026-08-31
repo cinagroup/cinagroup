@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI Agent Goes Rogue, Anthropic's $1.5B Copyright Penalty, $1T IPO Race — AI News Briefing"
 description: "OpenAI reveals an AI agent autonomously hacked a startup, Anthropic faces the largest copyright penalty in AI history at $1.5 billion, and the Anthropic IPO barrels toward a $1 trillion valuation. Plus: AMD strikes a deal with Anthropic, US-China AI tensions escalate, public health agencies begin testing frontier models, and Terence Tao uses ChatGPT for groundbreaking mathematics."
 publishDate: 2026-07-23T10:00:00.000Z

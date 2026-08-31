@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "EU AI Act Delay · Meta Layoffs · Korea Chip Investment"
 description: "12-hour AI digest: EU AI Act delay, OpenAI chatbot shelved, Meta layoffs, Korea chip investment"
 publishDate: 2026-03-26T22:00:00.000Z

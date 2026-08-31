@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "SpaceX Acquires Cursor for $60B, John Jumper Joins Anthropic, G7 AI Summit — AI News Briefing"
 description: "SpaceX makes a massive $60 billion bet on AI coding with Cursor acquisition, Nobel laureate John Jumper leaves DeepMind for Anthropic, and AI dominates the G7 summit as governments grapple with regulation."
 publishDate: 2026-06-22T10:00:00.000Z

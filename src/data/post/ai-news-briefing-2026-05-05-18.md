@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Shelves Hardware Spinout · Musk Trial Takes a Sharp Turn"
 description: "12-hour AI digest: OpenAI mothballs robotics/hardware spinout ahead of IPO, Jared Birchall's $97.4B xAI bid testimony struck in court, White House drafts AI oversight executive order, Anthropic's Mythos excluded from CISA"
 publishDate: 2026-05-05T10:00:00.000Z

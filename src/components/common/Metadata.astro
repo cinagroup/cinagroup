@@ -9,7 +9,7 @@ import type { MetaData } from '~/types';
 import { getCanonical } from '~/utils/permalinks';
 
 import { adaptOpenGraphImages } from '~/utils/images';
-import { getLangFromUrl, type Lang } from '~/i18n';
+import { getLangFromUrl, getLanguageAlternates } from '~/i18n';
 
 export interface Props extends MetaData {
   dontUseTitleTemplate?: boolean;
@@ -18,24 +18,32 @@ export interface Props extends MetaData {
 const {
   title,
   ignoreTitleTemplate = false,
+  omitCanonical = false,
   canonical = String(getCanonical(String(Astro.url.pathname))),
   robots = {},
   description,
   keywords,
   openGraph = {},
   twitter = {},
+  language,
 } = Astro.props;
 
-const localeByLanguage: Record<Lang, string> = {
+type MetadataLanguage = NonNullable<MetaData['language']>;
+const localeByLanguage: Record<MetadataLanguage, string> = {
   en: 'en_US',
+  'zh-CN': 'zh_CN',
   ja: 'ja_JP',
   ko: 'ko_KR',
   ru: 'ru_RU',
   es: 'es_ES',
   pt: 'pt_BR',
+  'pt-BR': 'pt_BR',
   fr: 'fr_FR',
 };
-const currentLocale = localeByLanguage[getLangFromUrl(Astro.url)];
+const currentLocale = localeByLanguage[language || getLangFromUrl(Astro.url)];
+const languageAlternates = omitCanonical
+  ? []
+  : getLanguageAlternates(Astro.url.pathname, new URL(String(canonical)).origin);
 const shouldIgnoreTitleTemplate =
   ignoreTitleTemplate ||
   (typeof title === 'string' && Boolean(SITE?.name) && title.toLowerCase().includes(SITE.name.toLowerCase()));
@@ -79,6 +87,13 @@ const seoProps: AstroSeoProps = merge(
     twitter: twitter,
   }
 );
+
+if (omitCanonical) {
+  delete seoProps.canonical;
+  if (seoProps.openGraph) delete seoProps.openGraph.url;
+} else if (languageAlternates.length > 0) {
+  seoProps.languageAlternates = languageAlternates;
+}
 ---
 
 <AstroSeo {...{ ...seoProps, openGraph: await adaptOpenGraphImages(seoProps?.openGraph, Astro.site) }} />

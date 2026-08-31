@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "NVIDIA Vera Rubin Launches, Claude Global Outage, Google-Meta Chip Deal — AI News Briefing"
 description: "NVIDIA's Vera Rubin platform enters full production for agentic AI factories. Anthropic's Claude suffers a major global outage. Google and Meta forge a multibillion-dollar chip alliance that challenges NVIDIA's dominance. Plus, the Pentagon signs AI defense deals, Singapore launches an AI agent registry, and AI spending fuels inflation concerns."
 publishDate: 2026-06-02T10:00:00.000Z

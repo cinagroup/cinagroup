@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Slashes Prices Ahead of IPO, Microsoft Drops Third-Party AI, Chinese Models Close the Gap — AI News Briefing"
 description: "OpenAI and Anthropic wage a token price war as they race toward IPOs, Microsoft replaces their models with in-house alternatives in Office products, Chinese challengers Z.ai and GLM-5.2 near parity with Western frontier models, and voters on both sides demand tighter AI regulation."
 publishDate: 2026-07-07T22:00:00.000Z

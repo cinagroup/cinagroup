@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google Pays SpaceX $920M/Month for Compute, Anthropic's Self-Coding Claude, Mira Murati Returns — AI News Briefing"
 description: "Google strikes a massive $920M/month compute deal with SpaceX, Anthropic reveals Claude writes 80% of its own code, Mira Murati returns after 18 months with a governance warning, Airbnb's Brian Chesky plans a rival AI lab, and a Chinese startup dethrones Nvidia on a key AI benchmark."
 publishDate: 2026-06-06T10:00:00.000Z

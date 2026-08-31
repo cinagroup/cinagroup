@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Five Eyes AI Warning, ChatGPT Loses Majority Share, Samsung AI Rollout — AI News Briefing"
 description: "Five Eyes intelligence agencies issue rare warning that AI models capable of destabilizing governments are months away. ChatGPT's market share drops below 50% for the first time as Claude and Gemini surge. Samsung deploys ChatGPT Enterprise globally while the Trump administration explores direct US stakes in AI companies."
 publishDate: 2026-06-22T22:00:00.000Z

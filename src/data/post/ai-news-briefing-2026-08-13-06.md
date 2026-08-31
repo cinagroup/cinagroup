@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Brad Lightcap Departs OpenAI, Meta's Muse Glimmer, Grok Bot — AI News Briefing"
 description: "OpenAI's longtime COO Brad Lightcap steps down as the AI lab's leadership shake-up continues, while Meta unveils Muse Glimmer — an open-weight model that runs AI agents on-device — and NVIDIA's $70B bet on OpenAI, Anthropic, and others comes into focus. SpaceXAI's Grok Bot enters the agent race, near-autonomous AI agents hit Taiwan's nuclear safety agency, Anthropic doubles down on invisible text watermarks, and Google's Pixel 11 puts Gemini at the center of the AI phone battle."
 publishDate: 2026-08-12T22:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 13, 2026 (06:00 CST)
 
 ## Top 7 Stories
 

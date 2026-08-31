@@ -2,46 +2,84 @@
 import CinaProductPage from '~/components/CinaProductPage.astro';
 
 const metadata = {
-  title: 'CinaToken — One gateway for model access and policy',
-  description: 'CinaToken gives builders a single layer for model routing, credentials, usage policy, request traces, and cost boundaries.',
+  title: 'CinaToken — Open-source AI gateway',
+  description:
+    'CinaToken is a self-hosted AI gateway with model routing, API keys, budgets, accounting, audit, and documented multimodal interfaces.',
 };
 
-const code = `gateway "coding-assistant" {
-  route    = "task-aware"
-  budget   = "team-limit"
-  fallback = "approved-model"
-  trace    = true
+const code = `gateway "team" {
+  protocol = "responses-api"
+  route    = "approved-models"
+  budget   = "enforced"
+  audit    = true
 }`;
 ---
 
 <CinaProductPage
+  product="cinatoken"
   {metadata}
-  eyebrow="CinaToken / model gateway."
-  title="Control model access, usage, and spend from one gateway."
-  lead="CinaToken gives builders one routing layer for model access, credentials, policy, request traces, and cost boundaries."
-  primary={{ text: 'Plan a gateway workflow', href: '/contact' }}
+  eyebrow="CinaToken / open-source, self-hosted AI gateway."
+  title="Route model access through one governed gateway."
+  lead="CinaToken combines provider routing, API keys, model policy, budgets, accounting, and audit with local, Docker, database, and Cloudflare deployment paths. This page does not claim a managed-service SLA."
+  primary={{ text: 'Plan a gateway evaluation', href: '/contact/' }}
   secondary={{ text: 'View the full stack', href: '/' }}
   capabilities={[
-    { label: 'Access.', title: 'Centralize credential boundaries.', description: 'Keep provider credentials behind one controlled service instead of distributing them across every application.' },
-    { label: 'Route.', title: 'Match requests to approved models.', description: 'Select providers and models by task, policy, availability, or product requirements.' },
-    { label: 'Limit.', title: 'Make usage boundaries visible.', description: 'Apply team, application, and environment limits before a request leaves the gateway.' },
-    { label: 'Trace.', title: 'Preserve request context.', description: 'Record the routing decision, policy result, and response metadata needed for review and operations.' },
-    { label: 'Fallback.', title: 'Handle provider failure deliberately.', description: 'Define approved fallback behavior rather than letting applications improvise during an incident.' },
-    { label: 'Measure.', title: 'Connect usage to product decisions.', description: 'Give teams the data they need to tune quality, latency, and cost without exposing credentials.' },
+    {
+      label: 'Route.',
+      title: 'Expose unified model interfaces.',
+      description: 'Connect applications through documented Chat Completions, Responses, image, audio, embedding, Realtime, Claude, and Gemini routes.',
+    },
+    {
+      label: 'Keys.',
+      title: 'Issue controlled downstream access.',
+      description: 'Keep provider credentials behind the gateway and manage user-facing API keys from the administration layer.',
+    },
+    {
+      label: 'Policy.',
+      title: 'Select approved providers and models.',
+      description: 'Route by explicit provider, model, task, availability, and policy configuration.',
+    },
+    {
+      label: 'Budget.',
+      title: 'Apply recurring usage boundaries.',
+      description: 'Use the project’s budget, accounting, status, and model-access controls for governed consumption.',
+    },
+    {
+      label: 'Audit.',
+      title: 'Retain operational evidence.',
+      description: 'Inspect routing, policy, usage, and accounting through the documented console and management APIs.',
+    },
+    {
+      label: 'Deploy.',
+      title: 'Choose a supported hosting path.',
+      description: 'Run locally, in Docker, with supported databases, or through the documented Cloudflare deployment path.',
+    },
   ]}
-  workflowTitle="Apply policy before the request reaches a provider."
-  workflowLead="A gateway workflow should make access, route selection, limits, fallback, and traceability explicit."
+  workflowTitle="Move one application through a governed model route."
+  workflowLead="A reference rollout starts with one protocol, provider route, downstream key, budget rule, and observable request."
   workflow={[
-    { title: 'Authenticate the application', description: 'Verify the calling product, environment, and permitted gateway scope.' },
-    { title: 'Evaluate policy', description: 'Check the task, model allow-list, usage boundary, and required data handling.' },
-    { title: 'Route the request', description: 'Send the request to an approved model with a defined fallback path.' },
-    { title: 'Record the outcome', description: 'Return the response while preserving the trace and usage metadata operators need.' },
+    {
+      title: 'Choose the interface',
+      description: 'Select the documented protocol and confirm the application request shape.',
+    },
+    {
+      title: 'Configure a provider route',
+      description: 'Add the provider credential securely and restrict the route to the intended models.',
+    },
+    {
+      title: 'Issue a downstream key',
+      description: 'Create the user or application identity with its applicable model and budget boundaries.',
+    },
+    {
+      title: 'Verify usage and audit',
+      description: 'Send a test request, then confirm routing, response, accounting, and trace evidence.',
+    },
   ]}
-  codeLabel="Gateway policy."
+  codeLabel="Illustrative gateway policy."
   {code}
   principles={[
-    { title: 'Credentials stay contained.', description: 'Applications use gateway-scoped access instead of handling provider secrets directly.' },
-    { title: 'Policies are visible.', description: 'Model, budget, and fallback rules should be easy to inspect and change.' },
-    { title: 'Decisions are traceable.', description: 'Routing outcomes should support debugging, governance, and cost review.' },
+    { title: 'Self-hosted control.', description: 'Operators choose the hosting path, providers, keys, and data stores.' },
+    { title: 'Protocol clarity.', description: 'Applications should use only interfaces documented by the active release.' },
+    { title: 'Observable spend.', description: 'Routing, usage, budgets, and accounting should remain visible to operators.' },
   ]}
 />

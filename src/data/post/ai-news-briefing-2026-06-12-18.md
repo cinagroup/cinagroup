@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "NVIDIA Vera CPU China Push, Anthropic Claude Fable 5, OpenAI Pricing War — AI News Briefing"
 description: "NVIDIA opens China orders for its Vera CPU ahead of an August launch, Anthropic unveils Claude Fable 5 and Mythos 5 models, OpenAI faces a wrongful death lawsuit while exploring lower token pricing, and Google rolls out WebMCP to make the web agent-ready. Plus: Trump eyes a government stake in AI companies as new legislative frameworks take shape."
 publishDate: 2026-06-12T10:00:00.000Z

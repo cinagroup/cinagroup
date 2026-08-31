@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Nvidia Q2 Earnings Test, OpenAI Gains on Anthropic, Agent Sprawl Outpaces Control — AI News Briefing"
 description: "Nvidia's upcoming Q2 earnings serve as a referendum on the resurgent AI trade, with hyperscaler capex and guidance in focus. New data shows OpenAI closing the gap with Anthropic among enterprise buyers, while enterprise AI agents double in deployment as confidence outpaces governance — and one in five firms can't halt runaway agent spending in real time."
 publishDate: 2026-08-23T22:00:00.000Z

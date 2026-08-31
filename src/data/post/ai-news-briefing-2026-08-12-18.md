@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google DeepMind Shake-Up, Meta's Glimmer, OpenAI Daybreak on AWS — AI News Briefing"
 description: "Google's DeepMind undergoes its biggest leadership shake-up ever — Demis Hassabis steps back as CEO, Jeff Dean exits after 27 years, and Gemini 3.5 Pro is reportedly shelved for a Gemini 4 pivot. Meta unveils Zuckerberg's 'personal intelligence' vision with the Glimmer model, OpenAI brings its Daybreak cyber agents to AWS, and Taiwan suffers an unprecedented autonomous AI cyber attack. Plus: Cognition eyes a $40B valuation, Bank of America commits $250B to AI infrastructure, and Foxconn's profit surges on AI demand."
 publishDate: 2026-08-12T10:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 12, 2026 (18:00 CST)
 
 ## Top 7 Stories
 

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Pope Leo Issues AI Encyclical with Anthropic, BofA Warns of AI Bubble, Trump Scraps AI Oversight Order — AI News Briefing"
 description: "Pope Leo releases a landmark encyclical on human dignity and AI alongside an Anthropic co-founder at the Vatican. BofA's Hartnett warns the AI stock rally is nearing historic extremes, calling it the biggest bubble since railroads. Trump cancels the AI executive order on model oversight after industry pushback. Plus: Google launches new AI models and personal agents, NVIDIA expands open model families, and Anthropic and OpenAI enter India's IT services market."
 publishDate: 2026-05-24T22:00:00.000Z

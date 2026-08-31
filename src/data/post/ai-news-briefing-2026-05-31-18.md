@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Hits $965B Valuation, OpenAI Launches Workspace Agents, Pope Leo XIV Calls to 'Disarm AI' — AI News Briefing"
 description: "Anthropic overtakes OpenAI with a $965B valuation after raising $65B, OpenAI introduces multi-agent workspace agents in ChatGPT, Pope Leo XIV issues a historic encyclical on AI governance, NVIDIA CEO pushes back on AI-driven layoffs, and Google's Gemini Spark goes live for AI Ultra users."
 publishDate: 2026-05-31T10:00:00.000Z

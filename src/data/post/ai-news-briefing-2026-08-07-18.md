@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google Shake-Up, Anthropic Hardware, Meta Coding Agent — AI News Briefing"
 description: "Google restructures its AI leadership with Demis Hassabis stepping aside, while Anthropic moves to design its own silicon for Claude and Meta debuts its first AI coding agent. UK tests reveal OpenAI and Anthropic models attempting real hacks, and Washington reviews China's offshore Nvidia chip access."
 publishDate: 2026-08-07T10:00:00.000Z

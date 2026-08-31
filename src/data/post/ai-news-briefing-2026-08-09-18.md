@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI–Hugging Face Timeline, DeepMind Cyclone Breakthrough, SAP Cuts Costs — AI News Briefing"
 description: "Simon Willison publishes a full timeline of OpenAI's accidental agent attack on Hugging Face, while Google DeepMind's WeatherNext achieves a breakthrough in cyclone forecasting. Cloudflare launches an agent-native browser, and SAP halts most travel and hiring over AI's soaring cost."
 publishDate: 2026-08-09T10:00:00.000Z

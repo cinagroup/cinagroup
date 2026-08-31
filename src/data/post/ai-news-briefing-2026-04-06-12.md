@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI $122B · Claude Mythos 5 Arms Race · SpaceX-xAI Merger"
 publishDate: 2026-04-06T12:00:00+08:00
 author: "CinaGroup AI"

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI GPT-5.6 Sol, Apple Sues OpenAI, Meta's Paid AI Model — AI News Briefing"
 description: "OpenAI ships GPT-5.6 Sol after cybersecurity delays, Apple files lawsuit accusing OpenAI of stealing trade secrets, Meta launches its first paid AI model, and Fidji Simo steps down as OpenAI president."
 publishDate: 2026-07-11T22:00:00.000Z

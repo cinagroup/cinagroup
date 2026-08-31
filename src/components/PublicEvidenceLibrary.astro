@@ -1,0 +1,169 @@
+---
+import type { PublicCaseStudy } from '~/data/public-cases';
+
+export interface Props {
+  cases: readonly PublicCaseStudy[];
+}
+
+const { cases } = Astro.props;
+
+const evidenceTiers = [
+  {
+    label: '01 / Repository and revision',
+    title: 'Inspect the implementation.',
+    description:
+      'Public repositories and pinned commits show what was present at a specific revision. They prove code state—not customer adoption or a managed-service SLA.',
+  },
+  {
+    label: '02 / Test evidence',
+    title: 'Reproduce the acceptance check.',
+    description:
+      'Automated checks, fixtures, and reviewable test output connect a claim to a defined behavior and make regressions visible.',
+  },
+  {
+    label: '03 / Deployment verification',
+    title: 'Verify the environment.',
+    description:
+      'A deployment record and production smoke check establish that a reviewed revision reached the named environment at a known time.',
+  },
+  {
+    label: '04 / Customer-approved case',
+    title: 'Publish only with explicit approval.',
+    description:
+      'Names, logos, quotes, outcomes, and metrics require written attribution approval plus linked evidence, methodology, measurement window, and limitations.',
+  },
+];
+---
+
+<section class="cg-page-section" aria-labelledby="evidence-layers-title">
+  <div class="cg-page-shell">
+    <div class="cg-section-heading">
+      <p class="cg-eyebrow">Evidence layers.</p>
+      <h2 id="evidence-layers-title">Different evidence supports different claims.</h2>
+      <p>
+        We separate implementation evidence from deployment evidence and customer outcomes so that a repository, demo,
+        or test result is not presented as a client case study.
+      </p>
+    </div>
+    <div class="cg-card-grid">
+      {
+        evidenceTiers.map((tier) => (
+          <article class="cg-card">
+            <p class="cg-card-meta">{tier.label}</p>
+            <h3>{tier.title}</h3>
+            <p>{tier.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="cg-page-section cg-page-section-soft" aria-labelledby="case-library-title">
+  <div class="cg-page-shell">
+    <div class="cg-section-heading">
+      <p class="cg-eyebrow">Public case library.</p>
+      <h2 id="case-library-title">No customer case studies are approved for public use yet.</h2>
+      <p>
+        We will not substitute invented customers, third-party logos, anonymous praise, or unsupported outcome numbers.
+        Product repository evidence remains available on each product page while this library is empty.
+      </p>
+    </div>
+
+    {
+      cases.length === 0 ? (
+        <div class="cg-list-panel" role="status" aria-label="Public case library status">
+          <div class="cg-list-row">
+            <strong>Current public cases</strong>
+            <span>0 — publication waits for customer approval and complete evidence.</span>
+          </div>
+          <div class="cg-list-row">
+            <strong>Illustrative workflows</strong>
+            <span>Always labelled as examples; never routed or counted as customer evidence.</span>
+          </div>
+        </div>
+      ) : (
+        <div class="cg-card-grid" data-public-case-library>
+          {cases.map((item) => (
+            <article
+              class="cg-card"
+              data-public-case={item.slug}
+              data-approved-attribution="true"
+              data-methodology="true"
+              data-measurement-window="true"
+              data-limitations="true"
+            >
+              <p class="cg-card-meta">Approved public case / {item.attribution.displayName}</p>
+              <h3>{item.title}</h3>
+              <p>{item.summary}</p>
+              <dl>
+                <dt>Methodology</dt>
+                <dd>{item.methodology}</dd>
+                <dt>Measurement window</dt>
+                <dd>{item.measurementWindow}</dd>
+                <dt>Limitations</dt>
+                <dd>{item.limitations}</dd>
+              </dl>
+              {item.metrics?.map((metric) => (
+                <div
+                  data-evidence-metric="approved"
+                  data-methodology="true"
+                  data-measurement-window="true"
+                  data-limitations="true"
+                >
+                  <h4>{metric.label}</h4>
+                  <p>{metric.value}</p>
+                  <dl>
+                    <dt>Metric methodology</dt>
+                    <dd>{metric.methodology}</dd>
+                    <dt>Metric measurement window</dt>
+                    <dd>{metric.measurementWindow}</dd>
+                    <dt>Metric limitations</dt>
+                    <dd>{metric.limitations}</dd>
+                  </dl>
+                  <p>
+                    {metric.evidence.map((source) => (
+                      <a href={source.href} target="_blank" rel="noopener noreferrer">
+                        {source.label}
+                      </a>
+                    ))}
+                  </p>
+                </div>
+              ))}
+              <p>
+                {item.evidence.map((source, index) => (
+                  <>
+                    {index > 0 ? ' · ' : ''}
+                    <a href={source.href} target="_blank" rel="noopener noreferrer">
+                      {source.label}
+                    </a>
+                  </>
+                ))}
+              </p>
+            </article>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<section class="cg-page-section cg-page-section-dark" aria-labelledby="publication-standard-title">
+  <div class="cg-page-shell">
+    <div class="cg-section-heading">
+      <p class="cg-eyebrow">Publication standard.</p>
+      <h2 id="publication-standard-title">A case becomes public only when every claim is reviewable.</h2>
+      <p>
+        Approval covers the named organization, display name, quoted language, evidence links, measurement method,
+        reporting window, and known limitations. Withdrawal removes the case from public routes.
+      </p>
+    </div>
+    <pre
+      class="cg-code-panel"><code>{`public_case {
+  attribution = "approved in writing"
+  evidence    = ["repository", "test", "deployment", "customer source"]
+  metrics     = "method + window + limitations"
+  status      = "public only after review"
+}`}</code></pre>
+  </div>
+</section>

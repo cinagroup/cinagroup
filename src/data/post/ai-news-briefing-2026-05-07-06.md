@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — May 7, 2026"
 description: "Musk v. Altman trial explodes with Toner and Zilis testimony, Anthropic launches Claude Dreams and partners with SpaceX for 300MW compute, OpenAI open-sources MRC supercomputer networking protocol, xAI formally dissolves into SpaceXAI."
 publishDate: 2026-05-06T22:00:00.000Z

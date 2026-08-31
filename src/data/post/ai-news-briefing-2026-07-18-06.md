@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Apple Sues OpenAI, Anthropic's $50B Bet, EU Hits Google — AI News Briefing"
 description: "Apple sues OpenAI over trade secret theft. Anthropic commits $50 billion to US AI infrastructure. The EU orders Google to open Android and Search to rivals. Plus: 1Password for Claude, OpenAI's first hardware, and more."
 publishDate: 2026-07-17T22:00:00.000Z

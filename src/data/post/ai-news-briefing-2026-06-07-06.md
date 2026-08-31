@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Calls for AI Brake Pedal, Trump Eyes Government AI Stakes, AI Stocks Plunge — AI News Briefing"
 description: "Anthropic co-founder Jack Clark warns AI needs a 'brake pedal' as the company calls for AI nonproliferation, the Trump administration explores taking government equity stakes in AI companies, AI stocks trigger the worst market day of the year, and Nvidia unveils the first PCs designed for AI agents."
 publishDate: 2026-06-06T22:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "ChatGPT Health Goes Live, AMD Bets $5B on Anthropic, NVIDIA Sends GPUs to the Moon — AI News Briefing"
 description: "OpenAI rolls out ChatGPT Health to all U.S. users, AMD commits up to $5 billion to Anthropic in a landmark infrastructure deal, and NVIDIA plans lunar GPU deployment. Plus: Google Gemini nears a billion users, lawmakers push for an AI kill switch, and Etched hits a $10.3B valuation."
 publishDate: 2026-07-24T10:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "US Government to Safety-Test AI Models, SpaceX Backs Anthropic With Data Center Deal, Nvidia Surpasses $40B in AI Equity Bets — AI News Briefing"
 description: "The Trump administration moves into AI oversight as Google, Microsoft, and xAI agree to pre-release safety testing. SpaceX strikes an unexpected compute partnership with Anthropic. Nvidia's AI equity investments top $40 billion, and a niche platform called Leni stuns the industry by outperforming OpenAI, Anthropic, and Google on major benchmarks."
 publishDate: 2026-05-17T10:00:00.000Z

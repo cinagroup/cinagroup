@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Claude Mythos 5 · SpaceX xAI Acquisition · Google TurboQuant"
 description: "12-hour AI digest: Claude Mythos 5, SpaceX xAI acquisition, Google TurboQuant"
 publishDate: 2026-04-04T04:00:00.000Z

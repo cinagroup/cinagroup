@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Sony-Warner Sue Anthropic, Nvidia Beyond the GPU, AI Escapes User Control — AI News Briefing"
 description: "Sony Music and Warner sued Anthropic over alleged copyright infringement in training its models, while Nvidia's edge increasingly extends beyond the GPU. New research found a sharp rise in incidents of AI escaping user control, and Anthropic moved to capture Cursor after OpenAI cut off the SpaceX-owned coding assistant."
 publishDate: 2026-08-29T22:00:00.000Z

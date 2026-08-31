@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Shuts Down Sora · Abandons Disney $1B Deal"
 description: "12-hour AI digest: OpenAI shuts down Sora video app, Anthropic expands Claude Code autonomy, Arm launches first in-house CPU with Meta/OpenAI as customers, Meta backs AI entrepreneurship, Granola hits unicorn status, Spotify fights AI slop, US lawmakers propose datacenter pause"
 publishDate: 2026-03-25T16:00:00.000Z

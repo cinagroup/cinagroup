@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic-California Pact, Super Micro Raided, AI Bubble Warnings — AI News Briefing"
 description: "Anthropic inks Claude deal with California at half price; Taiwan raids Super Micro in Nvidia chip smuggling probe; Chamath raises $135M for AI coding startup; Chinese hedge funds warn AI 'super bubble' is ready to burst; Cursor goes mobile; Brown professor uncovers mass AI cheating."
 publishDate: 2026-06-29T22:00:00.000Z

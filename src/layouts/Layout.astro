@@ -23,8 +23,11 @@ export interface Props {
 }
 
 const { metadata = {} } = Astro.props;
-const language = getLangFromUrl(Astro.url);
+const language = metadata.language || getLangFromUrl(Astro.url);
 const { textDirection } = I18N;
+const structuredDataJson = metadata.structuredData
+  ? JSON.stringify(metadata.structuredData).replaceAll('<', '\\u003c')
+  : undefined;
 ---
 
 <!doctype html>
@@ -42,11 +45,7 @@ const { textDirection } = I18N;
     <ClientRouter fallback="swap" />
 
     <!-- Structured Data (JSON-LD) -->
-    {
-      metadata?.structuredData && (
-        <script is:inline type="application/ld+json" set:html={JSON.stringify(metadata.structuredData)} />
-      )
-    }
+    {structuredDataJson && <script is:inline type="application/ld+json" set:html={structuredDataJson} />}
   </head>
 
   <body class="antialiased text-default bg-page tracking-tight">

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "12 AI Models in One Week · Developer Cycles Compressed to Monthly"
 description: "12-hour AI digest: Model avalanche continues with 12 releases in one week, Anthropic Claude Computer Use goes live, Oracle 22 enterprise agents, AI agent market to hit $139B by 2034, White House AI policy framework released"
 publishDate: 2026-03-30T04:00:00.000Z

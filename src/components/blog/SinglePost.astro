@@ -4,7 +4,6 @@ import PostTags from '~/components/blog/Tags.astro';
 
 import { getPermalink } from '~/utils/permalinks';
 import { getFormattedDate } from '~/utils/utils';
-
 import type { Post } from '~/types';
 
 export interface Props {
@@ -13,28 +12,34 @@ export interface Props {
 }
 
 const { post } = Astro.props;
-const isAutomatedBriefing = post.slug.startsWith('ai-news-briefing-');
+const archivedUnverified = post.status === 'archived_unverified';
 ---
 
-<article class="cg-blog-post">
+<article
+  class="cg-blog-post"
+  data-content-kind={archivedUnverified ? 'historical-archive' : 'editorial'}
+  data-content-status={post.status}
+>
   <header class="cg-blog-post-header">
     <div class="cg-blog-post-copy">
       <p class="cg-eyebrow">Journal / {post.category?.title || 'Update'}.</p>
       <h1>{post.title}</h1>
       <p class="cg-blog-post-lead">{post.excerpt}</p>
       <p class="cg-blog-meta">
-        <time datetime={String(post.publishDate)}>{getFormattedDate(post.publishDate)}</time>
+        <time datetime={post.publishDate.toISOString()}>{getFormattedDate(post.publishDate, post.language)}</time>
+        {post.updateDate && <><span aria-hidden="true"> / </span><span>Updated </span><time datetime={post.updateDate.toISOString()}>{getFormattedDate(post.updateDate, post.language)}</time></>}
         {post.author && <><span aria-hidden="true"> / </span><span>{post.author}</span></>}
-        {post.category && <><span aria-hidden="true"> / </span><a href={getPermalink(post.category.slug, 'category')}>{post.category.title}</a></>}
+        {post.category && <><span aria-hidden="true"> / </span>{archivedUnverified ? <span>{post.category.title}</span> : <a href={getPermalink(post.category.slug, 'category')}>{post.category.title}</a>}</>}
         {post.readingTime && <><span aria-hidden="true"> / </span><span>{post.readingTime} min read</span></>}
       </p>
       {
-        isAutomatedBriefing && (
-          <aside class="cg-briefing-notice" aria-label="Automated briefing notice">
-            <strong>Automated briefing archive.</strong>
+        archivedUnverified && (
+          <aside class="cg-briefing-notice" aria-label="Unverified historical archive notice">
+            <strong>Unverified historical archive — do not rely on this item as a verified source.</strong>
             <span>
-              This item was generated from an automated news workflow and has not been independently verified by the
-              CinaGroup editorial team. Check primary sources before relying on any claim.
+              This URL is preserved for transparency and continuity. The item came from a retired automated workflow,
+              was not independently source-checked by the CinaGroup editorial team, and may contain inaccurate or
+              outdated claims. Confirm every claim with current primary sources.
             </span>
           </aside>
         )
@@ -59,5 +64,5 @@ const isAutomatedBriefing = post.slug.startsWith('ai-news-briefing-');
     }
   </header>
   <div class="cg-prose cg-blog-post-body"><slot /></div>
-  <footer class="cg-blog-post-footer"><PostTags tags={post.tags} /></footer>
+  {!archivedUnverified && <footer class="cg-blog-post-footer"><PostTags tags={post.tags} /></footer>}
 </article>

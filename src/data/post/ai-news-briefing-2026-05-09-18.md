@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI News Briefing — May 9, 2026 (Evening)"
 description: "Anthropic eliminates agentic blackmail in all Claude models, OpenAI's WebRTC architecture under scrutiny, Fields Medalist evaluates ChatGPT 5.5 Pro, Mozilla publishes 271 Firefox bugs found by Claude, and AI reshapes vulnerability disclosure culture."
 publishDate: 2026-05-09T10:00:00.000Z

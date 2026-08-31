@@ -1,24 +1,13 @@
-import { defaultLang, type Lang } from '../i18n';
+import { getBaseRoute, getLangFromUrl, getLocalizedRoutePath, type Lang } from './routing';
 
 export function getLocalizedPath(path: string, lang: Lang): string {
-  if (lang === defaultLang) {
-    return path;
-  }
-  return `/${lang}${path}`;
+  return getLocalizedRoutePath(path, lang);
 }
 
 export function removeLangPrefix(path: string): string {
-  const parts = path.split('/').filter(Boolean);
-  if (parts[0] === 'en') {
-    return '/' + parts.slice(1).join('/');
-  }
-  return path;
+  return getBaseRoute(path);
 }
 
 export function getLangFromPath(path: string): Lang {
-  const parts = path.split('/').filter(Boolean);
-  if (parts[0] !== defaultLang && parts[0] in { en: 1, ja: 1, ko: 1, ru: 1, es: 1, pt: 1, fr: 1 }) {
-    return parts[0] as Lang;
-  }
-  return defaultLang;
+  return getLangFromUrl(new URL(path, 'https://cinagroup.com'));
 }

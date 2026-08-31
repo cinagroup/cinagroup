@@ -1,5 +1,6 @@
 ---
 import CinaPageHero from '~/components/CinaPageHero.astro';
+import PricingDisclosure from '~/components/PricingDisclosure.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 type Locale = 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
@@ -295,10 +296,181 @@ const content: Record<
   },
 };
 
+type PricingDetail = { budget: string; timeline: string; included: string; excluded: string };
+
+const transparency: Record<
+  Locale,
+  {
+    labels: { budget: string; timeline: string; included: string; excluded: string };
+    cards: [PricingDetail, PricingDetail, PricingDetail];
+    disclaimer: string;
+  }
+> = {
+  ja: {
+    labels: { budget: '計画上の目安', timeline: '標準的な期間', included: '含まれるもの', excluded: '含まれないもの' },
+    cards: [
+      {
+        budget: '範囲確定後に書面でお見積り',
+        timeline: '通常 1〜3 週間',
+        included: '合意した調査範囲、指摘事項、報告会、優先順位付きの次のステップ。',
+        excluded: '実装、外部テスト費、出張、有料ツール（書面で範囲に含めた場合を除く）。',
+      },
+      {
+        budget: '範囲確定後に書面でお見積り',
+        timeline: '通常 4〜10 週間',
+        included: '合意した一つの成果、実装、レビュー、QA、指定環境でのリリース証跡。',
+        excluded: '新しい製品領域、継続運用、外部ライセンス、データ移行、範囲外サポート。',
+      },
+      {
+        budget: '範囲確定後に書面でお見積り',
+        timeline: '月次計画、初回は 3 か月を目安',
+        included: '合意した稼働枠、優先キュー、定期レビュー、リリース支援。',
+        excluded: '未使用枠の繰越、ベンダー費用、24/7 対応、機材、出張、大規模な追加案件。',
+      },
+    ],
+    disclaimer:
+      'すべての業務はプロポーザルベースです。範囲、依存関係、受入条件、提供地域を確認後、見積額、通貨、適用税、第三者費用を着手前の書面で明記します。',
+  },
+  ko: {
+    labels: { budget: '계획 범위', timeline: '일반 일정', included: '포함', excluded: '미포함' },
+    cards: [
+      {
+        budget: '범위 확인 후 서면 견적',
+        timeline: '일반적으로 1–3주',
+        included: '합의한 검토 범위, 결과, 설명 세션, 우선순위가 있는 다음 단계.',
+        excluded: '구현, 외부 테스트 비용, 출장, 유료 도구(서면 범위에 포함된 경우 제외).',
+      },
+      {
+        budget: '범위 확인 후 서면 견적',
+        timeline: '일반적으로 4–10주',
+        included: '합의한 하나의 결과, 구현, 검토, QA, 지정 환경의 릴리스 증거.',
+        excluded: '새 제품 영역, 지속 운영, 외부 라이선스, 데이터 마이그레이션, 범위 밖 지원.',
+      },
+      {
+        budget: '범위 확인 후 서면 견적',
+        timeline: '월별 계획, 보통 첫 3개월',
+        included: '합의한 작업 용량, 우선순위 큐, 정기 검토, 릴리스 지원.',
+        excluded: '미사용 용량 이월, 공급업체 비용, 24/7 지원, 하드웨어, 출장, 계획 외 대형 프로젝트.',
+      },
+    ],
+    disclaimer:
+      '모든 업무는 제안서 기반입니다. 범위, 종속성, 승인 기준, 제공 지역을 확인한 후 견적, 통화, 적용 세금, 제3자 비용을 작업 시작 전 서면 제안서에 명시합니다.',
+  },
+  ru: {
+    labels: { budget: 'Ориентир бюджета', timeline: 'Обычный срок', included: 'Включено', excluded: 'Не включено' },
+    cards: [
+      {
+        budget: 'Письменное предложение после согласования объёма',
+        timeline: 'Обычно 1–3 недели',
+        included: 'Согласованная область проверки, выводы, разбор и приоритетные следующие шаги.',
+        excluded: 'Реализация, внешнее тестирование, поездки и платные инструменты без письменного согласования.',
+      },
+      {
+        budget: 'Письменное предложение после согласования объёма',
+        timeline: 'Обычно 4–10 недель',
+        included: 'Один согласованный результат, реализация, ревью, QA и подтверждение выпуска в указанных средах.',
+        excluded: 'Новые части продукта, постоянная эксплуатация, лицензии, миграция данных и поддержка вне объёма.',
+      },
+      {
+        budget: 'Письменное предложение после согласования объёма',
+        timeline: 'Помесячное планирование; обычно первые 3 месяца',
+        included: 'Согласованный объём команды, приоритетная очередь, регулярный обзор и поддержка релизов.',
+        excluded:
+          'Перенос неиспользованных часов, услуги поставщиков, 24/7, оборудование, поездки и крупные проекты вне плана.',
+      },
+    ],
+    disclaimer:
+      'Все работы выполняются на основе предложения. После согласования объёма, зависимостей, критериев приёмки и места оказания услуг в письменном предложении будут указаны цена, валюта, налоги и расходы третьих сторон.',
+  },
+  es: {
+    labels: { budget: 'Rango orientativo', timeline: 'Plazo habitual', included: 'Incluye', excluded: 'No incluye' },
+    cards: [
+      {
+        budget: 'Propuesta escrita tras confirmar el alcance',
+        timeline: 'Normalmente 1–3 semanas',
+        included: 'Superficie acordada, hallazgos, sesión de revisión y próximos pasos priorizados.',
+        excluded: 'Implementación, pruebas externas, viajes y herramientas de pago salvo acuerdo escrito.',
+      },
+      {
+        budget: 'Propuesta escrita tras confirmar el alcance',
+        timeline: 'Normalmente 4–10 semanas',
+        included:
+          'Un resultado acordado, implementación, revisión, QA y evidencia de entrega en los entornos definidos.',
+        excluded:
+          'Nuevas áreas de producto, operación continua, licencias, migración de datos y soporte fuera del alcance.',
+      },
+      {
+        budget: 'Propuesta escrita tras confirmar el alcance',
+        timeline: 'Plan mensual; suele comenzar con 3 meses',
+        included: 'Capacidad acordada, cola priorizada, revisión recurrente y soporte de entregas.',
+        excluded:
+          'Acumulación de capacidad, costes de proveedores, soporte 24/7, hardware, viajes y grandes proyectos no previstos.',
+      },
+    ],
+    disclaimer:
+      'Todo trabajo se basa en una propuesta. Tras confirmar alcance, dependencias, criterios de aceptación y lugar de prestación, la propuesta escrita indicará precio, moneda, impuestos aplicables y costes de terceros antes de comenzar.',
+  },
+  pt: {
+    labels: { budget: 'Faixa de planejamento', timeline: 'Prazo típico', included: 'Inclui', excluded: 'Não inclui' },
+    cards: [
+      {
+        budget: 'Proposta escrita após confirmar o escopo',
+        timeline: 'Normalmente 1–3 semanas',
+        included: 'Superfície acordada, achados, sessão de revisão e próximos passos priorizados.',
+        excluded: 'Implementação, testes externos, viagens e ferramentas pagas sem inclusão por escrito.',
+      },
+      {
+        budget: 'Proposta escrita após confirmar o escopo',
+        timeline: 'Normalmente 4–10 semanas',
+        included: 'Um resultado acordado, implementação, revisão, QA e evidência de entrega nos ambientes definidos.',
+        excluded: 'Novas áreas de produto, operação contínua, licenças, migração de dados e suporte fora do escopo.',
+      },
+      {
+        budget: 'Proposta escrita após confirmar o escopo',
+        timeline: 'Planejamento mensal; geralmente 3 meses iniciais',
+        included: 'Capacidade acordada, fila priorizada, revisão recorrente e suporte a releases.',
+        excluded:
+          'Acúmulo de capacidade, custos de fornecedores, suporte 24/7, hardware, viagens e grandes projetos não previstos.',
+      },
+    ],
+    disclaimer:
+      'Todo trabalho é baseado em proposta. Após confirmar escopo, dependências, critérios de aceitação e local de prestação, a proposta escrita informará preço, moeda, impostos aplicáveis e custos de terceiros antes do início.',
+  },
+  fr: {
+    labels: { budget: 'Fourchette indicative', timeline: 'Délai habituel', included: 'Inclus', excluded: 'Non inclus' },
+    cards: [
+      {
+        budget: 'Écrit après confirmation du périmètre',
+        timeline: 'Généralement 1 à 3 semaines',
+        included: 'Périmètre convenu, constats, restitution et prochaines étapes priorisées.',
+        excluded: 'Mise en œuvre, tests externes, déplacements et outils payants sans accord écrit.',
+      },
+      {
+        budget: 'Écrit après confirmation du périmètre',
+        timeline: 'Généralement 4 à 10 semaines',
+        included:
+          'Un résultat convenu, mise en œuvre, revue, QA et preuves de livraison dans les environnements définis.',
+        excluded:
+          'Nouveaux domaines produit, exploitation continue, licences, migration des données et support hors périmètre.',
+      },
+      {
+        budget: 'Écrit après confirmation du périmètre',
+        timeline: 'Planification mensuelle, souvent 3 mois au départ',
+        included: 'Capacité convenue, file priorisée, revue récurrente et support des mises en production.',
+        excluded:
+          'Report de capacité, frais fournisseurs, support 24/7, matériel, déplacements et grands projets imprévus.',
+      },
+    ],
+    disclaimer:
+      'Tout travail repose sur une proposition. Après confirmation du périmètre, des dépendances, des critères de réception et du lieu de prestation, la proposition écrite précisera le prix, la devise, les taxes applicables et les frais de tiers avant le démarrage.',
+  },
+};
+
 const { lang } = Astro.props as { lang: Locale };
 const page = content[lang];
-const contactHref = `/${lang}/contact`;
-const servicesHref = `/${lang}/services`;
+const details = transparency[lang];
+const contactHref = `/${lang}/contact/`;
+const servicesHref = `/${lang}/services/`;
 ---
 
 <Layout metadata={{ title: page.metadataTitle }}>
@@ -324,6 +496,13 @@ const servicesHref = `/${lang}/services`;
                   <p class="cg-card-meta">{card.label}</p>
                   <h3>{card.title}</h3>
                   <p>{card.description}</p>
+                  <PricingDisclosure
+                    budget={details.cards[index].budget}
+                    timeline={details.cards[index].timeline}
+                    included={details.cards[index].included}
+                    excluded={details.cards[index].excluded}
+                    labels={details.labels}
+                  />
                   <ul>
                     {card.items.map((item) => (
                       <li>{item}</li>
@@ -337,6 +516,7 @@ const servicesHref = `/${lang}/services`;
             ))
           }
         </div>
+        <p class="cg-pricing-terms">{details.disclaimer}</p>
       </div>
     </section>
     <section class="cg-page-section cg-page-section-soft" aria-labelledby="localized-factors-title">

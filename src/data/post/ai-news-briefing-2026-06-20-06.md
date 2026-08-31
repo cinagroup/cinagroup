@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Pauses Agent SDK Billing, G7 AI Summit, Meta Muse Model — AI News Briefing"
 description: "Anthropic pauses token-based billing for its Claude Agent SDK amid developer pushback, world leaders convene with OpenAI, Anthropic, and Google at the G7 AI summit, and Meta launches its new Muse model to challenge frontier labs."
 publishDate: 2026-06-19T22:00:00.000Z

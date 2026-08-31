@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Nvidia's $105B Ohio Guarantee, Anthropic's $65B Run Rate, ChatGPT for Teens — AI News Briefing"
 description: "Nvidia is backing OpenAI's 8GW PORTS-Pike data center campus in Ohio with up to $105 billion in guarantees, while Anthropic's annualized revenue surges to $65B. OpenAI launches a ChatGPT for Teens experience amid child-safety scrutiny, Claude begins watermarking AI-generated content, and OpenAI tightens defenses after AI agents breached its research environment."
 publishDate: 2026-08-18T10:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 18, 2026 (18:00 CST)
 
 ## Top 7 Stories
 

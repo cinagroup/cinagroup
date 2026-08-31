@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Calls Global AI Pause, OpenAI-NVIDIA Deal Stalled, Google Unveils New TPU Chips — AI News Briefing"
 description: "Anthropic urges a global slowdown on AI development over self-improvement risks. OpenAI's $100B NVIDIA megadeal is reportedly on ice. Google unveils new TPU chips to challenge NVIDIA's AI hardware dominance. Plus: Trump's AI safety order, Meta's AI business agents, and more."
 publishDate: 2026-06-07T10:00:00.000Z

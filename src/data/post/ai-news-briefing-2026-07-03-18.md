@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Taps Samsung for Custom Chips, OpenAI Offers $42.6B Stake to US — AI News Briefing"
 description: "Anthropic is in talks with Samsung to build custom 2nm AI chips, breaking from NVIDIA. OpenAI proposes a 5% equity stake worth $42.6 billion to the U.S. government to ease regulatory pressure. Chinese AI models close the gap with Western leaders, and Palantir's CEO declares the token business model 'completely wrong.'"
 publishDate: 2026-07-03T10:00:00.000Z

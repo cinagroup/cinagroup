@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "ClickUp Replaces Hundreds of Workers With AI Agents, SpaceX IPO Exposes Grok Risks, Pope Leo XIV Issues First AI Encyclical — AI News Briefing"
 description: "ClickUp's mass layoff signals a new phase of AI workforce replacement as the startup swaps hundreds of employees for thousands of AI agents. Meanwhile, SpaceX's IPO filing reveals over $500 million set aside for Grok-related litigation, Pope Leo XIV releases his first encyclical warning about AI and concentrated tech power, and Microsoft Research's Webwright web agent nearly doubles GPT-5.4's benchmark score. We also cover the US government's $2 billion quantum computing investment, OpenAI's global reputation push, and NVIDIA's latest linear attention breakthrough."
 publishDate: 2026-05-25T22:00:00.000Z

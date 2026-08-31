@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "GPT-5.6 Goes Public, China Warns on Claude Code, Meta's $13B Bet — AI News Briefing"
 description: "OpenAI's GPT-5.6 gets White House green light for public release today. China issues security alert over Anthropic's Claude Code, while Meta drops C$13 billion on its first Canadian data center and launches controversial AI image tools trained on public Instagram photos. NVIDIA's Nemotron hits new benchmarks with LangChain Deep Agents."
 publishDate: 2026-07-08T22:00:00.000Z

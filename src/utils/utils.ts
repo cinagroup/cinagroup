@@ -7,7 +7,24 @@ export const formatter: Intl.DateTimeFormat = new Intl.DateTimeFormat(I18N?.lang
   timeZone: 'Asia/Singapore',
 });
 
-export const getFormattedDate = (date: Date): string => (date ? formatter.format(date) : '');
+const dateFormatters = new Map<string, Intl.DateTimeFormat>([[I18N?.language || 'en', formatter]]);
+
+export const getFormattedDate = (date: Date, language = I18N?.language || 'en'): string => {
+  if (!date) return '';
+
+  let localizedFormatter = dateFormatters.get(language);
+  if (!localizedFormatter) {
+    localizedFormatter = new Intl.DateTimeFormat(language, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      timeZone: 'Asia/Singapore',
+    });
+    dateFormatters.set(language, localizedFormatter);
+  }
+
+  return localizedFormatter.format(date);
+};
 
 export const trim = (str = '', ch?: string) => {
   let start = 0,

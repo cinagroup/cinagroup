@@ -9,6 +9,7 @@ import type { Post } from '~/types';
 import { getPermalink } from '~/utils/permalinks';
 import { findImage } from '~/utils/images';
 import { getFormattedDate } from '~/utils/utils';
+import { isAutomatedBriefing } from '~/utils/blog-content.js';
 
 export interface Props {
   post: Post;
@@ -18,11 +19,12 @@ const { post } = Astro.props;
 const image = (await findImage(post.image)) as ImageMetadata | undefined;
 
 const link = APP_BLOG?.post?.isEnabled ? getPermalink(post.permalink, 'post') : '';
-const isAutomatedBriefing = post.slug.startsWith('ai-news-briefing-');
+const automatedBriefing = isAutomatedBriefing(post.slug);
 ---
 
 <article
   class:list={['cg-blog-item', { 'cg-blog-item-with-image': image }]}
+  data-content-kind={automatedBriefing ? 'automated-briefing-summary' : 'editorial-summary'}
 >
   {
     image &&
@@ -66,8 +68,8 @@ const isAutomatedBriefing = post.slug.startsWith('ai-news-briefing-');
     <header>
       <div class="cg-blog-meta">
         <span>
-          {isAutomatedBriefing && <><span class="cg-blog-kind">Automated briefing</span>{' '}·{' '}</>}
-          <time datetime={String(post.publishDate)} class="inline-block">{getFormattedDate(post.publishDate)}</time>
+          {automatedBriefing && <><span class="cg-blog-kind">Automated briefing</span>{' '}·{' '}</>}
+          <time datetime={post.publishDate.toISOString()} class="inline-block">{getFormattedDate(post.publishDate, post.language)}</time>
           {
             post.author && (
               <>

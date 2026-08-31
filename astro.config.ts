@@ -1,5 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { readFileSync, readdirSync } from 'node:fs';
 
 import { defineConfig } from 'astro/config';
 
@@ -13,17 +14,51 @@ import type { AstroIntegration } from 'astro';
 
 import astrowind from './vendor/integration';
 
-import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
+import {
+  blogPostHeadingsRemarkPlugin,
+  readingTimeRemarkPlugin,
+  responsiveTablesRehypePlugin,
+  lazyImagesRehypePlugin,
+} from './src/utils/frontmatter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const archivedBlogPaths = new Set(
+  ['src/data/post', 'src/content/blog'].flatMap((relativeDirectory) => {
+    const directory = path.join(__dirname, relativeDirectory);
+
+    return readdirSync(directory)
+      .filter((filename) => /\.mdx?$/i.test(filename))
+      .flatMap((filename) => {
+        const slug = filename.replace(/\.mdx?$/i, '');
+        const source = readFileSync(path.join(directory, filename), 'utf8');
+        const archived =
+          slug.startsWith('ai-news-briefing-') ||
+          /^status:\s*['"]?archived_unverified['"]?\s*$/m.test(source) ||
+          /^(?:archive|archived):\s*true\s*$/m.test(source);
+
+        return archived ? [`/blog/${slug}`] : [];
+      });
+  })
+);
 
 const hasExternalScripts = false;
 const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>
   hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
+const shouldIncludeInSitemap = (page: string) => {
+  const pathname = new URL(page).pathname.replace(/\/+$/, '') || '/';
+
+  return (
+    !/^\/tag(?:\/|$)/.test(pathname) &&
+    !archivedBlogPaths.has(pathname) &&
+    !/^\/category\/ai-news(?:\/|$)/.test(pathname)
+  );
+};
+
 export default defineConfig({
   output: 'static',
-  trailingSlash: 'never',
+  trailingSlash: 'always',
 
   i18n: {
     locales: ['en', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'],
@@ -39,7 +74,7 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     sitemap({
-      filter: (page) => !page.includes('/blog/ai-news-briefing-'),
+      filter: shouldIncludeInSitemap,
       i18n: {
         defaultLocale: 'en',
         locales: {
@@ -100,7 +135,7 @@ export default defineConfig({
   },
 
   markdown: {
-    remarkPlugins: [readingTimeRemarkPlugin],
+    remarkPlugins: [readingTimeRemarkPlugin, blogPostHeadingsRemarkPlugin],
     rehypePlugins: [responsiveTablesRehypePlugin, lazyImagesRehypePlugin],
   },
 

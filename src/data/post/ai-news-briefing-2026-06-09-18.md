@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Apple-Google AI Partnership, Xiaomi 1T Model, xAI Datacentre Pivot — AI News Briefing"
 description: "Apple unveils a new AI architecture co-developed with Google using Gemini technology, Xiaomi shocks the industry with a 1-trillion parameter model running at 1000 tokens/sec, and xAI pivots toward a datacentre REIT model renting GPU capacity to Anthropic and Google."
 publishDate: 2026-06-09T10:00:00.000Z

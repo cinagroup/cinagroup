@@ -1,5 +1,6 @@
 ---
 import Image from '~/components/common/Image.astro';
+import { getPermalink } from '~/utils/permalinks';
 
 const meshImage = '~/assets/images/cinagroup-mesh-gradient-v1.png';
 
@@ -39,12 +40,12 @@ const { eyebrow, title, lead, primary, secondary } = Astro.props;
       (primary || secondary) && (
         <div class="cg-page-actions">
           {primary && (
-            <a class="cg-page-button cg-page-button-primary" href={primary.href}>
+            <a class="cg-page-button cg-page-button-primary" href={getPermalink(primary.href)}>
               {primary.text}
             </a>
           )}
           {secondary && (
-            <a class="cg-page-button" href={secondary.href}>
+            <a class="cg-page-button" href={getPermalink(secondary.href)}>
               {secondary.text}
             </a>
           )}

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Broadcom-Anthropic Chip · Anthropic Biotech $400M · Microsoft AI Models"
 description: "12-hour AI digest: Broadcom-Anthropic chip deal, Anthropic biotech acquisition, Microsoft AI models"
 publishDate: 2026-04-07T04:00:00.000Z

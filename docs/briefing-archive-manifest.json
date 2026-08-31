@@ -1,0 +1,1737 @@
+{
+  "version": 1,
+  "policy": "immutable_historical_archive",
+  "count": 346,
+  "records": [
+    {
+      "slug": "ai-news-briefing-2026-03-20",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-20.md",
+      "sha256": "0dbc32be7bd89c1fa873eedcc5fbdbb5f5d12abf8b575879882877e12196e138"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-21-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-21-06.md",
+      "sha256": "782c9734586e3e4ea4e1d7432776350cec19ef2bd4c43a85e467b4509be94208"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-21-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-21-18.md",
+      "sha256": "c319fe7c1f0049ffc45e8207c3c1236696b1f880eb2319e53da6fec32a6356a8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-22-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-22-06.md",
+      "sha256": "ef387a7204130d23e888bea15b9b68a5e02e190a2ae49e24562f00e823697868"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-22-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-22-18.md",
+      "sha256": "050e5a75b1b9e45d2b0d353ca2be2f5ccf0ea4ccf790228b3443f8e5d75943fa"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-23-00",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-23-00.md",
+      "sha256": "a4c98c73a3a3728f1bbce62cfa3fff3e621cf9f3d959b7970e871318a47a4db6"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-23-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-23-06.md",
+      "sha256": "1c547357549322b1585ab6c0898075a863f990c663b5e14c3c3b10e9c6892dc5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-23-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-23-18.md",
+      "sha256": "38add3cf2d15ebb97e0a062e4300ec4c89a59c93dc6d3e7e7e73cdc39bf91b9b"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-24-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-24-06.md",
+      "sha256": "31953877525e81f53576217299ea62264693e21e4a11a9ffbdcc31f65c5d1ae9"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-24-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-24-18.md",
+      "sha256": "1813a558ab46bc47ea13018344bf2a7a3cb50523ec073d1195adaace1558c33f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-25-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-25-06.md",
+      "sha256": "f9353c8ecb55874f41c7f956d1d4d63ac516d37e3b9c5b773ff4dd1999ffe191"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-25-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-25-12.md",
+      "sha256": "0f2501a0f8f8e294a1d2f5fe2bd64eddef74ce577444a9cbff3a1d9a0f486a3a"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-25-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-25-18.md",
+      "sha256": "ac87c503f106c88897a9c85297bb1a5289c6d90e8256a7854728d9767d2a00cc"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-26-00",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-26-00.md",
+      "sha256": "c3fb784725d6daaf3469f388b100b9ce7dc83b3908c130a6dbca71be9996f460"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-26-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-26-06.md",
+      "sha256": "525760582fed1e6624748bb0e50ed740f74b1a2b198fb0291604c1f229a6b53a"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-26-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-26-12.md",
+      "sha256": "225774d5f445eeb5db1ec03c333a11acf90e45a5de05d2e7886492a4708b8edf"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-26-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-26-18.md",
+      "sha256": "2cc0297bccb134f2bfdbb4e04f095cb317da9d03f5561df9dc4dc5389596d12c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-27-00",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-27-00.md",
+      "sha256": "ca6db428738379c9ef813d81150fe896f2ccf8223c1d0fc84efadf274196af61"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-27-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-27-06.md",
+      "sha256": "e40918aff40f9e18b95961d7a3a34dae3f3e8241d5611df43e6eb88755e19add"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-27-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-27-12.md",
+      "sha256": "9dc33df10298e80b5f1b0da51ee6d65f55e79505ad186d0ff6e72af9680f6015"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-27-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-27-18.md",
+      "sha256": "2509ef173e138275f467e0ee7288b6d407dcba5b6687db24b3cbd947047ce0fa"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-28-00",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-28-00.md",
+      "sha256": "d5d2cb236df565d17f99b8134956bd9a16b292824f969d462e60b5de45361d0c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-28-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-28-06.md",
+      "sha256": "8149563c89bcce4ef561d45d8df497d19657127142adc5bd87349ed42ef56b20"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-28-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-28-12.md",
+      "sha256": "aede8f460a7df4d196893a9f633fef1bd1eb97efc1fff8b94c66aef702b6b90a"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-28-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-28-18.md",
+      "sha256": "db8d64469b1e69b89048464de0b97df8aece3b8d68070ec65154dd5fd684f6d3"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-29-00",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-29-00.md",
+      "sha256": "2a857374f5e922a9cfea4b974ad083dafb03e1d6daac3f86a831814221f7c7e1"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-29-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-29-06.md",
+      "sha256": "fa69de62e6a2330f1ebcd357d0e907ecf3c696c4a763ac219ce4ad840acebad4"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-29-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-29-12.md",
+      "sha256": "df8522f337b1f645d18d5aa0f115721c79bfc587c6b6540a364b935b5866e998"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-29-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-29-18.md",
+      "sha256": "ddaf984abac291d0052537eabea62045b3cfe2cfca74b3a4a6f59b10c1f99260"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-30-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-30-06.md",
+      "sha256": "920fafe4a91a34757d4dfcbb680765473baa82e1840cc17f8ad7b1d04529eae5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-30-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-30-12.md",
+      "sha256": "d7c53c0f2853e3122b90c35c3551782a6e670ee351a811ec5dde088be5606985"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-30-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-30-18.md",
+      "sha256": "0f237ca9d346619e6376ace07dc909ab8a6aef6ef8a9420f84545e8f78cf6d94"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-31-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-31-06.md",
+      "sha256": "e98d2b426e8c5232d7e22cc264734686f82ad3b1711f79c4fbf2b24fdc256be7"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-31-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-31-12.md",
+      "sha256": "65d65ed559ffc2164f198f20ee98cd47a1ddcb4093384cd259477682688ebc97"
+    },
+    {
+      "slug": "ai-news-briefing-2026-03-31-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-03-31-18.md",
+      "sha256": "dc9d7288ec1997217be768afe98ae4d68773efb736543485a45be3c82743c29d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-01-00",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-01-00.md",
+      "sha256": "d86e0f4a5b425a4076f2014acb40934b28c663bd2b138f1fb17c60236a47c6a5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-01-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-01-06.md",
+      "sha256": "b97fd67df56e62e2f511253293d547b2263b2f60f62dd9701ad101967f440c00"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-01-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-01-12.md",
+      "sha256": "bbc6b332bc2c13c6ca8b4656394bc5028182ed9bb750dce8305a8be959dd6ac1"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-01-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-01-18.md",
+      "sha256": "b32ff51939672045bf14724bc1e4281bfff6e5bdac479265d8822d39e026d860"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-02-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-02-06.md",
+      "sha256": "ae8b4a386383d157d4a57fd5dc42a0cce9d6aa54d1802aea2c8e8a4c5850a6a9"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-02-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-02-12.md",
+      "sha256": "c02db8b8b5cc409bc6894b57144ee7982b8706e6f0e592d621c476f24a35306d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-02-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-02-18.md",
+      "sha256": "08d466e17075be5512058ce839aab7859cde8a04c07ba6080483b7c951cbf4ce"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-03-00",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-03-00.md",
+      "sha256": "a7e0964f5edfc82af56071330fa245c87bb52929bf4ca38009e0770c521beb3a"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-03-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-03-06.md",
+      "sha256": "e90eccf217d204c41abb5b55e10a2b0dc22d527a36fb068bb50faf24b01befc5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-03-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-03-12.md",
+      "sha256": "c44f185e6e1b4216d66e5485a894390dada289013368617ad133d2a7ecc12552"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-03-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-03-18.md",
+      "sha256": "02e92f55ea25ea2564f1c55af5cc595ae62bead7f552a0aff23623fec782f255"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-04-00",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-04-00.md",
+      "sha256": "19deab7f8f48488ef8982a1b73333fa4bcb24f57637238ad86f1da2797f0039c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-04-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-04-06.md",
+      "sha256": "28a5582337959138e1885dd534a8846b8258d2770fb6e7eac5b1150b161d2e1c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-04-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-04-12.md",
+      "sha256": "c1c088dea810d637ce4925cbe8912d053998ddf50c48e04805706ba218ca8737"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-04-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-04-18.md",
+      "sha256": "0ad35cecd53f3b44f36f7e6aae6986df21bf85a1f9d2009fdb7ef83e1ecd1948"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-05-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-05-06.md",
+      "sha256": "9852e860c37e2c86f103566899106c2e3cc4b483ecb704adfa9b6b92cc4de89a"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-05-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-05-18.md",
+      "sha256": "d8c0cbf429563673a25e90a17dd055cb28350a6579ae3ebebb34acefe2a30251"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-06-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-06-06.md",
+      "sha256": "45129cdc6c12016c900ff6dc5d8631d25ebdd995b7caa54f65f025b185a7fdd3"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-06-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-06-12.md",
+      "sha256": "26c06d9d2ce36c22fac649f202110dcafac06691ec3c2c2589daac1686be15e2"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-06-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-06-18.md",
+      "sha256": "50fa1c0c8090cd0623e61a16a3bb5e87547fa66f93be70b1f551c60988af41fb"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-07-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-07-06.md",
+      "sha256": "72ce0fea9f080e8887f431a3ed6add49a463affc27e6f542a46ce7c9d1f1efcd"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-07-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-07-12.md",
+      "sha256": "5bb7d07deed28dce26136e7251cc09ee8f45a31b80e1652568cf1bb3d8f44ab9"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-07-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-07-18.md",
+      "sha256": "ce053adf205af499dc6971a2325e8b6291ceae2cd4ba828b6f96fc17dcc82846"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-08-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-08-06.md",
+      "sha256": "48706b14d37227e19f7dde626d267df1af4e5ae9e93bd23c96269237ecb5f826"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-08-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-08-12.md",
+      "sha256": "f33e827237164c4c35511cc5a8f907d50a985a01496f0226dd085687a8b67ba0"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-08-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-08-18.md",
+      "sha256": "10234a78186e8171c9cd6679fef8f6daa497ea77826e6b052f912c31bd8f81fc"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-09-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-09-06.md",
+      "sha256": "4b0db3a99d6b1af4bbcfdab092791ec15d132848a972101ab31458f52670d6ba"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-09-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-09-18.md",
+      "sha256": "7facd43b0517ffaf076bdbd84f658dde4b7b3e60d6c07a76ccf6dc2d062cb1ed"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-10-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-10-06.md",
+      "sha256": "fe010fd0cebf2d9a554fef365d6a14a9073a6191d7b8d431745f815559ae6535"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-10-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-10-12.md",
+      "sha256": "5b6611b0787e82a0f393f2e8e48f7b52959de45eb1b2b38dc0288f27bd4a8d2f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-10-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-10-18.md",
+      "sha256": "d1dfe75b123150abb1b1a25d49a7d3567a0ccbc5a1c68a5b718fc63c73e638c7"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-11-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-11-06.md",
+      "sha256": "97e8d174288ab082ebe4e2b6ad79396f06c4dfc4ea0e3ff8f2f884404dd50a54"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-11-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-11-18.md",
+      "sha256": "5be56ffdf208721a715e44e7c57d7059b75939aa06585410d0ecb0fe00364a5f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-12-00",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-12-00.md",
+      "sha256": "96feb7294466467ff6e480c1cc6192a2953ad176bec30d6bfbf121db6df221af"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-12-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-12-06.md",
+      "sha256": "29e8952274767ef346cd672b1aec822a901b0b361be20efaab148f3c65b201fc"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-12-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-12-18.md",
+      "sha256": "e0755720235489901e0d8a43b3115efd9f11143afeeb89d2b41571b7cd12e1c5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-13-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-13-06.md",
+      "sha256": "662c329d0076e89387491524cc7d80c6b581fc5d6bcc80755a9e07e3bf2f46ad"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-13-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-13-12.md",
+      "sha256": "c0bf64703e0a911d5455dc5f0418376e344e4d5c6a6f4b99c06afa9dda57f9d2"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-13-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-13-18.md",
+      "sha256": "42cfeeea2a7f56f13185ffdc8fee4283a9241a1f2750e811828b3be3d9a86d7c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-14-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-14-06.md",
+      "sha256": "cbad8a442e0306c92571c7f46a6c0ea6f516a9b905f2e1b879f55815dd4faf6c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-14-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-14-18.md",
+      "sha256": "782466c6ce411c35b0c5858c86193baa6317474760a2f7726a1dff6d7c59865b"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-15-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-15-06.md",
+      "sha256": "e4e6c64fefd54384695b62086e78bd6a1375c0f38d5b35b6d883f264ab412c1e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-15-12",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-15-12.md",
+      "sha256": "af81194a6f0b19094ec090d3b3d613c187aab928be59f7c2e1ad226e56b30e23"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-15-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-15-18.md",
+      "sha256": "69fa567aee4610576b615feb1e752466e369b1d44e4798ad5bd35158d3e7e9f5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-16-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-16-06.md",
+      "sha256": "92460aa7dcda523a23a57ccaf251cd42a0d15960d4f26c31df4481756953fb5b"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-16-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-16-18.md",
+      "sha256": "015034ac1630b7d9c0e93460ef63ee94f4652f01da17aa37bff99f68f2379bd2"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-17-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-17-06.md",
+      "sha256": "a30f2d7ffb49910ac3fd8fb982820407bbafc3b1ead2e0fe89f808ae9e1d29a6"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-17-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-17-18.md",
+      "sha256": "b5817fda9ae855996857dbfbe0d391adb03ed8f5c7498674c6f23ae9e1a88303"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-18-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-18-06.md",
+      "sha256": "b269179b7b7db865247d1e830b411bf06cb094d30deb70dfd526ca3c1a59f77c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-18-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-18-18.md",
+      "sha256": "1ab943f2ec5bc0a1dffbb465239cc6c6914291587f2a4bd83c8bc2e6099db504"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-19-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-19-06.md",
+      "sha256": "4c3a6ece439168963d3fe987a82d59b827f75c7f2939758e460200e0d820be76"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-19-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-19-18.md",
+      "sha256": "4b94d2dc8f705646a9dd799cae03b21dc096c71da75df44c394fcb148c6212fd"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-20-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-20-06.md",
+      "sha256": "4ba97a6e8816bf3f8367c982efa7e0a3e13cf0b62984323bf77ce738071e9922"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-20-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-20-18.md",
+      "sha256": "40e677be1873799bfadeb4d68cb50dc5f4a00069437e7034d9232e98f3c1a838"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-21-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-21-06.md",
+      "sha256": "b8aab1bd6ff289dddf5168319c4236de73ac243cf39cdb5135743ab1d8e90b42"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-21-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-21-18.md",
+      "sha256": "3ac14a440e9b924f32e0116a991e9f2b125cecb06a3ca64f8d7823cce29bf5e8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-22-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-22-06.md",
+      "sha256": "493f29c7fa1225e1f87dd459c1ca543223fa66d165eedb2ce81f0c30ad1f2cac"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-22-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-22-18.md",
+      "sha256": "30153c9632420532f3d513c8c1c3520c73e55c60d73b85a3c7bb2060b2ba07f5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-23-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-23-06.md",
+      "sha256": "e966155acfad2618bc449590ed42ae21a161a169b65476e4a487a05330549dbe"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-23-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-23-18.md",
+      "sha256": "d6090bf0a8c8caeb15f097d85d4e1586036862699a80ca23e20826da0b981d09"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-24-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-24-06.md",
+      "sha256": "8800c485ab449cf3eae008cb7f442b7c261045fc82b58cdce35362a97f042ea8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-24-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-24-18.md",
+      "sha256": "61e9bb3f59994059d700cb3294c46b3544bed60ba9b2a0ac802f42c24e42108f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-25-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-25-06.md",
+      "sha256": "dc9615db1913acfa6f684f33110bbbb70e0756f0185ab70c3961330a66bcc404"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-25-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-25-18.md",
+      "sha256": "534f1075766f8ec6b348d5e9120e881e5d5975b78c67127cc6c6e253baeb3a20"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-26-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-26-06.md",
+      "sha256": "d38bdeefc4fbbea5dec5b485ea87dc3e7db27d69edec99e7279fc9c51c11ca21"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-26-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-26-18.md",
+      "sha256": "f8675deddedd821e1818ff05940e11f3d9eeeab12623c86ea41d03598a38eee6"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-27-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-27-06.md",
+      "sha256": "1462acb5c29f29bbe82625c29799187e6092bc6b122ea414e14f79382e2d417f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-27-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-27-18.md",
+      "sha256": "376cb1f5758e8c56517c2e97ba7111fdb72a2fd2ad1364cdef6dff047923cbd0"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-28-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-28-06.md",
+      "sha256": "19687f7647cbd004ff26599d3b0c315b7c4989a524a41ad7bd5b78b34b2ecd64"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-28-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-28-18.md",
+      "sha256": "b68800f608169622bf2e554864770c911d57a601229f102bb914f4e46fb35d32"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-29-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-29-06.md",
+      "sha256": "c1a4fc0dbce2c1264894958f359ad2f2201af1ff7171ac1970c9bc40fb868ff1"
+    },
+    {
+      "slug": "ai-news-briefing-2026-04-29-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-04-29-18.md",
+      "sha256": "457dcd5d6844ebd301b67b293f36ccfbcc015e6cf298715ddf68166e49c676ea"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-01-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-01-18.md",
+      "sha256": "cc0f23e6ea7ae9706173cd9ce108e6a9158abdbc61aa8f5637aa8c9990977b1f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-02-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-02-06.md",
+      "sha256": "eb9456225894ce4d8a3acec626f213aa1240851a061f44a3ee2c23c2eb573413"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-02-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-02-18.md",
+      "sha256": "295e3c73326b1bf19f32801e74cfd8790cb9af5a0c1fb833b255cd46ef8f92dc"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-03-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-03-06.md",
+      "sha256": "6a5e4c216e98bb79dfcc52ea1dd59760b7f517dff4a7d08db544a7319ea1c271"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-03-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-03-18.md",
+      "sha256": "cd660b4ddb31d1ea5dcea038111a705fdd37ab32eaf5c953c9218ffa45acfea2"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-04-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-04-06.md",
+      "sha256": "48c68da3f1b770443bf7219949e302dea53520e3eacd47cecbaba811fcd406be"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-04-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-04-18.md",
+      "sha256": "64ca12f09e8320f9a05f5b62519fc95915014334c028f5d8a21854a2254b246c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-05-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-05-06.md",
+      "sha256": "10d9382c2180c96f1f7706e886613279b6f5e6c24980a4ef08f07177b03de3e5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-05-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-05-18.md",
+      "sha256": "f79a148a15a352557ac5c14991bcb9c3ab2e5297a5ae76084ecfbf40356e3572"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-06-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-06-06.md",
+      "sha256": "45b184a914e2bdd8f1a1335d1d65271973d216455154bcd5eb5a081a03a53224"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-06-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-06-18.md",
+      "sha256": "3b6a77e74e83d62ca3c2525812a87128a8726bda2e0503d6945495659bab1bd1"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-07-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-07-06.md",
+      "sha256": "795259cdc54473f9390d4c186245b81bd4590998c3d3df244b976c10bc6cdf6f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-07-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-07-18.md",
+      "sha256": "b18aa64af4f424d32450cece67db6aedad300d1977d17344fc59b95ba9b31f24"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-08-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-08-06.md",
+      "sha256": "d14b8da6cf7f3a6c6b876563f02be1d39443f0d19d9063df1556748ca130fcb8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-08-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-08-18.md",
+      "sha256": "491952eb426d9a5c85a93ef6c83e7b3f682f4e9344063b2b50dfb13317141125"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-09-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-09-06.md",
+      "sha256": "b9990977b27c86507a99c797469ff05ee9dd0cec02730c3e4ec4250f1c17c2ae"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-09-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-09-18.md",
+      "sha256": "2b067923c7ed973d725e2270a01740bbaef1abb89c217cad4d526cc2cc3e1fe6"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-10-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-10-06.md",
+      "sha256": "e1e79b0a4336082dba90af3c6b3c39d6beb0b15742db0728abfb8e28c8bd60ef"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-10-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-10-18.md",
+      "sha256": "7988d8db29edd65ae6322d25e3f6d300920bee961719f764170298db15ffb930"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-11-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-11-06.md",
+      "sha256": "05d0da07ca469e8fb79833f6895ef1a4ccc394e3511ee40f835fd5ad3a00e95c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-11-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-11-18.md",
+      "sha256": "5ba9aea7ccf5f4bed5037d22ba59c9dc614d6732a1edc60501aad6606d56fc70"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-12-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-12-06.md",
+      "sha256": "91a478a8a40338038b1e13fa290547748c91512f98155811af42fb0209be161a"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-12-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-12-18.md",
+      "sha256": "8d788775c3e45cee2f765864d1655559caaf9bb12081e3a94f2ab5f07958879c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-13-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-13-06.md",
+      "sha256": "8a3b0fffcbd6c26ef37fcc45967b2353368f20bd81c7a0b11fbc84bd91fa518d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-13-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-13-18.md",
+      "sha256": "194bb71c57ca84af4641b341a4c27fc49bbd587fbcad5e54899c35dbd8be2919"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-14-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-14-06.md",
+      "sha256": "015790a6d01e571efe47ef6006b8bb748c96221afba70b2cd20b32acbaf0643e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-14-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-14-18.md",
+      "sha256": "c0c5fa9b61c9d35b3791cd232a6d474d9ad98514ba79a22a87278fd0ae39ea8a"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-16-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-16-06.md",
+      "sha256": "424b43e46683a825a9bcad518a255a6b757a7d7014b3e63114a78014294cf058"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-16-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-16-18.md",
+      "sha256": "23b4ac74e9fd2c378dfe6c17e18bf4df880f1d9752da73102d0fcf4bb346f4b2"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-17-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-17-18.md",
+      "sha256": "2edd013035b55a3e8cdb44126f1d844639283b2e9231519a85b3f49b05f1b439"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-18-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-18-06.md",
+      "sha256": "085f0e067fa4eec4b91794851b9e0cc5af8529dff940a4dc4432ad2cf90af93b"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-18-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-18-18.md",
+      "sha256": "5e308be7abf776843ddbb1b2c50269af6d60a85d4e5839e9c3067d12a920381e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-19-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-19-06.md",
+      "sha256": "20991d803ba8a26b2de46e6b2e720a7e83fedb3f2e80fbbfb6de0fb4ad628a80"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-20-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-20-06.md",
+      "sha256": "835c733d1306c1b209a5834b3c8ca29aef0e3096fb181725af5ecc8f9eefcd43"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-20-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-20-18.md",
+      "sha256": "a0454b062bbb0cf2ca2ff025c1a65e282855ea23b8c0fa18f1f0c3b4a24b1d34"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-21-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-21-06.md",
+      "sha256": "350e673506ab36dc6bd1c8b3fd1fc8bc207a71367f9ffac25e56cb70dd0954c0"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-21-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-21-18.md",
+      "sha256": "a5dca518e0c5ec5e55520a55ae0712dca6a186d9655a6376dafbab5317da8ff4"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-22-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-22-06.md",
+      "sha256": "67171549daacb020c5cb5d4c37af6339558b4c962d3053e6679d554bbc09e026"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-22-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-22-18.md",
+      "sha256": "36e217d77682f13334ebeca544ccbe8f14f28fc58d0807ad38b7e8dac106ead3"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-23-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-23-06.md",
+      "sha256": "07c37160f63ea9be0c969aa3f1b3844f3429aa725c8aee59e48f3a2049a48d11"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-23-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-23-18.md",
+      "sha256": "809ddfa62164527f011c5e11ade447a363604cb0ce5f6f898da2b86ec44dc764"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-24-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-24-06.md",
+      "sha256": "d3273202d1164227738117dd222a584776b666306573e76ebb1152753b8ea0cb"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-24-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-24-18.md",
+      "sha256": "75df63f31fdace4b6d99be86f8a4759063eef260bea59a093519b01942d23f77"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-25-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-25-06.md",
+      "sha256": "e72d6b7a1b934a2d7aa0ddc36a9b7e9da2e1e9333e518ec98faac2a8cd54a8f1"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-25-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-25-18.md",
+      "sha256": "a1a6392d7ecc702b3fa63ddff33b721789b3124a228d8deba51da56830126409"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-26-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-26-06.md",
+      "sha256": "e8fa14fd546452788f758f499c5136cb70d5fac6d7a63b7c6c66ef118e8252fd"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-26-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-26-18.md",
+      "sha256": "39d5e597717d5b73f18b67a1670c8632e97ba268d227dba7f4ca52e40954188e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-27-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-27-06.md",
+      "sha256": "636e84c9dc2ac594ef66cf2d017b1094066553e13ed07b7b8b7296c6db1abb72"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-27-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-27-18.md",
+      "sha256": "392899d508483327075c1daf2ea9323f6a3500c0f9b57cd860304bdbee338f66"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-28-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-28-06.md",
+      "sha256": "61ce8d05a17ae541d145d05217336d2c6f12cace1672996e0342272652f4594e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-28-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-28-18.md",
+      "sha256": "e16121e7730b1fedd737df6b5880b0fa7856bc964c76160f1804ccf0abe7ad91"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-29-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-29-06.md",
+      "sha256": "36fb73e3d5d14024cce3dd593dac83036dffd9f55a8ebf3a9f26f47d9c4a43d8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-29-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-29-18.md",
+      "sha256": "c171bc064ef9d2a2f4d6ed326290fff4f02bceaea75ed73a074482d164a80eee"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-30-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-30-06.md",
+      "sha256": "524b31b7962b50896714fada7fc52ea3713be2633286ef265f8fd009f8721101"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-30-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-30-18.md",
+      "sha256": "1595ccde291fa8f7281ca4c78f7e025548e1b9f973cbc7950789bff235d0148e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-31-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-31-06.md",
+      "sha256": "a118d705f7b8b81da4a0463cd5c1c3603aebbf094e2782dbd9b1e9788344a339"
+    },
+    {
+      "slug": "ai-news-briefing-2026-05-31-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-05-31-18.md",
+      "sha256": "b99f598e82ad48e5c69e6623342b8143b0895d5d53b4a39b2b4196ecfc2991a1"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-01-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-01-06.md",
+      "sha256": "3e2ca080380bf855bdd8913f8151997c39f93ae77bca57650431657430b888a0"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-01-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-01-18.md",
+      "sha256": "5f825b6555fbdccb584af79a61f4adb0def5ad9df42e26fbd08f2a34a42652b5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-02-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-02-06.md",
+      "sha256": "7e8df6967670ccf3299253e2ce5af8ad390f1d1fc11213cfab067098bba14b95"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-02-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-02-18.md",
+      "sha256": "de30ff1790d86f164ad39490343481e60e8bbdd58aa3666ccdd6ab1597070c6d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-03-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-03-06.md",
+      "sha256": "030421ad5d6216155273358cf96d8b661fad22d8a407a617139c351986cc66aa"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-03-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-03-18.md",
+      "sha256": "7b805ed235a03bab9c3aa29261520a1702c20e12e5ada68d2bc2f2428820962c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-04-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-04-06.md",
+      "sha256": "6228331bc59246b95d5ad27c1b951bdd22d61a1c5b7ca0594938562eea06d445"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-04-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-04-18.md",
+      "sha256": "e7820903097f93feb3f8f56231b1ff7906573f137098a6868b251ca0def4f764"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-05-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-05-06.md",
+      "sha256": "57009eb53fd33c609f5adfd8aac6309183fbad443691fa2cff230e2a708a1761"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-05-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-05-18.md",
+      "sha256": "675edb81c84e358d1035cb63556152061a3a8f0037d8d3c854b89ea4ceb1833f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-06-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-06-06.md",
+      "sha256": "c211f670ed8770cca8f88da67cd3b32848453879864d6ec9a627e6a60c44e7d8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-06-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-06-18.md",
+      "sha256": "6284792c00e786cd0d3de105010ef6bcef83424be4025c01cae4098a9131a2fe"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-07-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-07-06.md",
+      "sha256": "83bc9f8f202f57b5ee1fc11fbb365b955871670bcf10e71dfd3fd08225248ff3"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-07-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-07-18.md",
+      "sha256": "828ca6c8db61c384e9fe09a83e250689c59c07d0fcdb1f472973f877f8b4ae67"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-08-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-08-06.md",
+      "sha256": "d615676b113fc153ad0839010f7f8fd7cd03d5707645c85a7729b15b5ce82833"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-08-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-08-18.md",
+      "sha256": "a1593dc6433a5240ed10b29643072e0bbfd27d23187d67ba528af852e54d8ed9"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-09-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-09-06.md",
+      "sha256": "e0a3a9bfe95a9d02c9bb6126037830ed921071fa36e2f1f18a96f80a64a9cb88"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-09-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-09-18.md",
+      "sha256": "b285f29f1b0892333d0eb48dcd7e34e590a372f7514659afd077a3c4e3aec50c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-10-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-10-06.md",
+      "sha256": "1f66386c1c03b0a3bf997f21385fde3d9ab22d7d56366414bb9115c57aec84fd"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-10-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-10-18.md",
+      "sha256": "1887709688603998984177334b80ca1b7724ee9b424864ef90e331198e9ab733"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-11-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-11-06.md",
+      "sha256": "e4455d19247fb7303b0996acb22a2c58c429911f77dad4ad38123b4ddf202e83"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-11-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-11-18.md",
+      "sha256": "7577ae9aeef7b91a308d62aa8df294ac318c45741ae9f1d01b152aee8e9f9b3a"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-12-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-12-06.md",
+      "sha256": "f4a060d650c18fa4be1e56edae0458720316bc9dfe19dd031cc7113519cdef6c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-12-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-12-18.md",
+      "sha256": "f37a7a46193f1dfaeda8e1e72e31ddc58d968f2f77a21582d6afeb99166dde12"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-13-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-13-06.md",
+      "sha256": "b37159a9acad3253089204dccf571a3dd17a29ce469116fab5cd6e856ec265db"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-13-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-13-18.md",
+      "sha256": "9d52f011faa6fb9bbb13a4e293af01bd2a79270b04402dff001345e322316e36"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-14-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-14-06.md",
+      "sha256": "1d6ccbbd513dcd09f352d711a41354f6f40b57b84c4bb7716ec802682c516c27"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-14-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-14-18.md",
+      "sha256": "a6df45ca3d6a55a32558dca6255804ba6c653617359fabf42c41298d385fa617"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-15-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-15-06.md",
+      "sha256": "ad77101b543c26eacc434c2fd9a83fb2d76028ececb5f9fd9cf2d904c16f5160"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-15-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-15-18.md",
+      "sha256": "5f8fd9294f00ee84e7a2bf64b1127beeaf68cb95b18761de4894b99ed022a4d1"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-16-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-16-06.md",
+      "sha256": "b1527b27c174dee97e765506490f9d0ce81ad0c9a47c23fcd80025fd033fa2f9"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-16-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-16-18.md",
+      "sha256": "505088e1d46dcec7fcd861961d37b2a0e4c8cb6547b7b73b01905dd33f67c9c5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-17-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-17-06.md",
+      "sha256": "98963b1a6dbf6d029ac6b5de131cd8e263b1fe4d563904ade89c22ab8136afa8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-17-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-17-18.md",
+      "sha256": "e9499fe8d8f3956caf19e88374231bff9769da02bbdae6c0fb27be4f88849d03"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-18-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-18-06.md",
+      "sha256": "1caad8ec355e68003a2195f61d2412343a16572c0601297440ac229a1cd0d494"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-18-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-18-18.md",
+      "sha256": "2b75ba4c538c862fb6190172d74ef6aad2d31832525cabcaaba70b63914afbb7"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-19-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-19-06.md",
+      "sha256": "f82c899ff67d151fa00e22d8e868c3b5f045a60066c5e888f07bf539e633ffd9"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-19-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-19-18.md",
+      "sha256": "2ca552c29c345393cfdd1f1c2ab31f838421e30c156fb3ced6defacd6fc4018f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-20-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-20-06.md",
+      "sha256": "ea0810c00b299ef5862cf227f4ed619a2bbd732a32f5f3728d948c22173bd5c0"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-20-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-20-18.md",
+      "sha256": "b696ff3aaf7a88471ca4874f48946b28d670b8df03e49c0be5844187aa904096"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-21-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-21-06.md",
+      "sha256": "fa8598d29e2f7d851896d656d553e222353805336e98e12209323c4a94c594aa"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-21-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-21-18.md",
+      "sha256": "1982cdb1c18f54e6b3171323c590001b47eac9f0f78bc160466a464109588352"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-22-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-22-06.md",
+      "sha256": "2844354da61f4cb2bb8fdbe124ff2ce19b4f5ff32ae0334bfe2813923efa7b99"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-22-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-22-18.md",
+      "sha256": "64308bd712e359c83f546d7d7fdec4e355acbc4f31b75c0abb4ab6a8888628e9"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-23-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-23-06.md",
+      "sha256": "26346589db140d28b767e20f5ae1eb3019c4668e9d20e3c850c916c6d4dbe1b5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-23-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-23-18.md",
+      "sha256": "ad9b06d750bb078e0f70cc89857633346e6e0ece13652320b2d937963bafe816"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-24-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-24-06.md",
+      "sha256": "0c855de0bd85138ec93eb53bee3489e70d34f1b4ca804dfefacf8066f837a67e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-24-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-24-18.md",
+      "sha256": "19b3ac309fbeb4bd2055ea3cc01f8ca5017042c01627dd6143ca7a53f2675b41"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-25-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-25-06.md",
+      "sha256": "14368f938ae0589e591b330e7bd41cbd338c98600072eede62138b369a0559e8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-25-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-25-18.md",
+      "sha256": "cecd383518f5d59fe09e7c007c9c461c87f92459104c0819ddedb4c8f49a65e5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-26-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-26-06.md",
+      "sha256": "84075fd55baa7cab932c04dc8506f40a2a234ce1cb828d0a93d86401a502107d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-26-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-26-18.md",
+      "sha256": "fb3f8a99883216983462d9036d40c9600f5b34888ee04eecbe4ed0bdf246b7c3"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-27-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-27-06.md",
+      "sha256": "4443aaa4eb587f0fd5577926b42220f0a89a36fe5b7b59cc4ba7acdfafa7398d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-27-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-27-18.md",
+      "sha256": "6bbe7e18ab03cc3d59a1fcc6e2a047577fc2f06e665b2da91dd9849ee641fe06"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-28-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-28-06.md",
+      "sha256": "434b5c4854210bfc3b8cb77160e5648ff48328571557d021fd63f5bd41f57d25"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-28-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-28-18.md",
+      "sha256": "e76d5c53687a8f652d4c86b0f45ae4ba22b8b1a7c0bf1fd04bb53ee31a00da39"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-29-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-29-06.md",
+      "sha256": "4fb08c5fe8a7e6e46029a6eea22ab9062367f83d69c9303acc2a0517d720ffe4"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-29-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-29-18.md",
+      "sha256": "481c871138f2cb7200b581242a1f0b9a1f2dd909d0fc68b97ba4a6beac871b9d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-30-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-30-06.md",
+      "sha256": "3b7f0506961f529c0853aef5523f25b757ae16ce22f4bcf13ffdb88fc41acf5c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-06-30-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-06-30-18.md",
+      "sha256": "d78bb1443d085161887159dbd9323c65811be07e401a2e87573bd4d9f6247305"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-01-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-01-06.md",
+      "sha256": "1c0a949e5660c929b7608d58f71063b07e069baaa59722b32c1de29dbc5b52c5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-01-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-01-18.md",
+      "sha256": "7ef7a114ae4781369088090a072a5f21d44cc837228465e9aa85f879270442e5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-02-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-02-06.md",
+      "sha256": "254200b078a5c27679a90b4024c5e4aff05a32eef61d7b2895a020fd9235d3da"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-02-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-02-18.md",
+      "sha256": "5f86b1ad701685709edd053b5eb845977da829ade28d7229e008180c06e845fa"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-03-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-03-06.md",
+      "sha256": "2938e35768b1cd94f457933d627e793a49cd8639e9c0c7aaff1943aa7dcc3bbb"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-03-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-03-18.md",
+      "sha256": "537a316319935bc8c0f4d4f7c33c61a453d59c7e867fe1c5b7a2424473620798"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-04-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-04-06.md",
+      "sha256": "976b21f18f07b4934350ab8e6bf3f9b3a6a52f1bfa77d46e01836c19b6d68ec8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-04-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-04-18.md",
+      "sha256": "35758f6d6570866ab9a17d97896f12c4585df9d5c370310375466ec0d2355688"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-05-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-05-06.md",
+      "sha256": "c92a201ec3a4441d396612808a13ffd3a030a1e753df6387a6b9b4a3443fe21e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-05-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-05-18.md",
+      "sha256": "b6e2e6ab143a767353baaace85cd64693727f9e5dde10c483c1fe4f1b6c27209"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-06-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-06-06.md",
+      "sha256": "5465f427168abc6234d62bad436ffdbf1c35c2d3596eee1fffe89f3a58ead088"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-06-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-06-18.md",
+      "sha256": "186281229fb4141aba2db32c77d1d1d7b442f4a461c53ba3990278c566cce3c6"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-07-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-07-06.md",
+      "sha256": "b14295e5f4fefdf09c71702fb3644024d617ef05c542e193a2db4e4fc1214197"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-07-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-07-18.md",
+      "sha256": "3be8f738cbde54ae839364329b095e705bfc67c3dde9a6656330e096c4f310f3"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-08-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-08-06.md",
+      "sha256": "e5f1721487bbd2d90112c5f48b017328056a9dd33da4239c5389d395079a8c34"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-08-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-08-18.md",
+      "sha256": "e7f7c09ae99d097c84fbbe7a8a7a8538884944dfec310a4a980f76b53137c0d9"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-09-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-09-06.md",
+      "sha256": "c1654f55e1e4053b85ebd8319bd51b0a14351e8f3386b0c7af4998389bbd82ce"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-09-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-09-18.md",
+      "sha256": "5dd621d2d2d3ca313f8cce9488a767bc74d767e79f500e3c237669e62c2bc888"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-10-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-10-06.md",
+      "sha256": "8914186740f57a4d1d759c915abb13412fecb9f4612e21ab09c62c6db38aa470"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-10-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-10-18.md",
+      "sha256": "00ab9a02e09aa430cb595ce75a09ed7b640934f7e0f369f2db5a6f28fdbbf9f9"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-11-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-11-06.md",
+      "sha256": "05a1d62e5cf1d490be983d3e96b238b50ebf604aeaa6295d39ece206f55c187c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-11-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-11-18.md",
+      "sha256": "fc5eccb3aa194f1b01e4d9507a40afffd1843d9a6e5b8f185ef96f43d6e32ab6"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-12-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-12-06.md",
+      "sha256": "20373718673878ef696596be8ce8e57c14bc6a043e51b7a35461193494c83723"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-12-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-12-18.md",
+      "sha256": "97689124322b19f854f210e52c7d5392bf797868a5e074ae01610cec1d7ff4b5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-13-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-13-06.md",
+      "sha256": "40102cc8fd4e16adeb561d14119e14022754f9326b90bd563bacff4c991f96cf"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-13-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-13-18.md",
+      "sha256": "55d923e7c8a181f0d6dac0e19b82b0e54d51a040a8d7d9d5b6463cbccc913e31"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-14-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-14-06.md",
+      "sha256": "862c89f2b92c4a25ab9a3faa586af60deb6322eea318e5b84942f795fff5854e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-14-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-14-18.md",
+      "sha256": "77b5abd26f0c6090449c75141fd5192aa387445aa624699e350d186a11e2ca24"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-15-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-15-06.md",
+      "sha256": "535f1d75d7a4bd109125fd63476eca3d28b5a18125e9a835afd07d13de88b1a7"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-15-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-15-18.md",
+      "sha256": "c86ff392a230d28c612902d2bc7af7002330bc91119f27a16cd37736dffdf0d3"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-16-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-16-06.md",
+      "sha256": "72e2a160e013c326dc1d48ef890de005093e2fc3b3beec8867560d51294c3014"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-16-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-16-18.md",
+      "sha256": "ffe6ce09dd44f6df73263cfdc3a31b9295f0b3cc210e9cfd2496be600534bc07"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-17-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-17-06.md",
+      "sha256": "0cd3bbd3335e853db4e7e4a2c5fd37c5a4b6ec6bb7bc80c0cbc91a95b9255ef0"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-17-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-17-18.md",
+      "sha256": "5e19557f77628ab4fa2403ac4a137ed27054a4d45af3edf5aa2794cd92b0e714"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-18-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-18-06.md",
+      "sha256": "7ee6e615c9990e895285195230febfab8b1991b54f690ca2ca4933af50c13bbc"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-18-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-18-18.md",
+      "sha256": "b464c37c839bef94510cd61e018b712b1f338bc7462928b4218a3636109d4e25"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-19-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-19-06.md",
+      "sha256": "17c13aff0b9f8ff33f0cc6f16db09038e5f792d56989d3480f46add127fab96e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-19-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-19-18.md",
+      "sha256": "7385a8cb2a435347aec6a5daa550e2e36ca5a619f8c83c85e12d1fed28d3ca3f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-20-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-20-06.md",
+      "sha256": "3689eb813f9a9b674cc026c6690dbbb7a94f223e9d5a49f5a2b3a4d7c915c50e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-20-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-20-18.md",
+      "sha256": "c2d45249650c942c84d4b3c0da041b839247ef01ce10eba0c0411fd633184f37"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-21-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-21-06.md",
+      "sha256": "743859010f981c45d7decc5dd8400ca657583f1e945387f70c4ea63e9ecd4e56"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-21-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-21-18.md",
+      "sha256": "4d0c4d61a9e18cd84a901828a6f3cfee0d02048872e125dec4bee7ea096b653d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-22-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-22-06.md",
+      "sha256": "8026ab0cfa7e17f4c33fdf08a7ae9bed695851342abd968ef4ba568a74a728c8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-22-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-22-18.md",
+      "sha256": "4bb2a4935f845afdc4dd56d2a5f0e7e99e37036ec29a320a27ef63f6408f173e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-23-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-23-06.md",
+      "sha256": "cc65ddbb128d98eed64fba63120b9ff4a7bfc1a947d7601b77a4477261aa8390"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-23-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-23-18.md",
+      "sha256": "f2c1dd93046ac11e0955bbdbae970133d19da226523f716d91356ac98d31181d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-24-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-24-06.md",
+      "sha256": "f9e7c09a7c00c22ba32f4bff8af931334caf54bb1b2a8a9e2c469a5427b76868"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-24-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-24-18.md",
+      "sha256": "0abdc2c259905db63524e0e422964fbaab8d3169abf6f2bdbcedec9da032d551"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-25-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-25-06.md",
+      "sha256": "3d494f1d82160cdcc863b650574a16dc29f6dad645ee23553b505369443c10d4"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-25-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-25-18.md",
+      "sha256": "48b65fb8bed9302a4733a15240c07473f2c56c30221e34e20c4127205ede24b1"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-26-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-26-06.md",
+      "sha256": "f909e0bc33820cf1ab69204d109e1171cad22aa0401ddd00b682fc9123e88f7e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-26-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-26-18.md",
+      "sha256": "0a1ff2749cd2b1b759ad426b54a9440e6f4972500271822da9d236564a57205d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-27-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-27-06.md",
+      "sha256": "b5c42359f51a05e801d33f96c575f30b87b383302231619fd1a91ed6232c929d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-27-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-27-18.md",
+      "sha256": "15780b2cc0afb04c79ca0467ff6173fc87f93a52813180bf47476f15c4d1a167"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-28-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-28-06.md",
+      "sha256": "947e9e5ce0f9bf4bb3de95dea141d643fbe885f94a5a50d15cc2d8fe53f233b4"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-28-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-28-18.md",
+      "sha256": "4f109c676480e3acb0fb030d6fd2638e6f5805e93253c33de9ff17dc3b85bb7c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-29-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-29-06.md",
+      "sha256": "693ffe3b330675385b7d2ccae043a600788595736007a75f1123be0c71940b63"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-29-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-29-18.md",
+      "sha256": "9db0190856fdb9e5f1fca2b9e36df4b2522e5906ba7a0c36454aa74e71df7709"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-30-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-30-06.md",
+      "sha256": "00d7d00b399f08ab8825dbdeb1aa3734e8ef0a77122ce76f68547962c031a52e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-30-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-30-18.md",
+      "sha256": "441b1ea111abd4be1d698c8f3f6e937840ae2b78e619bcac99d6211d8d51e1bc"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-31-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-31-06.md",
+      "sha256": "51e1f1d1ba3230c2db760c5c3888fc685a44492dd52f51cb05338cddf2e828fe"
+    },
+    {
+      "slug": "ai-news-briefing-2026-07-31-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-07-31-18.md",
+      "sha256": "0c385539d3ff2e67057f3b99eeba5aa2785f8d2aa9b56d8885dc027664ca2e92"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-01-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-01-06.md",
+      "sha256": "71f66169a7f247a5fb2215ed2bd578b8ee81f5f7aa9233c1ed96de131a633cbc"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-02-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-02-06.md",
+      "sha256": "78e8dfce190deeb3d936dccff59428654369740142fac0cd24736b11bdaa8ba4"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-02-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-02-18.md",
+      "sha256": "9804e89f048a1565c35eaf5d6a9de3fa08a740c61a3800d6ef6760059c7d07b8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-03-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-03-06.md",
+      "sha256": "8c3876fcc047fbf869e16d12b364ee90fef87ee4ea8100c768e027d5d8e51dd9"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-03-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-03-18.md",
+      "sha256": "f0fc4f2fef2723c81d0b775368286f0560406c57ca3c13755838884dda549f81"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-04-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-04-06.md",
+      "sha256": "f6ed3f9fc5dea829511e3c714280da23d8bb3a734901f928cddb0f8abe421303"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-04-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-04-18.md",
+      "sha256": "6ba8602ef7ba1cd8b47eb81d743b050bca25704a16001b2dc721717084949b86"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-05-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-05-06.md",
+      "sha256": "33bf71e4438be4877da6c4e9c1bb52422939173311a8358597c0a485bf753dd1"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-05-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-05-18.md",
+      "sha256": "cd9a346a6451019347760979e123a1da338dab70111163746f125438e03440f5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-06-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-06-06.md",
+      "sha256": "288a3fde4765c803575f0c943398aa4ff8bb3416c9a3504d54ffd1e980a247ec"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-06-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-06-18.md",
+      "sha256": "779f8effba83c235c7fe749bdd1785dfe3a42220e5ff3e8a10e22da09ade65fe"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-07-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-07-06.md",
+      "sha256": "ee19d8f90f827de0183420e7be0f66879b6f357f59dffba8ce0975136c461b2e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-07-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-07-18.md",
+      "sha256": "af92df033742476fb8c008e7e29b59215a5c9da95eae1bcf1d12e7b9c6b17acd"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-08-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-08-06.md",
+      "sha256": "ea20a6793df4b224e58e48a6b61f24047fd3e903ff09fa69eab18a45f7964663"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-08-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-08-18.md",
+      "sha256": "2a3b0b37d64ec05c5f3f1f68f7982891e2a304853b9712eea836b76068853457"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-09-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-09-06.md",
+      "sha256": "9107331ddafaada579c7f1f532e601a5c5f60788ee19b7a24ebbacaad366e30d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-09-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-09-18.md",
+      "sha256": "105fc53d2ebeea7674a82e6d4b6efee047e75cecf4e4afcabf99df0bcf7ca94f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-10-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-10-06.md",
+      "sha256": "5b97c5b49b6e13d0f45a6fbf000ced5c6c3afa35c12a2352ad625317ea4ac2a7"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-10-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-10-18.md",
+      "sha256": "0e4171a87060146299fc797c3220aeb4d5e3ae20852acb413109e7073e59744b"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-11-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-11-06.md",
+      "sha256": "92f2fb005fb297b8d8031d790a3c7e512f8fd32b1da6781ae1c3707e706d3290"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-11-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-11-18.md",
+      "sha256": "2fb7a03f4445ecde471d944a726eadd0c4e89ab2e23f60381b6d5e008c58ef86"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-12-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-12-06.md",
+      "sha256": "c585634bc63fcc44cacbb08ab099bc5ca61e07ddcf00e081c3693f796cbae2a7"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-12-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-12-18.md",
+      "sha256": "e4490fa38f6138d00a1699b57c0d44d13ff399dc5874d8349c0a12f0f52c65b0"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-13-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-13-06.md",
+      "sha256": "d3303d44d8b38f5b757f4d0fdbb5b21a069442ad2ba9efafa82231730e4298ee"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-13-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-13-18.md",
+      "sha256": "79e2ed75952e5bab6f12bc2b746997efafa75914d2fc297d67310b47328b1987"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-14-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-14-06.md",
+      "sha256": "5708336d5b996933e30a486db0e4d5da1bcfbf05c765f10fc955e4eb2edddec3"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-14-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-14-18.md",
+      "sha256": "b9290382e373569befedb1db3b38f1c1dfa2fcb174ad81049d1c4fc125cce7db"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-15-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-15-06.md",
+      "sha256": "86b8a747c48d46982f2583d7b595abe247ef3a0bd43e5989548752f05249fdec"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-15-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-15-18.md",
+      "sha256": "5bfc8c34ab1d04b55918659f4b07e7795116cd4189913ddceb62ea22e97c9562"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-16-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-16-06.md",
+      "sha256": "853d3f2928f7215fc5627cba9d3635440d6832014f5d2f4506b678f475ed4bfe"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-16-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-16-18.md",
+      "sha256": "256b2c92560157d9bc1310f8b4bf114f01ddaadb4d5b1fa29f945e9796c29b88"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-17-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-17-06.md",
+      "sha256": "8e60bc88f4ccda1f07dd03a0058ead241071f85a31625911fede63ea007340a9"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-17-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-17-18.md",
+      "sha256": "d8319e295fcf1851706bf7ff627859ca0588961dde6fb5514e735e98fb0edc7d"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-18-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-18-06.md",
+      "sha256": "41726e4332d8fff5fe2356fde2f5869d118a95a17da9a5af628197e1dcbc1526"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-18-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-18-18.md",
+      "sha256": "92ecd1b6df03e411ba3bc1858cd74fd867fa7268f8008cf42cf08ec803252af2"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-19-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-19-06.md",
+      "sha256": "4e9661a83fd603e3ec64a72bfb9cb7ee6dbce51c35c0f5b12fe97671098ab7d0"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-19-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-19-18.md",
+      "sha256": "d235782209958de7cb59a95ff0494173a12251af6c74818b2dcfc189a2ac0d17"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-20-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-20-06.md",
+      "sha256": "dc35f73cd2edcecec20549d7a0c31176d85e079d0823aee0b2ed18b47f18a236"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-20-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-20-18.md",
+      "sha256": "2a17e4d97acf120f189129263f15c38e8f6df0fcc980a8ebf8df895fb8119001"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-21-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-21-06.md",
+      "sha256": "3c6a0d8b553bfce08a046f0bc9a8c9163afb3b75c5bbf009621e2dd6d1c5df20"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-21-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-21-18.md",
+      "sha256": "509bfd8a2dbef9dc5eba48aac29fd7e83dcbc4d5ed6366380922db1f4e35f836"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-22-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-22-06.md",
+      "sha256": "4b4396259d39d0f7db5cf1821605dce36b669a89ab00251292d5c198a6b48e62"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-22-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-22-18.md",
+      "sha256": "08e65cbec13dd251931671f11766d3a29b7e1327cdeeec5afb8cbdea8859775f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-23-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-23-06.md",
+      "sha256": "629df9812087a219491684fa9772cff3162690e93a609ed56b1aff29469b0053"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-23-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-23-18.md",
+      "sha256": "a0a8491a9d26cabdc35d7856cc98db19e3e46905295a37b4c611e6bdaa6123de"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-24-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-24-06.md",
+      "sha256": "e815637633684898a5559bee5e2d6bd318f0e6351997ab7875c10efec76f9379"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-24-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-24-18.md",
+      "sha256": "20a217ac0eabe454f4695e38bebeb27b9d8c74aa4c650b73d9e3c6ea9e4d7512"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-25-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-25-06.md",
+      "sha256": "755017d87363d5a773e6709c5f582795127dff487a8bc1846181cc4a584da530"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-25-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-25-18.md",
+      "sha256": "7699b63bf8bcde6b44833f3b2faabe4c56be2bece602e83a50cf7f0558c0b775"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-26-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-26-06.md",
+      "sha256": "298fb22aa1a512c481a9d581344aa5033891f50a38a7dd94c9e967ed2fe86df8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-26-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-26-18.md",
+      "sha256": "961781066ccfdfe72b5456cd06b9c4300e834d107d27e31d5013437e152ff6fc"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-27-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-27-06.md",
+      "sha256": "cb2066622682fcc134297873a44a78e3f1a6d76f1fc9736e09b87634a29c697f"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-27-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-27-18.md",
+      "sha256": "3056bca459252fc0b2ac560b6662dd4e905cd01f7ee556e4e4dbd33f606fc0b8"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-28-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-28-06.md",
+      "sha256": "346b6052829efaffa5d679517798dad13a77e3320b4cad7c11e8605fef78f2da"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-28-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-28-18.md",
+      "sha256": "7334c97bcb9559c848fdaeaf609f50c2cd149b88d36e8eb0b964f28f69e3c757"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-29-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-29-06.md",
+      "sha256": "88f8d1c0dad10cf7ba9a663893e14c8b4ca320e2ed677b2beabe40353a26bc00"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-29-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-29-18.md",
+      "sha256": "b955d71d61fa055662ccd15e33539e915016e4c71738a205e03796b966bbdb07"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-30-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-30-06.md",
+      "sha256": "30d7c97a11378a71e9f507180b2b29542d27f787d4ad04bcbbf36e3a6a337b8e"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-30-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-30-18.md",
+      "sha256": "fc046668ff12be5313f57899b898426f1076f2ad1f022a3f2a8e21d8aa91f6e5"
+    },
+    {
+      "slug": "ai-news-briefing-2026-08-31-06",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-08-31-06.md",
+      "sha256": "a476dde6a66836f457b966f0c6d8c5e14aa8321037dfdf9045bd7a7b308a3416"
+    }
+  ]
+}

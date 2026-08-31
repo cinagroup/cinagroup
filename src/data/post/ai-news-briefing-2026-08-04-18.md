@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Google Axes Earth AI Tool, White House Finalizes AI Framework, Palantir's Karp Blasts Labs — AI News Briefing"
 description: "Google disables its new Earth AI feature just one day after launch amid disinformation concerns. The White House finalizes its AI oversight framework behind closed doors ahead of Tuesday's summit with top labs. Palantir CEO Alex Karp escalates his attacks on frontier AI companies, calling the industry 'Marxist.'"
 publishDate: 2026-08-04T10:00:00.000Z

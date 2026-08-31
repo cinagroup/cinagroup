@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Federal Judge Blocks Pentagon Anthropic Blacklist"
 description: "12-hour AI digest: Federal judge blocks Pentagon Anthropic blacklisting, Science study reveals AI chatbots flattery problem, Wikipedia bans AI content"
 publishDate: 2026-03-27T22:00:00.000Z

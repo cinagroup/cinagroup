@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic's Samsung Chip Talks, Meta's Cloud Gambit, OpenAI's World Order Push — AI News Briefing"
 description: "Anthropic explores custom AI chips with Samsung while launching Claude on Microsoft Foundry. Meta enters the AI cloud market to rival AWS, Azure, and Google. Sam Altman pushes for a new global AI framework as OpenAI faces rising competition. Plus: Forbes' 2026 AI 50 list, Musk's AI handset, and Zurich's rise as an AI hub."
 publishDate: 2026-07-02T22:00:00.000Z

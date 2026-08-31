@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI IPO Filing, Google's $35B Anthropic Deal, AI Subscription Wars — AI News Briefing"
 description: "OpenAI confidentially files for IPO targeting a $1 trillion valuation, Google backs a $35 billion chip deal to keep Anthropic on TPUs, and Google slashes AI subscription pricing in the opening salvo of a new price war."
 publishDate: 2026-06-10T10:00:00.000Z

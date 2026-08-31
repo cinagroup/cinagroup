@@ -1,0 +1,43 @@
+---
+import CinaPageHero from '~/components/CinaPageHero.astro';
+import PublicEvidenceLibrary from '~/components/PublicEvidenceLibrary.astro';
+import { publicCaseStudies } from '~/data/public-cases';
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'Work and evidence — What CinaGroup can substantiate',
+  description:
+    'How CinaGroup separates repository, test, deployment, and customer-approved evidence—and the publication standard for future public case studies.',
+};
+---
+
+<Layout metadata={metadata}>
+  <div class="cg-page">
+    <CinaPageHero
+      eyebrow="Work / evidence before claims."
+      title="Show what can be verified. State what cannot."
+      lead="This page explains the evidence behind product and delivery claims. CinaGroup currently has no customer case study approved for public use."
+      primary={{ text: 'Inspect product evidence', href: '/#scenarios' }}
+      secondary={{ text: 'Discuss a workflow', href: '/contact/' }}
+    />
+
+    <PublicEvidenceLibrary cases={publicCaseStudies} />
+
+    <section class="cg-page-section" aria-labelledby="work-cta-title">
+      <div class="cg-page-shell">
+        <div class="cg-section-heading cg-section-heading-center">
+          <p class="cg-eyebrow">Need a verifiable scope?</p>
+          <h2 id="work-cta-title">Define the acceptance evidence before implementation.</h2>
+          <p>
+            Bring the workflow, constraints, and environment. We will help define what should be observable at review,
+            release, and production handoff.
+          </p>
+          <div class="cg-page-actions">
+            <a class="cg-page-button cg-page-button-primary" href="/contact/">Contact CinaGroup</a>
+            <a class="cg-page-button" href="/services/">Review services</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

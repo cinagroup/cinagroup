@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Enters Drug Discovery, OpenAI Cuts Inference Costs, AI Cyber Boom — AI News Briefing"
 description: "Anthropic launches an AI drug discovery program joining the healthcare race, OpenAI discovers a method to halve inference costs, and cybersecurity firms post record quarters as AI-driven threats surge. Plus: a California study reveals highly educated workers are most exposed to AI disruption, and the White House issues a new AI executive order."
 publishDate: 2026-06-30T22:00:00.000Z

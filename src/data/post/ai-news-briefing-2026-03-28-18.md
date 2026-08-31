@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "GPT-4.5 Turbo · Microsoft $10B AI · EU AI Act · Tesla FSD V13"
 description: "12-hour AI digest: OpenAI GPT-4.5 Turbo, Microsoft $10B AI investment, EU AI Act takes effect, Tesla FSD V13"
 publishDate: 2026-03-28T10:00:00.000Z

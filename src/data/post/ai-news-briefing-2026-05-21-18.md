@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Confidentally Files for IPO, SpaceX Discloses Public Filing with $6.4B xAI Burn, Karpathy Defects to Anthropic — AI News Briefing"
 description: "OpenAI prepares a confidential IPO filing as early as Friday, valued at $850B+, while merged SpaceX-xAI reveals $6.4B in annual AI burn in its own public filing. Andrej Karpathy leaves for Anthropic's pretraining team. Google's Gemini 3.5 Flash ships with 5.5x operating cost increases. Trump expected to sign AI cybersecurity directive."
 publishDate: 2026-05-21T10:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Claude AI Agent Wipes Company Database in 9 Seconds · China Orders Meta to Unwind Manus Deal · Microsoft Cuts OpenAI Revenue Share"
 description: "AI digest covering 2026-04-27 18:00 to 2026-04-28 06:00"
 publishDate: 2026-04-27T22:00:00.000Z

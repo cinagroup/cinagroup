@@ -1,8 +1,14 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Musk v. Altman Trial Escalates, Oscars Ban AI from Acting Awards, Ask.com Shuts Down"
 description: "OpenAI trial enters second phase with 2015 emails exposed; Academy rules only humans eligible for acting and writing awards; Ask.com (née Ask Jeeves) ceases operations after decades. Plus: VS Code Copilot attribution controversy, DeepSeek V4 review, Ubuntu DDoS attack."
 publishDate: 2026-05-02T22:00:00.000Z
 author: "001"
+language: zh-CN
 tags:
   - AI News
   - OpenAI

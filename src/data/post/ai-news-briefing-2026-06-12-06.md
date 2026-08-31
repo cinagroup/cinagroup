@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic's Claude Fable 5 Backlash, Meta AI Hack, White House AI Preemption — AI News Briefing"
 description: "Anthropic faces user backlash over Claude Fable 5 restrictions, Meta's AI support bot exposes 34,000+ Instagram accounts to hackers, the White House pushes to block state AI laws citing child safety, and Anthropic commits $350M to study AI's economic impact. Plus: NVIDIA's major memory partnership and Bezos' AI startup raises $12B."
 publishDate: 2026-06-11T22:00:00.000Z

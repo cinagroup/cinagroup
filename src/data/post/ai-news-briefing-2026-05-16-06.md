@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Musk v. Altman Trial Concludes, OpenAI Prepares Legal Action Against Apple, Cerebras Stock Pops 108% — AI News Briefing"
 description: "The Musk v. Altman trial wraps up with a federal jury now deliberating; OpenAI reportedly preparing legal action against Apple over a disappointing ChatGPT integration; Cerebras surges 108% in the first major tech IPO of 2026; Anthropic's $1.5B copyright settlement faces delays and internal pushback; arXiv imposes 1-year bans on AI-slop authors."
 publishDate: 2026-05-16T22:00:00.000Z

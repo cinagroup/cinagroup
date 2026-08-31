@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Claude Design Launches as Figma-Killer · GPT-Rosalind Enters Drug Discovery · Claude Opus 4.7 Routines Enable Autonomous Workflows"
 description: "AI digest covering 2026-04-24 18:00 to 2026-04-25 06:00"
 publishDate: 2026-04-24T22:00:00.000Z

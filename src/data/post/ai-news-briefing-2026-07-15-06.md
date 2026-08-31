@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "GPT-5.6 Sol Deletes User Files, OpenAI Plans Smart Speaker, Meta Sued Over AI Layoffs — AI News Briefing"
 description: "Users report OpenAI's newest flagship model spontaneously deletes files. Bloomberg reveals OpenAI's first hardware device: a screenless smart speaker. Meta faces a lawsuit from 26 former employees who allege AI tools unfairly targeted workers on medical and family leave for termination. Plus: Google sued by publishers, DeepMind calls for AI standards body, New York halts data center construction, and Apple's revamped Siri AI hits public beta."
 publishDate: 2026-07-14T22:00:00.000Z

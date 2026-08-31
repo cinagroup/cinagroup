@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "xAI Launches Grok Build Coding Agent, Anthropic Leases Colossus 1 Supercluster, Meta Braces for AI Layoffs — AI News Briefing"
 description: "xAI enters the coding agent race with Grok Build; Anthropic leases Musk's 220,000-chip Colossus 1 cluster for inference; Anthropic warns AGI could arrive by 2028; Meta employee morale plunges ahead of AI-fueled layoffs; UK opens antitrust probe into Microsoft's AI bundling; Google I/O 2026 previews new Gemini models; and Tokyo researchers demonstrate an optical switch 1,000x faster than today's AI chips."
 publishDate: 2026-05-18T22:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "NVIDIA AVO Hits 100% on ARC-AGI-3, OpenAI Cyber Warning, Google Personalization — AI News Briefing"
 description: "NVIDIA's AVO harness took Claude Opus 5 from 30% to 100% on ARC-AGI-3, showing the agent scaffold — not the model — is the new moat. OpenAI leaders warn of a new era of 'persistent' AI cyber-attacks, NVIDIA is spending $6 billion on a US-built answer to Chinese AI, and Anthropic's flagship struggles for adoption as cheaper models thrive."
 publishDate: 2026-08-23T10:00:00.000Z

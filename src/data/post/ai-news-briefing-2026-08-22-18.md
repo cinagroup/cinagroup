@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic's $100B IPO Ambitions, Streamers Sue Twitch Over AI Training, MAHA Fights Coal-Powered Data Centers — AI News Briefing"
 description: "The New York Times reports Anthropic could aim to raise $100 billion in a blockbuster IPO that may target a $2 trillion valuation, while streamers sue Twitch and Amazon over using their content to train AI. MAHA activists warn Trump against coal-powered AI data centers, an AI agent saga unfolds on Resy, the UK bets on chip newcomers for sovereign AI, and a TechCrunch feature spotlights an AI model trained on living skin."
 publishDate: 2026-08-22T10:00:00.000Z

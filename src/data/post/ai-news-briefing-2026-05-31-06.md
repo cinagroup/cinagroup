@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Tops $965B Valuation, Opus 4.8 Released, Google Revamps Search with AI, NVIDIA Doubles Down on AI Infra, Meta AI Pendant Leaks, AI Agents Threaten Jobs, ServiceNow CEO Warns — AI News Briefing"
 description: "Anthropic surpasses OpenAI to become the world's most valuable AI startup at a $965B valuation while releasing Claude Opus 4.8. Google transforms its search box for the first time in 25 years with AI-powered results. NVIDIA pushes deeper into AI infrastructure at Computex. Meta's AI Pendant leaks as Reality Labs losses mount. ServiceNow CEO warns AI agents could push college graduate unemployment past 30%."
 publishDate: 2026-05-30T22:00:00.000Z

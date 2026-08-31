@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Amazon Triggers Anthropic Ban, Meta Unwinds Manus Deal, OpenAI Probed — AI News Briefing"
 description: "Amazon's security research leads the White House to order Anthropic to cut off Fable 5 and Mythos 5 access globally, Meta begins dismantling its $2B Manus acquisition after Beijing demands reversal, and OpenAI faces a multi-state attorneys general investigation."
 publishDate: 2026-06-14T10:00:00.000Z

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic Claude Mythos · Most Capable Model Can't Use It"
 description: "12-hour AI digest: Anthropic gates Mythos security model, US giants unite against Chinese AI copying, Zhipu GLM-5.1 open-source beats GPT-5.4, Google NotebookLM-Gemini integration, Meta Muse Spark benchmarks"
 publishDate: 2026-04-11T16:00:00.000Z

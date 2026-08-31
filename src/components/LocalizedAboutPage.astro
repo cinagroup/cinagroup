@@ -1,0 +1,371 @@
+---
+import CinaPageHero from '~/components/CinaPageHero.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import { localizeInternalHref, type Lang } from '~/i18n';
+
+type LocalizedLang = Exclude<Lang, 'en'>;
+
+interface Props {
+  lang: LocalizedLang;
+}
+
+interface AboutCopy {
+  title: string;
+  description: string;
+  eyebrow: string;
+  heroTitle: string;
+  lead: string;
+  services: string;
+  contact: string;
+  missionEyebrow: string;
+  missionTitle: string;
+  missionText: string;
+  principles: Array<{ label: string; title: string; text: string }>;
+  productsEyebrow: string;
+  productsTitle: string;
+  productsText: string;
+  productDescriptions: Record<'cinaseek' | 'cinaclaw' | 'cinatoken' | 'cinaskill' | 'cinachain', string>;
+  nextEyebrow: string;
+  nextTitle: string;
+  nextText: string;
+}
+
+const copy: Record<LocalizedLang, AboutCopy> = {
+  ja: {
+    title: 'CinaGroup について — 実用的な製品とワークフロー',
+    description:
+      'CinaGroup は、検索、自動化、モデルアクセス、再利用可能な機能、接続インフラを実際の仕事に合わせて設計します。',
+    eyebrow: '会社 / 仕事を中心に。',
+    heroTitle: '複雑な技術を、チームが使える明確なワークフローへ。',
+    lead: 'CinaGroup は、製品名や大きな約束ではなく、ユーザーが完了すべき仕事、必要な文脈、レビュー点、受け入れ条件から設計を始めます。',
+    services: 'サービスを見る',
+    contact: 'お問い合わせ',
+    missionEyebrow: '使命。',
+    missionTitle: '必要な仕事を前に進める、信頼できる製品をつくる。',
+    missionText: '検索、ワークフロー、API、インフラを別々の話として扱わず、一つの運用体験として設計します。',
+    principles: [
+      {
+        label: 'ユーザー。',
+        title: '完了すべき仕事から始める。',
+        text: '誰が、どの文脈で、どの結果を必要としているかを明確にします。',
+      },
+      {
+        label: '境界。',
+        title: '権限とレビューを見える化。',
+        text: 'アクセス、承認、失敗、復旧を後付けにせず、最初の設計に含めます。',
+      },
+      {
+        label: '証拠。',
+        title: '観察可能な結果で判断。',
+        text: '動作、品質、パフォーマンス、運用状態を確認してから提供範囲を広げます。',
+      },
+    ],
+    productsEyebrow: '製品群。',
+    productsTitle: '一つの業務フローに合わせて組み合わせます。',
+    productsText: '各製品は明確な責任を持ち、単独でも組み合わせても利用できます。',
+    productDescriptions: {
+      cinaseek: '承認された知識を検索し、根拠と一緒に回答します。',
+      cinaclaw: '繰り返し作業をレビュー可能なワークフローにします。',
+      cinatoken: 'モデルアクセス、ルーティング、利用境界を管理します。',
+      cinaskill: '小さな機能を定義、レビュー、バージョン管理します。',
+      cinachain: '検証可能な状態と明確なリリース管理を支えます。',
+    },
+    nextEyebrow: '次のステップ。',
+    nextTitle: '実際のワークフローを一つ共有してください。',
+    nextText: 'ユーザー、現在の状態、制約、期待する結果から、最小限の有用な範囲を一緒に定義します。',
+  },
+  ko: {
+    title: 'CinaGroup 소개 — 실무를 위한 제품과 워크플로',
+    description: 'CinaGroup은 검색, 자동화, 모델 접근, 재사용 가능한 기능, 연결 인프라를 실제 업무에 맞게 설계합니다.',
+    eyebrow: '회사 / 업무 중심.',
+    heroTitle: '복잡한 기술을 팀이 사용할 수 있는 명확한 워크플로로 바꿉니다.',
+    lead: 'CinaGroup은 큰 약속보다 사용자가 완료해야 할 일, 필요한 맥락, 검토 지점, 수용 기준에서 설계를 시작합니다.',
+    services: '서비스 보기',
+    contact: '문의하기',
+    missionEyebrow: '미션.',
+    missionTitle: '필요한 업무를 안정적으로 전진시키는 제품을 만듭니다.',
+    missionText: '검색, 워크플로, API, 인프라를 따로 보지 않고 하나의 운영 경험으로 설계합니다.',
+    principles: [
+      {
+        label: '사용자.',
+        title: '완료해야 할 일에서 시작합니다.',
+        text: '누가 어떤 맥락에서 어떤 결과를 필요로 하는지 분명히 합니다.',
+      },
+      {
+        label: '경계.',
+        title: '권한과 검토를 보이게 합니다.',
+        text: '접근, 승인, 실패, 복구를 처음부터 설계에 포함합니다.',
+      },
+      {
+        label: '증거.',
+        title: '관찰 가능한 결과로 판단합니다.',
+        text: '동작, 품질, 성능, 운영 상태를 확인한 뒤 범위를 확장합니다.',
+      },
+    ],
+    productsEyebrow: '제품 구성.',
+    productsTitle: '하나의 업무 흐름에 맞춰 조합합니다.',
+    productsText: '각 제품은 명확한 책임을 가지며 단독 또는 함께 사용할 수 있습니다.',
+    productDescriptions: {
+      cinaseek: '승인된 지식을 검색하고 근거와 함께 답변합니다.',
+      cinaclaw: '반복 업무를 검토 가능한 워크플로로 만듭니다.',
+      cinatoken: '모델 접근, 라우팅 정책, 사용 경계를 관리합니다.',
+      cinaskill: '작은 기능을 정의하고 검토하며 버전 관리합니다.',
+      cinachain: '검증 가능한 상태와 명확한 릴리스를 지원합니다.',
+    },
+    nextEyebrow: '다음 단계.',
+    nextTitle: '실제 워크플로 하나를 공유해 주세요.',
+    nextText: '사용자, 현재 상태, 제약, 기대 결과를 바탕으로 가장 작고 유용한 범위를 함께 정합니다.',
+  },
+  ru: {
+    title: 'О CinaGroup — практичные продукты и рабочие процессы',
+    description:
+      'CinaGroup проектирует поиск, автоматизацию, доступ к моделям и инфраструктуру вокруг реальной работы.',
+    eyebrow: 'Компания / Сначала работа.',
+    heroTitle: 'Превращаем сложные технологии в понятные рабочие процессы.',
+    lead: 'Мы начинаем с задачи пользователя, необходимого контекста, точек проверки и критериев приемки, а не с громких обещаний.',
+    services: 'Посмотреть услуги',
+    contact: 'Связаться с нами',
+    missionEyebrow: 'Миссия.',
+    missionTitle: 'Создавать надежные продукты, которые двигают работу вперед.',
+    missionText: 'Мы рассматриваем поиск, процессы, API и инфраструктуру как единый операционный опыт.',
+    principles: [
+      {
+        label: 'Пользователь.',
+        title: 'Начинаем с нужного результата.',
+        text: 'Определяем, кому, в каком контексте и какой результат нужен.',
+      },
+      {
+        label: 'Границы.',
+        title: 'Делаем доступ и контроль видимыми.',
+        text: 'Закладываем права, согласование, ошибки и восстановление в исходный дизайн.',
+      },
+      {
+        label: 'Доказательства.',
+        title: 'Судим по наблюдаемому результату.',
+        text: 'Проверяем работу, качество, производительность и эксплуатацию до расширения.',
+      },
+    ],
+    productsEyebrow: 'Линейка продуктов.',
+    productsTitle: 'Комбинируем продукты под один рабочий процесс.',
+    productsText: 'У каждого продукта своя четкая зона ответственности; их можно использовать отдельно или вместе.',
+    productDescriptions: {
+      cinaseek: 'Ищет в одобренных знаниях и показывает основания ответа.',
+      cinaclaw: 'Превращает повторяемую работу в проверяемый процесс.',
+      cinatoken: 'Управляет доступом к моделям, маршрутизацией и лимитами.',
+      cinaskill: 'Описывает, проверяет и версионирует небольшие возможности.',
+      cinachain: 'Поддерживает проверяемое состояние и понятные релизы.',
+    },
+    nextEyebrow: 'Следующий шаг.',
+    nextTitle: 'Покажите нам один реальный рабочий процесс.',
+    nextText:
+      'Вместе определим минимальный полезный объем, исходя из пользователей, текущего состояния, ограничений и результата.',
+  },
+  es: {
+    title: 'Acerca de CinaGroup — productos y flujos de trabajo prácticos',
+    description:
+      'CinaGroup diseña búsqueda, automatización, acceso a modelos e infraestructura alrededor del trabajo real.',
+    eyebrow: 'Empresa / Primero el trabajo.',
+    heroTitle: 'Convertimos tecnología compleja en flujos de trabajo claros para los equipos.',
+    lead: 'Empezamos por el trabajo que debe completarse, el contexto necesario, los puntos de revisión y los criterios de aceptación.',
+    services: 'Ver servicios',
+    contact: 'Contactar',
+    missionEyebrow: 'Misión.',
+    missionTitle: 'Crear productos fiables que hagan avanzar el trabajo necesario.',
+    missionText: 'Diseñamos búsqueda, flujos, API e infraestructura como una sola experiencia operativa.',
+    principles: [
+      {
+        label: 'Usuario.',
+        title: 'Empezar por el resultado.',
+        text: 'Aclaramos quién necesita qué resultado y en qué contexto.',
+      },
+      {
+        label: 'Límites.',
+        title: 'Hacer visibles el acceso y la revisión.',
+        text: 'Incluimos permisos, aprobaciones, fallos y recuperación desde el inicio.',
+      },
+      {
+        label: 'Evidencia.',
+        title: 'Decidir con resultados observables.',
+        text: 'Verificamos funcionamiento, calidad, rendimiento y operación antes de ampliar.',
+      },
+    ],
+    productsEyebrow: 'Mapa de productos.',
+    productsTitle: 'Combinamos productos alrededor de un flujo de trabajo.',
+    productsText: 'Cada producto tiene una responsabilidad clara y puede funcionar solo o como parte del conjunto.',
+    productDescriptions: {
+      cinaseek: 'Busca conocimiento aprobado y responde con sus fuentes.',
+      cinaclaw: 'Convierte tareas repetidas en flujos revisables.',
+      cinatoken: 'Gestiona acceso a modelos, enrutamiento y límites de uso.',
+      cinaskill: 'Define, revisa y versiona capacidades pequeñas.',
+      cinachain: 'Sustenta estados verificables y lanzamientos claros.',
+    },
+    nextEyebrow: 'Siguiente paso.',
+    nextTitle: 'Comparta un flujo de trabajo real.',
+    nextText:
+      'Definiremos juntos el alcance útil más pequeño a partir de usuarios, estado actual, límites y resultado esperado.',
+  },
+  pt: {
+    title: 'Sobre a CinaGroup — produtos e fluxos de trabalho práticos',
+    description: 'A CinaGroup projeta busca, automação, acesso a modelos e infraestrutura em torno do trabalho real.',
+    eyebrow: 'Empresa / Trabalho primeiro.',
+    heroTitle: 'Transformamos tecnologia complexa em fluxos claros para as equipes.',
+    lead: 'Começamos pelo trabalho a concluir, pelo contexto necessário, pelos pontos de revisão e pelos critérios de aceitação.',
+    services: 'Ver serviços',
+    contact: 'Entrar em contato',
+    missionEyebrow: 'Missão.',
+    missionTitle: 'Criar produtos confiáveis que façam o trabalho necessário avançar.',
+    missionText: 'Projetamos busca, fluxos, APIs e infraestrutura como uma única experiência operacional.',
+    principles: [
+      {
+        label: 'Usuário.',
+        title: 'Começar pelo resultado.',
+        text: 'Esclarecemos quem precisa de qual resultado e em que contexto.',
+      },
+      {
+        label: 'Limites.',
+        title: 'Tornar acesso e revisão visíveis.',
+        text: 'Incluímos permissões, aprovações, falhas e recuperação desde o início.',
+      },
+      {
+        label: 'Evidência.',
+        title: 'Decidir com resultados observáveis.',
+        text: 'Verificamos funcionamento, qualidade, desempenho e operação antes de ampliar.',
+      },
+    ],
+    productsEyebrow: 'Mapa de produtos.',
+    productsTitle: 'Combinamos produtos em torno de um fluxo de trabalho.',
+    productsText: 'Cada produto tem uma responsabilidade clara e pode ser usado sozinho ou em conjunto.',
+    productDescriptions: {
+      cinaseek: 'Pesquisa conhecimento aprovado e responde com as fontes.',
+      cinaclaw: 'Transforma tarefas repetidas em fluxos revisáveis.',
+      cinatoken: 'Gerencia acesso a modelos, roteamento e limites de uso.',
+      cinaskill: 'Define, revisa e versiona pequenas capacidades.',
+      cinachain: 'Sustenta estados verificáveis e lançamentos claros.',
+    },
+    nextEyebrow: 'Próximo passo.',
+    nextTitle: 'Compartilhe um fluxo de trabalho real.',
+    nextText:
+      'Definiremos juntos o menor escopo útil com base nos usuários, no estado atual, nos limites e no resultado esperado.',
+  },
+  fr: {
+    title: 'À propos de CinaGroup — produits et flux de travail concrets',
+    description:
+      'CinaGroup conçoit la recherche, l’automatisation, l’accès aux modèles et l’infrastructure autour du travail réel.',
+    eyebrow: 'Entreprise / Le travail d’abord.',
+    heroTitle: 'Nous transformons les technologies complexes en flux de travail clairs.',
+    lead: 'Nous partons du travail à accomplir, du contexte nécessaire, des points de contrôle et des critères d’acceptation.',
+    services: 'Voir les services',
+    contact: 'Nous contacter',
+    missionEyebrow: 'Mission.',
+    missionTitle: 'Créer des produits fiables qui font avancer le travail utile.',
+    missionText: 'Nous concevons recherche, flux, API et infrastructure comme une seule expérience opérationnelle.',
+    principles: [
+      {
+        label: 'Utilisateur.',
+        title: 'Partir du résultat.',
+        text: 'Nous précisons qui a besoin de quel résultat et dans quel contexte.',
+      },
+      {
+        label: 'Limites.',
+        title: 'Rendre l’accès et la revue visibles.',
+        text: 'Nous intégrons droits, approbations, échecs et reprise dès la conception.',
+      },
+      {
+        label: 'Preuves.',
+        title: 'Décider à partir de résultats observables.',
+        text: 'Nous vérifions fonctionnement, qualité, performance et exploitation avant d’élargir.',
+      },
+    ],
+    productsEyebrow: 'Gamme de produits.',
+    productsTitle: 'Nous combinons les produits autour d’un flux de travail.',
+    productsText: 'Chaque produit a une responsabilité claire et peut être utilisé seul ou avec les autres.',
+    productDescriptions: {
+      cinaseek: 'Recherche dans les connaissances approuvées et cite ses sources.',
+      cinaclaw: 'Transforme les tâches répétées en flux contrôlables.',
+      cinatoken: 'Gère l’accès aux modèles, le routage et les limites d’usage.',
+      cinaskill: 'Définit, révise et versionne de petites capacités.',
+      cinachain: 'Soutient des états vérifiables et des versions explicites.',
+    },
+    nextEyebrow: 'Étape suivante.',
+    nextTitle: 'Partagez un flux de travail réel.',
+    nextText:
+      'Nous définirons ensemble le plus petit périmètre utile à partir des utilisateurs, de l’existant, des contraintes et du résultat.',
+  },
+};
+
+const { lang } = Astro.props;
+const content = copy[lang];
+const route = (path: string) => localizeInternalHref(path, lang) || path;
+const products = [
+  { slug: 'cinaseek', name: 'CinaSeek' },
+  { slug: 'cinaclaw', name: 'CinaClaw' },
+  { slug: 'cinatoken', name: 'CinaToken' },
+  { slug: 'cinaskill', name: 'CinaSkill' },
+  { slug: 'cinachain', name: 'CinaChain' },
+] as const;
+const metadata = { title: content.title, description: content.description, language: lang };
+---
+
+<Layout {metadata}>
+  <div class="cg-page">
+    <CinaPageHero
+      eyebrow={content.eyebrow}
+      title={content.heroTitle}
+      lead={content.lead}
+      primary={{ text: content.services, href: route('/services/') }}
+      secondary={{ text: content.contact, href: route('/contact/') }}
+    />
+
+    <section class="cg-page-section" aria-labelledby={`${lang}-about-mission`}>
+      <div class="cg-page-shell">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">{content.missionEyebrow}</p>
+          <h2 id={`${lang}-about-mission`}>{content.missionTitle}</h2>
+          <p>{content.missionText}</p>
+        </div>
+        <div class="cg-card-grid">
+          {
+            content.principles.map((principle) => (
+              <article class="cg-card">
+                <p class="cg-card-meta">{principle.label}</p>
+                <h3>{principle.title}</h3>
+                <p>{principle.text}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="cg-page-section cg-page-section-soft" aria-labelledby={`${lang}-about-products`}>
+      <div class="cg-page-shell">
+        <div class="cg-section-heading">
+          <p class="cg-eyebrow">{content.productsEyebrow}</p>
+          <h2 id={`${lang}-about-products`}>{content.productsTitle}</h2>
+          <p>{content.productsText}</p>
+        </div>
+        <div class="cg-list-panel">
+          {
+            products.map(({ slug, name }) => (
+              <a class="cg-list-row" href={route(`/${slug}/`)}>
+                <strong>{name}</strong>
+                <span>{content.productDescriptions[slug]}</span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="cg-page-section cg-page-section-dark" aria-labelledby={`${lang}-about-next`}>
+      <div class="cg-page-shell cg-section-heading cg-section-heading-center">
+        <p class="cg-eyebrow">{content.nextEyebrow}</p>
+        <h2 id={`${lang}-about-next`}>{content.nextTitle}</h2>
+        <p>{content.nextText}</p>
+        <div class="cg-page-actions">
+          <a class="cg-page-button cg-page-button-primary" href={route('/contact/')}>{content.contact}</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

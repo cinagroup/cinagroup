@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Anthropic IPO Filing, Trump AI Executive Order, Nvidia AI PCs — AI News Briefing"
 description: "Anthropic files for a landmark IPO near $1 trillion valuation, Trump signs an executive order seeking early access to AI models, Nvidia unveils AI agent PCs, and more top AI developments."
 publishDate: 2026-06-02T22:00:00.000Z

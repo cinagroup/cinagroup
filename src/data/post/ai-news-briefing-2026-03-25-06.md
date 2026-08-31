@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI ChatGPT + Codex + Browser Desktop Super App"
 description: "12-hour AI digest: OpenAI super app merger, AWS Bahrain drone disruption, AI ad spend surges 63%, Anthropic Claude Computer Use launches, US Treasury AI Innovation Series"
 publishDate: 2026-03-24T22:00:00.000Z

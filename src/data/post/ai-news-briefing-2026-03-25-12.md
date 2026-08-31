@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "White House Light-Touch AI Framework · Congress Preemption"
 description: "12-hour AI digest: White House light-touch AI framework, OpenAI doubling to 8K employees, Jensen Huang's AGI claim, Luma AI Uni-1, Meta acquires Dreamer team, Doctronic $40M clinical AI, U.S. Labor Dept AI literacy push"
 publishDate: 2026-03-25T04:00:00.000Z

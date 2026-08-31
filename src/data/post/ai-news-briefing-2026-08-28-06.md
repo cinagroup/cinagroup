@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "NVIDIA-Hugging Face Deal, Anthropic Hardware Standard, 116-Firm AI Cyber Pledge — AI News Briefing"
 description: "NVIDIA reportedly agreed to acquire open-source AI platform Hugging Face for $12.9 billion, while Anthropic previewed a Model Hardware Standard that lets AI agents operate physical machines. OpenAI, Anthropic, Google, and 116 companies signed a major pledge warning that the window to defend against AI-powered cyberattacks is narrowing, and the NYT reported Meta could spend $10 billion on Anthropic's AI."
 publishDate: 2026-08-27T22:00:00.000Z

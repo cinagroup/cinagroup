@@ -1,10 +1,14 @@
 ---
+status: published
+origin: editorial
 title: 'CinaGroup 产品地图：五个产品如何组成一条工作流'
 excerpt: '从搜索、自动化到模型访问与连接基础设施，本文说明 CinaGroup 五个产品各自负责什么，以及如何避免边界重叠。'
 publishDate: 2026-03-20
 category: 'Product'
 tags: ['CinaGroup', 'Product', 'Architecture']
 author: 'CinaGroup Team'
+authorType: Organization
+language: zh-CN
 draft: false
 ---
 

@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Moonshot Kimi K3, China AI Law, Meta Muse Spark — AI News Briefing"
 description: "China's Moonshot AI unveils Kimi K3 to rival OpenAI and Anthropic, Beijing's AI companion law shuts down Doubao and Qwen, and Meta's Muse Spark 1.1 narrows the gap. Plus: AI agent monitoring challenges, Nvidia's $100M voice AI bet, and Anthropic's Pentagon tensions."
 publishDate: 2026-07-21T22:00:00.000Z

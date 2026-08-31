@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI-Visa Agent Payments, Ona Acquisition, DeepMind Multi-Agent Safety — AI News Briefing"
 description: "OpenAI partners with Visa to let AI agents make purchases, acquires cloud-execution startup Ona for Codex, while Google DeepMind publishes major research on multi-agent safety risks. NVIDIA launches Cosmos 3 for Physical AI and hires Intel's former top lobbyist amid escalating chip wars."
 publishDate: 2026-06-15T10:00:00.000Z

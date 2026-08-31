@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "OpenAI Disbands Preparedness Team, Stripe Buys OpenRouter for $7B, Nvidia Nears $100B OpenAI Credit Guarantee — AI News Briefing"
 description: "OpenAI has reportedly disbanded its preparedness team, the unit charged with guarding against catastrophic AI risks, while Stripe is buying AI model gateway OpenRouter in a deal worth over $7 billion. Nvidia is nearing a deal to guarantee roughly $100 billion in credit for OpenAI even as it scales back its Ohio data center backing, and Anthropic begins rolling out text watermarking as its CEO calls AI backlash a 'crisis of trust.' House Democrats are pressing both labs on rogue AI agents."
 publishDate: 2026-08-16T22:00:00.000Z
@@ -13,8 +18,6 @@ tags:
   - AI Safety
 category: AI News
 ---
-
-# AI News Briefing — August 17, 2026 (06:00 CST)
 
 ## Top 7 Stories
 

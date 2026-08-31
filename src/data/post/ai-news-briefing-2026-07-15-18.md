@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "AI Agents Deliver 45% Productivity Gains, Google Cloud Embraces Claude, Nobel Economists Warn on Jobs — AI News Briefing"
 description: "C.H. Robinson reports stunning 45% productivity gains from enterprise AI agents. Google Cloud expands Claude support on its Agent Platform in a major cross-vendor embrace. Nobel economists who once dismissed AI job fears now sound the alarm on white-collar displacement. Plus: Turing Award winner Rich Sutton launches a new lab, insurers grapple with agent liability blind spots, data centers trigger billions in new electricity costs, and AI-powered cybercrime barriers crumble."
 publishDate: 2026-07-15T10:00:00.000Z
