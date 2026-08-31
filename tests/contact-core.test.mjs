@@ -369,6 +369,7 @@ test('fails closed for secret, token, timeout, invalid JSON, and Siteverify fail
   assert.deepEqual(await rejected.json(), { ok: false, error: { code: 'verification_failed' } });
   assert.equal(rejectedDatabase.stats.insertAttempts, 0);
 
+  let observedTimeoutAbort = false;
   await assert.rejects(
     verifyTurnstile(
       {
@@ -416,17 +417,29 @@ test('fails closed for secret, token, timeout, invalid JSON, and Siteverify fail
         token: 'test-widget-token',
         idempotencyKey: submissionId,
         requestHostname: 'cinagroup.com',
-        timeoutMs: 1,
+        timeoutMs: 10,
       },
       (_url, init) =>
-        new Promise((_resolve, reject) => {
-          const rejectAbort = () => reject(init.signal.reason);
+        new Promise((resolve, reject) => {
+          // AbortSignal.timeout() uses an unref'ed timer in Node on Linux. Keep the
+          // mocked request alive long enough for that signal to fire, just as a real
+          // network request would, while still failing if the abort never happens.
+          const requestTimer = setTimeout(
+            () => resolve(Response.json({ success: true, action: 'contact', hostname: 'cinagroup.com' })),
+            1000
+          );
+          const rejectAbort = () => {
+            observedTimeoutAbort = true;
+            clearTimeout(requestTimer);
+            reject(init.signal.reason);
+          };
           if (init.signal.aborted) rejectAbort();
           else init.signal.addEventListener('abort', rejectAbort, { once: true });
         })
     ),
     (error) => error instanceof ContactRequestError && error.code === 'verification_unavailable'
   );
+  assert.equal(observedTimeoutAbort, true);
 });
 
 test('strictly validates Turnstile action and request hostname without exposing mismatch details', async () => {
