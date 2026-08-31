@@ -14,6 +14,14 @@ const origin = 'https://cinagroup.com';
 const turnstileScriptUrl = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
 const contactRoutePattern = /^\/(?:(?:ja|ko|ru|es|pt|fr)\/)?contact$/;
 const failures = [];
+const readOptionalDirectory = async (directory) => {
+  try {
+    return await readdir(directory);
+  } catch (error) {
+    if (error?.code === 'ENOENT') return [];
+    throw error;
+  }
+};
 const maxCssFileBytes = 64 * 1024;
 const requiredHeaderFragments = [
   "Content-Security-Policy: default-src 'self'",
@@ -90,7 +98,7 @@ const cssFiles = distFiles.filter((file) => file.endsWith('.css'));
 const blogSourceFiles = (
   await Promise.all(
     [automatedSourceDir, curatedSourceDir].map(async (directory) =>
-      (await readdir(directory))
+      (await readOptionalDirectory(directory))
         .filter((file) => /\.mdx?$/.test(file))
         .map((file) => path.join(directory, file))
     )

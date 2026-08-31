@@ -1,6 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 
 import { defineConfig } from 'astro/config';
 
@@ -26,6 +26,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const archivedBlogPaths = new Set(
   ['src/data/post', 'src/content/blog'].flatMap((relativeDirectory) => {
     const directory = path.join(__dirname, relativeDirectory);
+
+    if (!existsSync(directory)) return [];
 
     return readdirSync(directory)
       .filter((filename) => /\.mdx?$/i.test(filename))

@@ -22,6 +22,14 @@ const validLanguages = new Set(POST_LANGUAGES);
 const sourceOnly = process.argv.includes('--source-only');
 const failures = [];
 const languageCounts = new Map();
+const readOptionalDirectory = async (directory) => {
+  try {
+    return await readdir(directory);
+  } catch (error) {
+    if (error?.code === 'ENOENT') return [];
+    throw error;
+  }
+};
 const openGraphLocales = {
   en: 'en_US',
   'zh-CN': 'zh_CN',
@@ -142,7 +150,7 @@ const isPublishedSource = (data, automated) => isPublicPostStatus(resolvePostSta
 const sourceFiles = (
   await Promise.all(
     sourceDirectories.map(async (directory) =>
-      (await readdir(directory))
+      (await readOptionalDirectory(directory))
         .filter((filename) => /\.mdx?$/i.test(filename))
         .map((filename) => path.join(directory, filename))
     )

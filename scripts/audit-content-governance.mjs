@@ -22,6 +22,14 @@ const archiveManifestPath = path.join(root, 'docs', 'briefing-archive-manifest.j
 const sourceOnly = process.argv.includes('--source-only');
 const EXPECTED_ARCHIVE_COUNT = 346;
 const failures = [];
+const readOptionalDirectory = async (directory) => {
+  try {
+    return await readdir(directory);
+  } catch (error) {
+    if (error?.code === 'ENOENT') return [];
+    throw error;
+  }
+};
 
 const walk = async (directory, filter = () => true) => {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -56,7 +64,7 @@ const artifactPatterns = [
 const sourceFiles = (
   await Promise.all(
     sourceDirectories.map(async (directory) =>
-      (await readdir(directory))
+      (await readOptionalDirectory(directory))
         .filter((filename) => /\.mdx?$/i.test(filename))
         .map((filename) => path.join(directory, filename))
     )
