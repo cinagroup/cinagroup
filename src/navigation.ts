@@ -74,38 +74,39 @@ export const headerData = {
   ],
   actions: [
     { text: 'Login', href: 'https://cinaseek.ai/login', variant: 'primary', target: '_blank' },
-    { text: 'Signup', href: 'https://cinaseek.ai/register', variant: 'secondary', target: '_blank' },
   ] satisfies CallToAction[],
 };
 
 export const footerData = {
+  description: 'Auditable agent workspaces, gateways, reusable skills, and testnet applications.',
   links: [
     {
       title: 'Products',
       links: [
-        { text: 'CinaSeek — Agent Workspace', href: '/cinaseek/' },
-        { text: 'CinaClaw — Local-first Agent Gateway', href: '/cinaclaw/' },
-        { text: 'CinaToken — Open-source Model Gateway', href: '/cinatoken/' },
-        { text: 'CinaSkill — CinaClaw SKILL.md Format', href: '/cinaskill/' },
-        { text: 'CinaChain — Base Sepolia NFT DApp Beta', href: '/cinachain/' },
+        { text: 'CinaSeek', href: '/cinaseek/' },
+        { text: 'CinaClaw', href: '/cinaclaw/' },
+        { text: 'CinaToken', href: '/cinatoken/' },
+        { text: 'CinaSkill', href: '/cinaskill/' },
+        { text: 'CinaChain', href: '/cinachain/' },
       ],
-    },
-    {
-      title: 'Developers',
-      links: [{ text: 'Developer Blog', href: '/blog' }],
-    },
-    {
-      title: 'Support',
-      links: [{ text: 'Contact Support', href: '/contact' }],
     },
     {
       title: 'Company',
       links: [
         { text: 'About Us', href: '/about' },
         { text: 'Evidence', href: '/work' },
-        { text: 'Blog', href: '/blog' },
-        { text: 'Contact', href: '/contact' },
       ],
+    },
+    {
+      title: 'Resources',
+      links: [
+        { text: 'Blog', href: '/blog' },
+        { text: 'RSS', href: getAsset('/rss.xml') },
+      ],
+    },
+    {
+      title: 'Support',
+      links: [{ text: 'Contact Support', href: '/contact' }],
     },
   ],
   secondaryLinks: [

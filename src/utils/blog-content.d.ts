@@ -41,6 +41,7 @@ export function isAutomatedBriefing(slug?: string): boolean;
 export function resolvePostStatus(data?: Record<string, unknown>, automated?: boolean): PostStatus;
 export function isPublicPostStatus(status: unknown): status is 'published';
 export function isRoutablePostStatus(status: unknown): status is 'published' | 'archived_unverified';
+export function isBlogFeedPost(status: unknown, language: unknown): boolean;
 export function normalizePostAuthor(rawAuthor: unknown, automated?: boolean): string;
 export function normalizePostAuthorInfo(
   rawAuthor: unknown,

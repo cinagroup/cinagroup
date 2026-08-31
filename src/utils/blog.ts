@@ -7,6 +7,7 @@ import { cleanSlug, trimSlash, BLOG_BASE, POST_PERMALINK_PATTERN, CATEGORY_BASE,
 import {
   inferPostLanguage,
   isAutomatedBriefing,
+  isBlogFeedPost,
   isPublicPostStatus,
   isRoutablePostStatus,
   normalizePostAuthorInfo,
@@ -184,11 +185,15 @@ export const blogPostsPerPage = APP_BLOG?.postsPerPage;
 /** */
 export const fetchPosts = async (): Promise<Array<Post>> => {
   if (!_posts) {
-    _posts = (await fetchAllPosts()).filter((post) => isPublicPostStatus(post.status));
+    _posts = (await fetchAllPosts()).filter((post) => isBlogFeedPost(post.status, post.language));
   }
 
   return _posts;
 };
+
+/** Editorially published posts only; excludes visible unverified archives. */
+const fetchPublishedPosts = async (): Promise<Array<Post>> =>
+  (await fetchAllPosts()).filter((post) => isPublicPostStatus(post.status));
 
 /** All governed sources, including entries that must not appear in public indexes. */
 export const fetchAllPosts = async (): Promise<Array<Post>> => {
@@ -258,7 +263,7 @@ export const getStaticPathsBlogPost = async () => {
 export const getStaticPathsBlogCategory = async ({ paginate }: { paginate: PaginateFunction }) => {
   if (!isBlogEnabled || !isBlogCategoryRouteEnabled) return [];
 
-  const posts = await fetchPosts();
+  const posts = await fetchPublishedPosts();
   const categories = {};
   posts.map((post) => {
     if (post.category?.slug) {
@@ -282,7 +287,7 @@ export const getStaticPathsBlogCategory = async ({ paginate }: { paginate: Pagin
 export const getStaticPathsBlogTag = async ({ paginate }: { paginate: PaginateFunction }) => {
   if (!isBlogEnabled || !isBlogTagRouteEnabled) return [];
 
-  const posts = await fetchPosts();
+  const posts = await fetchPublishedPosts();
   const tags = {};
   posts.map((post) => {
     if (Array.isArray(post.tags)) {
@@ -306,7 +311,7 @@ export const getStaticPathsBlogTag = async ({ paginate }: { paginate: PaginateFu
 
 /** */
 export async function getRelatedPosts(originalPost: Post, maxResults: number = 4): Promise<Post[]> {
-  const allPosts = await fetchPosts();
+  const allPosts = await fetchPublishedPosts();
   const originalTagsSet = new Set(originalPost.tags ? originalPost.tags.map((tag) => tag.slug) : []);
 
   const postsWithScores = allPosts.reduce((acc: { post: Post; score: number }[], iteratedPost: Post) => {

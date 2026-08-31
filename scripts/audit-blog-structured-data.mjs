@@ -7,6 +7,7 @@ import {
   POST_LANGUAGES,
   inferPostLanguage,
   isAutomatedBriefing,
+  isBlogFeedPost,
   isPublicPostStatus,
   normalizePostAuthorInfo,
   resolvePostStatus,
@@ -174,7 +175,9 @@ for (const sourceFile of sourceFiles) {
   const expectedPublished = Number.isNaN(publishedDate.valueOf()) ? undefined : publishedDate.toISOString();
   const expectedModified = Number.isNaN(modifiedDate.valueOf()) ? undefined : modifiedDate.toISOString();
   const curated = sourceFile.startsWith(`${curatedSourceDir}${path.sep}`);
+  const status = resolvePostStatus(data, automated);
   const published = isPublishedSource(data, automated);
+  const listed = isBlogFeedPost(status, language);
 
   if (explicitLanguage) explicitLanguageCount += 1;
   else inferredLanguageCount += 1;
@@ -198,11 +201,15 @@ for (const sourceFile of sourceFiles) {
     expectedPublished,
     expectedModified,
     published,
+    listed,
   });
 }
 
 const publishedCount = sources.filter((source) => source.published).length;
 const unpublishedCount = sources.length - publishedCount;
+const listedCount = sources.filter((source) => source.listed).length;
+
+if (listedCount !== 345) failures.push(`expected exactly 345 entries in the blog feed; found ${listedCount}`);
 
 if (!sourceOnly) {
   const articlePages = new Map();
@@ -323,5 +330,5 @@ const languageSummary = [...languageCounts.entries()]
   .join(', ');
 
 console.log(
-  `${sourceOnly ? 'Blog source audit' : 'Blog structured-data audit'} passed: ${sources.length} sources (${publishedCount} published, ${unpublishedCount} unpublished); languages ${languageSummary}; ${explicitLanguageCount} explicit and ${inferredLanguageCount} inferred.`
+  `${sourceOnly ? 'Blog source audit' : 'Blog structured-data audit'} passed: ${sources.length} sources (${publishedCount} editorially published, ${listedCount} listed archives, ${unpublishedCount} unverified); languages ${languageSummary}; ${explicitLanguageCount} explicit and ${inferredLanguageCount} inferred.`
 );

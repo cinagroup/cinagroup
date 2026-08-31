@@ -70,6 +70,14 @@ export const isPublicPostStatus = (status) => status === 'published';
 export const isRoutablePostStatus = (status) => status === 'published' || status === 'archived_unverified';
 
 /**
+ * The main journal intentionally exposes the English automated-news archive.
+ * These entries remain unverified archives: listing them does not promote them
+ * to editorially published status or make them indexable.
+ */
+export const isBlogFeedPost = (status, language) =>
+  status === 'published' || (status === 'archived_unverified' && language === 'en');
+
+/**
  * Explicit author types win. Known CinaGroup desks/teams are organizations;
  * an otherwise unknown byline defaults to Person so arbitrary names are not
  * mislabeled as organizations. Legacy automation markers are never exposed.

@@ -24,7 +24,9 @@ const currentPage = page.currentPage ?? 1;
 // const allTags = await findTags();
 
 const metadata = {
-  title: `Blog${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
+  title: `AI News Briefings${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
+  description:
+    'English AI news briefings preserved from CinaGroup’s retired automated workflow, with clear unverified archive labels.',
   robots: {
     index: blogListRobots?.index && currentPage === 1,
     follow: blogListRobots?.follow,
@@ -38,9 +40,9 @@ const metadata = {
 <Layout metadata={metadata}>
   <section class="cg-blog-index" data-blog-collection="index">
     <Headline
-      subtitle="Reviewed product notes, engineering decisions, and practical implementation guidance from the CinaGroup team."
+      subtitle={`${page.total} English briefings from our retired automated news workflow. These items are preserved for reference, were not independently source-checked, and should be verified against current primary sources.`}
     >
-      CinaGroup journal
+      AI news briefings
     </Headline>
     <BlogList posts={page.data} />
     <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />

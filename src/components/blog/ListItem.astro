@@ -20,11 +20,13 @@ const image = (await findImage(post.image)) as ImageMetadata | undefined;
 
 const link = APP_BLOG?.post?.isEnabled ? getPermalink(post.permalink, 'post') : '';
 const automatedBriefing = isAutomatedBriefing(post.slug);
+const archivedUnverified = post.status === 'archived_unverified';
 ---
 
 <article
   class:list={['cg-blog-item', { 'cg-blog-item-with-image': image }]}
-  data-content-kind={automatedBriefing ? 'automated-briefing-summary' : 'editorial-summary'}
+  data-content-kind={archivedUnverified ? 'historical-archive-summary' : 'editorial-summary'}
+  data-content-status={post.status}
 >
   {
     image &&
@@ -68,7 +70,7 @@ const automatedBriefing = isAutomatedBriefing(post.slug);
     <header>
       <div class="cg-blog-meta">
         <span>
-          {automatedBriefing && <><span class="cg-blog-kind">Automated briefing</span>{' '}·{' '}</>}
+          {automatedBriefing && <><span class="cg-blog-kind">Automated · unverified</span>{' '}·{' '}</>}
           <time datetime={post.publishDate.toISOString()} class="inline-block">{getFormattedDate(post.publishDate, post.language)}</time>
           {
             post.author && (
@@ -82,9 +84,11 @@ const automatedBriefing = isAutomatedBriefing(post.slug);
             post.category && (
               <>
                 {' '}·{' '}
-                <a href={getPermalink(post.category.slug, 'category')}>
-                  {post.category.title}
-                </a>
+                {archivedUnverified ? (
+                  <span>{post.category.title}</span>
+                ) : (
+                  <a href={getPermalink(post.category.slug, 'category')}>{post.category.title}</a>
+                )}
               </>
             )
           }
@@ -110,7 +114,7 @@ const automatedBriefing = isAutomatedBriefing(post.slug);
     {
       post.tags && Array.isArray(post.tags) ? (
         <footer class="cg-blog-tags">
-          <PostTags tags={post.tags} />
+          <PostTags tags={post.tags} linkable={!archivedUnverified} />
         </footer>
       ) : (
         <Fragment />

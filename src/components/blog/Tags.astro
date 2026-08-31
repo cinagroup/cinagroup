@@ -9,9 +9,10 @@ export interface Props {
   class?: string;
   title?: string | undefined;
   isCategory?: boolean;
+  linkable?: boolean;
 }
 
-const { tags, class: className = '', title = undefined, isCategory = false } = Astro.props;
+const { tags, class: className = '', title = undefined, isCategory = false, linkable = true } = Astro.props;
 ---
 
 {
@@ -23,7 +24,7 @@ const { tags, class: className = '', title = undefined, isCategory = false } = A
       <ul class={className}>
         {tags.map((tag) => (
           <li class="cg-blog-tag">
-            {!APP_BLOG?.tag?.isEnabled ? (
+            {!linkable || !APP_BLOG?.tag?.isEnabled ? (
               tag.title
             ) : (
               <a

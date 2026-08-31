@@ -7,7 +7,9 @@ import { load as parseYaml } from 'js-yaml';
 import {
   POST_ORIGINS,
   POST_STATUSES,
+  inferPostLanguage,
   isAutomatedBriefing,
+  isBlogFeedPost,
   isPublicPostStatus,
   isRoutablePostStatus,
   resolvePostStatus,
@@ -77,6 +79,7 @@ for (const sourceFile of sourceFiles) {
 
   const automated = isAutomatedBriefing(slug);
   const status = resolvePostStatus(data, automated);
+  const language = data.language || inferPostLanguage(source);
 
   if (!POST_STATUSES.includes(data.status)) failures.push(`${sourcePath}: explicit status is required`);
   if (!POST_ORIGINS.includes(data.origin)) failures.push(`${sourcePath}: explicit origin is required`);
@@ -94,7 +97,7 @@ for (const sourceFile of sourceFiles) {
     }
   }
 
-  sources.push({ sourcePath, slug, data, status, automated, sourceSha256: normalizedSha256(source) });
+  sources.push({ sourcePath, slug, data, status, language, automated, sourceSha256: normalizedSha256(source) });
 }
 
 if (resolvePostStatus({}, false) !== 'in_review' || resolvePostStatus({ published: true }, false) !== 'in_review') {
@@ -106,9 +109,13 @@ if (resolvePostStatus({ status: 'published' }, true) !== 'archived_unverified') 
 
 const publicSources = sources.filter((source) => isPublicPostStatus(source.status));
 const archivedSources = sources.filter((source) => source.status === 'archived_unverified');
+const listedArchiveSources = archivedSources.filter((source) => isBlogFeedPost(source.status, source.language));
 const nonRoutableSources = sources.filter((source) => !isRoutablePostStatus(source.status));
 
 if (!archivedSources.length) failures.push('No archived briefing sources were found');
+if (listedArchiveSources.length !== 345) {
+  failures.push(`Expected exactly 345 English archives in the blog feed; found ${listedArchiveSources.length}`);
+}
 if (archivedSources.some((source) => !source.automated)) {
   failures.push('A non-automated source is archived; confirm its migration and audit expectations explicitly');
 }
@@ -247,7 +254,7 @@ if (!sourceOnly) {
         if (!/data-content-status=["']archived_unverified["']/i.test(html)) {
           failures.push(`${source.sourcePath}: archive status marker is missing from detail page`);
         }
-        if (!/Unverified historical archive/i.test(html)) {
+        if (!/Automated briefing[\s\S]{0,80}unverified archive/i.test(html)) {
           failures.push(`${source.sourcePath}: archive warning is missing from detail page`);
         }
 
@@ -265,7 +272,11 @@ if (!sourceOnly) {
     }
 
     const publicSurfaceFiles = (await walk(distDirectory, (filename) => /\.(?:html|xml)$/i.test(filename))).filter(
-      (filename) => !archivedDetailPaths.has(path.relative(distDirectory, filename))
+      (filename) => {
+        const relativeToDist = path.relative(distDirectory, filename).replaceAll(path.sep, '/');
+        const allowedArchiveSurface = /^blog(?:\/\d+)?\/index\.html$/i.test(relativeToDist) || relativeToDist === 'rss.xml';
+        return !archivedDetailPaths.has(path.relative(distDirectory, filename)) && !allowedArchiveSurface;
+      }
     );
     const archivedSlugPattern = /ai-news-briefing-[a-z0-9-]+/gi;
     const archivedSlugs = new Set(archivedSources.map((source) => source.slug));
@@ -278,6 +289,22 @@ if (!sourceOnly) {
       if (leakedSlugs.size) {
         failures.push(`${relative(filename)}: exposes archived briefing link(s): ${[...leakedSlugs].slice(0, 3).join(', ')}`);
       }
+    }
+
+    const blogIndexFiles = (await walk(path.join(distDirectory, 'blog'), (filename) => /index\.html$/i.test(filename))).filter(
+      (filename) => /^blog(?:\/\d+)?\/index\.html$/i.test(path.relative(distDirectory, filename).replaceAll(path.sep, '/'))
+    );
+    const listedSlugs = new Set();
+    for (const filename of blogIndexFiles) {
+      const html = await readFile(filename, 'utf8');
+      for (const match of html.matchAll(/ai-news-briefing-[a-z0-9-]+/gi)) listedSlugs.add(match[0].toLowerCase());
+    }
+    const expectedListedSlugs = new Set(listedArchiveSources.map((source) => source.slug));
+    for (const slug of expectedListedSlugs) {
+      if (!listedSlugs.has(slug)) failures.push(`${slug}: English archive is missing from the blog feed`);
+    }
+    for (const slug of listedSlugs) {
+      if (!expectedListedSlugs.has(slug)) failures.push(`${slug}: non-English or unknown archive leaked into the blog feed`);
     }
   }
 }

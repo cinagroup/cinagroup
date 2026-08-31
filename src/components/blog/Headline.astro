@@ -3,7 +3,7 @@ const { title = await Astro.slots.render('default'), subtitle = await Astro.slot
 ---
 
 <header class="cg-blog-headline">
-  <p class="cg-eyebrow">Research / product / operations.</p>
+  <p class="cg-eyebrow">AI news / automated archive.</p>
   <h1 set:html={title} />
   {
     subtitle && <div class="cg-blog-headline-lead" set:html={subtitle} />

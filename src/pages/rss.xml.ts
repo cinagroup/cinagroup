@@ -1,6 +1,6 @@
 import { getRssString } from '@astrojs/rss';
 
-import { SITE, METADATA, APP_BLOG } from 'astrowind:config';
+import { SITE, APP_BLOG } from 'astrowind:config';
 import { fetchPosts } from '~/utils/blog';
 import { getPermalink } from '~/utils/permalinks';
 
@@ -15,14 +15,18 @@ export const GET = async () => {
   const posts = await fetchPosts();
 
   const rss = await getRssString({
-    title: `${SITE.name}’s Blog`,
-    description: METADATA?.description || '',
+    title: `${SITE.name} AI News Briefing Archive`,
+    description:
+      'English AI news briefings from a retired automated workflow. Items are unverified and should be checked against current primary sources.',
     site: import.meta.env.SITE,
 
     items: posts.map((post) => ({
       link: getPermalink(post.permalink, 'post'),
-      title: post.title,
-      description: post.excerpt,
+      title: post.status === 'archived_unverified' ? `[Unverified archive] ${post.title}` : post.title,
+      description:
+        post.status === 'archived_unverified'
+          ? `Automated, unverified archive. Confirm claims with current primary sources. ${post.excerpt || ''}`
+          : post.excerpt,
       pubDate: post.publishDate,
     })),
 
