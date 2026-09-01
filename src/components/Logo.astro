@@ -1,12 +1,14 @@
 ---
 import { SITE } from 'astrowind:config';
+import { getLangFromUrl, getLocalizedLabel } from '~/i18n';
 
 export interface Props {
   showName?: boolean;
   imageAlt?: string;
 }
 
-const { showName = true, imageAlt = SITE?.name ?? 'CinaGroup' } = Astro.props;
+const localizedName = getLocalizedLabel(getLangFromUrl(Astro.url), SITE?.name) ?? SITE?.name;
+const { showName = true, imageAlt = localizedName ?? 'CinaGroup' } = Astro.props;
 ---
 
 <div class="flex items-center">
@@ -20,7 +22,7 @@ const { showName = true, imageAlt = SITE?.name ?? 'CinaGroup' } = Astro.props;
   {
     showName && (
       <span class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white">
-        {SITE?.name}
+        {localizedName}
       </span>
     )
   }

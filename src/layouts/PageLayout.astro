@@ -7,12 +7,14 @@ import Announcement from '~/components/widgets/Announcement.astro';
 import { headerData, footerData } from '~/navigation';
 
 import type { MetaData } from '~/types';
+import { getLangFromUrl } from '~/i18n';
 
 export interface Props {
   metadata?: MetaData;
 }
 
 const { metadata } = Astro.props;
+const skipLabel = getLangFromUrl(Astro.url) === 'zh' ? '跳到主要内容' : 'Skip to content';
 ---
 
 <Layout metadata={metadata}>
@@ -20,7 +22,7 @@ const { metadata } = Astro.props;
     href="#main-content"
     class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-3 focus:text-gray-900 focus:shadow-lg"
   >
-    Skip to content
+    {skipLabel}
   </a>
   <slot name="announcement">
     <Announcement />

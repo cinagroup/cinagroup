@@ -2,7 +2,7 @@
 import CinaPageHero from '~/components/CinaPageHero.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
-type Locale = 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+type Locale = 'zh' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
 
 const content: Record<
   Locale,
@@ -22,6 +22,42 @@ const content: Record<
     steps: Array<{ title: string; description: string }>;
   }
 > = {
+  zh: {
+    metadataTitle: '服务 — 产品、工作流与平台交付',
+    eyebrow: '服务 / 从当前状态到经过验证的发布。',
+    title: '在下一次产品改动变得昂贵之前，把它讲清楚。',
+    lead: '海内集团帮助团队审计、设计、实现并强化搜索、自动化、模型网关与互联基础设施工作流。',
+    primary: '沟通需求',
+    secondary: '查看产品体系',
+    sectionEyebrow: '服务领域。',
+    sectionTitle: '从真实工作出发，而不是套用通用方案。',
+    sectionLead: '范围会根据用户、现有系统、风险与验收证据来确定。',
+    cards: [
+      {
+        label: '01 / 审计',
+        title: '产品与工作流审计。',
+        description: '审查用户旅程、源码、内容、可访问性与技术风险。',
+      },
+      {
+        label: '02 / 设计',
+        title: '搜索与自动化设计。',
+        description: '为小而清晰的流程明确数据源、权限、审核点与输出。',
+      },
+      {
+        label: '03 / 实现',
+        title: '实现与发布强化。',
+        description: '构建共享模式、测试、部署检查与恢复路径。',
+      },
+    ],
+    processEyebrow: '交付方式。',
+    processTitle: '在每次交接中留下证据。',
+    steps: [
+      { title: '审计', description: '记录当前体验、源码与约束。' },
+      { title: '界定', description: '就优先级与验收条件达成一致。' },
+      { title: '构建', description: '以可审核的增量交付改动。' },
+      { title: '验证', description: '执行静态检查、响应式 QA、部署与生产抽查。' },
+    ],
+  },
   ja: {
     metadataTitle: 'サービス — 製品・ワークフロー・プラットフォーム支援',
     eyebrow: 'サービス / 現状から検証済みリリースへ。',

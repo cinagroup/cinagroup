@@ -86,17 +86,21 @@ const localizeHeaderHref = (href?: string) => localizeInternalHref(href, current
     ]}
   >
     <div class:list={[{ 'mr-auto rtl:mr-0 rtl:ml-auto': position === 'right' }, 'flex justify-between']}>
-      <a class="flex items-center" href={homeHref} aria-label="CinaGroup home">
+      <a
+        class="flex items-center"
+        href={homeHref}
+        aria-label={currentLang === 'zh' ? '海内集团首页' : 'CinaGroup home'}
+      >
         <Logo />
       </a>
       <div class="flex items-center lg:hidden">
-        <ToggleMenu controls="main-navigation" />
+        <ToggleMenu label={currentLang === 'zh' ? '切换菜单' : 'Toggle Menu'} controls="main-navigation" />
       </div>
     </div>
     <nav
       id="main-navigation"
       class="items-center flex-1 min-h-0 w-full lg:w-auto hidden lg:flex lg:mx-3 xl:mx-5 pb-24 lg:pb-0 text-default overflow-y-auto overflow-x-hidden lg:overflow-y-visible lg:overflow-x-auto lg:justify-self-center"
-      aria-label="Main navigation"
+      aria-label={getLocalizedLabel(currentLang, 'Main navigation')}
     >
       <ul
         class="flex flex-col lg:flex-row lg:self-center w-full lg:w-auto text-xl lg:text-[0.9375rem] tracking-[0.01rem] font-medium lg:justify-center"
@@ -167,14 +171,21 @@ const localizeHeaderHref = (href?: string) => localizeInternalHref(href, current
     >
       <div class="items-center flex justify-between w-full lg:w-auto">
         <div class="flex items-center">
-          {showToggleTheme && <ToggleTheme iconClass="w-6 h-6 lg:w-5 lg:h-5 lg:inline-block" />}
+          {
+            showToggleTheme && (
+              <ToggleTheme
+                label={getLocalizedLabel(currentLang, 'Switch to dark mode')}
+                iconClass="w-6 h-6 lg:w-5 lg:h-5 lg:inline-block"
+              />
+            )
+          }
           {
             showLanguageSwitcher && (
               <div class="relative ml-2">
                 <button
                   type="button"
                   class="text-muted dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center"
-                  aria-label="Language Switcher"
+                  aria-label={getLocalizedLabel(currentLang, 'Language Switcher')}
                   aria-expanded="false"
                   aria-haspopup="menu"
                   aria-controls="language-dropdown"

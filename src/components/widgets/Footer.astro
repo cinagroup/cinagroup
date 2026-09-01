@@ -36,6 +36,8 @@ const {
 const currentLang = getLangFromUrl(Astro.url);
 const homeHref = changeLangPath(new URL('/', Astro.url), currentLang);
 const localizeFooterHref = (href?: string) => localizeInternalHref(href, currentLang);
+const localizedName = getLocalizedLabel(currentLang, SITE?.name) ?? SITE?.name;
+const localizedFootNote = currentLang === 'zh' ? '&copy; 2026 海内集团。保留所有权利。' : footNote;
 ---
 
 <footer class:list={[{ dark: theme === 'dark' }, 'cg-site-footer relative not-prose']}>
@@ -43,11 +45,11 @@ const localizeFooterHref = (href?: string) => localizeInternalHref(href, current
   <div class="cg-footer-shell relative">
     <div class="cg-footer-main">
       <div class="cg-footer-brand">
-        <a class="cg-footer-wordmark" href={homeHref || getHomePermalink()}>{SITE?.name}</a>
+        <a class="cg-footer-wordmark" href={homeHref || getHomePermalink()}>{localizedName}</a>
         {description && <p class="cg-footer-description">{getLocalizedLabel(currentLang, description)}</p>}
       </div>
 
-      <nav class="cg-footer-nav" aria-label="Footer navigation">
+      <nav class="cg-footer-nav" aria-label={getLocalizedLabel(currentLang, 'Footer navigation')}>
         {
           links.map(({ title, links }, sectionIndex) => (
             <section class="cg-footer-column" aria-labelledby={`footer-section-${sectionIndex}`}>
@@ -74,11 +76,11 @@ const localizeFooterHref = (href?: string) => localizeInternalHref(href, current
     <div class="cg-footer-bottom">
       <div class="cg-footer-meta">
         <div class="cg-footer-copyright">
-          <Fragment set:html={footNote} />
+          <Fragment set:html={localizedFootNote} />
         </div>
         {
           secondaryLinks.length > 0 && (
-            <ul class="cg-footer-legal" aria-label="Legal">
+            <ul class="cg-footer-legal" aria-label={getLocalizedLabel(currentLang, 'Legal')}>
               {secondaryLinks.map(({ text, href }) => (
                 <li>
                   <a class="cg-footer-link" href={localizeFooterHref(href)}>
@@ -93,7 +95,7 @@ const localizeFooterHref = (href?: string) => localizeInternalHref(href, current
 
       {
         socialLinks?.length ? (
-          <ul class="cg-footer-social" aria-label="Social links">
+          <ul class="cg-footer-social" aria-label={getLocalizedLabel(currentLang, 'Social links')}>
             {socialLinks.map(({ ariaLabel, href, text, icon }) => (
               <li>
                 <a class="cg-footer-social-link" aria-label={ariaLabel} href={href}>

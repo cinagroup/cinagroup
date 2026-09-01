@@ -21,7 +21,7 @@ const TURNSTILE_TIMEOUT_MS = 8000;
 const PAGES_ROOT_HOSTNAME = 'homepage-cj7.pages.dev';
 const API_CONTENT_SECURITY_POLICY = "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
 
-export const CONTACT_LOCALES = ['en', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'];
+export const CONTACT_LOCALES = ['en', 'zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'];
 
 export const CONTACT_SUBJECTS = [
   'product-workflow',
@@ -40,6 +40,14 @@ const statusCopy = {
     error: 'We could not accept this inquiry. Return to the form, review the fields, and try again.',
     back: 'Return to the contact page',
     reference: 'Reference',
+  },
+  zh: {
+    title: '咨询已收到',
+    errorTitle: '咨询未确认',
+    success: '您的咨询已安全记录。请保存下方参考编号。',
+    error: '无法接受此咨询。请返回表单、检查各字段后重试。',
+    back: '返回联系页面',
+    reference: '参考编号',
   },
   ja: {
     title: 'お問い合わせを受け付けました',
@@ -468,7 +476,8 @@ function htmlStatusResponse(locale, ok, submissionId, status) {
   const reference = submissionId
     ? `<p><strong>${escapeHtml(copy.reference)}:</strong> <code>${escapeHtml(submissionId)}</code></p>`
     : '';
-  const html = `<!doctype html><html lang="${safeLocale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${escapeHtml(heading)} — CinaGroup</title></head><body><main><h1>${escapeHtml(heading)}</h1><p>${escapeHtml(ok ? copy.success : copy.error)}</p>${reference}<p><a href="${localizedContactPath(safeLocale)}">${escapeHtml(copy.back)}</a></p></main></body></html>`;
+  const organizationName = safeLocale === 'zh' ? '海内集团' : 'CinaGroup';
+  const html = `<!doctype html><html lang="${safeLocale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${escapeHtml(heading)} — ${organizationName}</title></head><body><main><h1>${escapeHtml(heading)}</h1><p>${escapeHtml(ok ? copy.success : copy.error)}</p>${reference}<p><a href="${localizedContactPath(safeLocale)}">${escapeHtml(copy.back)}</a></p></main></body></html>`;
   return new Response(html, { status, headers: responseHeaders('text/html; charset=utf-8') });
 }
 

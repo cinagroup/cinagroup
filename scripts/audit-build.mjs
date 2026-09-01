@@ -12,7 +12,7 @@ const automatedSourceDir = path.join(root, 'src', 'data', 'post');
 const curatedSourceDir = path.join(root, 'src', 'content', 'blog');
 const origin = 'https://cinagroup.com';
 const turnstileScriptUrl = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-const contactRoutePattern = /^\/(?:(?:ja|ko|ru|es|pt|fr)\/)?contact$/;
+const contactRoutePattern = /^\/(?:(?:zh|ja|ko|ru|es|pt|fr)\/)?contact$/;
 const failures = [];
 const readOptionalDirectory = async (directory) => {
   try {
@@ -206,8 +206,8 @@ for (const file of htmlFiles) {
   }
 }
 
-if (turnstileContactPages !== 7) {
-  failures.push(`expected Turnstile only on 7 localized contact pages, found ${turnstileContactPages}`);
+if (turnstileContactPages !== 8) {
+  failures.push(`expected Turnstile only on 8 localized contact pages, found ${turnstileContactPages}`);
 }
 
 const sitemapFiles = (await walk(distDir)).filter((file) => /sitemap.*\.xml$/.test(file));

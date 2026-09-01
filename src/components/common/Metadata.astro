@@ -31,6 +31,7 @@ const {
 type MetadataLanguage = NonNullable<MetaData['language']>;
 const localeByLanguage: Record<MetadataLanguage, string> = {
   en: 'en_US',
+  zh: 'zh_CN',
   'zh-CN': 'zh_CN',
   ja: 'ja_JP',
   ko: 'ko_KR',
@@ -40,13 +41,17 @@ const localeByLanguage: Record<MetadataLanguage, string> = {
   'pt-BR': 'pt_BR',
   fr: 'fr_FR',
 };
-const currentLocale = localeByLanguage[language || getLangFromUrl(Astro.url)];
+const currentLanguage = language || getLangFromUrl(Astro.url);
+const currentLocale = localeByLanguage[currentLanguage];
+const localizedSiteName = currentLanguage === 'zh' ? '海内集团' : SITE?.name;
 const languageAlternates = omitCanonical
   ? []
   : getLanguageAlternates(Astro.url.pathname, new URL(String(canonical)).origin);
 const shouldIgnoreTitleTemplate =
   ignoreTitleTemplate ||
-  (typeof title === 'string' && Boolean(SITE?.name) && title.toLowerCase().includes(SITE.name.toLowerCase()));
+  (typeof title === 'string' &&
+    typeof localizedSiteName === 'string' &&
+    title.toLowerCase().includes(localizedSiteName.toLowerCase()));
 
 const seoProps: AstroSeoProps = merge(
   {
@@ -58,7 +63,7 @@ const seoProps: AstroSeoProps = merge(
     description: undefined,
     openGraph: {
       url: canonical,
-      site_name: SITE?.name,
+      site_name: localizedSiteName,
       images: [],
       locale: currentLocale || I18N?.language || 'en',
       type: 'website',
@@ -69,7 +74,7 @@ const seoProps: AstroSeoProps = merge(
   },
   {
     title: METADATA?.title?.default,
-    titleTemplate: METADATA?.title?.template,
+    titleTemplate: currentLanguage === 'zh' ? '%s — 海内集团' : METADATA?.title?.template,
     noindex: typeof METADATA?.robots?.index !== 'undefined' ? !METADATA.robots.index : undefined,
     nofollow: typeof METADATA?.robots?.follow !== 'undefined' ? !METADATA.robots.follow : undefined,
     description: METADATA?.description,
@@ -83,7 +88,7 @@ const seoProps: AstroSeoProps = merge(
     noindex: typeof robots?.index !== 'undefined' ? !robots.index : undefined,
     nofollow: typeof robots?.follow !== 'undefined' ? !robots.follow : undefined,
     description: description,
-    openGraph: { url: canonical, locale: currentLocale, ...openGraph },
+    openGraph: { url: canonical, locale: currentLocale, site_name: localizedSiteName, ...openGraph },
     twitter: twitter,
   }
 );

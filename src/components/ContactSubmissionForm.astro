@@ -1,5 +1,5 @@
 ---
-type Locale = 'en' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+type Locale = 'en' | 'zh' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
 
 const copy = {
   en: {
@@ -34,6 +34,32 @@ const copy = {
     challenge: 'Security verification',
     noScript: 'Enable JavaScript to use this protected form, or email us directly at',
     direct: 'If the form is unavailable, email info@cinagroup.com directly.',
+  },
+  zh: {
+    name: '姓名',
+    email: '电子邮箱',
+    company: '公司或团队',
+    optional: '选填',
+    subject: '咨询领域',
+    choose: '选择一个领域',
+    subjects: ['产品工作流', '搜索与知识', '自动化', 'API 与模型网关', '基础设施与交付', '其他'],
+    message: '工作流与期望结果',
+    submit: '发送咨询',
+    sending: '正在记录您的咨询…',
+    success: '您的咨询已安全记录。',
+    reference: '参考编号',
+    error: '无法记录此咨询。请检查各字段后重试。',
+    errorSummary: '请修正以下字段：',
+    fieldError: '请检查此项内容。',
+    network: '确认前连接失败。请使用相同参考编号重试，或发送邮件至 info@cinagroup.com。',
+    noteBefore: '提交即表示您确认海内集团可按照',
+    privacy: '隐私政策',
+    and: '处理此咨询，并同意',
+    terms: '服务条款',
+    noteAfter: '适用于本次提交。',
+    challenge: '安全验证',
+    noScript: '请启用 JavaScript 以使用此受保护表单，或直接发送邮件至',
+    direct: '如果表单不可用，请直接发送邮件至 info@cinagroup.com。',
   },
   ja: {
     name: 'お名前',
@@ -248,6 +274,7 @@ interface Props {
 
 const { lang = 'en' } = Astro.props;
 const content = copy[lang];
+const legalPrefix = lang === 'en' ? '' : `/${lang}`;
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY?.trim() || '0x4AAAAAAEigqtYgQBcKUhpa';
 ---
 
@@ -378,9 +405,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY?.trim() || '0
   <button class="cg-page-button cg-page-button-primary" type="submit">{content.submit}</button>
   <p class="cg-form-note">
     {content.noteBefore}
-    <a href="/privacy/">{content.privacy}</a>
+    <a href={`${legalPrefix}/privacy/`}>{content.privacy}</a>
     {content.and}
-    <a href="/terms/">{content.terms}</a>{content.noteAfter}
+    <a href={`${legalPrefix}/terms/`}>{content.terms}</a>{content.noteAfter}
   </p>
   <noscript>
     <p class="cg-form-note">{content.noScript} <a href="mailto:info@cinagroup.com">info@cinagroup.com</a>.</p>

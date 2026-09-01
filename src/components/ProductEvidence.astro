@@ -1,5 +1,5 @@
 ---
-type Locale = 'en' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+type Locale = 'en' | 'zh' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
 type Product = 'cinaseek' | 'cinaclaw' | 'cinatoken' | 'cinaskill' | 'cinachain';
 
 export interface Props {
@@ -42,6 +42,21 @@ const ui: Record<
     input: 'Input',
     control: 'Control',
     output: 'Output',
+  },
+  zh: {
+    eyebrow: '产品依据 / 当前范围。',
+    title: '目前可验证的内容。',
+    intro: '以下状态与能力均关联到公开项目仓库；除所链接的依据外，不代表客户部署、托管 SLA 或生产可用性。',
+    status: '状态',
+    implemented: '项目中已实现',
+    interfaces: '已记录的接口与集成',
+    sources: '依据来源',
+    verified: '验证日期',
+    preview: '说明性参考工作流',
+    previewNote: '由本网站生成的示例数据，不是客户截图，也不是线上部署证明。',
+    input: '输入',
+    control: '控制',
+    output: '输出',
   },
   ja: {
     eyebrow: '製品の根拠 / 現在の範囲。',
@@ -147,6 +162,7 @@ const statusText: Record<Product, { label: LocalizedText; summary: LocalizedText
   cinaseek: {
     label: {
       en: 'Early access',
+      zh: '抢先体验',
       ja: 'アーリーアクセス',
       ko: '얼리 액세스',
       ru: 'Ранний доступ',
@@ -156,6 +172,7 @@ const statusText: Record<Product, { label: LocalizedText; summary: LocalizedText
     },
     summary: {
       en: 'The repository documents an August 2026 early-access build: workerd is for local development, with Cloudflare as the documented production path.',
+      zh: '仓库记录了 2026 年 8 月的抢先体验版本：workerd 用于本地开发，Cloudflare 是文档所述的生产路径。',
       ja: 'リポジトリは 2026 年 8 月のアーリーアクセス版を文書化しています。workerd はローカル開発用で、文書化された本番経路は Cloudflare です。',
       ko: '저장소는 2026년 8월 얼리 액세스 빌드를 문서화합니다. workerd는 로컬 개발용이며 문서화된 프로덕션 경로는 Cloudflare입니다.',
       ru: 'Репозиторий описывает сборку раннего доступа за август 2026 года: workerd используется для локальной разработки, а Cloudflare — для документированного production-пути.',
@@ -167,6 +184,7 @@ const statusText: Record<Product, { label: LocalizedText; summary: LocalizedText
   cinaclaw: {
     label: {
       en: 'Open-source release',
+      zh: '开源版本',
       ja: 'オープンソース公開版',
       ko: '오픈 소스 릴리스',
       ru: 'Открытый релиз',
@@ -176,6 +194,7 @@ const statusText: Record<Product, { label: LocalizedText; summary: LocalizedText
     },
     summary: {
       en: 'The installable CLI and local-first Gateway document stable, beta, and development channels; external channels require user configuration.',
+      zh: '可安装的 CLI 与本地优先 Gateway 记录了 stable、beta 和开发渠道；外部渠道需要用户自行配置。',
       ja: 'インストール可能な CLI とローカルファースト Gateway があり、stable / beta / dev を文書化しています。外部チャネルは利用者の設定が必要です。',
       ko: '설치 가능한 CLI와 로컬 우선 Gateway가 stable, beta, dev 채널을 문서화하며 외부 채널은 사용자 설정이 필요합니다.',
       ru: 'Устанавливаемый CLI и local-first Gateway имеют каналы stable, beta и dev; внешние каналы настраивает пользователь.',
@@ -187,6 +206,7 @@ const statusText: Record<Product, { label: LocalizedText; summary: LocalizedText
   cinatoken: {
     label: {
       en: 'Open-source / self-hosted',
+      zh: '开源 / 自托管',
       ja: 'オープンソース / セルフホスト',
       ko: '오픈 소스 / 자체 호스팅',
       ru: 'Open source / self-hosted',
@@ -196,6 +216,7 @@ const statusText: Record<Product, { label: LocalizedText; summary: LocalizedText
     },
     summary: {
       en: 'The gateway repository includes local, Docker, and Cloudflare deployment paths. No managed-service SLA is claimed here.',
+      zh: '网关仓库包含本地、Docker 与 Cloudflare 部署路径；本页面不主张提供托管服务 SLA。',
       ja: 'Gateway リポジトリにはローカル、Docker、Cloudflare の展開経路があります。このページはマネージドサービス SLA を主張しません。',
       ko: 'Gateway 저장소는 로컬, Docker 및 Cloudflare 배포 경로를 포함합니다. 이 페이지는 관리형 서비스 SLA를 주장하지 않습니다.',
       ru: 'Репозиторий шлюза содержит локальный, Docker- и Cloudflare-варианты развёртывания. Управляемый SLA здесь не заявлен.',
@@ -207,6 +228,7 @@ const statusText: Record<Product, { label: LocalizedText; summary: LocalizedText
   cinaskill: {
     label: {
       en: 'Integrated capability format',
+      zh: '集成能力格式',
       ja: '統合された機能形式',
       ko: '통합 기능 형식',
       ru: 'Интегрированный формат возможностей',
@@ -216,6 +238,7 @@ const statusText: Record<Product, { label: LocalizedText; summary: LocalizedText
     },
     summary: {
       en: 'CinaSkill describes the SKILL.md-based capability format used with CinaClaw. A separate hosted service or standalone release is not claimed.',
+      zh: 'CinaSkill 描述与 CinaClaw 配合使用的 SKILL.md 能力格式；不主张其为独立托管服务或单独发布的产品。',
       ja: 'CinaSkill は CinaClaw で使う SKILL.md ベースの機能形式です。独立したホステッドサービスや単体リリースは主張しません。',
       ko: 'CinaSkill은 CinaClaw에서 사용하는 SKILL.md 기반 기능 형식입니다. 별도 호스팅 서비스나 독립 릴리스를 주장하지 않습니다.',
       ru: 'CinaSkill — формат возможностей на основе SKILL.md, используемый с CinaClaw. Отдельный хостинг или самостоятельный релиз не заявлен.',
@@ -227,6 +250,7 @@ const statusText: Record<Product, { label: LocalizedText; summary: LocalizedText
   cinachain: {
     label: {
       en: 'Beta / Base Sepolia testnet',
+      zh: '测试版 / Base Sepolia 测试网',
       ja: 'ベータ / Base Sepolia テストネット',
       ko: '베타 / Base Sepolia 테스트넷',
       ru: 'Бета / тестовая сеть Base Sepolia',
@@ -236,6 +260,7 @@ const statusText: Record<Product, { label: LocalizedText; summary: LocalizedText
     },
     summary: {
       en: 'The repository is configured for testnet assets. Its documented domain topology is not proof of a live production deployment.',
+      zh: '仓库面向测试网资产配置；文档所述的域名拓扑本身不能证明存在实时生产部署。',
       ja: 'リポジトリはテストネット資産向けです。文書化されたドメイン構成だけでは本番稼働の証明になりません。',
       ko: '저장소는 테스트넷 자산용으로 구성되어 있으며 문서화된 도메인 구조만으로 실제 프로덕션 배포를 증명하지 않습니다.',
       ru: 'Репозиторий настроен для тестовых активов; схема доменов сама по себе не доказывает действующее production-развёртывание.',
@@ -377,10 +402,110 @@ const evidence: Record<
   },
 };
 
+const zhEvidence: Record<
+  Product,
+  Pick<(typeof evidence)[Product], 'implemented' | 'interfaces' | 'sources' | 'preview'>
+> = {
+  cinaseek: {
+    implemented: [
+      '智能体对话与沙箱化个人应用（Gadget）',
+      '每个工作空间独立的 Durable Object 与 Dynamic Worker facet',
+      '具备限定访问、操作日志与人工审核的 Gatekeeper',
+    ],
+    interfaces: [
+      'Cloudflare Workers / workerd',
+      'Cap’n Web RPC',
+      '配置后可通过 Gatekeeper 连接 OAuth、MCP、GitHub 与 Google',
+    ],
+    sources: [
+      { label: 'GitHub 仓库与抢先体验说明', href: 'https://github.com/cinagroup/cinaseek' },
+      { label: '发布工具', href: 'https://github.com/cinagroup/cinaseek/tree/main/scripts/release' },
+    ],
+    preview: ['规划请求', '沙箱 + 限定范围的 Gatekeeper', '个人 Gadget + 审核队列'],
+  },
+  cinaclaw: {
+    implemented: [
+      '本地优先 Gateway、CLI 引导与控制界面',
+      'WebChat 与文档化消息渠道适配器',
+      '工作空间技能、多智能体路由与配套节点',
+    ],
+    interfaces: [
+      'CLI 与 Gateway WebSocket/RPC',
+      'WhatsApp、Telegram、Slack、Discord、Signal 与其他已记录适配器',
+      'macOS、Windows、iOS、Android 与 Linux 配套界面',
+    ],
+    sources: [
+      { label: 'GitHub 仓库与安装指南', href: 'https://github.com/cinagroup/cinaclaw' },
+      { label: '已发布版本', href: 'https://github.com/cinagroup/cinaclaw/releases' },
+    ],
+    preview: ['收到支持消息', '上下文 + 明确批准', '回复草稿 / 已路由操作'],
+  },
+  cinatoken: {
+    implemented: [
+      '具备路由、API 密钥、策略、预算与审计的统一模型网关',
+      '管理控制台与管理 API',
+      '本地、Docker、数据库与 Cloudflare 部署路径',
+    ],
+    interfaces: [
+      '兼容 OpenAI 的 Chat Completions 与 Responses API',
+      '项目记录的图像、音频、嵌入、Realtime、Claude 与 Gemini 路由',
+      'SQLite / D1、PostgreSQL、MySQL、Docker 与 Cloudflare Workers',
+    ],
+    sources: [
+      { label: 'GitHub 仓库与快速开始', href: 'https://github.com/cinagroup/cinatoken' },
+      {
+        label: 'API 与部署文档',
+        href: 'https://github.com/cinagroup/cinatoken/blob/39260954e2e8d0aee86a9fe9d5b7cd23282771eb/docs/users/README.md',
+      },
+      { label: '已发布版本', href: 'https://github.com/cinagroup/cinatoken/releases' },
+    ],
+    preview: ['Responses API 请求', '路由策略 + 预算检查', '供应商响应 + 审计事件'],
+  },
+  cinaskill: {
+    implemented: [
+      'SKILL.md 指令约定',
+      'CinaClaw 中的内置、托管与工作空间技能加载',
+      '工作空间技能按已记录的优先级高于托管与内置技能',
+    ],
+    interfaces: [
+      'Markdown 约定：输入、指令与支持资源',
+      '~/.cinaclaw/workspace/skills/<skill>/SKILL.md',
+      'CinaClaw 智能体与工具注册表',
+    ],
+    sources: [
+      {
+        label: 'CinaClaw 仓库：智能体工作空间与技能',
+        href: 'https://github.com/cinagroup/cinaclaw#agent-workspace--skills',
+      },
+    ],
+    preview: ['已定义的任务输入', 'SKILL.md + 权限', '聚焦结果 + 可见版本'],
+  },
+  cinachain: {
+    implemented: [
+      'NFT 画廊、白名单/公开铸造与管理界面',
+      '连接 Base Sepolia 测试网钱包',
+      '采用 IPFS 与 R2 存储路径的 Cloudflare Pages / Workers',
+    ],
+    interfaces: [
+      'Base Sepolia 上的 EVM 智能合约',
+      'Reown AppKit、wagmi 与 viem',
+      'IPFS 网关、Cloudflare KV / R2 / Workers',
+    ],
+    sources: [
+      { label: 'GitHub 仓库与测试版范围', href: 'https://github.com/cinagroup/cinachain' },
+      {
+        label: '部署与验证指南',
+        href: 'https://github.com/cinagroup/cinachain/blob/main/DEPLOYMENT.md',
+      },
+    ],
+    preview: ['测试网铸造请求', '白名单 + 合约状态', 'Base Sepolia 交易'],
+  },
+};
+
 const { product, locale = 'en' } = Astro.props;
 const copy = ui[locale];
 const status = statusText[product];
-const item = evidence[product];
+const item = locale === 'zh' ? { ...evidence[product], ...zhEvidence[product] } : evidence[product];
 const productName: Record<Product, string> = {
   cinaseek: 'CinaSeek',
   cinaclaw: 'CinaClaw',

@@ -1,7 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
-type Locale = 'en' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+type Locale = 'en' | 'zh' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
 
 const copy = {
   en: {
@@ -11,6 +11,14 @@ const copy = {
     lead: 'The address may have changed, or the page may no longer be public. Start from the product overview or contact us if you expected something here.',
     home: 'Back to home',
     contact: 'Contact CinaGroup',
+  },
+  zh: {
+    title: '页面未找到',
+    eyebrow: '404 / 路径不存在。',
+    heading: '此页面不可用。',
+    lead: '地址可能已变更，或页面已不再公开。请返回产品概览；如果您认为这里应有内容，也可以联系我们。',
+    home: '返回首页',
+    contact: '联系海内集团',
   },
   ja: {
     title: 'ページが見つかりません',

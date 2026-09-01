@@ -2,7 +2,7 @@
 import CinaPageHero from '~/components/CinaPageHero.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
-type Locale = 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+type Locale = 'zh' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
 
 type Copy = {
   title: string;
@@ -27,6 +27,62 @@ type Copy = {
 };
 
 const copy: Record<Locale, Copy> = {
+  zh: {
+    title: '海内集团 — 搜索、自动化、API 与基础设施',
+    description: '海内集团帮助团队构建搜索、工作流自动化、模型访问、可复用能力与互联基础设施。',
+    eyebrow: '海内集团 / 实用技术。',
+    heroTitle: '将搜索、自动化、API 与基础设施整合为一套产品体系。',
+    heroLead: '帮助团队查找知识、推进重复工作、管理模型访问，并在明确控制下交付可复用能力。',
+    explore: '查看产品',
+    contact: '沟通工作流',
+    productsEyebrow: '产品。',
+    productsTitle: '五款产品，各自从一项明确任务出发。',
+    productsLead: '只选择需要的范围，并接入现有系统与审核流程。',
+    learn: '了解更多',
+    products: [
+      {
+        name: 'CinaSeek',
+        role: '抢先体验智能体工作空间',
+        description: '结合智能体对话、个人 Gadget 与限定访问范围的 Gatekeeper。',
+        href: '/zh/cinaseek',
+      },
+      {
+        name: 'CinaClaw',
+        role: '本地优先智能体网关',
+        description: '通过由操作者控制的 Gateway、渠道适配器与技能运行智能体。',
+        href: '/zh/cinaclaw',
+      },
+      {
+        name: 'CinaToken',
+        role: '开源自托管模型网关',
+        description: '在同一层管理凭据、路由、使用策略与成本边界。',
+        href: '/zh/cinatoken',
+      },
+      {
+        name: 'CinaSkill',
+        role: 'CinaClaw 的 SKILL.md 能力格式',
+        description: '打包可由 CinaClaw 工作空间加载的指令与资源。',
+        href: '/zh/cinaskill',
+      },
+      {
+        name: 'CinaChain',
+        role: 'Base Sepolia NFT DApp 测试版',
+        description: '在 Base Sepolia 测试网上评估 NFT 展示与铸造流程。',
+        href: '/zh/cinachain',
+      },
+    ],
+    methodEyebrow: '方法。',
+    methodTitle: '从小处开始，保持边界清晰，用证据持续改进。',
+    methodLead: '先明确真实用户、系统、约束与验收条件，再决定实现范围。',
+    methods: [
+      { title: '定义任务。', description: '明确由谁完成什么结果。' },
+      { title: '连接必要上下文。', description: '将访问边界与人工审核点纳入设计。' },
+      { title: '验证结果。', description: '依据可观察证据决定下一项改进。' },
+    ],
+    nextEyebrow: '下一步。',
+    nextTitle: '从一条真实工作流开始界定范围。',
+    nextLead: '请告诉我们用户、当前流程、约束与期望结果。',
+  },
   ja: {
     title: 'CinaGroup — 検索、自動化、API、インフラストラクチャ',
     description: 'CinaGroup は、検索、ワークフロー自動化、モデルアクセス、再利用可能な機能、接続インフラを支援します。',

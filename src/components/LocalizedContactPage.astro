@@ -3,9 +3,32 @@ import CinaPageHero from '~/components/CinaPageHero.astro';
 import ContactSubmissionForm from '~/components/ContactSubmissionForm.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
-type Locale = 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+type Locale = 'zh' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
 
 const copy = {
+  zh: {
+    title: '联系我们 — 海内集团',
+    description: '请向海内集团介绍用户、当前工作流、约束与期望结果。',
+    eyebrow: '联系我们 / 从工作出发。',
+    heroTitle: '告诉我们，您的团队需要推进什么工作。',
+    heroLead: '请分享用户、当前流程、相关系统、约束与期望结果。我们会一起确定合理的第一阶段范围。',
+    email: '开始咨询',
+    services: '查看服务',
+    contextEyebrow: '第一条消息。',
+    contextTitle: '为了给出有用答复，我们需要这些背景。',
+    contextLead: '咨询只有在安全记录后才算提交成功。请保存返回的参考编号。',
+    items: [
+      ['用户', '谁需要这一结果？他们要完成什么？'],
+      ['当前状态', '目前使用的是哪款产品、页面、工作流或系统？'],
+      ['约束', '需要考虑哪些访问、时间、集成、风险或部署边界？'],
+      ['验收条件', '哪些可观察证据能够证明改动有效？'],
+    ],
+    directEyebrow: '直接联系。',
+    directTitle: 'info@cinagroup.com',
+    directLead: '可通过此邮箱咨询产品、服务、合作与支持事项。',
+    privacy: '隐私政策',
+    terms: '服务条款',
+  },
   ja: {
     title: 'お問い合わせ — CinaGroup',
     description: 'ユーザー、現在のワークフロー、制約、期待する結果を CinaGroup に共有してください。',
@@ -203,7 +226,9 @@ const content = copy[lang] as (typeof copy)[Locale];
         <div class="cg-page-actions">
           <a class="cg-page-button cg-page-button-primary" href="mailto:info@cinagroup.com">{content.email}</a>
         </div>
-        <p class="cg-form-note"><a href="/privacy/">{content.privacy}</a> · <a href="/terms/">{content.terms}</a></p>
+        <p class="cg-form-note">
+          <a href={`/${lang}/privacy/`}>{content.privacy}</a> · <a href={`/${lang}/terms/`}>{content.terms}</a>
+        </p>
       </div>
     </section>
   </div>

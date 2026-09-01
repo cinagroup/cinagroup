@@ -140,6 +140,7 @@ test('normalizes and validates an accepted contact payload', () => {
   assert.equal(parsed.name, 'Ada Lovelace');
   assert.equal(parsed.email, 'Ada.Lovelace@example.com');
   assert.equal(parsed.submissionId, submissionId);
+  assert.equal(validateContactPayload(validPayload({ locale: 'zh' })).locale, 'zh');
 });
 
 test('calculates a 12-month retention date with end-of-month clamping', () => {

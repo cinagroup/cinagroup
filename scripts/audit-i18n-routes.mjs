@@ -81,13 +81,13 @@ for (const [route, locales] of Object.entries(routeMatrix)) {
 }
 
 const expectedNewRoutes = [
-  ...['ko', 'ru', 'es', 'pt', 'fr'].map((locale) => `/${locale}/about/`),
-  ...['ja', 'ko', 'ru', 'es', 'pt', 'fr'].flatMap((locale) => [
+  ...['zh', 'ko', 'ru', 'es', 'pt', 'fr'].map((locale) => `/${locale}/about/`),
+  ...['zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'].flatMap((locale) => [
     `/${locale}/privacy/`,
     `/${locale}/terms/`,
   ]),
 ];
-if (expectedNewRoutes.length !== 17) fail('the expected localized route inventory is not 17');
+if (expectedNewRoutes.length !== 20) fail('the expected localized route inventory is not 20');
 for (const localizedPath of expectedNewRoutes) {
   const parts = localizedPath.split('/').filter(Boolean);
   const locale = parts.shift();
