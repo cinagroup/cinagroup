@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Sony & Warner Sue Anthropic, Pentagon Deploys ChatGPT & Grok, Nvidia's $3.5B MediaTek Bet — AI News Briefing"
 description: "Sony Music and Warner Chappell sued Anthropic in a sweeping copyright action over song lyrics, while the Pentagon added versions of ChatGPT and Grok to its central AI portal alongside Google's Gemini. Nvidia invested $3.5 billion in MediaTek to hedge against Big Tech's in-house chip buildout, and new security research targeted Claude Code's auto mode."
 publishDate: 2026-08-31T22:00:00.000Z

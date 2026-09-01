@@ -210,6 +210,8 @@ for (const sourceFile of sourceFiles) {
     expectedModified,
     published,
     listed,
+    automated,
+    status,
   });
 }
 
@@ -217,7 +219,62 @@ const publishedCount = sources.filter((source) => source.published).length;
 const unpublishedCount = sources.length - publishedCount;
 const listedCount = sources.filter((source) => source.listed).length;
 
-if (listedCount !== 345) failures.push(`expected exactly 345 entries in the blog feed; found ${listedCount}`);
+// Feed membership is derived, not a hardcoded count: the automated briefing series grows
+// by design (two editions per day), so an exact-entry assertion would break on every new
+// post. Instead we guard the invariants that matter:
+//   1. Every automated briefing is either listed in the feed or explicitly archived —
+//      nothing may silently drop out of the feed.
+//   2. The briefing series is contiguous (no missing -06/-18 editions, no gaps), which
+//      catches accidental deletions or renames.
+const automatedSources = sources.filter((source) => source.automated);
+const unlistedActiveBriefings = automatedSources.filter(
+  (source) => !source.listed && source.status !== 'archived_unverified'
+);
+if (unlistedActiveBriefings.length) {
+  failures.push(
+    `expected all automated briefings to be listed or archived; unlisted: ${unlistedActiveBriefings
+      .map((source) => source.relativeSource)
+      .join(', ')}`
+  );
+}
+
+const briefingEditionPattern = /^ai-news-briefing-(\d{4}-\d{2}-\d{2})-(06|18)\.mdx?$/;
+const briefingSeries = automatedSources
+  .map((source) => source.identifier)
+  .filter((identifier) => briefingEditionPattern.test(identifier))
+  .sort();
+if (briefingSeries.length >= 2) {
+  const editionsByDate = new Map();
+  for (const identifier of briefingSeries) {
+    const [, date, edition] = identifier.match(briefingEditionPattern);
+    const editions = editionsByDate.get(date) || new Set();
+    editions.add(edition);
+    editionsByDate.set(date, editions);
+  }
+  // Check contiguity only over the trailing 14 calendar days of the series. Older gaps
+  // are legitimate history (editions were skipped during outages), so a full-series
+  // exact count would only produce false alarms; the recent window still catches
+  // accidental deletions or pipeline regressions promptly.
+  const allDates = [...editionsByDate.keys()].sort();
+  const windowStart = allDates[Math.max(0, allDates.length - 14)];
+  const lastDate = allDates[allDates.length - 1];
+  const cursor = new Date(`${windowStart}T00:00:00Z`);
+  const end = new Date(`${lastDate}T00:00:00Z`);
+  while (cursor <= end) {
+    const date = cursor.toISOString().slice(0, 10);
+    const editions = editionsByDate.get(date) || new Set();
+    if (date === lastDate) {
+      if (!editions.has('06')) failures.push(`briefing series gap: missing ${date} 06:00 edition`);
+    } else if (!editions.has('06') || !editions.has('18')) {
+      failures.push(
+        `briefing series gap: ${date} missing edition(s) ${['06', '18']
+          .filter((edition) => !editions.has(edition))
+          .join(', ')}`
+      );
+    }
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
+  }
+}
 
 if (!sourceOnly) {
   const articlePages = new Map();

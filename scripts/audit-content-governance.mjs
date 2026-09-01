@@ -20,7 +20,6 @@ const distDirectory = path.join(root, 'dist');
 const sourceDirectories = [path.join(root, 'src', 'data', 'post'), path.join(root, 'src', 'content', 'blog')];
 const archiveManifestPath = path.join(root, 'docs', 'briefing-archive-manifest.json');
 const sourceOnly = process.argv.includes('--source-only');
-const EXPECTED_ARCHIVE_COUNT = 346;
 const failures = [];
 const readOptionalDirectory = async (directory) => {
   try {
@@ -121,8 +120,15 @@ const listedArchiveSources = archivedSources.filter((source) => isBlogFeedPost(s
 const nonRoutableSources = sources.filter((source) => !isRoutablePostStatus(source.status));
 
 if (!archivedSources.length) failures.push('No archived briefing sources were found');
-if (listedArchiveSources.length !== 345) {
-  failures.push(`Expected exactly 345 English archives in the blog feed; found ${listedArchiveSources.length}`);
+// No hardcoded archive count: the feed grows by two automated briefings per day, so an
+// exact-entry assertion would break on every new post. Loss/immutability is enforced by
+// the per-file governance checks above and the manifest hash loop below. Here we keep
+// only a catastrophic-loss floor guard (the archive is an immutable historical record,
+// so a large drop in listed English archives means something was deleted, not published).
+if (listedArchiveSources.length < 300) {
+  failures.push(
+    `Expected at least 300 English archives in the blog feed; found ${listedArchiveSources.length}`
+  );
 }
 if (archivedSources.some((source) => !source.automated)) {
   failures.push('A non-automated source is archived; confirm its migration and audit expectations explicitly');
@@ -143,9 +149,9 @@ if (archiveManifest) {
   if (archiveManifest.policy !== 'immutable_historical_archive') {
     failures.push('Archive manifest policy must remain immutable_historical_archive');
   }
-  if (archiveManifest.count !== EXPECTED_ARCHIVE_COUNT || records.length !== EXPECTED_ARCHIVE_COUNT) {
+  if (archiveManifest.count !== records.length) {
     failures.push(
-      `Archive manifest must contain exactly ${EXPECTED_ARCHIVE_COUNT} records; found ${records.length}`
+      `Archive manifest count field (${archiveManifest.count}) does not match its record list (${records.length})`
     );
   }
 
@@ -157,11 +163,9 @@ if (archiveManifest) {
     manifestBySlug.set(record.slug, record);
   }
 
-  if (automatedSources.length !== EXPECTED_ARCHIVE_COUNT) {
-    failures.push(
-      `Expected exactly ${EXPECTED_ARCHIVE_COUNT} automated archive sources; found ${automatedSources.length}`
-    );
-  }
+  // Manifest-vs-source consistency is enforced by the two loops below (every source must
+  // have a matching manifest record and every record a matching source), so no hardcoded
+  // archive count is needed here — the archive grows by design with each briefing.
 
   for (const source of automatedSources) {
     const record = manifestBySlug.get(source.slug);

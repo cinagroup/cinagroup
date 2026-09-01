@@ -1,4 +1,9 @@
 ---
+status: archived_unverified
+origin: automated_news_workflow
+verification:
+  status: unverified
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "G20 Warns on AI Financial Risk, Anthropic Sued Over Plan Limits, Cursor Origin Launch — AI News Briefing"
 description: "G20 regulators warn new AI models pose a growing threat to financial stability, Anthropic faces a lawsuit over usage caps on its $200/month plans, and Cursor launches its Origin code hosting platform as OpenAI splits from the startup. Plus: METR's independent investigation into the Hugging Face agent incident, Nvidia's push beyond GPUs, Meta's content-regulation settlement, and Google's Earth AI initiative."
 publishDate: 2026-08-31T10:00:00.000Z
