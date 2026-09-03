@@ -5,7 +5,6 @@
 <h3>AI Gateway · Cloudflare · Rust · Web3 Infrastructure</h3>
 
 <p>
-  构建开放、可靠、可审计的 AI 与边缘基础设施。<br />
   Building open, reliable, and auditable infrastructure for AI and the edge.
 </p>
 
@@ -22,27 +21,27 @@
 
 </div>
 
-## 👨‍💻 About Me / 关于我
+## 👨‍💻 About Me
 
-- 🦀 使用 **Rust、TypeScript 与 Go** 构建后端、网关和开发者工具
-- ☁️ 专注 **Cloudflare Workers、边缘计算与可观测基础设施**
-- 🤖 探索 **AI Gateway、Agent Workspace 与模型路由**
-- ⛓️ 构建面向真实应用的 **Web3 与 Solidity** 项目
-- 🌏 **海内存知己，天涯若比邻。**
+- 🦀 Building backends, gateways, and developer tools with **Rust, TypeScript, and Go**
+- ☁️ Focused on **Cloudflare Workers, edge computing, and observable infrastructure**
+- 🤖 Exploring **AI gateways, agent workspaces, and model routing**
+- ⛓️ Creating practical **Web3 and Solidity** projects
+- 🌏 **A bosom friend afar brings a distant land near.**
 
-## 🛠 Tech Stack / 技术栈
+## 🛠 Tech Stack
 
 <div align="center">
   <img src="https://skillicons.dev/icons?i=rust,ts,go,wasm,cloudflare,docker,postgres,solidity,redis,linux,git,githubactions&perline=12" alt="Rust, TypeScript, Go, WebAssembly, Cloudflare, Docker, PostgreSQL, Solidity, Redis, Linux, Git, and GitHub Actions" />
 </div>
 
-## 🚀 Featured Projects / 重点项目
+## 🚀 Featured Projects
 
 <table>
   <tr>
     <td width="50%" valign="top">
       <h3 align="center"><a href="https://github.com/cinagroup/cinatoken-rust">🦀 CinaToken Rust</a></h3>
-      <p align="center">开源、自托管的 AI 模型网关，统一管理模型路由、凭据、策略与成本边界。</p>
+      <p align="center">An open-source, self-hosted AI model gateway for unified model routing, credentials, policy, and cost controls.</p>
       <p align="center">
         <img src="https://img.shields.io/badge/Rust-dea584?style=flat-square&logo=rust&logoColor=black" alt="Rust" />
         <img src="https://img.shields.io/badge/AI-Gateway-36BCF7?style=flat-square&logo=openai&logoColor=white" alt="AI Gateway" />
@@ -51,7 +50,7 @@
     </td>
     <td width="50%" valign="top">
       <h3 align="center"><a href="https://github.com/cinagroup/cinaauth">🔐 CinaAuth</a></h3>
-      <p align="center">面向现代应用的综合身份认证框架，专注清晰的开发体验与可扩展架构。</p>
+      <p align="center">A comprehensive authentication framework for modern applications, with a clear developer experience and extensible architecture.</p>
       <p align="center">
         <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
         <img src="https://img.shields.io/badge/Auth-Framework-7c3aed?style=flat-square&logo=auth0&logoColor=white" alt="Authentication Framework" />
@@ -71,7 +70,7 @@
   </sub>
 </div>
 
-## 📊 GitHub Activity / 开发动态
+## 📊 GitHub Activity
 
 <div align="center">
   <img width="98%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=cinagroup&theme=tokyonight" alt="CinaGroup contribution overview" />
@@ -83,10 +82,10 @@
 </div>
 
 <div align="center">
-  <img width="70%" src="https://streak-stats.demolab.com?user=cinagroup&theme=tokyonight&hide_border=true&locale=zh_Hans" alt="CinaGroup contribution streak" />
+  <img width="70%" src="https://streak-stats.demolab.com?user=cinagroup&theme=tokyonight&hide_border=true&locale=en" alt="CinaGroup contribution streak" />
 </div>
 
-## 🧩 Focus / 技术方向
+## 🧩 Focus
 
 <div align="center">
   <img src="https://img.shields.io/badge/Rust-Backend-dea584?style=flat-square&logo=rust&logoColor=black" alt="Rust Backend" />
@@ -99,12 +98,12 @@
 <br />
 
 <div align="center">
-  <strong>Thanks for visiting · 感谢来访</strong><br />
+  <strong>Thanks for visiting!</strong><br />
   <sub>Explore more at <a href="https://cinagroup.com">cinagroup.com</a></sub>
 </div>
 
 <details>
-<summary><strong>About this repository / 本仓库开发说明</strong></summary>
+<summary><strong>About this repository</strong></summary>
 
 This repository contains the CinaGroup website, built with Astro and Tailwind CSS and deployed to Cloudflare Pages.
 
