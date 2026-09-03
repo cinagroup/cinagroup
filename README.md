@@ -40,21 +40,21 @@
 <table>
   <tr>
     <td width="50%" valign="top">
-      <h3 align="center"><a href="https://github.com/cinagroup/cinatoken-rust">🦀 CinaToken Rust</a></h3>
-      <p align="center">An open-source, self-hosted AI model gateway for unified model routing, credentials, policy, and cost controls.</p>
+      <h3 align="center"><a href="https://github.com/cinagroup/cinaseek">🔎 CinaSeek</a></h3>
+      <p align="center">An agent workspace built on Cloudflare Workers for creating documents, building apps, and running agents with company context and systems.</p>
       <p align="center">
-        <img src="https://img.shields.io/badge/Rust-dea584?style=flat-square&logo=rust&logoColor=black" alt="Rust" />
-        <img src="https://img.shields.io/badge/AI-Gateway-36BCF7?style=flat-square&logo=openai&logoColor=white" alt="AI Gateway" />
-        <img src="https://img.shields.io/github/stars/cinagroup/cinatoken-rust?style=flat-square&logo=github&label=Stars" alt="CinaToken Rust stars" />
+        <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+        <img src="https://img.shields.io/badge/Cloudflare-Workers-f38020?style=flat-square&logo=cloudflare&logoColor=white" alt="Cloudflare Workers" />
+        <img src="https://img.shields.io/github/stars/cinagroup/cinaseek?style=flat-square&logo=github&label=Stars" alt="CinaSeek stars" />
       </p>
     </td>
     <td width="50%" valign="top">
-      <h3 align="center"><a href="https://github.com/cinagroup/cinaauth">🔐 CinaAuth</a></h3>
-      <p align="center">A comprehensive authentication framework for modern applications, with a clear developer experience and extensible architecture.</p>
+      <h3 align="center"><a href="https://github.com/cinagroup/cinatoken">⚡ CinaToken</a></h3>
+      <p align="center">A self-hosted, open-source AI gateway that unifies providers, accounts, and API keys with routing, budgets, billing, and auditing.</p>
       <p align="center">
         <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
-        <img src="https://img.shields.io/badge/Auth-Framework-7c3aed?style=flat-square&logo=auth0&logoColor=white" alt="Authentication Framework" />
-        <img src="https://img.shields.io/github/stars/cinagroup/cinaauth?style=flat-square&logo=github&label=Stars" alt="CinaAuth stars" />
+        <img src="https://img.shields.io/badge/AI-Gateway-36BCF7?style=flat-square&logo=openai&logoColor=white" alt="AI Gateway" />
+        <img src="https://img.shields.io/github/stars/cinagroup/cinatoken?style=flat-square&logo=github&label=Stars" alt="CinaToken stars" />
       </p>
     </td>
   </tr>
@@ -62,9 +62,9 @@
 
 <div align="center">
   <sub>
+    <a href="https://cinagroup.com/cinaseek/">CinaSeek</a> ·
     <a href="https://cinagroup.com/cinatoken/">CinaToken</a> ·
     <a href="https://cinagroup.com/cinaclaw/">CinaClaw</a> ·
-    <a href="https://cinagroup.com/cinaseek/">CinaSeek</a> ·
     <a href="https://cinagroup.com/cinaskill/">CinaSkill</a> ·
     <a href="https://cinagroup.com/cinachain/">CinaChain</a>
   </sub>
