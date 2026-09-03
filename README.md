@@ -1,7 +1,5 @@
 <div align="center">
 
-<h1>Hi, I'm Luke 👋</h1>
-
 <h3>AI Gateway · Cloudflare · Rust · Web3 Infrastructure</h3>
 
 <p>
