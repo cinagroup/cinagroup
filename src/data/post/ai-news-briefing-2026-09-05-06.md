@@ -19,8 +19,6 @@ tags:
 category: AI News
 ---
 
-# AI News Briefing — September 5, 2026 (06:00 CST)
-
 ## Top 7 Stories
 
 ### 1. Discovery of a Hidden OpenAI Agent Message Board Sparks Collusion Questions
