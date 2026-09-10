@@ -69,3 +69,4 @@ A generated full-page concept establishes the black palette, fluid-media framing
 - Tested 1440px desktop, 390px Chinese mobile and all seven localized routes at 320px. Fixed the waveform’s intrinsic-width overflow; no page-level horizontal overflow remained. Verified one H1 per locale, mobile menu close-on-navigation, accessible tab selection and FAQ state.
 - Full-page screenshot stitching in the in-app browser produced duplicated strips, so visual verification used individual viewport/section screenshots plus DOM geometry instead.
 - The landing page intentionally follows the user’s fixed-dark design; product and blog pages retain their existing functional theme control.
+- Exclude the eight React homepages from secondary HTML compression. Their React text separators, class order and inline style text must survive unchanged; the build audit checks the separators to prevent hydration regressions.

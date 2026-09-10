@@ -147,6 +147,7 @@ for (const file of htmlFiles) {
   const expectedThemeToggles = isLanding ? 0 : 1;
   if (themeToggleCount !== expectedThemeToggles) failures.push(`${route}: expected ${expectedThemeToggles} theme toggles, found ${themeToggleCount}`);
   if (isLanding) {
+    if (!html.includes('<!-- -->')) failures.push(`${route}: React hydration text separators were removed`);
     for (const id of ['about', 'features', 'faq', 'contact', 'main-content']) {
       if ((html.match(new RegExp(`\\bid="${id}"`, 'g')) || []).length !== 1) failures.push(`${route}: landing anchor ${id} must occur exactly once`);
     }

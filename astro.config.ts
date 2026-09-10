@@ -127,6 +127,9 @@ export default defineConfig({
     ),
 
     compress({
+      // React hydration requires its original text separators, class order and inline styles.
+      // Astro already optimizes these pages; do not rewrite their island markup a second time.
+      Exclude: [(file: string) => /(?:^|[/\\])dist[/\\]+(?:(?:zh|ja|ko|ru|es|pt|fr)[/\\]+)?index\.html$/.test(file)],
       CSS: true,
       HTML: {
         'html-minifier-terser': {
