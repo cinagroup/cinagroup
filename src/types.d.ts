@@ -64,6 +64,8 @@ export interface Post {
   authorUrl?: string;
   /** The primary language of the article content. */
   language: PostLanguage;
+  /** Groups translations of the same article; resolved from frontmatter or the slug. */
+  translationKey: string;
 
   /** Editorial lifecycle. Only `published` entries appear in public collections. */
   status: PostStatus;
@@ -150,6 +152,8 @@ export interface MetaData {
   structuredData?: Record<string, unknown>;
   /** Overrides the URL-derived document language for content such as blog posts. */
   language?: PostLanguage | Lang;
+  /** Overrides route-derived hreflang alternates, e.g. translations of a blog post. */
+  alternates?: Array<{ hreflang: string; href: string }>;
 }
 
 export interface MetaDataRobots {

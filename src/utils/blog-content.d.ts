@@ -41,7 +41,9 @@ export function isAutomatedBriefing(slug?: string): boolean;
 export function resolvePostStatus(data?: Record<string, unknown>, automated?: boolean): PostStatus;
 export function isPublicPostStatus(status: unknown): status is 'published';
 export function isRoutablePostStatus(status: unknown): status is 'published' | 'archived_unverified';
-export function isBlogFeedPost(status: unknown, language: unknown): boolean;
+export function isBlogFeedPost(status: unknown, language: unknown, siteLocale?: string): boolean;
+export function postLanguageToSiteLocale(language: unknown): string | undefined;
+export function siteLocaleToPostLanguage(locale: unknown): PostLanguage | undefined;
 export function normalizePostAuthor(rawAuthor: unknown, automated?: boolean): string;
 export function normalizePostAuthorInfo(
   rawAuthor: unknown,

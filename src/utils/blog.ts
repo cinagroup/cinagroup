@@ -3,7 +3,16 @@ import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import type { Post } from '~/types';
 import { APP_BLOG } from 'astrowind:config';
-import { cleanSlug, trimSlash, BLOG_BASE, POST_PERMALINK_PATTERN, CATEGORY_BASE, TAG_BASE } from './permalinks';
+import {
+  cleanSlug,
+  trimSlash,
+  BLOG_BASE,
+  POST_PERMALINK_PATTERN,
+  CATEGORY_BASE,
+  TAG_BASE,
+  getPermalink,
+} from './permalinks';
+import { defaultLang, getPath, supportedLocales, type Lang } from '~/i18n';
 import {
   inferPostLanguage,
   isAutomatedBriefing,
@@ -11,7 +20,9 @@ import {
   isPublicPostStatus,
   isRoutablePostStatus,
   normalizePostAuthorInfo,
+  postLanguageToSiteLocale,
   resolvePostStatus,
+  siteLocaleToPostLanguage,
 } from './blog-content.js';
 
 const generatePermalink = async ({
@@ -67,6 +78,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     authorType: rawAuthorType,
     authorUrl: rawAuthorUrl,
     language: rawLanguage,
+    translationKey: rawTranslationKey,
     status: rawStatus,
     origin,
     sources,
@@ -129,6 +141,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     authorType: author.type,
     authorUrl: authorUrl,
     language: language,
+    translationKey: rawTranslationKey || slug,
     status,
     origin,
     sources,
@@ -165,7 +178,7 @@ const load = async function (): Promise<Array<Post>> {
 };
 
 let _allPosts: Array<Post>;
-let _posts: Array<Post>;
+const _feedCacheByLocale = new Map<Lang, Array<Post>>();
 
 /** */
 export const isBlogEnabled = APP_BLOG.isEnabled;
@@ -183,12 +196,22 @@ export const blogTagRobots = APP_BLOG.tag.robots;
 export const blogPostsPerPage = APP_BLOG?.postsPerPage;
 
 /** */
-export const fetchPosts = async (): Promise<Array<Post>> => {
-  if (!_posts) {
-    _posts = (await fetchAllPosts()).filter((post) => isBlogFeedPost(post.status, post.language));
+export const fetchPosts = async (): Promise<Array<Post>> => fetchPostsByLocale(defaultLang);
+
+/**
+ * Posts visible on a locale's blog index: published posts written in that
+ * locale's language, plus (on the default locale only) the English automated
+ * archive. Locales without any visible post get an empty feed and no index.
+ */
+export const fetchPostsByLocale = async (lang: Lang): Promise<Array<Post>> => {
+  if (!_feedCacheByLocale.has(lang)) {
+    _feedCacheByLocale.set(
+      lang,
+      (await fetchAllPosts()).filter((post) => isBlogFeedPost(post.status, post.language, lang))
+    );
   }
 
-  return _posts;
+  return _feedCacheByLocale.get(lang) ?? [];
 };
 
 /** Editorially published posts only; excludes visible unverified archives. */
@@ -238,32 +261,141 @@ export const findLatestPosts = async ({ count }: { count?: number }): Promise<Ar
 };
 
 /** */
-export const getStaticPathsBlogList = async ({ paginate }: { paginate: PaginateFunction }) => {
+export const getStaticPathsBlogList = async ({
+  paginate,
+  lang = defaultLang,
+}: {
+  paginate: PaginateFunction;
+  lang?: Lang;
+}) => {
   if (!isBlogEnabled || !isBlogListRouteEnabled) return [];
-  return paginate(await fetchPosts(), {
-    params: { blog: BLOG_BASE || undefined },
+  const posts = await fetchPostsByLocale(lang);
+  if (posts.length === 0) return [];
+  return paginate(posts, {
+    params: { blog: BLOG_BASE || undefined, ...(lang !== defaultLang ? { lang } : {}) },
     pageSize: blogPostsPerPage,
   });
 };
 
 /** */
-export const getStaticPathsBlogPost = async () => {
+export const getStaticPathsBlogPost = async ({ lang = defaultLang }: { lang?: Lang } = {}) => {
   if (!isBlogEnabled || !isBlogPostRouteEnabled) return [];
+  const expectedLanguage = siteLocaleToPostLanguage(lang);
+  if (!expectedLanguage) return [];
   return (await fetchAllPosts())
-    .filter((post) => isRoutablePostStatus(post.status))
+    .filter((post) => isRoutablePostStatus(post.status) && post.language === expectedLanguage)
     .flatMap((post) => ({
       params: {
         blog: post.permalink,
+        ...(lang !== defaultLang ? { lang } : {}),
       },
       props: { post },
     }));
 };
 
+export interface PostTranslation {
+  post: Post;
+  /** Site locale whose blog section serves this translation. */
+  locale: Lang;
+}
+
+/** */
+export const getPostLocalePermalink = (translation: PostTranslation): string => {
+  const permalink = getPermalink(translation.post.permalink, 'post');
+  return translation.locale === defaultLang ? permalink : getPath(permalink, translation.locale);
+};
+
+/** Routable translations of a post (including itself), grouped by translationKey and locale. */
+export const findPostTranslations = async (post: Post): Promise<Array<PostTranslation>> => {
+  const translationsByLocale = new Map<Lang, PostTranslation>();
+
+  for (const candidate of await fetchAllPosts()) {
+    if (!isRoutablePostStatus(candidate.status) || candidate.translationKey !== post.translationKey) continue;
+    const locale = postLanguageToSiteLocale(candidate.language) as Lang | undefined;
+    if (!locale) continue;
+
+    const existing = translationsByLocale.get(locale);
+    if (!existing || (isPublicPostStatus(candidate.status) && !isPublicPostStatus(existing.post.status))) {
+      translationsByLocale.set(locale, { post: candidate, locale });
+    }
+  }
+
+  return supportedLocales.flatMap((locale) => {
+    const translation = translationsByLocale.get(locale);
+    return translation ? [translation] : [];
+  });
+};
+
+export interface PostLanguageAlternate {
+  hreflang: Lang | 'x-default';
+  href: string;
+}
+
+/**
+ * Reciprocal SEO alternates across indexable translations. Noindex archive
+ * sources are deliberately excluded from hreflang sets.
+ */
+export const getPostLanguageAlternates = async (
+  post: Post,
+  origin: string | URL
+): Promise<Array<PostLanguageAlternate>> => {
+  const translations = (await findPostTranslations(post)).filter((translation) =>
+    isPublicPostStatus(translation.post.status)
+  );
+  if (translations.length < 2) return [];
+
+  const makeHref = (translation: PostTranslation) => new URL(getPostLocalePermalink(translation), origin).toString();
+  const alternates: Array<PostLanguageAlternate> = translations.map((translation) => ({
+    hreflang: translation.locale,
+    href: makeHref(translation),
+  }));
+  const defaultTranslation = translations.find((translation) => translation.locale === defaultLang);
+  if (defaultTranslation) alternates.push({ hreflang: 'x-default', href: makeHref(defaultTranslation) });
+  return alternates;
+};
+
+/**
+ * Direct links used by the on-page language switcher. Unlike SEO alternates,
+ * these may include the noindex historical original for reader provenance.
+ */
+export const getPostLanguageSwitcherAlternates = async (
+  post: Post,
+  origin: string | URL
+): Promise<Array<PostLanguageAlternate>> => {
+  const translations = await findPostTranslations(post);
+  const makeHref = (translation: PostTranslation) => new URL(getPostLocalePermalink(translation), origin).toString();
+  return translations.map((translation) => ({ hreflang: translation.locale, href: makeHref(translation) }));
+};
+
+/** Locales that have a blog index page: the default locale plus every locale with at least one feed post. */
+export const getBlogListLocales = async (): Promise<Array<Lang>> => {
+  const locales: Array<Lang> = [];
+  for (const lang of supportedLocales) {
+    if (lang === defaultLang || (await fetchPostsByLocale(lang)).length > 0) locales.push(lang);
+  }
+  return locales;
+};
+
+/** hreflang alternates for the blog index pages across locales. */
+export const getBlogListLanguageAlternates = async (origin: string | URL): Promise<Array<PostLanguageAlternate>> => {
+  const locales = await getBlogListLocales();
+  if (!locales.includes(defaultLang)) return [];
+
+  const makeHref = (lang: Lang) =>
+    new URL(
+      lang === defaultLang ? getPermalink(BLOG_BASE, 'blog') : getPath(getPermalink(BLOG_BASE, 'blog'), lang),
+      origin
+    ).toString();
+  const alternates: Array<PostLanguageAlternate> = locales.map((lang) => ({ hreflang: lang, href: makeHref(lang) }));
+  alternates.push({ hreflang: 'x-default', href: makeHref(defaultLang) });
+  return alternates;
+};
+
 /** */
 export const getStaticPathsBlogCategory = async ({ paginate }: { paginate: PaginateFunction }) => {
   if (!isBlogEnabled || !isBlogCategoryRouteEnabled) return [];
-
-  const posts = await fetchPublishedPosts();
+  const defaultLanguage = siteLocaleToPostLanguage(defaultLang);
+  const posts = (await fetchPublishedPosts()).filter((post) => post.language === defaultLanguage);
   const categories = {};
   posts.map((post) => {
     if (post.category?.slug) {
@@ -286,8 +418,8 @@ export const getStaticPathsBlogCategory = async ({ paginate }: { paginate: Pagin
 /** */
 export const getStaticPathsBlogTag = async ({ paginate }: { paginate: PaginateFunction }) => {
   if (!isBlogEnabled || !isBlogTagRouteEnabled) return [];
-
-  const posts = await fetchPublishedPosts();
+  const defaultLanguage = siteLocaleToPostLanguage(defaultLang);
+  const posts = (await fetchPublishedPosts()).filter((post) => post.language === defaultLanguage);
   const tags = {};
   posts.map((post) => {
     if (Array.isArray(post.tags)) {
@@ -311,7 +443,9 @@ export const getStaticPathsBlogTag = async ({ paginate }: { paginate: PaginateFu
 
 /** */
 export async function getRelatedPosts(originalPost: Post, maxResults: number = 4): Promise<Post[]> {
-  const allPosts = await fetchPublishedPosts();
+  const allPosts = (await fetchPublishedPosts()).filter(
+    (iteratedPost) => iteratedPost.language === originalPost.language
+  );
   const originalTagsSet = new Set(originalPost.tags ? originalPost.tags.map((tag) => tag.slug) : []);
 
   const postsWithScores = allPosts.reduce((acc: { post: Post; score: number }[], iteratedPost: Post) => {

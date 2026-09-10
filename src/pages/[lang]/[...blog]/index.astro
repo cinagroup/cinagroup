@@ -1,0 +1,87 @@
+---
+import type { GetStaticPaths } from 'astro';
+
+import merge from 'lodash.merge';
+import type { ImageMetadata } from 'astro';
+import Layout from '~/layouts/PageLayout.astro';
+import SinglePost from '~/components/blog/SinglePost.astro';
+import ToBlogLink from '~/components/blog/ToBlogLink.astro';
+
+import { getCanonical, getPermalink } from '~/utils/permalinks';
+import {
+  getStaticPathsBlogPost,
+  blogPostRobots,
+  getPostLanguageAlternates,
+  getPostLanguageSwitcherAlternates,
+} from '~/utils/blog';
+import { findImage } from '~/utils/images';
+import { getArticleStructuredData } from '~/utils/article-schema';
+import { getFactCheck } from '~/data/fact-checks';
+import { defaultLang, getPath, supportedLocales, type Lang } from '~/i18n';
+import type { MetaData, Post } from '~/types';
+
+export const prerender = true;
+
+// One page per routable post written in a non-default language, served under
+// its own locale prefix (e.g. /zh/blog/<slug>/). English posts live at /blog/.
+export const getStaticPaths = (async () => {
+  const localizedLocales = supportedLocales.filter((locale) => locale !== defaultLang);
+  const pathsByLocale = await Promise.all(localizedLocales.map((lang) => getStaticPathsBlogPost({ lang })));
+  return pathsByLocale.flat();
+}) satisfies GetStaticPaths;
+
+type Props = { post: Post };
+
+const { post } = Astro.props as Props;
+const lang = (Astro.params.lang as Lang | undefined) ?? defaultLang;
+const factCheck = getFactCheck(post.translationKey);
+
+const defaultCanonical = String(getCanonical(getPath(getPermalink(post.permalink, 'post'), lang)));
+const image = (await findImage(post.image)) as ImageMetadata | string | undefined;
+const archivedUnverified = post.status === 'archived_unverified';
+const languageAlternates = await getPostLanguageAlternates(post, new URL(defaultCanonical).origin);
+const languageSwitcherAlternates = await getPostLanguageSwitcherAlternates(post, new URL(defaultCanonical).origin);
+
+const metadata = merge(
+  {
+    title: post.title,
+    description: post.excerpt,
+    canonical: defaultCanonical,
+    robots: {
+      index: blogPostRobots?.index,
+      follow: blogPostRobots?.follow,
+    },
+    openGraph: {
+      type: 'article',
+      url: defaultCanonical,
+      ...(image
+        ? { images: [{ url: image, width: (image as ImageMetadata)?.width, height: (image as ImageMetadata)?.height }] }
+        : {}),
+    },
+    language: post.language,
+    alternates: languageAlternates,
+  },
+  post?.metadata || {}
+) as MetaData;
+
+const effectiveCanonical = String(metadata.canonical || defaultCanonical);
+metadata.canonical = effectiveCanonical;
+metadata.openGraph = { ...(metadata.openGraph || {}), url: effectiveCanonical };
+metadata.language = post.language;
+metadata.alternates = languageAlternates;
+if (archivedUnverified) {
+  metadata.robots = { index: false, follow: true };
+  metadata.structuredData = undefined;
+} else {
+  metadata.structuredData = getArticleStructuredData({ post, canonical: effectiveCanonical, image });
+}
+---
+
+<Layout metadata={metadata} languageAlternates={languageSwitcherAlternates}>
+  <SinglePost post={{ ...post, image: image }} url={effectiveCanonical} lang={lang} factCheck={factCheck}>
+    <article>
+      {post.Content ? <post.Content /> : <Fragment set:html={post.content || ''} />}
+    </article>
+  </SinglePost>
+  <ToBlogLink lang={lang} />
+</Layout>

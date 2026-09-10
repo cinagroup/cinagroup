@@ -1,0 +1,59 @@
+---
+import type { GetStaticPaths } from 'astro';
+
+import Layout from '~/layouts/PageLayout.astro';
+import BlogList from '~/components/blog/List.astro';
+import Headline from '~/components/blog/Headline.astro';
+import Pagination from '~/components/blog/Pagination.astro';
+
+import { blogListRobots, getBlogListLanguageAlternates, getStaticPathsBlogList } from '~/utils/blog';
+import { getCanonical } from '~/utils/permalinks';
+import { getBlogStrings } from '~/i18n/blog';
+import { defaultLang, supportedLocales, type Lang } from '~/i18n';
+
+export const prerender = true;
+
+// Only locales with at least one post in their language get a localized blog
+// index; the default locale is served by the unprefixed /[...blog]/ routes.
+export const getStaticPaths = (async ({ paginate }) => {
+  const localizedLocales = supportedLocales.filter((locale) => locale !== defaultLang);
+  const pathsByLocale = await Promise.all(localizedLocales.map((lang) => getStaticPathsBlogList({ paginate, lang })));
+  return pathsByLocale.flat();
+}) satisfies GetStaticPaths;
+
+type Props = { page: import('astro').Page };
+
+const lang = (Astro.params.lang as Lang | undefined) ?? defaultLang;
+const { page } = Astro.props as Props;
+const currentPage = page.currentPage ?? 1;
+const strings = getBlogStrings(lang);
+const languageAlternates =
+  currentPage === 1 ? await getBlogListLanguageAlternates(new URL(String(getCanonical('/'))).origin) : [];
+
+const metadata = {
+  title: `${strings.listTitle}${currentPage > 1 ? strings.pageSuffix(currentPage) : ''}`,
+  description: strings.listDescription,
+  robots: {
+    index: blogListRobots?.index && currentPage === 1,
+    follow: blogListRobots?.follow,
+  },
+  openGraph: {
+    type: 'blog',
+  },
+  language: lang,
+  alternates: languageAlternates,
+};
+---
+
+<Layout metadata={metadata} languageAlternates={languageAlternates}>
+  <section class="cg-blog-index" data-blog-collection="index" data-blog-locale={lang}>
+    <Headline lang={lang} subtitle={strings.listSubtitle(page.total)}>{strings.listTitle}</Headline>
+    <BlogList posts={page.data} lang={lang} />
+    <Pagination
+      prevUrl={page.url.prev}
+      nextUrl={page.url.next}
+      prevText={strings.newerPosts}
+      nextText={strings.olderPosts}
+    />
+  </section>
+</Layout>

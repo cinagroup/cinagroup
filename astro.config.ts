@@ -7,6 +7,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
+import react from '@astrojs/react';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
 import compress from 'astro-compress';
@@ -48,8 +49,17 @@ const hasExternalScripts = false;
 const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>
   hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
+const siteLocales = ['en', 'zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'];
+
+/** Maps a localized pathname such as `/zh/blog/<slug>` back to `/blog/<slug>`. */
+const stripLocalePrefix = (pathname: string): string => {
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments.length > 1 && siteLocales.includes(segments[0])) segments.shift();
+  return `/${segments.join('/')}`;
+};
+
 const shouldIncludeInSitemap = (page: string) => {
-  const pathname = new URL(page).pathname.replace(/\/+$/, '') || '/';
+  const pathname = stripLocalePrefix(new URL(page).pathname.replace(/\/+$/, '') || '/');
 
   return (
     !/^\/tag(?:\/|$)/.test(pathname) &&
@@ -72,6 +82,7 @@ export default defineConfig({
   },
 
   integrations: [
+    react(),
     tailwind({
       applyBaseStyles: false,
     }),

@@ -12,6 +12,7 @@ import {
   isBlogFeedPost,
   isPublicPostStatus,
   isRoutablePostStatus,
+  postLanguageToSiteLocale,
   resolvePostStatus,
 } from '../src/utils/blog-content.js';
 
@@ -241,12 +242,19 @@ if (!sourceOnly) {
   }
 
   if (!failures.some((failure) => failure.startsWith('dist/ is missing'))) {
+    // Non-default-language posts are served under their locale prefix (e.g.
+    // zh/blog/<slug>/); default-language posts stay at the unprefixed route.
+    const detailRouteFor = (source) => {
+      const siteLocale = postLanguageToSiteLocale(source.language);
+      const prefix = siteLocale && siteLocale !== 'en' ? `${siteLocale}/` : '';
+      return `${prefix}blog/${source.slug}/index.html`;
+    };
     const archivedDetailPaths = new Set(
-      archivedSources.map((source) => `blog/${source.slug}/index.html`.replaceAll('/', path.sep))
+      archivedSources.map((source) => detailRouteFor(source).replaceAll('/', path.sep))
     );
 
     for (const source of sources) {
-      const relativeDetail = `blog/${source.slug}/index.html`.replaceAll('/', path.sep);
+      const relativeDetail = detailRouteFor(source).replaceAll('/', path.sep);
       const detailPath = path.join(distDirectory, relativeDetail);
       let html;
 
@@ -266,7 +274,7 @@ if (!sourceOnly) {
         if (!/data-content-status=["']archived_unverified["']/i.test(html)) {
           failures.push(`${source.sourcePath}: archive status marker is missing from detail page`);
         }
-        if (!/Automated briefing[\s\S]{0,80}unverified archive/i.test(html)) {
+        if (!/\bdata-archive-notice(?:=["'][^"']*["']|(?=[\s>]))/i.test(html)) {
           failures.push(`${source.sourcePath}: archive warning is missing from detail page`);
         }
 
@@ -293,10 +301,28 @@ if (!sourceOnly) {
     const archivedSlugPattern = /ai-news-briefing-[a-z0-9-]+/gi;
     const archivedSlugs = new Set(archivedSources.map((source) => source.slug));
 
+    // A published translation of an archived briefing legitimately references
+    // its English original (body links, hreflang alternates, fact-check panel).
+    // Those mentions are allowed only on that translation's own detail route.
+    const translationAllowedSlugs = new Map();
+    for (const source of sources) {
+      if (!isRoutablePostStatus(source.status)) continue;
+      const siteLocale = postLanguageToSiteLocale(source.language);
+      const translationKey = source.data?.translationKey;
+      if (!siteLocale || siteLocale === 'en' || !translationKey || !archivedSlugs.has(translationKey)) continue;
+      const routeFile = `${siteLocale}/blog/${source.slug}/index.html`;
+      if (!translationAllowedSlugs.has(routeFile)) translationAllowedSlugs.set(routeFile, new Set());
+      translationAllowedSlugs.get(routeFile).add(translationKey);
+    }
+
     for (const filename of publicSurfaceFiles) {
+      const relativeToDist = path.relative(distDirectory, filename).replaceAll(path.sep, '/');
+      const allowedHere = translationAllowedSlugs.get(relativeToDist);
       const builtSource = await readFile(filename, 'utf8');
       const leakedSlugs = new Set(
-        [...builtSource.matchAll(archivedSlugPattern)].map((match) => match[0].toLowerCase()).filter((slug) => archivedSlugs.has(slug))
+        [...builtSource.matchAll(archivedSlugPattern)]
+          .map((match) => match[0].toLowerCase())
+          .filter((slug) => archivedSlugs.has(slug) && !(allowedHere && allowedHere.has(slug)))
       );
       if (leakedSlugs.size) {
         failures.push(`${relative(filename)}: exposes archived briefing link(s): ${[...leakedSlugs].slice(0, 3).join(', ')}`);

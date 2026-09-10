@@ -12,14 +12,13 @@ import { UI } from 'astrowind:config';
   function syncThemeControls() {
     const isDark = document.documentElement.classList.contains('dark');
     const language = document.documentElement.lang;
-    const label =
-      language === 'zh'
-        ? isDark
-          ? '切换到浅色模式'
-          : '切换到深色模式'
-        : isDark
-          ? 'Switch to light mode'
-          : 'Switch to dark mode';
+    const label = language.startsWith('zh')
+      ? isDark
+        ? '切换到浅色模式'
+        : '切换到深色模式'
+      : isDark
+        ? 'Switch to light mode'
+        : 'Switch to dark mode';
 
     document.querySelectorAll('[data-aw-toggle-color-scheme]').forEach((control) => {
       control.setAttribute('aria-label', label);

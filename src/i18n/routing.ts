@@ -34,7 +34,7 @@ export const routeMatrix = {
   '/about': everyLocale,
   '/privacy': everyLocale,
   '/terms': everyLocale,
-  '/blog': ['en'],
+  '/blog': ['en', 'zh', 'ja'],
   '/work': ['en'],
 } as const satisfies Record<string, readonly Lang[]>;
 

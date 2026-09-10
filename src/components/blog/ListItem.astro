@@ -10,15 +10,19 @@ import { getPermalink } from '~/utils/permalinks';
 import { findImage } from '~/utils/images';
 import { getFormattedDate } from '~/utils/utils';
 import { isAutomatedBriefing } from '~/utils/blog-content.js';
+import { getPath, type Lang } from '~/i18n';
 
 export interface Props {
   post: Post;
+  /** Locale section the list is rendered in; links posts under `/{lang}/blog/`. */
+  lang?: Lang;
 }
 
-const { post } = Astro.props;
+const { post, lang = 'en' } = Astro.props;
 const image = (await findImage(post.image)) as ImageMetadata | undefined;
 
-const link = APP_BLOG?.post?.isEnabled ? getPermalink(post.permalink, 'post') : '';
+const permalink = getPermalink(post.permalink, 'post');
+const link = APP_BLOG?.post?.isEnabled ? (lang === 'en' ? permalink : getPath(permalink, lang)) : '';
 const automatedBriefing = isAutomatedBriefing(post.slug);
 const archivedUnverified = post.status === 'archived_unverified';
 ---

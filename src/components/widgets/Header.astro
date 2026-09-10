@@ -30,6 +30,8 @@ export interface Props {
   showRssFeed?: boolean;
   showLanguageSwitcher?: boolean;
   position?: string;
+  /** Page-provided hreflang alternates; the switcher links these directly when present. */
+  languageAlternates?: Array<{ hreflang: string; href: string }>;
 }
 
 const {
@@ -42,10 +44,14 @@ const {
   showToggleTheme = false,
   showLanguageSwitcher = true,
   position = 'center',
+  languageAlternates = [],
 } = Astro.props;
 
 const currentPath = Astro.url.pathname === '/' ? '/' : `${Astro.url.pathname.replace(/\/+$/, '')}/`;
+const currentHref = /^\/404(?:\/|\.html)?$/.test(Astro.url.pathname) ? '/404.html' : currentPath;
 const currentLang = getLangFromUrl(Astro.url);
+
+const alternatesByLang = new Map(languageAlternates.map((alternate) => [alternate.hreflang, alternate.href]));
 
 const languageOptions = Object.entries(languages).map(([lang, label]) => {
   const targetLang = lang as Lang;
@@ -53,7 +59,10 @@ const languageOptions = Object.entries(languages).map(([lang, label]) => {
   return {
     lang: targetLang,
     label,
-    href: changeLangPath(Astro.url, targetLang),
+    href:
+      targetLang === currentLang
+        ? currentHref
+        : (alternatesByLang.get(targetLang) ?? changeLangPath(Astro.url, targetLang)),
   };
 });
 

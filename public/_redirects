@@ -22,3 +22,6 @@
 /index-new/* / 301
 /decapcms / 301
 /decapcms/* / 301
+
+# Multilingual blog: the zh-CN archived briefing moved to its locale section
+/blog/ai-news-briefing-2026-05-03-06 /zh/blog/ai-news-briefing-2026-05-03-06 301

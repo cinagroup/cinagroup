@@ -26,6 +26,7 @@ const {
   openGraph = {},
   twitter = {},
   language,
+  alternates,
 } = Astro.props;
 
 type MetadataLanguage = NonNullable<MetaData['language']>;
@@ -43,10 +44,15 @@ const localeByLanguage: Record<MetadataLanguage, string> = {
 };
 const currentLanguage = language || getLangFromUrl(Astro.url);
 const currentLocale = localeByLanguage[currentLanguage];
-const localizedSiteName = currentLanguage === 'zh' ? '海内集团' : SITE?.name;
-const languageAlternates = omitCanonical
-  ? []
-  : getLanguageAlternates(Astro.url.pathname, new URL(String(canonical)).origin);
+const isChinese = currentLanguage === 'zh' || currentLanguage === 'zh-CN';
+const localizedSiteName = isChinese ? '海内集团' : SITE?.name;
+// Page-provided alternates (e.g. a blog post's translations) win over the
+// static route matrix, which cannot know data-driven localized routes.
+const languageAlternates = alternates
+  ? alternates
+  : omitCanonical
+    ? []
+    : getLanguageAlternates(Astro.url.pathname, new URL(String(canonical)).origin);
 const shouldIgnoreTitleTemplate =
   ignoreTitleTemplate ||
   (typeof title === 'string' &&
@@ -74,7 +80,7 @@ const seoProps: AstroSeoProps = merge(
   },
   {
     title: METADATA?.title?.default,
-    titleTemplate: currentLanguage === 'zh' ? '%s — 海内集团' : METADATA?.title?.template,
+    titleTemplate: isChinese ? '%s — 海内集团' : METADATA?.title?.template,
     noindex: typeof METADATA?.robots?.index !== 'undefined' ? !METADATA.robots.index : undefined,
     nofollow: typeof METADATA?.robots?.follow !== 'undefined' ? !METADATA.robots.follow : undefined,
     description: METADATA?.description,

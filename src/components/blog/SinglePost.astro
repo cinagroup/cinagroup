@@ -5,14 +5,30 @@ import PostTags from '~/components/blog/Tags.astro';
 import { getPermalink } from '~/utils/permalinks';
 import { getFormattedDate } from '~/utils/utils';
 import type { Post } from '~/types';
+import type { Lang } from '~/i18n';
+import { getBlogStrings } from '~/i18n/blog';
+import type { FactCheckRecord } from '~/data/fact-checks';
 
 export interface Props {
   post: Post;
   url: string | URL;
+  /** Locale section the post is rendered in; defaults to English UI strings. */
+  lang?: Lang;
+  /** Fact-check ledger record for this translation group, if one exists. */
+  factCheck?: FactCheckRecord;
 }
 
-const { post } = Astro.props;
+const { post, lang = 'en', factCheck } = Astro.props;
+const strings = getBlogStrings(lang);
 const archivedUnverified = post.status === 'archived_unverified';
+const factCheckDate = factCheck ? new Date(`${factCheck.checkedAt}T00:00:00Z`) : undefined;
+const getSourceLabel = (source: string, index: number): string => {
+  try {
+    return new URL(source).hostname.replace(/^www\./, '');
+  } catch {
+    return strings.factCheckSource(index + 1);
+  }
+};
 ---
 
 <article
@@ -22,25 +38,21 @@ const archivedUnverified = post.status === 'archived_unverified';
 >
   <header class="cg-blog-post-header">
     <div class="cg-blog-post-copy">
-      <p class="cg-eyebrow">Journal / {post.category?.title || 'Update'}.</p>
+      <p class="cg-eyebrow">{strings.journal} / {post.category?.title || strings.journalFallback}.</p>
       <h1>{post.title}</h1>
       <p class="cg-blog-post-lead">{post.excerpt}</p>
       <p class="cg-blog-meta">
         <time datetime={post.publishDate.toISOString()}>{getFormattedDate(post.publishDate, post.language)}</time>
-        {post.updateDate && <><span aria-hidden="true"> / </span><span>Updated </span><time datetime={post.updateDate.toISOString()}>{getFormattedDate(post.updateDate, post.language)}</time></>}
+        {post.updateDate && <><span aria-hidden="true"> / </span><span>{strings.updated} </span><time datetime={post.updateDate.toISOString()}>{getFormattedDate(post.updateDate, post.language)}</time></>}
         {post.author && <><span aria-hidden="true"> / </span><span>{post.author}</span></>}
         {post.category && <><span aria-hidden="true"> / </span>{archivedUnverified ? <span>{post.category.title}</span> : <a href={getPermalink(post.category.slug, 'category')}>{post.category.title}</a>}</>}
-        {post.readingTime && <><span aria-hidden="true"> / </span><span>{post.readingTime} min read</span></>}
+        {post.readingTime && <><span aria-hidden="true"> / </span><span>{strings.minRead(post.readingTime)}</span></>}
       </p>
       {
         archivedUnverified && (
-          <aside class="cg-briefing-notice" aria-label="Unverified historical archive notice">
-            <strong>Automated briefing · unverified archive</strong>
-            <span>
-              This item came from a retired automated workflow and was not independently source-checked by the
-              CinaGroup editorial team. It may contain inaccurate or outdated claims. Confirm every claim with current
-              primary sources.
-            </span>
+          <aside class="cg-briefing-notice" aria-label={strings.archiveNoticeTitle} data-archive-notice>
+            <strong>{strings.archiveNoticeTitle}</strong>
+            <span>{strings.archiveNoticeBody}</span>
           </aside>
         )
       }
@@ -64,5 +76,50 @@ const archivedUnverified = post.status === 'archived_unverified';
     }
   </header>
   <div class="cg-prose cg-blog-post-body"><slot /></div>
+  {
+    factCheck && (
+      <aside
+        class="cg-briefing-notice cg-fact-check"
+        aria-label={strings.factCheckTitle}
+        data-fact-check-complete="true"
+        data-fact-check-translation-key={factCheck.translationKey}
+      >
+        <strong>{strings.factCheckTitle}</strong>
+        <span>
+          {strings.factCheckCheckedBy} {factCheck.checkedBy}
+          {factCheckDate && !Number.isNaN(factCheckDate.valueOf()) && (
+            <>
+              {' · '}
+              {strings.factCheckCheckedAt}{' '}
+              <time datetime={factCheckDate.toISOString()}>{getFormattedDate(factCheckDate, post.language)}</time>
+            </>
+          )}
+          .
+        </span>
+        <p class="cg-fact-check-summary">
+          <span>{strings.factCheckSummary}:</span> {factCheck.summary}
+        </p>
+        <ul>
+          {factCheck.claims.map((claim) => (
+            <li>
+              <span class="cg-fact-check-verdict" data-verdict={claim.verdict}>
+                {strings.factCheckVerdicts[claim.verdict]}
+              </span>
+              {claim.claim}
+              <em>{claim.note}</em>
+              <div class="cg-fact-check-sources">
+                <span>{strings.factCheckSources}:</span>
+                {claim.sources.map((source, index) => (
+                  <a href={source} rel="noreferrer" data-fact-check-source>
+                    {getSourceLabel(source, index)}
+                  </a>
+                ))}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )
+  }
   {!archivedUnverified && <footer class="cg-blog-post-footer"><PostTags tags={post.tags} /></footer>}
 </article>

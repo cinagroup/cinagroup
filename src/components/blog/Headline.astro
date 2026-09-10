@@ -1,9 +1,20 @@
 ---
-const { title = await Astro.slots.render('default'), subtitle = await Astro.slots.render('subtitle') } = Astro.props;
+import { getBlogStrings } from '~/i18n/blog';
+import type { Lang } from '~/i18n';
+
+export interface Props {
+  lang?: Lang;
+  title?: string;
+  subtitle?: string;
+}
+
+const { lang = 'en', title = await Astro.slots.render('default'), subtitle = await Astro.slots.render('subtitle') } =
+  Astro.props;
+const strings = getBlogStrings(lang);
 ---
 
 <header class="cg-blog-headline">
-  <p class="cg-eyebrow">AI news / automated archive.</p>
+  <p class="cg-eyebrow">{strings.listEyebrow}</p>
   <h1 set:html={title} />
   {
     subtitle && <div class="cg-blog-headline-lead" set:html={subtitle} />

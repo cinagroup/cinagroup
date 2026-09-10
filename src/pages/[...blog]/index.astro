@@ -8,9 +8,15 @@ import SinglePost from '~/components/blog/SinglePost.astro';
 import ToBlogLink from '~/components/blog/ToBlogLink.astro';
 
 import { getCanonical, getPermalink } from '~/utils/permalinks';
-import { getStaticPathsBlogPost, blogPostRobots } from '~/utils/blog';
+import {
+  getStaticPathsBlogPost,
+  blogPostRobots,
+  getPostLanguageAlternates,
+  getPostLanguageSwitcherAlternates,
+} from '~/utils/blog';
 import { findImage } from '~/utils/images';
 import { getArticleStructuredData } from '~/utils/article-schema';
+import { getFactCheck } from '~/data/fact-checks';
 import type { MetaData } from '~/types';
 
 export const prerender = true;
@@ -22,10 +28,13 @@ export const getStaticPaths = (async () => {
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { post } = Astro.props as Props;
+const factCheck = getFactCheck(post.translationKey);
 
 const defaultCanonical = String(getCanonical(getPermalink(post.permalink, 'post')));
 const image = (await findImage(post.image)) as ImageMetadata | string | undefined;
 const archivedUnverified = post.status === 'archived_unverified';
+const languageAlternates = await getPostLanguageAlternates(post, new URL(defaultCanonical).origin);
+const languageSwitcherAlternates = await getPostLanguageSwitcherAlternates(post, new URL(defaultCanonical).origin);
 
 const metadata = merge(
   {
@@ -44,6 +53,7 @@ const metadata = merge(
         : {}),
     },
     language: post.language,
+    alternates: languageAlternates,
   },
   post?.metadata || {}
 ) as MetaData;
@@ -52,6 +62,7 @@ const effectiveCanonical = String(metadata.canonical || defaultCanonical);
 metadata.canonical = effectiveCanonical;
 metadata.openGraph = { ...(metadata.openGraph || {}), url: effectiveCanonical };
 metadata.language = post.language;
+metadata.alternates = languageAlternates;
 if (archivedUnverified) {
   metadata.robots = { index: false, follow: true };
   metadata.structuredData = undefined;
@@ -60,8 +71,8 @@ if (archivedUnverified) {
 }
 ---
 
-<Layout metadata={metadata}>
-  <SinglePost post={{ ...post, image: image }} url={effectiveCanonical}>
+<Layout metadata={metadata} languageAlternates={languageSwitcherAlternates}>
+  <SinglePost post={{ ...post, image: image }} url={effectiveCanonical} factCheck={factCheck}>
     <article>
       {post.Content ? <post.Content /> : <Fragment set:html={post.content || ''} />}
     </article>

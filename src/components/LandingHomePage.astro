@@ -1,0 +1,36 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import CinaLanding from '~/components/CinaLanding';
+import { copy, type Locale } from '~/data/home-copy';
+interface Props {
+  lang?: Locale | 'en';
+}
+const { lang = 'en' } = Astro.props;
+const content =
+  lang === 'en'
+    ? {
+        title: 'CinaGroup — An intelligent layer for your work',
+        description:
+          'Explore CinaSeek, an early-access agent workspace, and CinaToken, an open-source self-hosted model gateway.',
+      }
+    : copy[lang];
+---
+
+<Layout
+  metadata={{
+    title: content.title,
+    description: content.description,
+    ignoreTitleTemplate: true,
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: lang === 'zh' ? '海内集团' : 'CinaGroup',
+      url: 'https://cinagroup.com',
+      logo: 'https://cinagroup.com/logo.png',
+      description: content.description,
+      sameAs: ['https://github.com/cinagroup', 'https://x.com/cinagroup'],
+    },
+  }}
+>
+  <CinaLanding lang={lang} client:load />
+</Layout>

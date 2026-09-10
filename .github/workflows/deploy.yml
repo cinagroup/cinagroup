@@ -67,6 +67,9 @@ jobs:
       - name: Test contact endpoint
         run: npm run test:contact
 
+      - name: Test blog i18n rules
+        run: npm run test:blog-i18n
+
       - name: Check Cloudflare Pages Functions
         run: npm run check:cloudflare
 

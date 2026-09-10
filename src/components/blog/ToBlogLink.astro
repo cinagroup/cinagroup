@@ -1,7 +1,16 @@
 ---
 import { getBlogPermalink } from '~/utils/permalinks';
+import { getPath, type Lang } from '~/i18n';
+import { getBlogStrings } from '~/i18n/blog';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const href = lang === 'en' ? getBlogPermalink() : getPath(getBlogPermalink(), lang);
 ---
 
 <div class="cg-blog-back">
-  <a class="cg-page-button" href={getBlogPermalink()}>Back to blog</a>
+  <a class="cg-page-button" href={href}>{getBlogStrings(lang).backToBlog}</a>
 </div>

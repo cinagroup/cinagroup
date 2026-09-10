@@ -1,19 +1,21 @@
 ---
 import Item from '~/components/blog/ListItem.astro';
 import type { Post } from '~/types';
+import type { Lang } from '~/i18n';
 
 export interface Props {
   posts: Array<Post>;
+  lang?: Lang;
 }
 
-const { posts } = Astro.props;
+const { posts, lang = 'en' } = Astro.props;
 ---
 
 <ul class="cg-blog-list">
   {
     posts.map((post) => (
       <li>
-        <Item post={post} />
+        <Item post={post} lang={lang} />
       </li>
     ))
   }

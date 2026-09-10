@@ -7,7 +7,9 @@ import Headline from '~/components/blog/Headline.astro';
 import Pagination from '~/components/blog/Pagination.astro';
 // import PostTags from "~/components/blog/Tags.astro";
 
-import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
+import { blogListRobots, getBlogListLanguageAlternates, getStaticPathsBlogList } from '~/utils/blog';
+import { getCanonical } from '~/utils/permalinks';
+import { getBlogStrings } from '~/i18n/blog';
 
 export const prerender = true;
 
@@ -19,14 +21,16 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { page } = Astro.props as Props;
 const currentPage = page.currentPage ?? 1;
+const strings = getBlogStrings('en');
+const languageAlternates =
+  currentPage === 1 ? await getBlogListLanguageAlternates(new URL(String(getCanonical('/'))).origin) : [];
 
 // const allCategories = await findCategories();
 // const allTags = await findTags();
 
 const metadata = {
-  title: `AI News Briefings${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
-  description:
-    'English AI news briefings preserved from CinaGroup’s retired automated workflow, with clear unverified archive labels.',
+  title: `${strings.listTitle}${currentPage > 1 ? strings.pageSuffix(currentPage) : ''}`,
+  description: strings.listDescription,
   robots: {
     index: blogListRobots?.index && currentPage === 1,
     follow: blogListRobots?.follow,
@@ -34,18 +38,20 @@ const metadata = {
   openGraph: {
     type: 'blog',
   },
+  alternates: languageAlternates,
 };
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} languageAlternates={languageAlternates}>
   <section class="cg-blog-index" data-blog-collection="index">
-    <Headline
-      subtitle={`${page.total} English briefings from our retired automated news workflow. These items are preserved for reference, were not independently source-checked, and should be verified against current primary sources.`}
-    >
-      AI news briefings
-    </Headline>
+    <Headline subtitle={strings.listSubtitle(page.total)}>{strings.listTitle}</Headline>
     <BlogList posts={page.data} />
-    <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+    <Pagination
+      prevUrl={page.url.prev}
+      nextUrl={page.url.next}
+      prevText={strings.newerPosts}
+      nextText={strings.olderPosts}
+    />
     <!--
       <PostTags tags={allCategories} class="mb-2" title="Search by Categories:" isCategory />
       <PostTags tags={allTags}  title="Search by Tags:" />

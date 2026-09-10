@@ -121,6 +121,9 @@ const postCollection = defineCollection({
     description: z.string().optional(),
     image: z.string().optional(),
 
+    /** Shared key linking translations of the same article; defaults to the slug. */
+    translationKey: z.string().trim().min(1).optional(),
+
     category: z.string().optional(),
     tags: z.array(z.string()).optional(),
     author: z.string().trim().min(1).default('CinaGroup Editorial'),

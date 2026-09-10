@@ -1,11 +1,15 @@
-import { access, readFile } from 'node:fs/promises';
+import { access, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 
+import { load as parseYaml } from 'js-yaml';
 import ts from 'typescript';
+
+import { postLanguageToSiteLocale } from '../src/utils/blog-content.js';
 
 const root = path.resolve(import.meta.dirname, '..');
 const routingPath = path.join(root, 'src', 'i18n', 'routing.ts');
 const pagesRoot = path.join(root, 'src', 'pages');
+const blogContentRoot = path.join(root, 'src', 'content', 'blog');
 
 const fail = (message) => {
   throw new Error(`i18n route audit failed: ${message}`);
@@ -41,9 +45,22 @@ const {
   supportedLocales,
 } = await import(routingModuleUrl);
 
+const publishedBlogLocales = new Set([defaultLang]);
+for (const name of (await readdir(blogContentRoot)).filter((entry) => /\.mdx?$/i.test(entry))) {
+  const source = await readFile(path.join(blogContentRoot, name), 'utf8');
+  const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/);
+  if (!match) continue;
+  const data = parseYaml(match[1]) || {};
+  const locale = postLanguageToSiteLocale(data.language);
+  if (data.status === 'published' && locale) publishedBlogLocales.add(locale);
+}
+
 const sourceCandidates = (route, locale) => {
   if (route === '/blog') {
-    return locale === 'en' ? [path.join(pagesRoot, '[...blog]', 'index.astro')] : [];
+    if (locale === defaultLang) return [path.join(pagesRoot, '[...blog]', '[...page].astro')];
+    return publishedBlogLocales.has(locale)
+      ? [path.join(pagesRoot, '[lang]', '[...blog]', '[...page].astro')]
+      : [];
   }
 
   const prefix = locale === defaultLang ? [] : [locale];
@@ -57,6 +74,12 @@ const sourceCandidates = (route, locale) => {
     ...['astro', 'md', 'mdx'].map((extension) => path.join(stem, `index.${extension}`)),
   ];
 };
+
+if (JSON.stringify(routeMatrix['/blog']) !== JSON.stringify([...publishedBlogLocales])) {
+  fail(
+    `/blog matrix locales (${routeMatrix['/blog'].join(', ')}) do not match published feeds (${[...publishedBlogLocales].join(', ')})`
+  );
+}
 
 const findSource = async (route, locale) => {
   for (const candidate of sourceCandidates(route, locale)) {

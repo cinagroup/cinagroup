@@ -12,6 +12,36 @@ export const POST_STATUSES = [
 export const POST_ORIGINS = ['editorial', 'automated_news_workflow', 'imported_legacy', 'partner', 'press_release'];
 export const POST_VERIFICATION_STATUSES = ['unverified', 'source_reviewed', 'fact_checked', 'primary_source_confirmed'];
 
+/**
+ * Blog content declares BCP 47 languages (regional for zh/pt) while site routes
+ * use short locales. These lookups bridge the two vocabularies so a post can be
+ * matched to the locale section that should serve it.
+ */
+const SITE_LOCALE_BY_POST_LANGUAGE = {
+  en: 'en',
+  'zh-CN': 'zh',
+  ja: 'ja',
+  ko: 'ko',
+  ru: 'ru',
+  es: 'es',
+  'pt-BR': 'pt',
+  fr: 'fr',
+};
+
+const POST_LANGUAGE_BY_SITE_LOCALE = Object.fromEntries(
+  Object.entries(SITE_LOCALE_BY_POST_LANGUAGE).map(([postLanguage, siteLocale]) => [siteLocale, postLanguage])
+);
+
+export const postLanguageToSiteLocale = (language) =>
+  Object.prototype.hasOwnProperty.call(SITE_LOCALE_BY_POST_LANGUAGE, language)
+    ? SITE_LOCALE_BY_POST_LANGUAGE[language]
+    : undefined;
+
+export const siteLocaleToPostLanguage = (locale) =>
+  Object.prototype.hasOwnProperty.call(POST_LANGUAGE_BY_SITE_LOCALE, locale)
+    ? POST_LANGUAGE_BY_SITE_LOCALE[locale]
+    : undefined;
+
 const ORGANIZATION_AUTHORS = new Set([
   'CinaGroup Editorial',
   'CinaGroup Automation Desk',
@@ -72,10 +102,16 @@ export const isRoutablePostStatus = (status) => status === 'published' || status
 /**
  * The main journal intentionally exposes the English automated-news archive.
  * These entries remain unverified archives: listing them does not promote them
- * to editorially published status or make them indexable.
+ * to editorially published status or make them indexable. Localized feeds list
+ * editorially published posts in their own language only, so the automated
+ * English archive never leaks into a localized blog index.
  */
-export const isBlogFeedPost = (status, language) =>
-  status === 'published' || (status === 'archived_unverified' && language === 'en');
+export const isBlogFeedPost = (status, language, siteLocale = 'en') => {
+  const expectedLanguage = siteLocaleToPostLanguage(siteLocale);
+  if (!expectedLanguage || language !== expectedLanguage) return false;
+  if (status === 'published') return true;
+  return siteLocale === 'en' && status === 'archived_unverified';
+};
 
 /**
  * Explicit author types win. Known CinaGroup desks/teams are organizations;
