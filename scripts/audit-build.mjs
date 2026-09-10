@@ -143,18 +143,7 @@ for (const file of htmlFiles) {
   if (titleCount !== 1) failures.push(`${route}: expected one title, found ${titleCount}`);
   if (!metaContent(html, 'description')) failures.push(`${route}: missing description`);
   if (!/<html\b[^>]*\blang="[^"]+"/i.test(html)) failures.push(`${route}: missing html lang`);
-  const isLanding = /^\/(?:zh|ja|ko|ru|es|pt|fr)?$/.test(route) && html.includes('data-landing-theme="fixed-dark"');
-  const expectedThemeToggles = isLanding ? 0 : 1;
-  if (themeToggleCount !== expectedThemeToggles) failures.push(`${route}: expected ${expectedThemeToggles} theme toggles, found ${themeToggleCount}`);
-  if (isLanding) {
-    if (!html.includes('<!-- -->')) failures.push(`${route}: React hydration text separators were removed`);
-    for (const id of ['about', 'features', 'faq', 'contact', 'main-content']) {
-      if ((html.match(new RegExp(`\\bid="${id}"`, 'g')) || []).length !== 1) failures.push(`${route}: landing anchor ${id} must occur exactly once`);
-    }
-    if ((html.match(/id="cg-faq-question-\d"/g) || []).length !== 5) failures.push(`${route}: expected five accessible FAQ questions`);
-    if (!html.includes('/images/landing/silver-flow.webp')) failures.push(`${route}: missing static media fallback`);
-    if (/Plety|Springfield|Orbitc|Amster/.test(html)) failures.push(`${route}: placeholder branding was published`);
-  }
+  if (themeToggleCount !== 1) failures.push(`${route}: expected one theme toggle, found ${themeToggleCount}`);
   if (/[�]|â€”|â€™|â€œ|â€|Ã./.test(html)) failures.push(`${route}: possible mojibake`);
 
   if (/googletagmanager\.com|G-QYXR6DT2F0|type="text\/partytown"/i.test(html)) {

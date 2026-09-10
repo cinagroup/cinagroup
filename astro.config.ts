@@ -7,7 +7,6 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
-import react from '@astrojs/react';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
 import compress from 'astro-compress';
@@ -82,7 +81,6 @@ export default defineConfig({
   },
 
   integrations: [
-    react(),
     tailwind({
       applyBaseStyles: false,
     }),
@@ -127,9 +125,6 @@ export default defineConfig({
     ),
 
     compress({
-      // React hydration requires its original text separators, class order and inline styles.
-      // Astro already optimizes these pages; do not rewrite their island markup a second time.
-      Exclude: [(file: string) => /(?:^|[/\\])dist[/\\]+(?:(?:zh|ja|ko|ru|es|pt|fr)[/\\]+)?index\.html$/.test(file)],
       CSS: true,
       HTML: {
         'html-minifier-terser': {

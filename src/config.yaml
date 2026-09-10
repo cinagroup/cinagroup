@@ -54,8 +54,8 @@ metadata:
 
 # Favicon configuration
 favicon:
-  path: '/logo.png'
-  apple: '/logo.png'
+  path: '/favicon.ico'
+  apple: '/apple-touch-icon.png'
   safari: '/logo.png'
 
 i18n:
