@@ -3,21 +3,26 @@ import { SITE } from 'astrowind:config';
 import { getLangFromUrl, getLocalizedLabel } from '~/i18n';
 
 export interface Props {
-  showName?: boolean;
   imageAlt?: string;
 }
 
 const localizedName = getLocalizedLabel(getLangFromUrl(Astro.url), SITE?.name) ?? SITE?.name;
-const { showName = true, imageAlt = localizedName ?? 'CinaGroup' } = Astro.props;
+const { imageAlt = localizedName ?? 'CinaGroup' } = Astro.props;
 ---
 
-<div class="flex items-center">
-  <img src="/logo.png" alt={showName ? '' : imageAlt} class="h-10 w-10 object-contain" width="256" height="256" />
-  {
-    showName && (
-      <span class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white">
-        {localizedName}
-      </span>
-    )
-  }
+<div class="flex shrink-0 items-center">
+  <img
+    src="/brand/cinagroup-horizontal.png"
+    alt={imageAlt}
+    class="block h-14 w-auto object-contain dark:hidden"
+    width="832"
+    height="288"
+  />
+  <img
+    src="/brand/cinagroup-horizontal-white.png"
+    alt={imageAlt}
+    class="hidden h-14 w-auto object-contain dark:block"
+    width="832"
+    height="288"
+  />
 </div>
