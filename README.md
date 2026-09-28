@@ -1,5 +1,13 @@
 <div align="center">
 
+<a href="https://cinagroup.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./public/brand/cinagroup-horizontal-white.png" />
+    <source media="(prefers-color-scheme: light)" srcset="./public/brand/cinagroup-horizontal.png" />
+    <img src="./public/brand/cinagroup-horizontal.png" alt="海内集团 CinaGroup" width="416" />
+  </picture>
+</a>
+
 <h3>AI Gateway · Cloudflare · Rust · Web3 Infrastructure</h3>
 
 <p>
