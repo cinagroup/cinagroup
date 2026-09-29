@@ -9,6 +9,7 @@
     {
       "binding": "DB",
       "database_name": "cinagroup-emdash-preview",
+      "database_id": "050ec919-1b18-4de8-86a8-62c16c28e59c",
     },
     {
       "binding": "CONTACT_DB",

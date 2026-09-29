@@ -10,7 +10,7 @@ const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
 const token = process.env.CLOUDFLARE_API_TOKEN;
 const operation = process.argv[2] ?? 'audit';
 
-if (!['audit', 'provision', 'deploy'].includes(operation)) throw new Error('Unknown preview operation');
+if (!['audit', 'provision', 'migrate-contact', 'deploy'].includes(operation)) throw new Error('Unknown preview operation');
 if (!/^[a-f0-9]{32}$/i.test(accountId ?? '') || !token) {
   throw new Error('GitHub Cloudflare account ID or API token is missing');
 }
