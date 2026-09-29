@@ -32,6 +32,42 @@ async function cloudflareGet(path, label) {
   return body;
 }
 
+async function contactSchema() {
+  const response = await fetch(
+    `https://api.cloudflare.com/client/v4/accounts/${accountId}/d1/database/${contactDatabaseId}/query`,
+    {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sql: "SELECT name, sql FROM sqlite_master WHERE type = 'table' AND name IN ('contact_submissions', 'd1_migrations')",
+      }),
+    }
+  );
+  let body;
+  try {
+    body = await response.json();
+  } catch {
+    throw new Error(`Contact D1 schema: Cloudflare returned HTTP ${response.status} without JSON`);
+  }
+  if (!response.ok || body.success !== true) {
+    const codes = Array.isArray(body.errors) ? body.errors.map((error) => error.code).join(',') : 'unknown';
+    throw new Error(`Contact D1 schema: Cloudflare HTTP ${response.status}, error code(s) ${codes}`);
+  }
+  const first = body.result?.[0];
+  if (first?.success !== true || !Array.isArray(first.results)) {
+    throw new Error('Contact D1 schema query failed or returned an unexpected result');
+  }
+  const table = first.results.find((item) => item.name === 'contact_submissions');
+  const localeSupportsZh = /locale\s+TEXT\s+NOT\s+NULL\s+CHECK\s*\(\s*locale\s+IN\s*\([^)]*'zh'/i.test(
+    table?.sql ?? ''
+  );
+  return {
+    state: !table ? 'missing' : localeSupportsZh ? 'zh-ready' : 'legacy locale constraint',
+    localeSupportsZh,
+    migrationTableExists: first.results.some((item) => item.name === 'd1_migrations'),
+  };
+}
+
 async function database(name) {
   const response = await cloudflareGet(`/d1/database?name=${encodeURIComponent(name)}&per_page=10000`, `D1 ${name}`);
   if (!Array.isArray(response.result)) throw new Error(`D1 ${name}: unexpected result format`);
@@ -87,11 +123,16 @@ if (contactDatabase) {
     throw new Error('Contact D1 ID does not resolve to the expected preview name');
   }
 }
+const schema = contactDatabase ? await contactSchema() : null;
+const schemaLine = `- Contact schema: ${schema?.state ?? 'unavailable'}; migration history table: ${schema?.migrationTableExists ? 'present' : 'absent'}`;
+if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${schemaLine}\n`);
+console.log(schemaLine);
 if (operation === 'deploy') {
   if (!emdashDatabase || !contactDatabase || !mediaBucket) {
     throw new Error('Required isolated preview D1/R2 resources are missing');
   }
   if (existingWorker) throw new Error('Preview Worker already exists; inspect its routes before any update');
+  if (!schema?.localeSupportsZh) throw new Error('Preview contact D1 needs the tracked Chinese-locale migration');
 
   const pointerPath = resolve('.wrangler/deploy/config.json');
   const pointer = JSON.parse(readFileSync(pointerPath, 'utf8'));

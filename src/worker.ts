@@ -1,4 +1,5 @@
 import handler, { createScheduledHandler, PluginBridge } from '@emdash-cms/cloudflare/worker';
+import { fetchWithPreviewAdminAccess } from './emdash-preview-access';
 
 export { PluginBridge };
 
@@ -11,7 +12,12 @@ if (!astroFetch) {
 export default {
   ...handler,
   async fetch(request, env, ctx) {
-    const response = await astroFetch(request, env, ctx);
+    const previewEnv = env as CloudflareEnv & { EMDASH_PREVIEW_ADMIN_PASSWORD?: string };
+    const response = await fetchWithPreviewAdminAccess(
+      request,
+      previewEnv.EMDASH_PREVIEW_ADMIN_PASSWORD,
+      async (forwarded) => astroFetch(forwarded as typeof request, env, ctx)
+    );
     if (!new URL(request.url).hostname.toLowerCase().endsWith('.workers.dev')) return response;
 
     const headers = new Headers(response.headers);
