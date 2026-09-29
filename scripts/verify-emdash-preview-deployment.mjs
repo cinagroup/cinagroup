@@ -34,8 +34,10 @@ const [scripts, domains, scriptSubdomain, accountSubdomain] = await Promise.all(
 if (!Array.isArray(scripts) || !Array.isArray(domains)) throw new Error('Unexpected Worker inventory format');
 const worker = scripts.find((item) => item.id === workerName);
 if (!worker) throw new Error('Deployed preview Worker is missing from account inventory');
-if (!Array.isArray(worker.routes)) throw new Error('Preview Worker route inventory is unavailable');
-if (worker.routes.length) throw new Error('Preview Worker has an unexpected zone route');
+if (worker.routes !== null && !Array.isArray(worker.routes)) {
+  throw new Error('Preview Worker route inventory is unavailable');
+}
+if (worker.routes?.length) throw new Error('Preview Worker has an unexpected zone route');
 if (domains.some((item) => item.service === workerName)) {
   throw new Error('Preview Worker has an unexpected custom domain');
 }

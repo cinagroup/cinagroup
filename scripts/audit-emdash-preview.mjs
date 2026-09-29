@@ -102,10 +102,11 @@ if (!Array.isArray(domains.result)) throw new Error('Worker custom domains: unex
 const matchingWorkers = scripts.result.filter((item) => item.id === workerName);
 if (matchingWorkers.length > 1) throw new Error('Duplicate preview Worker names');
 const existingWorker = matchingWorkers[0] ?? null;
-if (existingWorker && existingWorker.routes !== undefined && !Array.isArray(existingWorker.routes)) {
+if (existingWorker && existingWorker.routes != null && !Array.isArray(existingWorker.routes)) {
   throw new Error('Preview Worker routes: unexpected result format');
 }
-const routes = existingWorker?.routes;
+// Cloudflare uses null for a script with no associated zone routes.
+const routes = existingWorker?.routes === null ? [] : existingWorker?.routes;
 const attachedDomains = domains.result.filter((item) => item.service === workerName);
 
 const lines = [
