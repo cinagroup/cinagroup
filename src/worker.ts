@@ -4,6 +4,7 @@ import {
   isAstroPrerenderRequest,
   isIsolatedPreviewHostname,
 } from './emdash-preview-access';
+import { fetchLegacyArticleAsset, type LegacyAssetFetcher } from './emdash/legacy-article-asset';
 
 export { PluginBridge };
 
@@ -29,7 +30,11 @@ export default {
     const response = await fetchWithPreviewAdminAccess(
       request,
       previewEnv.EMDASH_PREVIEW_ADMIN_PASSWORD,
-      async (forwarded) => astroFetch(forwarded as typeof request, env, ctx)
+      async (forwarded) => {
+        const assets = (env as unknown as { ASSETS: LegacyAssetFetcher }).ASSETS;
+        const legacyArticle = await fetchLegacyArticleAsset(forwarded, assets);
+        return legacyArticle ?? astroFetch(forwarded as typeof request, env, ctx);
+      }
     );
     const headers = new Headers(response.headers);
     const existingRobots = headers.get('X-Robots-Tag');

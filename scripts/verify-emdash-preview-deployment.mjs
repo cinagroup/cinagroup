@@ -71,6 +71,25 @@ async function checkPath(path, expectedStatuses) {
 await checkPath('/', [200]);
 await checkPath('/zh/', [200]);
 await checkPath('/favicon.svg', [200]);
+await checkPath('/blog/', [200]);
+await checkPath('/zh/blog/', [200]);
+await checkPath('/ja/blog/', [200]);
+const legacyArticlePath = '/zh/blog/news-briefing-2026-06-15-06-zh/';
+await checkPath(legacyArticlePath, [200]);
+const legacyArticle = await fetch(`${origin}${legacyArticlePath}`);
+const legacyHtml = await legacyArticle.text();
+if (
+  legacyArticle.status !== 200 ||
+  !legacyArticle.headers.get('Content-Type')?.includes('text/html') ||
+  !legacyArticle.headers.get('X-Robots-Tag')?.includes('noindex') ||
+  legacyHtml.length < 1000 ||
+  !legacyHtml.includes('<article')
+) {
+  throw new Error('Preview legacy article did not return its prerendered HTML through the trailing-slash route');
+}
+await checkPath('/rss.xml', [200]);
+await checkPath('/robots.txt', [200]);
+await checkPath('/sitemap-emdash.xml', [200]);
 const adminStatus = await checkPath('/_emdash/admin/setup', [401, 503]);
 
 const lines = [
@@ -80,6 +99,7 @@ const lines = [
   `- URL: ${origin}`,
   '- Routes/custom domains: none',
   '- Public homepages and a static asset: HTTP 200 with noindex',
+  '- Blog indexes, a legacy article, RSS, robots, and CMS sitemap: HTTP 200 with noindex',
   `- EmDash admin setup: HTTP ${adminStatus} (${adminStatus === 401 ? 'outer Basic gate enabled' : 'closed until preview-only password is set'})`,
 ];
 if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join('\n')}\n`);
