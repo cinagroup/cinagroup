@@ -7,6 +7,17 @@ export function isIsolatedPreviewHostname(url: string): boolean {
   return new URL(url).hostname.toLowerCase() === PREVIEW_HOSTNAME;
 }
 
+/** Astro's Cloudflare adapter invokes these loopback endpoints while prerendering at build time. */
+export function isAstroPrerenderRequest(url: string): boolean {
+  const parsed = new URL(url);
+  return (
+    parsed.protocol === 'http:' &&
+    parsed.hostname === 'localhost' &&
+    parsed.port !== '' &&
+    ['/__astro_static_paths', '/__astro_prerender', '/__astro_static_images'].includes(parsed.pathname)
+  );
+}
+
 function isPreviewAdminRequest(request: Request): boolean {
   const url = new URL(request.url);
   let path = url.pathname;

@@ -1,5 +1,9 @@
 import handler, { createScheduledHandler, PluginBridge } from '@emdash-cms/cloudflare/worker';
-import { fetchWithPreviewAdminAccess, isIsolatedPreviewHostname } from './emdash-preview-access';
+import {
+  fetchWithPreviewAdminAccess,
+  isAstroPrerenderRequest,
+  isIsolatedPreviewHostname,
+} from './emdash-preview-access';
 
 export { PluginBridge };
 
@@ -12,7 +16,7 @@ if (!astroFetch) {
 export default {
   ...handler,
   async fetch(request, env, ctx) {
-    if (!isIsolatedPreviewHostname(request.url)) {
+    if (!isIsolatedPreviewHostname(request.url) && !isAstroPrerenderRequest(request.url)) {
       return new Response('Preview Worker hostname mismatch', {
         status: 421,
         headers: {

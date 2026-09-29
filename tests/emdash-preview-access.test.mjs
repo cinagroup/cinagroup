@@ -2,7 +2,11 @@ import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
 import test from 'node:test';
 
-import { fetchWithPreviewAdminAccess, isIsolatedPreviewHostname } from '../src/emdash-preview-access.ts';
+import {
+  fetchWithPreviewAdminAccess,
+  isAstroPrerenderRequest,
+  isIsolatedPreviewHostname,
+} from '../src/emdash-preview-access.ts';
 
 const host = 'https://cinagroup-emdash-preview.example.workers.dev';
 const secret = 'preview-secret-with-at-least-32-characters';
@@ -16,6 +20,21 @@ test('preview Worker accepts only its exact workers.dev hostname', () => {
     'https://other.cinagroup.workers.dev/',
   ]) {
     assert.equal(isIsolatedPreviewHostname(url), false);
+  }
+});
+
+test('only Astro Cloudflare loopback prerender endpoints bypass the public hostname lock', () => {
+  for (const path of ['/__astro_static_paths', '/__astro_prerender', '/__astro_static_images']) {
+    assert.equal(isAstroPrerenderRequest(`http://localhost:42817${path}`), true);
+  }
+  for (const url of [
+    'https://localhost:42817/__astro_prerender',
+    'http://localhost:42817/_emdash/admin/setup',
+    'http://localhost:42817/',
+    'http://127.0.0.1:42817/__astro_prerender',
+    'http://cinagroup.com:42817/__astro_prerender',
+  ]) {
+    assert.equal(isAstroPrerenderRequest(url), false);
   }
 });
 
