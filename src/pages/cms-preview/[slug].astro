@@ -1,0 +1,39 @@
+---
+import { getEmDashEntry } from 'emdash';
+import { PortableText } from 'emdash/ui';
+
+export const prerender = false;
+
+const locales = ['en', 'zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'];
+const locale = Astro.url.searchParams.get('locale') ?? 'zh';
+if (!locales.includes(locale)) return new Response('Unsupported locale', { status: 400 });
+
+const slug = Astro.params.slug;
+if (!slug) return new Response('Not found', { status: 404 });
+
+const { entry: post, error } = await getEmDashEntry('posts', slug, { locale });
+if (error) {
+  console.error('Unable to read EmDash post', error);
+  return new Response('Content unavailable', { status: 500 });
+}
+if (!post || post.data.status !== 'published') return new Response('Not found', { status: 404 });
+
+const content = Array.isArray(post.data.content) ? post.data.content : [];
+---
+
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{post.data.title} | EmDash content preview</title>
+  </head>
+  <body>
+    <main>
+      <p><a href={`/cms-preview/?locale=${locale}`}>Back to EmDash preview</a></p>
+      <article>
+        <h1>{post.data.title}</h1>
+        <PortableText value={content} />
+      </article>
+    </main>
+  </body>
+</html>

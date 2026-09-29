@@ -4,15 +4,17 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 
 import { defineConfig } from 'astro/config';
 
+import cloudflare from '@astrojs/cloudflare';
+import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
-import tailwind from '@astrojs/tailwind';
-import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
-import compress from 'astro-compress';
+import emdash from 'emdash/astro';
+import { d1, r2 } from '@emdash-cms/cloudflare';
 import type { AstroIntegration } from 'astro';
 
 import astrowind from './vendor/integration';
+import { editorialPolicyPlugin } from './src/emdash/editorial-policy';
 
 import {
   blogPostHeadingsRemarkPlugin,
@@ -68,7 +70,8 @@ const shouldIncludeInSitemap = (page: string) => {
 };
 
 export default defineConfig({
-  output: 'static',
+  output: 'server',
+  adapter: cloudflare({ prerenderEnvironment: 'node' }),
   trailingSlash: 'always',
 
   i18n: {
@@ -81,8 +84,11 @@ export default defineConfig({
   },
 
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
+    react(),
+    emdash({
+      database: d1({ binding: 'DB' }),
+      storage: r2({ binding: 'MEDIA' }),
+      plugins: [editorialPolicyPlugin()],
     }),
     sitemap({
       filter: shouldIncludeInSitemap,
@@ -100,7 +106,6 @@ export default defineConfig({
         },
       },
     }),
-    mdx(),
     icon({
       include: {
         tabler: ['*'],
@@ -123,19 +128,6 @@ export default defineConfig({
         config: { forward: ['dataLayer.push'] },
       })
     ),
-
-    compress({
-      CSS: true,
-      HTML: {
-        'html-minifier-terser': {
-          removeAttributeQuotes: false,
-        },
-      },
-      Image: false,
-      JavaScript: true,
-      SVG: false,
-      Logger: 1,
-    }),
 
     astrowind({
       config: './src/config.yaml',

@@ -1,0 +1,51 @@
+---
+import { getEmDashCollection } from 'emdash';
+
+export const prerender = false;
+
+const locales = ['en', 'zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'];
+const locale = Astro.url.searchParams.get('locale') ?? 'zh';
+if (!locales.includes(locale)) return new Response('Unsupported locale', { status: 400 });
+
+const { entries: posts, error } = await getEmDashCollection('posts', {
+  locale,
+  status: 'published',
+  orderBy: { published_at: 'desc' },
+  limit: 20,
+});
+
+if (error) {
+  console.error('Unable to read EmDash posts', error);
+  return new Response('Content unavailable', { status: 500 });
+}
+---
+
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>EmDash content preview | CinaGroup</title>
+  </head>
+  <body>
+    <main>
+      <h1>EmDash content preview</h1>
+      <p>Published {locale} posts from the EmDash database:</p>
+      <nav aria-label="Content language">
+        {locales.map((candidate) => <a href={`/cms-preview/?locale=${candidate}`}>{candidate} </a>)}
+      </nav>
+      <ul>
+        {
+          posts.map((post) => (
+            <li>
+              <a
+                href={`/cms-preview/${encodeURIComponent(typeof post.data.slug === 'string' ? post.data.slug : post.id)}/?locale=${locale}`}
+              >
+                {post.data.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+  </body>
+</html>

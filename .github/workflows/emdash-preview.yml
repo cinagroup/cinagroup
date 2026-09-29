@@ -1,0 +1,137 @@
+name: Deploy EmDash preview Worker
+
+# Migration-branch pushes validate only. Deployment requires manual dispatch.
+on:
+  push:
+    branches:
+      - codex/emdash-migration
+  workflow_dispatch:
+
+concurrency:
+  group: emdash-preview
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    name: Validate migration branch; deploy preview only when dispatched
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Require the isolated migration branch
+        if: github.ref != 'refs/heads/codex/emdash-migration'
+        run: |
+          echo "::error::This preview workflow may only run from codex/emdash-migration."
+          exit 1
+
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.19'
+          cache: 'npm'
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Check Astro types
+        run: npm run check:astro
+
+      - name: Check Cloudflare Worker types
+        run: npm run check:cloudflare
+
+      - name: Check ESLint
+        run: npm run check:eslint
+
+      - name: Check formatting
+        run: npm run check:prettier
+
+      - name: Test contact endpoint
+        run: npm run test:contact
+
+      - name: Test blog i18n rules
+        run: npm run test:blog-i18n
+
+      - name: Test EmDash editorial policy and draft preparation
+        run: npm run test:emdash
+
+      - name: Audit governed source content
+        run: npm run audit:source
+
+      - name: Build preview Worker
+        run: npm run build
+        env:
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.EMDASH_PREVIEW_TURNSTILE_SITE_KEY }}
+
+      - name: Verify generated deploy target and isolated bindings
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          import { dirname, resolve } from 'node:path';
+
+          const pointerPath = resolve('.wrangler/deploy/config.json');
+          const pointer = JSON.parse(readFileSync(pointerPath, 'utf8'));
+          if (typeof pointer.configPath !== 'string') throw new Error('Missing generated Wrangler config path');
+          const configPath = resolve(dirname(pointerPath), pointer.configPath);
+          const config = JSON.parse(readFileSync(configPath, 'utf8'));
+          const binding = (name) => config.d1_databases?.find((item) => item.binding === name);
+          const media = config.r2_buckets?.find((item) => item.binding === 'MEDIA');
+          const session = config.kv_namespaces?.find((item) => item.binding === 'SESSION');
+
+          if (config.name !== 'cinagroup-emdash-preview') throw new Error('Unexpected Worker name');
+          if (config.route || config.routes?.length || config.domains?.length) {
+            throw new Error('Preview Worker must not claim any domain or route');
+          }
+          if (config.workers_dev === false) throw new Error('Preview Worker must have a workers.dev URL');
+          if (binding('DB')?.database_name !== 'cinagroup-emdash-preview') {
+            throw new Error('Preview EmDash D1 binding is missing or points elsewhere');
+          }
+          if (
+            binding('CONTACT_DB')?.database_name !== 'cinagroup-contact-submissions-preview' ||
+            binding('CONTACT_DB')?.database_id !== 'a24a999d-f784-4ee1-8dcd-888a7be43e7c'
+          ) {
+            throw new Error('Preview contact D1 binding is missing or points elsewhere');
+          }
+          if (media?.bucket_name !== 'cinagroup-emdash-media-preview') {
+            throw new Error('Preview R2 binding is missing or points elsewhere');
+          }
+          if (!session || config.images?.binding !== 'IMAGES') {
+            throw new Error('Astro Cloudflare session or images binding is missing');
+          }
+          NODE
+
+      - name: Check Worker bundle without uploading
+        run: npx wrangler deploy --dry-run --name cinagroup-emdash-preview
+
+      - name: Verify preview deploy credentials
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          CF_TOKEN_SET: ${{ secrets.CLOUDFLARE_EMDASH_PREVIEW_API_TOKEN != '' }}
+          CF_ACCOUNT_SET: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+        run: |
+          if [ "$CF_TOKEN_SET" != "true" ] || [ "$CF_ACCOUNT_SET" != "true" ]; then
+            echo "::error::Configure CLOUDFLARE_EMDASH_PREVIEW_API_TOKEN and CLOUDFLARE_ACCOUNT_ID before dispatching this workflow."
+            exit 1
+          fi
+
+      - name: Deploy preview Worker
+        if: github.event_name == 'workflow_dispatch'
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_EMDASH_PREVIEW_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --name cinagroup-emdash-preview
+
+      - name: Deployment summary
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "Manually deployed preview Worker: cinagroup-emdash-preview" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Migration branch validation only; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "Production Pages project and cinagroup.com were not targeted by this workflow." >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,133 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "defaultLocale": "en",
+  "meta": {
+    "name": "CinaGroup Journal",
+    "description": "Editorial content model. Historical articles must be reviewed and imported as drafts.",
+    "author": "CinaGroup"
+  },
+  "collections": [
+    {
+      "slug": "posts",
+      "label": "Journal Posts",
+      "labelSingular": "Journal Post",
+      "description": "Multilingual articles with separate editorial review and publication states.",
+      "supports": ["drafts", "revisions", "preview", "scheduling", "search", "seo"],
+      "urlPattern": "/blog/{slug}/",
+      "routable": true,
+      "editLocking": true,
+      "titleField": "title",
+      "dateField": "publish_date",
+      "admin": {
+        "quickCreate": false,
+        "listColumns": ["editorial_status", "origin", "publish_date", "review_status"]
+      },
+      "fields": [
+        { "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },
+        { "slug": "excerpt", "label": "Excerpt", "type": "text", "searchable": true },
+        { "slug": "description", "label": "Description", "type": "text" },
+        { "slug": "content", "label": "Article", "type": "portableText" },
+        { "slug": "image_url", "label": "Legacy image URL", "type": "url" },
+        {
+          "slug": "editorial_status",
+          "label": "Editorial status",
+          "type": "select",
+          "required": true,
+          "indexed": true,
+          "defaultValue": "in_review",
+          "validation": {
+            "options": ["draft", "in_review", "approved", "archived_unverified", "withdrawn"]
+          }
+        },
+        {
+          "slug": "legacy_status",
+          "label": "Original publication status",
+          "type": "select",
+          "validation": {
+            "options": ["draft", "in_review", "approved", "scheduled", "published", "archived_unverified", "withdrawn"]
+          }
+        },
+        {
+          "slug": "origin",
+          "label": "Content origin",
+          "type": "select",
+          "required": true,
+          "indexed": true,
+          "validation": {
+            "options": ["editorial", "automated_news_workflow", "imported_legacy", "partner", "press_release"]
+          }
+        },
+        {
+          "slug": "sources",
+          "label": "Sources",
+          "type": "repeater",
+          "validation": {
+            "subFields": [
+              { "slug": "title", "label": "Title", "type": "string", "required": true },
+              { "slug": "url", "label": "URL", "type": "url" },
+              { "slug": "kind", "label": "Source kind", "type": "string" },
+              { "slug": "publisher", "label": "Publisher", "type": "string" },
+              { "slug": "published_at", "label": "Published at", "type": "datetime" },
+              { "slug": "accessed_at", "label": "Accessed at", "type": "datetime" }
+            ]
+          }
+        },
+        {
+          "slug": "verification_status",
+          "label": "Verification status",
+          "type": "select",
+          "defaultValue": "unverified",
+          "validation": { "options": ["unverified", "source_reviewed", "fact_checked", "primary_source_confirmed"] }
+        },
+        { "slug": "verified_by", "label": "Verified by", "type": "string" },
+        { "slug": "verified_at", "label": "Verified at", "type": "datetime" },
+        { "slug": "verification_note", "label": "Verification note", "type": "text" },
+        {
+          "slug": "review_status",
+          "label": "Review status",
+          "type": "select",
+          "defaultValue": "pending",
+          "validation": { "options": ["pending", "changes_requested", "approved"] }
+        },
+        { "slug": "reviewed_by", "label": "Reviewed by", "type": "string" },
+        { "slug": "reviewed_at", "label": "Reviewed at", "type": "datetime" },
+        { "slug": "review_note", "label": "Review note", "type": "text" },
+        { "slug": "correction_note", "label": "Correction note", "type": "text" },
+        { "slug": "corrected_at", "label": "Corrected at", "type": "datetime" },
+        {
+          "slug": "aliases",
+          "label": "Former paths",
+          "type": "repeater",
+          "validation": {
+            "subFields": [{ "slug": "path", "label": "Former path", "type": "string", "required": true }]
+          }
+        },
+        { "slug": "publish_date", "label": "Original publication date", "type": "datetime", "indexed": true },
+        { "slug": "update_date", "label": "Original update date", "type": "datetime" },
+        { "slug": "translation_key", "label": "Legacy translation key", "type": "string", "translatable": false },
+        { "slug": "author_name", "label": "Author name", "type": "string" },
+        {
+          "slug": "author_type",
+          "label": "Author type",
+          "type": "select",
+          "validation": { "options": ["Organization", "Person"] }
+        },
+        { "slug": "author_url", "label": "Author URL", "type": "url" },
+        { "slug": "legacy_source_path", "label": "Legacy source path", "type": "string" },
+        { "slug": "legacy_source_hash", "label": "Legacy source SHA-256", "type": "string" }
+      ]
+    }
+  ],
+  "taxonomies": [
+    {
+      "name": "category",
+      "label": "Categories",
+      "labelSingular": "Category",
+      "hierarchical": false,
+      "collections": ["posts"]
+    },
+    { "name": "tag", "label": "Tags", "labelSingular": "Tag", "hierarchical": false, "collections": ["posts"] }
+  ],
+  "content": {}
+}

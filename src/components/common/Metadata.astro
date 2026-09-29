@@ -1,18 +1,26 @@
 ---
 import merge from 'lodash.merge';
-import { AstroSeo } from '@astrolib/seo';
-
-import type { Props as AstroSeoProps } from '@astrolib/seo';
 
 import { SITE, METADATA, I18N } from 'astrowind:config';
 import type { MetaData } from '~/types';
 import { getCanonical } from '~/utils/permalinks';
-
-import { adaptOpenGraphImages } from '~/utils/images';
+import { adaptOpenGraphImages, type OpenGraph } from '~/utils/images';
 import { getLangFromUrl, getLanguageAlternates } from '~/i18n';
 
 export interface Props extends MetaData {
   dontUseTitleTemplate?: boolean;
+}
+
+interface SeoMetadata {
+  title?: string;
+  titleTemplate?: string;
+  noindex?: boolean;
+  nofollow?: boolean;
+  description?: string;
+  canonical?: string;
+  openGraph?: OpenGraph;
+  twitter?: { cardType?: string; site?: string; handle?: string };
+  languageAlternates?: Array<{ hreflang: string; href: string }>;
 }
 
 const {
@@ -59,11 +67,11 @@ const shouldIgnoreTitleTemplate =
     typeof localizedSiteName === 'string' &&
     title.toLowerCase().includes(localizedSiteName.toLowerCase()));
 
-const seoProps: AstroSeoProps = merge(
+const seoProps: SeoMetadata = merge(
   {
     title: '',
     titleTemplate: '%s',
-    canonical: canonical,
+    canonical,
     noindex: true,
     nofollow: true,
     description: undefined,
@@ -88,14 +96,14 @@ const seoProps: AstroSeoProps = merge(
     twitter: METADATA?.twitter,
   },
   {
-    title: title,
+    title,
     titleTemplate: shouldIgnoreTitleTemplate ? '%s' : undefined,
-    canonical: canonical,
+    canonical,
     noindex: typeof robots?.index !== 'undefined' ? !robots.index : undefined,
     nofollow: typeof robots?.follow !== 'undefined' ? !robots.follow : undefined,
-    description: description,
+    description,
     openGraph: { url: canonical, locale: currentLocale, site_name: localizedSiteName, ...openGraph },
-    twitter: twitter,
+    twitter,
   }
 );
 
@@ -105,8 +113,56 @@ if (omitCanonical) {
 } else if (languageAlternates.length > 0) {
   seoProps.languageAlternates = languageAlternates;
 }
+
+const renderedTitle = seoProps.title
+  ? seoProps.titleTemplate?.replace('%s', seoProps.title) || seoProps.title
+  : undefined;
+const robotsContent = [
+  typeof seoProps.noindex === 'boolean' ? (seoProps.noindex ? 'noindex' : 'index') : undefined,
+  typeof seoProps.nofollow === 'boolean' ? (seoProps.nofollow ? 'nofollow' : 'follow') : undefined,
+]
+  .filter(Boolean)
+  .join(',');
+const renderedOpenGraph = await adaptOpenGraphImages(seoProps.openGraph, Astro.site);
 ---
 
-<AstroSeo {...{ ...seoProps, openGraph: await adaptOpenGraphImages(seoProps?.openGraph, Astro.site) }} />
+{renderedTitle && <title>{renderedTitle}</title>}
+{seoProps.description && <meta name="description" content={seoProps.description} />}
+{robotsContent && <meta name="robots" content={robotsContent} />}
+{seoProps.canonical && <link rel="canonical" href={seoProps.canonical} />}
+{
+  seoProps.languageAlternates?.map((alternate) => (
+    <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
+  ))
+}
+
+{
+  (renderedOpenGraph?.title || seoProps.title) && (
+    <meta property="og:title" content={renderedOpenGraph?.title || seoProps.title} />
+  )
+}
+{
+  (renderedOpenGraph?.description || seoProps.description) && (
+    <meta property="og:description" content={renderedOpenGraph?.description || seoProps.description} />
+  )
+}
+{renderedOpenGraph?.url && <meta property="og:url" content={renderedOpenGraph.url} />}
+{renderedOpenGraph?.type && <meta property="og:type" content={renderedOpenGraph.type} />}
+{
+  renderedOpenGraph?.images?.map((image) => (
+    <>
+      <meta property="og:image" content={image.url} />
+      {image.alt && <meta property="og:image:alt" content={image.alt} />}
+      {image.width && <meta property="og:image:width" content={String(image.width)} />}
+      {image.height && <meta property="og:image:height" content={String(image.height)} />}
+    </>
+  ))
+}
+{renderedOpenGraph?.locale && <meta property="og:locale" content={renderedOpenGraph.locale} />}
+{renderedOpenGraph?.site_name && <meta property="og:site_name" content={renderedOpenGraph.site_name} />}
+
+{seoProps.twitter?.cardType && <meta name="twitter:card" content={seoProps.twitter.cardType} />}
+{seoProps.twitter?.site && <meta name="twitter:site" content={seoProps.twitter.site} />}
+{seoProps.twitter?.handle && <meta name="twitter:creator" content={seoProps.twitter.handle} />}
 
 {keywords && keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
