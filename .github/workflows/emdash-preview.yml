@@ -1,11 +1,20 @@
 name: Deploy EmDash preview Worker
 
-# Migration-branch pushes validate only. Deployment requires manual dispatch.
+# Migration-branch pushes validate only. Manual dispatch audits or deploys the isolated preview.
 on:
   push:
     branches:
       - codex/emdash-migration
   workflow_dispatch:
+    inputs:
+      operation:
+        description: Cloudflare preview operation
+        required: true
+        type: choice
+        default: audit
+        options:
+          - audit
+          - deploy
 
 concurrency:
   group: emdash-preview
@@ -29,6 +38,8 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -133,26 +144,35 @@ jobs:
       - name: Verify preview deploy credentials
         if: github.event_name == 'workflow_dispatch'
         env:
-          CF_TOKEN_SET: ${{ secrets.CLOUDFLARE_EMDASH_PREVIEW_API_TOKEN != '' }}
+          CF_TOKEN_SET: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
           CF_ACCOUNT_SET: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
         run: |
           if [ "$CF_TOKEN_SET" != "true" ] || [ "$CF_ACCOUNT_SET" != "true" ]; then
-            echo "::error::Configure CLOUDFLARE_EMDASH_PREVIEW_API_TOKEN and CLOUDFLARE_ACCOUNT_ID before dispatching this workflow."
+            echo "::error::Configure CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID before dispatching this workflow."
             exit 1
           fi
 
-      - name: Deploy preview Worker
+      - name: Audit Cloudflare preview resources and existing Worker
         if: github.event_name == 'workflow_dispatch'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/audit-emdash-preview.mjs '${{ inputs.operation }}'
+
+      - name: Deploy preview Worker
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'deploy'
         uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_EMDASH_PREVIEW_API_TOKEN }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --name cinagroup-emdash-preview
 
       - name: Deployment summary
         run: |
-          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "${{ inputs.operation }}" = "deploy" ]; then
             echo "Manually deployed preview Worker: cinagroup-emdash-preview" >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "Cloudflare preview resource audit only; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
           else
             echo "Migration branch validation only; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
           fi

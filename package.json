@@ -29,7 +29,7 @@
     "audit:i18n": "node scripts/audit-i18n-routes.mjs",
     "audit:source": "npm run audit:blog:source && npm run audit:content:source && npm run audit:fact-checks:source && npm run audit:evidence:source && npm run audit:i18n",
     "check:cloudflare": "wrangler types worker-configuration.d.ts --env-interface CloudflareEnv --include-runtime false --check && tsc -p tsconfig.json --noEmit",
-    "test:contact": "node --test tests/contact-core.test.mjs",
+    "test:contact": "node --test tests/contact-core.test.mjs tests/contact-migration.test.mjs",
     "test:blog-i18n": "node --experimental-strip-types --test tests/blog-i18n.test.mjs",
     "test:emdash": "node --experimental-strip-types --test tests/emdash-editorial-policy.test.mjs tests/prepare-emdash-pilot.test.mjs",
     "fix": "npm run fix:eslint && npm run fix:prettier",

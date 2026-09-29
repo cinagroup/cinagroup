@@ -30,6 +30,8 @@ npx wrangler d1 create cinagroup-contact-submissions
 
 ## Migrations
 
+Migration `0002_contact_zh_locale.sql` rebuilds the contact table to include `zh`, matching the handler and `/zh/contact/` form. It preserves existing submissions and the other field constraints. Apply it only to the intended D1 database after checking the binding; the EmDash pilot uses the separate preview database.
+
 Apply and test the migration against local D1 storage first:
 
 ```sh
