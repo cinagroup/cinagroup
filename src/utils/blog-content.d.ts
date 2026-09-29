@@ -4,13 +4,7 @@ export const POST_LANGUAGES: readonly ['en', 'zh-CN', 'ja', 'ko', 'ru', 'es', 'p
 export type PostAuthorType = 'Organization' | 'Person';
 export const POST_AUTHOR_TYPES: readonly ['Organization', 'Person'];
 export type PostStatus =
-  | 'draft'
-  | 'in_review'
-  | 'approved'
-  | 'scheduled'
-  | 'published'
-  | 'archived_unverified'
-  | 'withdrawn';
+  'draft' | 'in_review' | 'approved' | 'scheduled' | 'published' | 'archived_unverified' | 'withdrawn';
 export const POST_STATUSES: readonly [
   'draft',
   'in_review',
