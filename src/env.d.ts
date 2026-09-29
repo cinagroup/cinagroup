@@ -16,3 +16,8 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+interface CloudflareEnv {
+  /** Exact workers.dev hostname for the isolated EmDash preview contact form. */
+  TURNSTILE_PREVIEW_HOSTNAME?: string;
+}

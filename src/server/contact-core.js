@@ -19,6 +19,8 @@ const TURNSTILE_TEST_RESPONSE_HOSTNAME = 'example.com';
 const TURNSTILE_MAX_TOKEN_LENGTH = 2048;
 const TURNSTILE_TIMEOUT_MS = 8000;
 const PAGES_ROOT_HOSTNAME = 'homepage-cj7.pages.dev';
+const PREVIEW_WORKER_HOSTNAME_PATTERN =
+  /^cinagroup-emdash-preview\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.workers\.dev$/u;
 const API_CONTENT_SECURITY_POLICY = "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
 
 export const CONTACT_LOCALES = ['en', 'zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'];
@@ -312,11 +314,14 @@ function isLocalHostname(hostname) {
   return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
 }
 
-function isAllowedTurnstileHostname(hostname, allowLocalhost) {
+function isAllowedTurnstileHostname(hostname, allowLocalhost, previewWorkerHostname) {
   return (
     hostname === 'cinagroup.com' ||
     hostname === PAGES_ROOT_HOSTNAME ||
     hostname.endsWith(`.${PAGES_ROOT_HOSTNAME}`) ||
+    (typeof previewWorkerHostname === 'string' &&
+      PREVIEW_WORKER_HOSTNAME_PATTERN.test(previewWorkerHostname) &&
+      hostname === previewWorkerHostname) ||
     (allowLocalhost && isLocalHostname(hostname))
   );
 }
@@ -333,6 +338,7 @@ export async function verifyTurnstile(
     idempotencyKey,
     requestHostname,
     allowLocalhost = false,
+    previewWorkerHostname,
     testMode = false,
     timeoutMs = TURNSTILE_TIMEOUT_MS,
   },
@@ -346,7 +352,7 @@ export async function verifyTurnstile(
   }
 
   const expectedHostname = normalizeString(requestHostname).toLowerCase().replace(/\.$/u, '');
-  if (!isAllowedTurnstileHostname(expectedHostname, allowLocalhost)) {
+  if (!isAllowedTurnstileHostname(expectedHostname, allowLocalhost, previewWorkerHostname)) {
     throw new ContactRequestError(403, 'verification_failed');
   }
   if (testMode && !isProjectPreviewHostname(expectedHostname)) {
@@ -391,7 +397,7 @@ export async function verifyTurnstile(
     result?.success === true &&
     result?.action === TURNSTILE_ACTION &&
     verifiedHostname === expectedHostname &&
-    isAllowedTurnstileHostname(verifiedHostname, allowLocalhost);
+    isAllowedTurnstileHostname(verifiedHostname, allowLocalhost, previewWorkerHostname);
   if (!validTestResult && !validProductionResult) {
     throw new ContactRequestError(403, 'verification_failed');
   }
@@ -624,6 +630,7 @@ export async function handleContactRequest(context, dependencies = {}) {
           idempotencyKey: submission.submissionId,
           requestHostname: requestUrl.hostname,
           allowLocalhost: context.env.TURNSTILE_ALLOW_LOCALHOST === 'true',
+          previewWorkerHostname: context.env.TURNSTILE_PREVIEW_HOSTNAME,
           testMode: context.env.TURNSTILE_TEST_MODE === 'true',
         },
         dependencies.fetch || fetch

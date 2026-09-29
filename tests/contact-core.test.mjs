@@ -12,6 +12,7 @@ import {
 } from '../src/server/contact-core.js';
 
 const submissionId = '0198f5d0-7c8c-7a31-9f00-123456789abc';
+const previewWorkerHostname = 'cinagroup-emdash-preview.account.workers.dev';
 
 function validPayload(overrides = {}) {
   return {
@@ -28,14 +29,14 @@ function validPayload(overrides = {}) {
   };
 }
 
-function contactRequest(payload = validPayload(), headers = {}) {
-  return new Request('https://cinagroup.com/api/contact', {
+function contactRequest(payload = validPayload(), headers = {}, requestUrl = 'https://cinagroup.com/api/contact') {
+  return new Request(requestUrl, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'CF-Connecting-IP': '203.0.113.10',
-      Origin: 'https://cinagroup.com',
+      Origin: new URL(requestUrl).origin,
       ...headers,
     },
     body: JSON.stringify(payload),
@@ -524,6 +525,126 @@ test('allows only this Pages project preview hostnames and gates localhost behin
       successfulSiteverify('localhost')
     )
   );
+});
+
+test('allows only the configured EmDash preview Worker hostname', async () => {
+  await assert.doesNotReject(() =>
+    verifyTurnstile(
+      {
+        secret: 'preview-test-secret-placeholder',
+        token: 'test-widget-token',
+        idempotencyKey: submissionId,
+        requestHostname: previewWorkerHostname,
+        previewWorkerHostname,
+      },
+      successfulSiteverify(previewWorkerHostname)
+    )
+  );
+
+  for (const configuredHostname of [
+    undefined,
+    'other.account.workers.dev',
+    'cinagroup-emdash-preview.other-account.workers.dev',
+    'cinagroup-emdash-preview.account.workers.dev.evil.example',
+    'https://cinagroup-emdash-preview.account.workers.dev',
+    '*.workers.dev',
+  ]) {
+    await assert.rejects(
+      verifyTurnstile(
+        {
+          secret: 'preview-test-secret-placeholder',
+          token: 'test-widget-token',
+          idempotencyKey: submissionId,
+          requestHostname: previewWorkerHostname,
+          previewWorkerHostname: configuredHostname,
+        },
+        () => assert.fail('an unconfigured or mismatched preview host must be rejected before fetch')
+      ),
+      (error) => error instanceof ContactRequestError && error.code === 'verification_failed'
+    );
+  }
+
+  await assert.rejects(
+    verifyTurnstile(
+      {
+        secret: 'preview-test-secret-placeholder',
+        token: 'test-widget-token',
+        idempotencyKey: submissionId,
+        requestHostname: 'other.account.workers.dev',
+        previewWorkerHostname,
+      },
+      () => assert.fail('a different Worker must be rejected before fetch')
+    ),
+    (error) => error instanceof ContactRequestError && error.code === 'verification_failed'
+  );
+
+  await assert.rejects(
+    verifyTurnstile(
+      {
+        secret: 'preview-test-secret-placeholder',
+        token: 'XXXX.DUMMY.TOKEN.XXXX',
+        idempotencyKey: submissionId,
+        requestHostname: previewWorkerHostname,
+        previewWorkerHostname,
+        testMode: true,
+      },
+      () => assert.fail('Pages-only Turnstile test mode must remain rejected on workers.dev')
+    ),
+    (error) => error instanceof ContactRequestError && error.code === 'verification_failed'
+  );
+});
+
+test('EmDash preview contact writes only after same-origin and matching Turnstile verification', async () => {
+  const requestUrl = `https://${previewWorkerHostname}/api/contact`;
+  const previewDatabase = new MockD1();
+  const previewEnv = contactEnv(previewDatabase, { TURNSTILE_PREVIEW_HOSTNAME: previewWorkerHostname });
+  const siteverifyCalls = [];
+  const request = contactRequest(validPayload(), {}, requestUrl);
+  const first = await handleContactRequest(
+    { request, env: previewEnv, waitUntil() {} },
+    { fetch: successfulSiteverify(previewWorkerHostname, siteverifyCalls) }
+  );
+  assert.equal(first.status, 201);
+  assert.equal(previewDatabase.rows.size, 1);
+  assert.equal(previewDatabase.rows.get(submissionId)?.source_host, previewWorkerHostname);
+  assert.equal(siteverifyCalls.length, 1);
+
+  const retry = await handleContactRequest(
+    { request: contactRequest(validPayload(), {}, requestUrl), env: previewEnv, waitUntil() {} },
+    { fetch: () => assert.fail('an idempotent retry must not verify the spent Turnstile token again') }
+  );
+  assert.equal(retry.status, 200);
+  assert.equal((await retry.json()).idempotent, true);
+  assert.equal(previewDatabase.rows.size, 1);
+
+  const confirmation = await handleContactRequest({
+    request: new Request(`${requestUrl}?locale=en&submission_id=${submissionId}`),
+    env: previewEnv,
+    waitUntil() {},
+  });
+  assert.equal(confirmation.status, 200);
+
+  for (const { headers, siteverifyResult } of [
+    { headers: { Origin: 'https://cinagroup.com' } },
+    { siteverifyResult: { success: true, action: 'login', hostname: previewWorkerHostname } },
+    { siteverifyResult: { success: true, action: 'contact', hostname: 'cinagroup.com' } },
+  ]) {
+    const database = new MockD1();
+    const response = await handleContactRequest(
+      {
+        request: contactRequest(validPayload(), headers, requestUrl),
+        env: contactEnv(database, { TURNSTILE_PREVIEW_HOSTNAME: previewWorkerHostname }),
+        waitUntil() {},
+      },
+      { fetch: async () => Response.json(siteverifyResult) }
+    );
+    assert.equal(response.status, 403);
+    assert.equal(database.stats.insertAttempts, 0);
+    assert.deepEqual(await response.json(), {
+      ok: false,
+      error: { code: headers ? 'cross_origin_rejected' : 'verification_failed' },
+    });
+  }
 });
 
 test('gates the official Turnstile dummy response behind preview-only test mode', async () => {
