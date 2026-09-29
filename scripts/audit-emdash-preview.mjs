@@ -10,7 +10,7 @@ const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
 const token = process.env.CLOUDFLARE_API_TOKEN;
 const operation = process.argv[2] ?? 'audit';
 
-if (!['audit', 'deploy'].includes(operation)) throw new Error('Unknown preview operation');
+if (!['audit', 'provision', 'deploy'].includes(operation)) throw new Error('Unknown preview operation');
 if (!/^[a-f0-9]{32}$/i.test(accountId ?? '') || !token) {
   throw new Error('GitHub Cloudflare account ID or API token is missing');
 }
@@ -33,7 +33,7 @@ async function cloudflareGet(path, label) {
 }
 
 async function database(name) {
-  const response = await cloudflareGet(`/d1/database?name=${encodeURIComponent(name)}`, `D1 ${name}`);
+  const response = await cloudflareGet(`/d1/database?name=${encodeURIComponent(name)}&per_page=10000`, `D1 ${name}`);
   if (!Array.isArray(response.result)) throw new Error(`D1 ${name}: unexpected result format`);
   const matches = response.result.filter((item) => item.name === name);
   if (matches.length > 1) throw new Error(`D1 ${name}: duplicate exact names`);
@@ -47,7 +47,7 @@ async function bucket(name) {
     if (cursor) query.set('cursor', cursor);
     const response = await cloudflareGet(`/r2/buckets?${query}`, `R2 ${name}`);
     if (!Array.isArray(response.result?.buckets)) throw new Error(`R2 ${name}: unexpected result format`);
-    const match = response.result.buckets.find((item) => item.name === name);
+    const match = response.result.buckets.find((item) => item.name === name && (!item.jurisdiction || item.jurisdiction === 'default'));
     if (match) return match;
     cursor = response.result_info?.cursor;
   } while (cursor);
@@ -80,6 +80,12 @@ console.log(lines.slice(2).join('\n'));
 
 if (contactDatabase && contactDatabase.uuid !== contactDatabaseId) {
   throw new Error('Contact D1 name resolves to an unexpected database ID');
+}
+if (contactDatabase) {
+  const exactContact = await cloudflareGet(`/d1/database/${contactDatabaseId}`, 'Contact D1 by ID');
+  if (exactContact.result?.name !== contactDatabaseName || exactContact.result?.uuid !== contactDatabaseId) {
+    throw new Error('Contact D1 ID does not resolve to the expected preview name');
+  }
 }
 if (operation === 'deploy') {
   if (!emdashDatabase || !contactDatabase || !mediaBucket) {
