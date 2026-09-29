@@ -71,7 +71,7 @@ const shouldIncludeInSitemap = (page: string) => {
 
 export default defineConfig({
   output: 'server',
-  adapter: cloudflare({ prerenderEnvironment: 'node' }),
+  adapter: cloudflare(),
   trailingSlash: 'always',
 
   i18n: {
