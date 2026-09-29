@@ -90,16 +90,23 @@ async function bucket(name) {
   return null;
 }
 
-const [emdashDatabase, contactDatabase, mediaBucket, scripts] = await Promise.all([
+const [emdashDatabase, contactDatabase, mediaBucket, scripts, domains] = await Promise.all([
   database(emdashDatabaseName),
   database(contactDatabaseName),
   bucket(mediaBucketName),
   cloudflareGet('/workers/scripts', 'Worker inventory'),
+  cloudflareGet(`/workers/domains?service=${workerName}`, 'Worker custom domains'),
 ]);
 if (!Array.isArray(scripts.result)) throw new Error('Worker inventory: unexpected result format');
+if (!Array.isArray(domains.result)) throw new Error('Worker custom domains: unexpected result format');
 const matchingWorkers = scripts.result.filter((item) => item.id === workerName);
 if (matchingWorkers.length > 1) throw new Error('Duplicate preview Worker names');
 const existingWorker = matchingWorkers[0] ?? null;
+if (existingWorker && existingWorker.routes !== undefined && !Array.isArray(existingWorker.routes)) {
+  throw new Error('Preview Worker routes: unexpected result format');
+}
+const routes = existingWorker?.routes;
+const attachedDomains = domains.result.filter((item) => item.service === workerName);
 
 const lines = [
   '### Isolated EmDash preview account audit',
@@ -107,7 +114,7 @@ const lines = [
   `- EmDash D1: ${emdashDatabase ? `present (${emdashDatabase.uuid})` : 'missing'}`,
   `- Contact D1: ${contactDatabase ? `present (${contactDatabase.uuid})` : 'missing'}`,
   `- R2 media bucket: ${mediaBucket ? 'present' : 'missing'}`,
-  `- Preview Worker: ${existingWorker ? 'already exists; deployment halted pending route inspection' : 'absent'}`,
+  `- Preview Worker: ${existingWorker ? `present (${routes ? routes.length : 'unavailable'} zone routes, ${attachedDomains.length} custom domains)` : 'absent'}`,
 ];
 if (process.env.GITHUB_STEP_SUMMARY) {
   appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join('\n')}\n`);
@@ -131,7 +138,18 @@ if (operation === 'deploy') {
   if (!emdashDatabase || !contactDatabase || !mediaBucket) {
     throw new Error('Required isolated preview D1/R2 resources are missing');
   }
-  if (existingWorker) throw new Error('Preview Worker already exists; inspect its routes before any update');
+  if (existingWorker && !routes) {
+    throw new Error('Preview Worker route inventory is unavailable; deployment halted');
+  }
+  if (routes?.length || attachedDomains.length) {
+    throw new Error('Preview Worker has a zone route or custom domain; deployment halted');
+  }
+  if (existingWorker) {
+    const subdomain = await cloudflareGet(`/workers/scripts/${workerName}/subdomain`, 'Worker workers.dev status');
+    if (subdomain.result?.enabled !== true) {
+      throw new Error('Existing preview Worker is not enabled on workers.dev');
+    }
+  }
   if (!schema?.localeSupportsZh) throw new Error('Preview contact D1 needs the tracked Chinese-locale migration');
 
   const pointerPath = resolve('.wrangler/deploy/config.json');
