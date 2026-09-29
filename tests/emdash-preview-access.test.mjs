@@ -2,11 +2,22 @@ import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
 import test from 'node:test';
 
-import { fetchWithPreviewAdminAccess } from '../src/emdash-preview-access.ts';
+import { fetchWithPreviewAdminAccess, isIsolatedPreviewHostname } from '../src/emdash-preview-access.ts';
 
 const host = 'https://cinagroup-emdash-preview.example.workers.dev';
 const secret = 'preview-secret-with-at-least-32-characters';
 const now = 1_800_000_000;
+
+test('preview Worker accepts only its exact workers.dev hostname', () => {
+  assert.equal(isIsolatedPreviewHostname('https://cinagroup-emdash-preview.cinagroup.workers.dev/'), true);
+  for (const url of [
+    'https://cinagroup.com/',
+    'https://cinagroup-emdash-preview.cinagroup.workers.dev.evil.example/',
+    'https://other.cinagroup.workers.dev/',
+  ]) {
+    assert.equal(isIsolatedPreviewHostname(url), false);
+  }
+});
 
 test('preview setup stays closed until a strong secret is configured', async () => {
   let forwarded = false;
@@ -81,10 +92,17 @@ test('preview admin requires a password, then accepts only a fresh signed cookie
   assert.equal(calls, 2);
 });
 
-test('public preview and production-domain requests bypass the admin gate', async () => {
+test('public preview routes bypass the admin gate, while an admin path on any host remains protected', async () => {
   const next = async () => new Response('site');
-  for (const url of [`${host}/`, `${host}/cms-preview/`, 'https://cinagroup.com/_emdash/admin/']) {
+  for (const url of [`${host}/`, `${host}/cms-preview/`]) {
     const response = await fetchWithPreviewAdminAccess(new Request(url), undefined, next, now);
     assert.equal(response.status, 200);
   }
+  const mismatchedHostAdmin = await fetchWithPreviewAdminAccess(
+    new Request('https://cinagroup.com/_emdash/admin/'),
+    undefined,
+    next,
+    now
+  );
+  assert.equal(mismatchedHostAdmin.status, 503);
 });

@@ -1,10 +1,14 @@
 const COOKIE_NAME = 'emdash_preview_access';
 const SESSION_SECONDS = 60 * 60 * 8;
 const encoder = new TextEncoder();
+const PREVIEW_HOSTNAME = 'cinagroup-emdash-preview.cinagroup.workers.dev';
+
+export function isIsolatedPreviewHostname(url: string): boolean {
+  return new URL(url).hostname.toLowerCase() === PREVIEW_HOSTNAME;
+}
 
 function isPreviewAdminRequest(request: Request): boolean {
   const url = new URL(request.url);
-  if (!url.hostname.toLowerCase().endsWith('.workers.dev')) return false;
   let path = url.pathname;
   try {
     // Decode conservatively so encoded path segments cannot reach Astro without passing this gate.

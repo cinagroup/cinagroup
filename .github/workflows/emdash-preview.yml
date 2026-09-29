@@ -143,6 +143,16 @@ jobs:
           NODE
           npx wrangler check startup --outfile "$RUNNER_TEMP/emdash-startup.cpuprofile"
 
+      - name: Validate manual preview operation
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          OPERATION: ${{ inputs.operation }}
+        run: |
+          case "$OPERATION" in
+            audit|provision|migrate-contact|deploy) ;;
+            *) echo "::error::Unsupported preview operation."; exit 1 ;;
+          esac
+
       - name: Verify preview deploy credentials
         if: github.event_name == 'workflow_dispatch'
         env:
@@ -159,7 +169,8 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: node scripts/audit-emdash-preview.mjs '${{ inputs.operation }}'
+          OPERATION: ${{ inputs.operation }}
+        run: node scripts/audit-emdash-preview.mjs "$OPERATION"
 
       - name: Provision missing isolated preview D1 and R2
         if: github.event_name == 'workflow_dispatch' && inputs.operation == 'provision'
@@ -205,12 +216,14 @@ jobs:
         run: node scripts/verify-emdash-preview-deployment.mjs
 
       - name: Deployment summary
+        env:
+          OPERATION: ${{ inputs.operation }}
         run: |
-          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "${{ inputs.operation }}" = "deploy" ]; then
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "deploy" ]; then
             echo "Manually deployed preview Worker: cinagroup-emdash-preview" >> "$GITHUB_STEP_SUMMARY"
-          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "${{ inputs.operation }}" = "provision" ]; then
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "provision" ]; then
             echo "Provisioned only missing isolated EmDash preview D1/R2 resources; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
-          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "${{ inputs.operation }}" = "migrate-contact" ]; then
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "migrate-contact" ]; then
             echo "Applied the tracked contact migration to the exact preview D1 database; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
           elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
             echo "Cloudflare preview resource audit only; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
