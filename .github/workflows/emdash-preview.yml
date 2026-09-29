@@ -16,6 +16,8 @@ on:
           - audit
           - provision
           - migrate-contact
+          - audit-turnstile
+          - configure-turnstile
           - deploy
 
 concurrency:
@@ -66,6 +68,9 @@ jobs:
 
       - name: Test contact endpoint
         run: npm run test:contact
+
+      - name: Test isolated Turnstile setup
+        run: node --test tests/turnstile-emdash-preview.test.mjs
 
       - name: Test blog i18n rules
         run: npm run test:blog-i18n
@@ -149,7 +154,7 @@ jobs:
           OPERATION: ${{ inputs.operation }}
         run: |
           case "$OPERATION" in
-            audit|provision|migrate-contact|deploy) ;;
+            audit|provision|migrate-contact|audit-turnstile|configure-turnstile|deploy) ;;
             *) echo "::error::Unsupported preview operation."; exit 1 ;;
           esac
 
@@ -165,7 +170,7 @@ jobs:
           fi
 
       - name: Audit Cloudflare preview resources and existing Worker
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch' && inputs.operation != 'audit-turnstile' && inputs.operation != 'configure-turnstile'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -200,6 +205,15 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: node scripts/audit-emdash-preview.mjs deploy
 
+      - name: Audit or configure exact preview Turnstile widget
+        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'audit-turnstile' || inputs.operation == 'configure-turnstile')
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          EMDASH_PREVIEW_TURNSTILE_SITE_KEY: ${{ vars.EMDASH_PREVIEW_TURNSTILE_SITE_KEY }}
+          OPERATION: ${{ inputs.operation }}
+        run: node scripts/turnstile-emdash-preview.mjs "$OPERATION"
+
       - name: Deploy preview Worker
         if: github.event_name == 'workflow_dispatch' && inputs.operation == 'deploy'
         uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
@@ -225,6 +239,10 @@ jobs:
             echo "Provisioned only missing isolated EmDash preview D1/R2 resources; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
           elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "migrate-contact" ]; then
             echo "Applied the tracked contact migration to the exact preview D1 database; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "configure-turnstile" ]; then
+            echo "Configured the exact-host preview Turnstile widget and secrets; Wrangler deployed a new preview Worker version and post-deploy isolation checks passed. Set the GitHub site key variable before the next code deployment." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "audit-turnstile" ]; then
+            echo "Audited only the exact-host preview Turnstile widget and Worker secret names; no changes made." >> "$GITHUB_STEP_SUMMARY"
           elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
             echo "Cloudflare preview resource audit only; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
           else

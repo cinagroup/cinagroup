@@ -31,7 +31,7 @@
     "check:cloudflare": "wrangler types worker-configuration.d.ts --env-interface CloudflareEnv --include-runtime false --check && tsc -p tsconfig.json --noEmit",
     "test:contact": "node --test tests/contact-core.test.mjs tests/contact-migration.test.mjs",
     "test:blog-i18n": "node --experimental-strip-types --test tests/blog-i18n.test.mjs",
-    "test:emdash": "node --experimental-strip-types --test tests/emdash-editorial-policy.test.mjs tests/emdash-preview-access.test.mjs tests/prepare-emdash-pilot.test.mjs",
+    "test:emdash": "node --experimental-strip-types --test tests/emdash-editorial-policy.test.mjs tests/emdash-preview-access.test.mjs tests/emdash-public-blog-index.test.mjs tests/emdash-public-discovery.test.mjs tests/emdash-public-post.test.mjs tests/import-emdash-pilot.test.mjs tests/prepare-emdash-pilot.test.mjs",
     "fix": "npm run fix:eslint && npm run fix:prettier",
     "fix:eslint": "eslint --fix .",
     "fix:prettier": "prettier -w ."
