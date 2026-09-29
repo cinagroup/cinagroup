@@ -14,7 +14,7 @@
       "labelSingular": "Journal Post",
       "description": "Multilingual articles with separate editorial review and publication states.",
       "supports": ["drafts", "revisions", "preview", "scheduling", "search", "seo"],
-      "urlPattern": "/blog/{slug}/",
+      "urlPattern": "/cms-preview/{slug}/",
       "routable": true,
       "editLocking": true,
       "titleField": "title",

@@ -2,6 +2,7 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "cinagroup-emdash-preview",
   "main": "./src/worker.ts",
+  "assets": { "run_worker_first": true },
   "compatibility_date": "2026-03-18",
   "compatibility_flags": ["nodejs_compat"],
   "d1_databases": [

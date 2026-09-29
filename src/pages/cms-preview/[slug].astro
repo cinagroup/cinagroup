@@ -5,18 +5,18 @@ import { PortableText } from 'emdash/ui';
 export const prerender = false;
 
 const locales = ['en', 'zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'];
-const locale = Astro.url.searchParams.get('locale') ?? 'zh';
+const locale = Astro.url.searchParams.get('locale') ?? 'en';
 if (!locales.includes(locale)) return new Response('Unsupported locale', { status: 400 });
 
 const slug = Astro.params.slug;
 if (!slug) return new Response('Not found', { status: 404 });
 
-const { entry: post, error } = await getEmDashEntry('posts', slug, { locale });
+const { entry: post, error, isPreview } = await getEmDashEntry('posts', slug, { locale });
 if (error) {
   console.error('Unable to read EmDash post', error);
   return new Response('Content unavailable', { status: 500 });
 }
-if (!post || post.data.status !== 'published') return new Response('Not found', { status: 404 });
+if (!post || (post.data.status !== 'published' && !isPreview)) return new Response('Not found', { status: 404 });
 
 const content = Array.isArray(post.data.content) ? post.data.content : [];
 ---
