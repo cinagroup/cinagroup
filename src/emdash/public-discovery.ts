@@ -13,7 +13,9 @@ type LoadPage = (cursor?: string) => Promise<CmsPage>;
 
 const MAX_PAGES = 500;
 const MAX_SITEMAP_URLS = 50_000;
-export const LEGACY_ROBOTS_BODY = 'User-agent: *\r\nDisallow:';
+// This is the live cinagroup.com response observed before the Worker cutover.
+// The checked-in Pages asset is older and lacks its sitemap declaration.
+export const PRODUCTION_ROBOTS_BODY = 'User-agent: *\nDisallow:\n\nSitemap: https://cinagroup.com/sitemap-index.xml';
 
 /** Enumerate only independently approved, exact-locale public routes. */
 export async function listDiscoverableCmsPosts(
@@ -95,8 +97,9 @@ export function cmsSitemapXml(posts: PublicPost[], site: string): string {
 }
 
 export function robotsBody(hasPublishedCmsPosts: boolean, site: string): string {
-  if (!hasPublishedCmsPosts) return LEGACY_ROBOTS_BODY;
   const base = new URL(site);
   if (base.protocol !== 'https:') throw new Error('Public robots requires an HTTPS site URL');
-  return `${LEGACY_ROBOTS_BODY}\r\nSitemap: ${new URL('/sitemap-index.xml', base).href}\r\nSitemap: ${new URL('/sitemap-emdash.xml', base).href}`;
+  const productionBody = `User-agent: *\nDisallow:\n\nSitemap: ${new URL('/sitemap-index.xml', base).href}`;
+  if (!hasPublishedCmsPosts) return productionBody;
+  return `${productionBody}\nSitemap: ${new URL('/sitemap-emdash.xml', base).href}`;
 }

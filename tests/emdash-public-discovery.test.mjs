@@ -6,7 +6,7 @@ import { getRssString } from '@astrojs/rss';
 import {
   cmsPostsToRssItems,
   cmsSitemapXml,
-  LEGACY_ROBOTS_BODY,
+  PRODUCTION_ROBOTS_BODY,
   listDiscoverableCmsPosts,
   robotsBody,
 } from '../src/emdash/public-discovery.ts';
@@ -165,11 +165,11 @@ test('RSS items and sitemap contain canonical exact-locale URLs with XML-safe te
   assert.doesNotMatch(rss, /ja\/blog\/second-post|draft-post/);
 });
 
-test('robots body is byte-for-byte legacy until published CMS content exists', () => {
-  assert.equal(LEGACY_ROBOTS_BODY, 'User-agent: *\r\nDisallow:');
-  assert.equal(robotsBody(false, 'https://cinagroup.com'), LEGACY_ROBOTS_BODY);
+test('robots body preserves the live production sitemap until published CMS content exists', () => {
+  assert.equal(PRODUCTION_ROBOTS_BODY, 'User-agent: *\nDisallow:\n\nSitemap: https://cinagroup.com/sitemap-index.xml');
+  assert.equal(robotsBody(false, 'https://cinagroup.com'), PRODUCTION_ROBOTS_BODY);
   assert.equal(
     robotsBody(true, 'https://cinagroup.com'),
-    `${LEGACY_ROBOTS_BODY}\r\nSitemap: https://cinagroup.com/sitemap-index.xml\r\nSitemap: https://cinagroup.com/sitemap-emdash.xml`
+    `${PRODUCTION_ROBOTS_BODY}\nSitemap: https://cinagroup.com/sitemap-emdash.xml`
   );
 });
