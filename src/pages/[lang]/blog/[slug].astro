@@ -1,10 +1,9 @@
 ---
 import { getEmDashEntry } from 'emdash';
 import { env } from 'cloudflare:workers';
-import type { Fetcher } from '@cloudflare/workers-types';
 
 import EmDashPost from '~/components/blog/EmDashPost.astro';
-import { findLegacyArticle, isPublicPostLocale, isPublicPostSlug, publicPostFromEntry } from '~/emdash/public-post';
+import { findLegacyArticle, isPublicPostLocale, isPublicPostSlug, publicPostFromEntry, type AssetFetcher } from '~/emdash/public-post';
 
 export const prerender = false;
 
@@ -15,7 +14,7 @@ if (!locale || locale === 'en' || !isPublicPostLocale(locale) || !slug || !isPub
 }
 
 // Preserve every prerendered localized legacy article before consulting the CMS.
-const legacyAsset = await findLegacyArticle(Astro.request, (env as unknown as { ASSETS: Fetcher }).ASSETS);
+const legacyAsset = await findLegacyArticle(Astro.request, (env as unknown as { ASSETS: AssetFetcher }).ASSETS);
 if (legacyAsset) return legacyAsset;
 
 const { entry, error, isPreview, fallbackLocale } = await getEmDashEntry('posts', slug, { locale });

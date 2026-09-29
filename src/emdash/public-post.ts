@@ -16,6 +16,8 @@ export interface PublicPost {
   publishDate?: Date;
 }
 
+export type AssetFetcher = { fetch(request: Request): Promise<Response> };
+
 const POST_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export function isPublicPostLocale(value: string): value is PublicPostLocale {
@@ -31,10 +33,7 @@ export function publicPostPath(locale: PublicPostLocale, slug: string): string {
 }
 
 /** Worker-first routing must defer to a prerendered legacy article when it exists. */
-export async function findLegacyArticle(
-  request: Request,
-  assets: { fetch(request: Request): Promise<Response> }
-): Promise<Response | undefined> {
+export async function findLegacyArticle(request: Request, assets: AssetFetcher): Promise<Response | undefined> {
   const response = await assets.fetch(request);
   return response.status === 404 ? undefined : response;
 }
