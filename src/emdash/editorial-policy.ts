@@ -1,5 +1,5 @@
-import { definePlugin } from 'emdash';
-import type { ContentPolicyDecision, PluginDescriptor } from 'emdash';
+import type { PluginDescriptor } from 'emdash';
+import type { ContentPolicyDecision, SandboxedPlugin } from 'emdash/plugin';
 
 const PLUGIN_ID = 'cinagroup-editorial-policy';
 const PLUGIN_VERSION = '1.0.0';
@@ -99,26 +99,30 @@ export function editorialPolicyPlugin(): PluginDescriptor {
   return {
     id: PLUGIN_ID,
     version: PLUGIN_VERSION,
-    format: 'native',
+    format: 'standard',
+    capabilities: ['hooks.content-policy:register'],
     entrypoint: '/src/emdash/editorial-policy.ts',
   };
 }
 
-/** EmDash imports this named factory from the descriptor's entrypoint. */
-export function createPlugin() {
-  return definePlugin({
-    id: PLUGIN_ID,
-    version: PLUGIN_VERSION,
-    capabilities: ['hooks.content-policy:register'],
-    hooks: {
-      'content:beforePublish': {
-        errorPolicy: 'abort',
-        handler: async (event) => (event.collection === 'posts' ? validatePostPublication(event.content) : undefined),
-      },
-      'content:beforeSchedule': {
-        errorPolicy: 'abort',
-        handler: async (event) => (event.collection === 'posts' ? validatePostPublication(event.content) : undefined),
-      },
+/**
+ * Keep this entrypoint free of runtime imports from the EmDash barrel. Its
+ * virtual plugins module loads it during runtime initialization; importing the
+ * barrel here creates a cycle that can instantiate the policy before its
+ * module constants initialize. EmDash adapts this standard definition and
+ * normalizes the hooks using the descriptor above.
+ */
+const editorialPolicy = {
+  hooks: {
+    'content:beforePublish': {
+      errorPolicy: 'abort',
+      handler: async (event) => (event.collection === 'posts' ? validatePostPublication(event.content) : undefined),
     },
-  });
-}
+    'content:beforeSchedule': {
+      errorPolicy: 'abort',
+      handler: async (event) => (event.collection === 'posts' ? validatePostPublication(event.content) : undefined),
+    },
+  },
+} satisfies SandboxedPlugin;
+
+export default editorialPolicy;

@@ -1,7 +1,11 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { createPlugin, editorialPolicyPlugin, validatePostPublication } from '../src/emdash/editorial-policy.ts';
+import { adaptSandboxEntry } from 'emdash/internal/plugins/adapt-sandbox-entry';
+
+import editorialPolicy, { editorialPolicyPlugin, validatePostPublication } from '../src/emdash/editorial-policy.ts';
+
+const createPlugin = () => adaptSandboxEntry(editorialPolicy, editorialPolicyPlugin());
 
 const approvedPost = () => ({
   id: 'post-1',
@@ -33,16 +37,25 @@ const schedule = (entry, collection = 'posts') =>
     scheduledAt: '2026-10-01T10:00:00.000Z',
   });
 
-test('registers a native content policy with aborting publish and schedule hooks', () => {
+test('registers a standard policy with normalized aborting publish and schedule hooks', () => {
   const descriptor = editorialPolicyPlugin();
   const plugin = createPlugin();
   assert.equal(descriptor.id, plugin.id);
   assert.equal(descriptor.version, plugin.version);
-  assert.equal(descriptor.format, 'native');
+  assert.equal(descriptor.format, 'standard');
   assert.equal(descriptor.entrypoint, '/src/emdash/editorial-policy.ts');
   assert.ok(plugin.capabilities.includes('hooks.content-policy:register'));
   assert.equal(policyHooks['content:beforePublish'].errorPolicy, 'abort');
   assert.equal(policyHooks['content:beforeSchedule'].errorPolicy, 'abort');
+  for (const hook of Object.values(policyHooks)) {
+    assert.equal(hook.pluginId, descriptor.id);
+    assert.equal(hook.priority, 100);
+    assert.equal(hook.timeout, 5000);
+    assert.deepEqual(hook.dependencies, []);
+    assert.equal(hook.exclusive, false);
+  }
+  assert.deepEqual(plugin.routes, {});
+  assert.deepEqual(plugin.allowedHosts, []);
 });
 
 test('approved, sourced, reviewed posts may publish and schedule', async () => {
