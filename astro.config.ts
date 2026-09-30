@@ -15,6 +15,7 @@ import type { AstroIntegration } from 'astro';
 
 import astrowind from './vendor/integration';
 import { editorialPolicyPlugin } from './src/emdash/editorial-policy';
+import { isCmsOnlyBlogIndexPath } from './src/emdash/public-discovery';
 
 import {
   blogPostHeadingsRemarkPlugin,
@@ -60,7 +61,9 @@ const stripLocalePrefix = (pathname: string): string => {
 };
 
 const shouldIncludeInSitemap = (page: string) => {
-  const pathname = stripLocalePrefix(new URL(page).pathname.replace(/\/+$/, '') || '/');
+  const originalPathname = new URL(page).pathname.replace(/\/+$/, '') || '/';
+  if (isCmsOnlyBlogIndexPath(originalPathname)) return false;
+  const pathname = stripLocalePrefix(originalPathname);
 
   return (
     !/^\/(?:cms-preview|_emdash)(?:\/|$)/.test(pathname) &&

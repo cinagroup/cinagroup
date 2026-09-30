@@ -150,6 +150,50 @@ test('missing assets and dynamic/private/file routes continue to their handler',
   assert.equal(calls, 1);
 });
 
+test('flat HTML asset redirects back to the requested path still produce Pages canonical 308', async () => {
+  for (const status of [301, 307, 308]) {
+    for (const location of ['/zh', origin + '/zh', '/zh?asset=one']) {
+      const response = await fetchPublicCanonicalRedirect(new Request(origin + '/zh?utm=original'), {
+        async fetch(candidate) {
+          assert.equal(candidate.url, origin + '/zh/?utm=original');
+          return new Response(null, { status, headers: { Location: location } });
+        },
+      });
+      assert.equal(response.status, 308);
+      assert.equal(response.headers.get('Location'), '/zh/?utm=original');
+    }
+  }
+  assert.equal(
+    await fetchPublicCanonicalRedirect(new Request(origin + '/zh/?utm=original'), {
+      async fetch() {
+        assert.fail('The slash destination must not reenter the asset probe');
+      },
+    }),
+    undefined
+  );
+});
+
+test('redirects to unrelated, cross-origin, or malformed targets do not establish a canonical asset', async () => {
+  for (const location of ['/other', '/zh/', '/zh.html', 'https://other.example/zh', '//other.example/zh', 'http://[']) {
+    const response = await fetchPublicCanonicalRedirect(new Request(origin + '/zh'), {
+      async fetch() {
+        return new Response(null, { status: 308, headers: { Location: location } });
+      },
+    });
+    assert.equal(response, undefined, location);
+  }
+  for (const status of [302, 303]) {
+    assert.equal(
+      await fetchPublicCanonicalRedirect(new Request(origin + '/zh'), {
+        async fetch() {
+          return new Response(null, { status, headers: { Location: '/zh' } });
+        },
+      }),
+      undefined
+    );
+  }
+});
+
 test('unsupported policy syntax fails validation rather than silently dropping a future rule', () => {
   for (const source of ['/old https://example.com 301', '/old/*/nested / 301', '/old / 200', '/old/:slug / 301']) {
     assert.throws(() => createPublicResponseParity(source, headerSource), /Unsupported public/);

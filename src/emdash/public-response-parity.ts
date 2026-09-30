@@ -117,10 +117,24 @@ export async function fetchPublicCanonicalRedirect(
   if (request.method !== 'GET' && request.method !== 'HEAD') return undefined;
   const url = new URL(request.url);
   if (!isPublicPath(url.pathname) || url.pathname.endsWith('/') || /\.[^/]*$/.test(url.pathname)) return undefined;
+  const originalPath = url.pathname;
   const destination = url.pathname + '/' + url.search;
   url.pathname += '/';
   const candidate = await assets.fetch(new Request(url, request));
-  const exists = (candidate.status >= 200 && candidate.status < 300) || candidate.status === 304;
+  let redirectsToOriginalAsset = false;
+  const location = candidate.headers.get('Location');
+  if ([301, 307, 308].includes(candidate.status) && location) {
+    try {
+      // Auto HTML handling can serve /zh.html at /zh and redirect /zh/ back
+      // there. Astro serves the same asset at /zh/, which is Pages' canonical.
+      const target = new URL(location, url);
+      redirectsToOriginalAsset = target.origin === url.origin && target.pathname === originalPath;
+    } catch {
+      // An invalid or unrelated redirect does not prove that a static asset exists.
+    }
+  }
+  const exists =
+    (candidate.status >= 200 && candidate.status < 300) || candidate.status === 304 || redirectsToOriginalAsset;
   await candidate.body?.cancel();
   if (!exists) return undefined;
   return new Response(null, { status: 308, headers: { Location: destination } });

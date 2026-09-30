@@ -6,6 +6,7 @@ import { getRssString } from '@astrojs/rss';
 import {
   cmsPostsToRssItems,
   cmsSitemapXml,
+  isCmsOnlyBlogIndexPath,
   PRODUCTION_ROBOTS_BODY,
   listDiscoverableCmsPosts,
   robotsBody,
@@ -171,5 +172,103 @@ test('robots body preserves the live production sitemap until published CMS cont
   assert.equal(
     robotsBody(true, 'https://cinagroup.com'),
     `${PRODUCTION_ROBOTS_BODY}\nSitemap: https://cinagroup.com/sitemap-emdash.xml`
+  );
+});
+
+test('static sitemap excludes only CMS-only index paths before locale prefixes are stripped', () => {
+  for (const locale of ['ko', 'ru', 'es', 'pt', 'fr']) {
+    assert.equal(isCmsOnlyBlogIndexPath(`/${locale}/blog/`), true);
+    assert.equal(isCmsOnlyBlogIndexPath(`/${locale}/blog`), true);
+    assert.equal(isCmsOnlyBlogIndexPath(`/${locale}/blog/approved-post/`), false);
+    assert.equal(isCmsOnlyBlogIndexPath(`/${locale}/about/`), false);
+  }
+  for (const path of ['/blog/', '/en/blog/', '/zh/blog/', '/ja/blog/', '/cms-preview/', '/de/blog/']) {
+    assert.equal(isCmsOnlyBlogIndexPath(path), false);
+  }
+});
+
+test('empty CMS sitemap contains no native index URL', () => {
+  const xml = cmsSitemapXml([], 'https://cinagroup.com');
+  assert.doesNotMatch(xml, /<url>|\/blog\//);
+});
+
+test('only non-empty native CMS locales add a unique index URL; legacy indexes stay static', async () => {
+  const entriesByLocale = {
+    fr: [approvedEntry('first-post', 'fr'), approvedEntry('second-post', 'fr')],
+    ko: [approvedEntry('korean-post', 'ko')],
+    zh: [approvedEntry('chinese-post', 'zh')],
+    en: [approvedEntry('english-post', 'en')],
+    ja: [approvedEntry('japanese-post', 'ja')],
+  };
+  const posts = (
+    await Promise.all(
+      Object.entries(entriesByLocale).map(([locale, entries]) =>
+        listDiscoverableCmsPosts(locale, 'https://preview.example/', missingAssets, async () => ({ entries }))
+      )
+    )
+  ).flat();
+  const xml = cmsSitemapXml(posts, 'https://cinagroup.com');
+  const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
+  assert.equal(urls.filter((url) => url === 'https://cinagroup.com/fr/blog/').length, 1);
+  assert.equal(urls.filter((url) => url === 'https://cinagroup.com/ko/blog/').length, 1);
+  for (const path of ['/blog/', '/zh/blog/', '/ja/blog/', '/ru/blog/', '/es/blog/', '/pt/blog/']) {
+    assert.ok(!urls.includes(`https://cinagroup.com${path}`), path);
+  }
+  assert.equal(urls.length, posts.length + 2);
+});
+
+test('draft, private path, unapproved, wrong-locale and legacy-collision entries cannot advertise a native index', async () => {
+  const paths = [];
+  const posts = await listDiscoverableCmsPosts(
+    'fr',
+    'https://preview.example/',
+    {
+      fetch: async (request) => {
+        const path = new URL(request.url).pathname;
+        paths.push(path);
+        return new Response(null, { status: 200 });
+      },
+    },
+    async () => ({
+      entries: [
+        approvedEntry('draft-post', 'fr', { status: 'draft' }),
+        approvedEntry('../cms-preview', 'fr'),
+        approvedEntry('withdrawn-post', 'fr', { editorial_status: 'withdrawn' }),
+        approvedEntry('wrong-locale', 'ko'),
+        approvedEntry('legacy-collision', 'fr'),
+      ],
+    })
+  );
+  assert.deepEqual(posts, []);
+  assert.deepEqual(paths, ['/fr/blog/legacy-collision/']);
+  assert.doesNotMatch(cmsSitemapXml(posts, 'https://cinagroup.com'), /<url>|cms-preview|\/fr\/blog\//);
+  assert.throws(
+    () => cmsSitemapXml([{ locale: 'fr', slug: '../cms-preview' }], 'https://cinagroup.com'),
+    /Invalid sitemap post slug/
+  );
+});
+
+test('the sitemap URL limit counts native index URLs in addition to article URLs', () => {
+  const posts = Array.from({ length: 49_999 }, (_, index) => ({
+    locale: 'fr',
+    slug: `post-${index}`,
+    title: 'Article',
+    excerpt: '',
+    content: [],
+  }));
+  const xml = cmsSitemapXml(posts, 'https://cinagroup.com');
+  assert.equal([...xml.matchAll(/<url>/g)].length, 50_000);
+  assert.match(xml, /<loc>https:\/\/cinagroup\.com\/fr\/blog\/<\/loc>/);
+  assert.throws(
+    () => cmsSitemapXml([...posts, { ...posts[0], slug: 'last-post' }], 'https://cinagroup.com'),
+    /50,000 URL limit/
+  );
+  assert.throws(
+    () =>
+      cmsSitemapXml(
+        [...posts.slice(0, -1), { ...posts[0], locale: 'ko', slug: 'korean-post' }, { ...posts[0], slug: 'last-post' }],
+        'https://cinagroup.com'
+      ),
+    /50,000 URL limit/
   );
 });

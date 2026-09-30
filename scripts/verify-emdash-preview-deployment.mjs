@@ -104,6 +104,7 @@ for (const path of ['/', '/zh/', '/ja/', '/contact/', '/zh/contact/', '/not-a-pr
     throw new Error(`Preview ${path}: production public security headers are missing`);
 }
 for (const [path, location, status] of [
+  ['/zh', '/zh/', 308],
   ['/homes/saas', '/', 301],
   ['/homes/saas/x/', '/', 301],
   ['/index-new/', '/', 301],
@@ -124,8 +125,12 @@ if (publicMedia.status !== 404 || !publicMedia.headers.get('X-Robots-Tag')?.incl
   throw new Error('Public missing media must reach EmDash and return 404 without the admin gate');
 }
 const sitemap = await fetch(`${origin}/sitemap-0.xml`);
-if ((await sitemap.text()).includes('/cms-preview/'))
+const staticSitemap = await sitemap.text();
+if (staticSitemap.includes('/cms-preview/'))
   throw new Error('Internal signed preview route leaked into public sitemap');
+if (/<loc>https:\/\/cinagroup\.com\/(?:ko|ru|es|pt|fr)\/blog\/<\/loc>/.test(staticSitemap)) {
+  throw new Error('CMS-only indexes must be discovered dynamically only after approved content exists');
+}
 const adminStatus = await checkPath('/_emdash/admin/setup', [401, 503]);
 
 const lines = [
