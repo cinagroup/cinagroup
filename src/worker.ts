@@ -1,9 +1,6 @@
 import handler, { createScheduledHandler, PluginBridge } from '@emdash-cms/cloudflare/worker';
-import {
-  fetchWithPreviewAdminAccess,
-  isAstroPrerenderRequest,
-  isIsolatedPreviewHostname,
-} from './emdash-preview-access';
+import { isAstroPrerenderRequest, isIsolatedPreviewHostname } from './emdash-preview-access';
+import { fetchWithCinaAuthAccess } from './emdash/cinaauth-access';
 import { fetchLegacyArticleAsset, type LegacyAssetFetcher } from './emdash/legacy-article-asset';
 import {
   canonicalizeCmsBlogResponse,
@@ -26,7 +23,10 @@ if (!astroFetch) {
 export default {
   ...handler,
   async fetch(request, env, ctx) {
-    if (!isIsolatedPreviewHostname(request.url) && !isAstroPrerenderRequest(request.url)) {
+    // Astro invokes these exact loopback endpoints only while prerendering.
+    // They must remain ahead of runtime identity configuration and JWT checks.
+    if (isAstroPrerenderRequest(request.url)) return astroFetch(request, env, ctx);
+    if (!isIsolatedPreviewHostname(request.url)) {
       return new Response('Preview Worker hostname mismatch', {
         status: 421,
         headers: {
@@ -35,23 +35,17 @@ export default {
         },
       });
     }
-    const previewEnv = env as CloudflareEnv & { EMDASH_PREVIEW_ADMIN_PASSWORD?: string };
-    const response = await fetchWithPreviewAdminAccess(
-      request,
-      previewEnv.EMDASH_PREVIEW_ADMIN_PASSWORD,
-      async (forwarded) => {
-        if (isAstroPrerenderRequest(forwarded.url)) return astroFetch(forwarded as typeof request, env, ctx);
-        const assets = (env as unknown as { ASSETS: LegacyAssetFetcher }).ASSETS;
-        const redirect = publicParity.redirect(forwarded) ?? (await fetchPublicCanonicalRedirect(forwarded, assets));
-        if (redirect) return redirect;
-        const staticSitemap = await fetchGeneratedSitemapAsset(forwarded, assets);
-        if (staticSitemap) return staticSitemap;
-        const legacyArticle = await fetchLegacyArticleAsset(forwarded, assets);
-        if (legacyArticle) return legacyArticle;
-        const rendered = await astroFetch(forwarded as typeof request, env, ctx);
-        return canonicalizeCmsBlogResponse(forwarded, rendered);
-      }
-    );
+    const response = await fetchWithCinaAuthAccess(request, async (forwarded) => {
+      const assets = (env as unknown as { ASSETS: LegacyAssetFetcher }).ASSETS;
+      const redirect = publicParity.redirect(forwarded) ?? (await fetchPublicCanonicalRedirect(forwarded, assets));
+      if (redirect) return redirect;
+      const staticSitemap = await fetchGeneratedSitemapAsset(forwarded, assets);
+      if (staticSitemap) return staticSitemap;
+      const legacyArticle = await fetchLegacyArticleAsset(forwarded, assets);
+      if (legacyArticle) return legacyArticle;
+      const rendered = await astroFetch(forwarded as typeof request, env, ctx);
+      return canonicalizeCmsBlogResponse(forwarded, rendered);
+    });
     const result = publicParity.applyHeaders(request, new Response(response.body, response));
     const existingRobots = result.headers.get('X-Robots-Tag');
     result.headers.set('X-Robots-Tag', existingRobots ? existingRobots + ', noindex, nofollow' : 'noindex, nofollow');

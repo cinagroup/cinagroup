@@ -109,6 +109,11 @@ export default defineConfig({
       siteUrl: 'https://cinagroup-emdash-preview.cinagroup.workers.dev',
       database: d1({ binding: 'DB' }),
       storage: r2({ binding: 'MEDIA' }),
+      auth: {
+        type: 'cloudflare-access',
+        entrypoint: fileURLToPath(new URL('./src/emdash/cinaauth-access.ts', import.meta.url)).replaceAll('\\', '/'),
+        config: { autoProvision: true, syncRoles: true },
+      },
       plugins: [editorialPolicyPlugin()],
     }),
     sitemap({
