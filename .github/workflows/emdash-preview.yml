@@ -18,6 +18,8 @@ on:
           - migrate-contact
           - audit-turnstile
           - configure-turnstile
+          - audit-secrets
+          - configure-encryption
           - deploy
 
 concurrency:
@@ -71,6 +73,9 @@ jobs:
 
       - name: Test isolated Turnstile setup
         run: node --test tests/turnstile-emdash-preview.test.mjs
+
+      - name: Test isolated preview encryption provisioning
+        run: node --test tests/secrets-emdash-preview.test.mjs
 
       - name: Test blog i18n rules
         run: npm run test:blog-i18n
@@ -154,7 +159,7 @@ jobs:
           OPERATION: ${{ inputs.operation }}
         run: |
           case "$OPERATION" in
-            audit|provision|migrate-contact|audit-turnstile|configure-turnstile|deploy) ;;
+            audit|provision|migrate-contact|audit-turnstile|configure-turnstile|audit-secrets|configure-encryption|deploy) ;;
             *) echo "::error::Unsupported preview operation."; exit 1 ;;
           esac
 
@@ -170,7 +175,7 @@ jobs:
           fi
 
       - name: Audit Cloudflare preview resources and existing Worker
-        if: github.event_name == 'workflow_dispatch' && inputs.operation != 'audit-turnstile' && inputs.operation != 'configure-turnstile'
+        if: github.event_name == 'workflow_dispatch' && inputs.operation != 'audit-turnstile' && inputs.operation != 'configure-turnstile' && inputs.operation != 'audit-secrets' && inputs.operation != 'configure-encryption'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -222,6 +227,15 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --name cinagroup-emdash-preview
 
+      - name: Audit preview secrets or create an absent encryption key
+        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'audit-secrets' || inputs.operation == 'configure-encryption')
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          EMDASH_ENCRYPTION_KEY: ${{ secrets.EMDASH_ENCRYPTION_KEY }}
+          OPERATION: ${{ inputs.operation }}
+        run: node scripts/secrets-emdash-preview.mjs "$OPERATION"
+
       - name: Verify preview route isolation, noindex, and closed admin setup
         if: github.event_name == 'workflow_dispatch' && inputs.operation == 'deploy'
         env:
@@ -243,6 +257,10 @@ jobs:
             echo "Configured the exact-host preview Turnstile widget and secrets; Wrangler deployed a new preview Worker version and post-deploy isolation checks passed. Set the GitHub site key variable before the next code deployment." >> "$GITHUB_STEP_SUMMARY"
           elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "audit-turnstile" ]; then
             echo "Audited only the exact-host preview Turnstile widget and Worker secret names; no changes made." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "configure-encryption" ]; then
+            echo "Created the isolated preview encryption key only if absent; existing keys were never replaced." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "audit-secrets" ]; then
+            echo "Audited isolated preview secret names only; no values retrieved or changes made." >> "$GITHUB_STEP_SUMMARY"
           elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
             echo "Cloudflare preview resource audit only; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
           else
