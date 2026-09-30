@@ -134,15 +134,21 @@ test('canonical public media GET and HEAD reads bypass the admin gate without is
       headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=300' },
     });
   };
+  const keys = [
+    '01K7P4J26T0WYS88MQ72GHAFBJ.png',
+    'images/pilot-image_1~small.webp',
+    '01K7P4J26T0WYS88MQ72GHAFBJ.图片',
+    '01K7P4J26T0WYS88MQ72GHAFBJ.image extension+png',
+    'images/résumé.png',
+    'images/re\u0301sume\u0301.png',
+  ];
   for (const method of ['GET', 'HEAD']) {
     for (const configured of [undefined, secret]) {
-      for (const key of ['01K7P4J26T0WYS88MQ72GHAFBJ.png', 'images/pilot-image_1~small.webp']) {
-        const response = await fetchWithPreviewAdminAccess(
-          new Request(`${host}/_emdash/api/media/file/${key}`, { method }),
-          configured,
-          next,
-          now
-        );
+      for (const key of keys) {
+        const url = `${host}/_emdash/api/media/file/${encodeURI(key)}`;
+        // Astro's router decodes URI path text before creating the media key param.
+        assert.equal(decodeURI(new URL(url).pathname).slice('/_emdash/api/media/file/'.length), key);
+        const response = await fetchWithPreviewAdminAccess(new Request(url, { method }), configured, next, now);
         assert.equal(response.status, 200);
         assert.equal(response.headers.get('Content-Type'), 'image/png');
         assert.equal(response.headers.get('Cache-Control'), 'public, max-age=300');
@@ -150,7 +156,7 @@ test('canonical public media GET and HEAD reads bypass the admin gate without is
       }
     }
   }
-  assert.equal(calls, 8);
+  assert.equal(calls, keys.length * 4);
 });
 
 test('media writes, private keys, ambiguous paths and administrative APIs cannot bypass the preview gate', async () => {
@@ -168,6 +174,12 @@ test('media writes, private keys, ambiguous paths and administrative APIs cannot
     '/_emdash/api/media/file/images//pilot.png',
     '/_emdash/api/media/file/pilot.png/',
     '/_emdash/api/media/file/pilot%2epng',
+    '/_emdash/api/media/file/pilot%2Bpng',
+    '/_emdash/api/media/file/pilot%2520image.png',
+    '/_emdash/api/media/file/pilot%00image.png',
+    '/_emdash/api/media/file/pilot%C0%AFimage.png',
+    '/_emdash/api/media/file/pilot.%e5%9b%be',
+    '/_emdash/api/media/file/pilot.%25E5%259B%25BE',
     '/_emdash/api/media/file/%62ackups/snapshot.zip',
     '/_emdash/api/media/file/%2562ackups/snapshot.zip',
     '/_emdash/api/media/file/images%2f..%2fbackups/snapshot.zip',

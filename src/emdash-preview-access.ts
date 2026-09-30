@@ -38,10 +38,17 @@ function isPublicPreviewMediaRequest(request: Request): boolean {
   const path = new URL(request.url).pathname;
   if (!path.startsWith(prefix)) return false;
 
-  // Reject encoded separators, ambiguous paths and private backup/transfer keys
-  // before passing the key to EmDash's own public-file storage guard.
-  const key = path.slice(prefix.length);
-  if (!key || !/^[A-Za-z0-9._~/-]+$/.test(key)) return false;
+  // Unicode extensions and spaces need one canonical URL encoding. Reject
+  // encoded separators, ASCII aliases and further encoding before Astro decodes.
+  const rawKey = path.slice(prefix.length);
+  let key: string;
+  try {
+    key = decodeURIComponent(rawKey);
+    if (encodeURI(key) !== rawKey) return false;
+  } catch {
+    return false;
+  }
+  if (!key || !/^[\p{L}\p{M}\p{N}._~+ /-]+$/u.test(key)) return false;
   const segments = key.split('/');
   if (segments.some((segment) => !segment || segment === '.' || segment === '..')) return false;
   return !['backups', 'transfers'].includes(segments[0].toLowerCase());

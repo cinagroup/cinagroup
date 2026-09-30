@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - codex/emdash-migration
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       operation:
@@ -23,7 +26,7 @@ on:
           - deploy
 
 concurrency:
-  group: emdash-preview
+  group: ${{ github.event_name == 'pull_request' && format('emdash-preview-pr-{0}', github.event.pull_request.number) || 'emdash-preview' }}
   cancel-in-progress: false
 
 permissions:
@@ -31,13 +34,14 @@ permissions:
 
 jobs:
   preview:
+    if: github.event_name != 'pull_request' || (github.head_ref == 'codex/emdash-migration' && github.event.pull_request.head.repo.full_name == github.repository)
     name: Validate migration branch; deploy preview only when dispatched
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
       - name: Require the isolated migration branch
-        if: github.ref != 'refs/heads/codex/emdash-migration'
+        if: github.ref != 'refs/heads/codex/emdash-migration' && !(github.event_name == 'pull_request' && github.head_ref == 'codex/emdash-migration' && github.event.pull_request.head.repo.full_name == github.repository)
         run: |
           echo "::error::This preview workflow may only run from codex/emdash-migration."
           exit 1
