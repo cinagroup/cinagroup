@@ -17,6 +17,7 @@ const app = step('Configure or verify dedicated preview Access applications');
 const runtime = step('Configure absent preview Access runtime bindings');
 const authTests = step('Test Access authentication and public media boundaries');
 const configTests = step('Test isolated Access application and runtime configuration');
+const migration = step('Migrate the exact legacy preview admin Access policy');
 
 test('two manual operations are whitelisted and excluded from the general resource audit', () => {
   const options = workflow.on.workflow_dispatch.inputs.operation.options;
@@ -58,6 +59,38 @@ test('runtime follows real Access app verification and receives its AUD through 
     assert.ok(!Object.keys(item.env).includes('EMDASH_ENCRYPTION_KEY'));
   }
   assert.ok(!/secret bulk|wrangler deploy/.test(runtime.run));
+});
+
+test('policy migration is a separate pinned one-policy action with no runtime, deploy, or other write step', () => {
+  const operation = 'migrate-access-policy';
+  const gate = "github.event_name == 'workflow_dispatch' && inputs.operation == 'migrate-access-policy'";
+  assert.equal(workflow.on.workflow_dispatch.inputs.operation.options.filter((value) => value === operation).length, 1);
+  assert.ok(step('Validate manual preview operation').run.includes(operation));
+  assert.ok(
+    step('Audit Cloudflare preview resources and existing Worker').if.includes(`inputs.operation != '${operation}'`)
+  );
+  assert.equal(migration.if, gate);
+  assert.equal(migration.run, 'node scripts/configure-emdash-access-preview.mjs migrate-policy');
+  assert.deepEqual(Object.keys(migration.env).sort(), [
+    'CF_ACCESS_CINA_AUTH_IDP_ID',
+    'CLOUDFLARE_ACCOUNT_ID',
+    'CLOUDFLARE_API_TOKEN',
+    'EMDASH_ACCESS_ADMIN_EMAIL',
+  ]);
+  for (const [key, secret] of Object.entries({
+    CLOUDFLARE_API_TOKEN: 'CLOUDFLARE_API_TOKEN',
+    CLOUDFLARE_ACCOUNT_ID: 'CLOUDFLARE_ACCOUNT_ID',
+    CF_ACCESS_CINA_AUTH_IDP_ID: 'CF_ACCESS_CINA_AUTH_IDP_ID',
+    EMDASH_ACCESS_ADMIN_EMAIL: 'EMDASH_ACCESS_ADMIN_EMAIL',
+  }))
+    assert.equal(migration.env[key], '${{ secrets.' + secret + ' }}');
+  for (const other of [app, runtime, step('Deploy preview Worker')]) assert.ok(!other.if.includes(operation));
+  for (const other of steps.filter((entry) => entry !== migration)) {
+    if (!other.env?.CLOUDFLARE_API_TOKEN && !other.with?.apiToken) continue;
+    assert.ok(!other.if.includes(`inputs.operation == '${operation}'`));
+  }
+  assert.ok(steps.indexOf(configTests) < steps.indexOf(migration));
+  assert.ok(steps.indexOf(authTests) < steps.indexOf(migration));
 });
 
 test('authentication, challenge, app and runtime mock tests run before all new configuration actions', () => {

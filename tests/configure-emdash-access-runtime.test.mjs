@@ -92,7 +92,7 @@ function fixture({ onRequest } = {}) {
             name: 'Verified CinaAuth preview administrator',
             decision: 'allow',
             include: [{ email: { email: EMAIL } }],
-            require: [{ oidc: { claim_name: 'email_verified', claim_value: 'true', identity_provider_id: IDP } }],
+            require: [{ login_method: { id: IDP } }],
           },
         ],
       },
@@ -332,7 +332,7 @@ test('remote routes, custom domains, wrong resources or subdomain cannot receive
   }
 });
 
-test('Access app, verified-email policy, IdP, team or AUD mismatch cannot receive runtime writes', async () => {
+test('Access app, email/login-method policy, IdP, team or AUD mismatch cannot receive runtime writes', async () => {
   for (const change of [
     (s) => {
       s.apps[0].aud = 'b'.repeat(64);
@@ -347,10 +347,12 @@ test('Access app, verified-email policy, IdP, team or AUD mismatch cannot receiv
       s.apps[0].policies[0].require = [];
     },
     (s) => {
-      s.apps[0].policies[0].require[0].oidc.claim_value = 'false';
+      s.apps[0].policies[0].require[0] = {
+        oidc: { claim_name: 'email_verified', claim_value: 'true', identity_provider_id: IDP },
+      };
     },
     (s) => {
-      s.apps[0].policies[0].require[0].oidc.identity_provider_id = 'b'.repeat(32);
+      s.apps[0].policies[0].require[0].login_method.id = 'b'.repeat(32);
     },
     (s) => {
       s.apps[0].domain = HOST;

@@ -217,7 +217,7 @@ export async function configureEmDashAccessRuntime({
         fetchImpl,
       });
     } catch {
-      fail('Dedicated preview Access application or email/verified-claim policy preflight failed');
+      fail('Dedicated preview Access application or email/login-method policy preflight failed');
     }
     const admin = report?.applications?.filter((item) => item.role === 'admin');
     const media = report?.applications?.filter((item) => item.role === 'publicMedia');

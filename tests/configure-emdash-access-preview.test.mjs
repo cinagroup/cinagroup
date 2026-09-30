@@ -9,6 +9,7 @@ const ACCOUNT_ID = '7ea8e46d8210bad342fa7595f7935fea';
 const TEAM_DOMAIN = 'cinagroup.cloudflareaccess.com';
 const HOST = 'cinagroup-emdash-preview.cinagroup.workers.dev';
 const WORKER_ID = 'c81a2d22c29840ed9d61681a3270dbff';
+const WORKER_VERSION = '8a486133-6176-43ed-9812-eabd5b2969b0';
 const IDP_ID = '4b05ed38-1315-4d88-b25c-ee1c2b0f37f5';
 const EMAIL = 'editor@preview.example';
 const TOKEN = 'TOKEN-NEVER-PRINT';
@@ -42,12 +43,14 @@ function fakeCloudflare({ teamDomain = TEAM_DOMAIN, providerOverrides = {}, exis
     assert.ok(url.pathname.startsWith(`/client/v4/accounts/${ACCOUNT_ID}/`));
     assert.equal(init.redirect, 'error');
     assert.equal(init.headers.Authorization, `Bearer ${TOKEN}`);
-    assert.ok(['GET', 'POST'].includes(init.method));
+    assert.ok(['GET', 'POST', 'PUT'].includes(init.method));
     const overridden = onRequest?.(url, init, apps);
     if (overridden) return overridden;
     if (url.pathname.endsWith('/organizations')) return ok({ auth_domain: teamDomain, secret: TOKEN });
     if (url.pathname.endsWith('/identity_providers')) return ok([provider]);
     if (url.pathname.endsWith('/workers/scripts')) return ok([{ id: 'cinagroup-emdash-preview', tag: WORKER_ID }]);
+    if (url.pathname.endsWith('/workers/scripts/cinagroup-emdash-preview/deployments'))
+      return ok({ deployments: [{ id: appId(80), versions: [{ version_id: WORKER_VERSION, percentage: 100 }] }] });
     if (url.pathname.endsWith('/apps') && init.method === 'GET') return ok(apps);
     if (url.pathname.endsWith('/apps') && init.method === 'POST') {
       const body = JSON.parse(init.body);
@@ -57,6 +60,17 @@ function fakeCloudflare({ teamDomain = TEAM_DOMAIN, providerOverrides = {}, exis
     }
     const policyMatch = url.pathname.match(/\/apps\/([^/]+)\/policies$/);
     if (policyMatch) return ok(apps.find((app) => app.id === policyMatch[1])?.policies);
+    const policyDetailMatch = url.pathname.match(/\/apps\/([^/]+)\/policies\/([^/]+)$/);
+    if (policyDetailMatch) {
+      const policy = apps
+        .find((app) => app.id === policyDetailMatch[1])
+        ?.policies?.find((entry) => entry.id === policyDetailMatch[2]);
+      if (init.method === 'PUT') {
+        assert.ok(policy);
+        Object.assign(policy, JSON.parse(init.body));
+      }
+      return ok(policy);
+    }
     const appMatch = url.pathname.match(/\/apps\/([^/]+)$/);
     if (appMatch) return ok(apps.find((app) => app.id === appMatch[1]));
     assert.fail(`Unexpected endpoint ${url.pathname}`);
@@ -72,6 +86,21 @@ const config = (fetchImpl, operation = 'plan') => ({
   idpId: IDP_ID,
   fetchImpl,
 });
+
+async function legacyCloudflare(options) {
+  const cloudflare = fakeCloudflare(options);
+  await configureEmDashPreviewAccess(config(cloudflare.fetchImpl, 'configure'));
+  const admin = cloudflare.apps[0];
+  admin.aud = 'a'.repeat(64);
+  admin.policies[0].id = appId(30);
+  admin.policies[0].precedence = 1;
+  admin.policies[0].require = [
+    { oidc: { claim_name: 'email_verified', claim_value: 'true', identity_provider_id: IDP_ID } },
+  ];
+  cloudflare.apps[1].policies[0].id = appId(31);
+  cloudflare.calls.length = 0;
+  return cloudflare;
+}
 
 test('default plan reads fixed endpoints and reports only two proposed scoped apps', async () => {
   const cloudflare = fakeCloudflare();
@@ -129,6 +158,22 @@ test('admin email with leading or trailing whitespace or final newline is reject
   }
 });
 
+test('selected IdP and returned app IDs/AUD reject trailing line breaks', async () => {
+  for (const idpId of [`${IDP_ID}\n`, `${IDP_ID}\r\n`, `${IDP_ID} `]) {
+    const cloudflare = fakeCloudflare();
+    await assert.rejects(configureEmDashPreviewAccess({ ...config(cloudflare.fetchImpl), idpId }), /IDP_ID/);
+    assert.equal(cloudflare.calls.length, 0);
+  }
+  for (const field of ['id', 'aud']) {
+    const cloudflare = fakeCloudflare();
+    await configureEmDashPreviewAccess(config(cloudflare.fetchImpl, 'configure'));
+    cloudflare.apps[0][field] += '\n';
+    cloudflare.calls.length = 0;
+    await assert.rejects(configureEmDashPreviewAccess(config(cloudflare.fetchImpl, 'configure')));
+    assert.ok(cloudflare.calls.every(({ init }) => init.method === 'GET'));
+  }
+});
+
 test('token with leading or trailing whitespace is rejected before network', async () => {
   for (const token of [` ${TOKEN}`, `${TOKEN} `, `${TOKEN}\n`]) {
     const cloudflare = fakeCloudflare();
@@ -154,9 +199,7 @@ test('configure creates only scoped admin and more-specific media bypass apps, t
   assert.equal(admin.allow_authenticate_via_warp, false);
   assert.equal(admin.policies[0].decision, 'allow');
   assert.deepEqual(admin.policies[0].include, [{ email: { email: EMAIL } }]);
-  assert.deepEqual(admin.policies[0].require, [
-    { oidc: { claim_name: 'email_verified', claim_value: 'true', identity_provider_id: IDP_ID } },
-  ]);
+  assert.deepEqual(admin.policies[0].require, [{ login_method: { id: IDP_ID } }]);
   assert.equal(media.domain, `${HOST}/_emdash/api/media/file/*`);
   assert.deepEqual(media.destinations, [{ type: 'public', uri: `${HOST}/_emdash/api/media/file/*` }]);
   assert.deepEqual(media.policies, [
@@ -183,6 +226,99 @@ test('rerun is idempotent and verifies exact existing apps without POST', async 
   );
   assert.ok(cloudflare.calls.every(({ init }) => init.method === 'GET'));
   assert.equal(cloudflare.calls.filter(({ url }) => url.pathname.endsWith('/policies')).length, 2);
+});
+
+test('migrate-policy replaces only the exact legacy admin Require rule with the selected Login Method', async () => {
+  const cloudflare = await legacyCloudflare();
+  const report = await configureEmDashPreviewAccess(config(cloudflare.fetchImpl, 'migrate-policy'));
+  assert.equal(report.state, 'migrated');
+  const writes = cloudflare.calls.filter(({ init }) => init.method !== 'GET');
+  assert.equal(writes.length, 1);
+  assert.equal(writes[0].init.method, 'PUT');
+  assert.equal(
+    writes[0].url.pathname,
+    `/client/v4/accounts/${ACCOUNT_ID}/access/apps/${cloudflare.apps[0].id}/policies/${appId(30)}`
+  );
+  const update = JSON.parse(writes[0].init.body);
+  assert.equal(update.name, 'Verified CinaAuth preview administrator');
+  assert.equal(update.decision, 'allow');
+  assert.deepEqual(update.include, [{ email: { email: EMAIL } }]);
+  assert.deepEqual(update.require, [{ login_method: { id: IDP_ID } }]);
+  assert.equal(update.precedence, 1);
+  assert.deepEqual(update.exclude, []);
+  assert.deepEqual(cloudflare.apps[0].policies[0].require, [{ login_method: { id: IDP_ID } }]);
+  for (const secret of [TOKEN, EMAIL, 'PRIVATE-CLIENT-ID', 'PRIVATE-CLIENT-SECRET']) {
+    assert.ok(!JSON.stringify(report).includes(secret));
+  }
+});
+
+test('migrate-policy is read-only when already current, even if the pinned migration version is no longer active', async () => {
+  const cloudflare = await legacyCloudflare({
+    onRequest(url) {
+      if (url.pathname.endsWith('/workers/scripts/cinagroup-emdash-preview/deployments'))
+        return ok({ deployments: [{ id: appId(80), versions: [{ version_id: appId(81), percentage: 100 }] }] });
+      return null;
+    },
+  });
+  cloudflare.apps[0].policies[0].require = [{ login_method: { id: IDP_ID } }];
+  const report = await configureEmDashPreviewAccess(config(cloudflare.fetchImpl, 'migrate-policy'));
+  assert.equal(report.state, 'already-current');
+  assert.ok(cloudflare.calls.every(({ init }) => init.method === 'GET'));
+  assert.ok(!cloudflare.calls.some(({ url }) => url.pathname.endsWith('/deployments')));
+});
+
+test('migrate-policy refuses changed app domain, extra rule, extra policy or wrong Worker version before a write', async () => {
+  for (const change of [
+    (c) => {
+      c.apps[0].domain = 'cinagroup.com/_emdash';
+    },
+    (c) => {
+      c.apps[0].policies[0].include = [{ everyone: {} }];
+    },
+    (c) => {
+      c.apps[0].policies[0].require.push({ everyone: {} });
+    },
+    (c) => {
+      c.apps[0].policies.push({ id: appId(32), name: 'extra', decision: 'allow', include: [{ everyone: {} }] });
+    },
+    (c) => {
+      c.apps[0].policies[0].approval_required = true;
+    },
+  ]) {
+    const cloudflare = await legacyCloudflare();
+    change(cloudflare);
+    await assert.rejects(configureEmDashPreviewAccess(config(cloudflare.fetchImpl, 'migrate-policy')));
+    assert.ok(cloudflare.calls.every(({ init }) => init.method === 'GET'));
+  }
+  const wrongVersion = await legacyCloudflare({
+    onRequest(url) {
+      if (url.pathname.endsWith('/workers/scripts/cinagroup-emdash-preview/deployments'))
+        return ok({ deployments: [{ id: appId(80), versions: [{ version_id: appId(81), percentage: 100 }] }] });
+      return null;
+    },
+  });
+  await assert.rejects(configureEmDashPreviewAccess(config(wrongVersion.fetchImpl, 'migrate-policy')), /sole active/);
+  assert.ok(wrongVersion.calls.every(({ init }) => init.method === 'GET'));
+});
+
+test('ambiguous policy PUT never logs credentials and requires a read-only audit', async () => {
+  for (const putResponse of [
+    new Response('bad', { status: 502 }),
+    new Response('not-json', { status: 200 }),
+    Response.json({ success: false, errors: [{ message: TOKEN }] }),
+  ]) {
+    const cloudflare = await legacyCloudflare({
+      onRequest(url, init) {
+        if (init.method === 'PUT' && url.pathname.includes('/policies/')) return putResponse;
+        return null;
+      },
+    });
+    await assert.rejects(
+      configureEmDashPreviewAccess(config(cloudflare.fetchImpl, 'migrate-policy')),
+      /outcome unknown/
+    );
+    assert.equal(cloudflare.calls.filter(({ init }) => init.method === 'PUT').length, 1);
+  }
 });
 
 test('an owned-name app with a changed allow policy is a conflict and is never overwritten', async () => {

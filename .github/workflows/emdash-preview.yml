@@ -22,9 +22,11 @@ on:
           - audit-turnstile
           - configure-turnstile
           - audit-secrets
+          - diagnose-public
           - audit-access
           - configure-access
           - configure-access-runtime
+          - migrate-access-policy
           - configure-encryption
           - configure-admin-password
           - deploy
@@ -87,6 +89,9 @@ jobs:
 
       - name: Test read-only Access preview audit
         run: node --test tests/access-emdash-preview.test.mjs tests/access-emdash-preview-workflow.test.mjs
+
+      - name: Test isolated public runtime diagnostics
+        run: node --test tests/diagnose-emdash-public.test.mjs
 
       - name: Test isolated Access application and runtime configuration
         run: node --test tests/configure-emdash-access-preview.test.mjs tests/configure-emdash-access-runtime.test.mjs tests/configure-emdash-access-workflow.test.mjs
@@ -176,7 +181,7 @@ jobs:
           OPERATION: ${{ inputs.operation }}
         run: |
           case "$OPERATION" in
-            audit|provision|migrate-contact|audit-turnstile|configure-turnstile|audit-secrets|audit-access|configure-access|configure-access-runtime|configure-encryption|configure-admin-password|deploy) ;;
+            audit|provision|migrate-contact|audit-turnstile|configure-turnstile|audit-secrets|diagnose-public|audit-access|configure-access|configure-access-runtime|migrate-access-policy|configure-encryption|configure-admin-password|deploy) ;;
             *) echo "::error::Unsupported preview operation."; exit 1 ;;
           esac
 
@@ -192,7 +197,7 @@ jobs:
           fi
 
       - name: Audit Cloudflare preview resources and existing Worker
-        if: github.event_name == 'workflow_dispatch' && inputs.operation != 'audit-turnstile' && inputs.operation != 'configure-turnstile' && inputs.operation != 'audit-secrets' && inputs.operation != 'audit-access' && inputs.operation != 'configure-access' && inputs.operation != 'configure-access-runtime' && inputs.operation != 'configure-encryption' && inputs.operation != 'configure-admin-password'
+        if: github.event_name == 'workflow_dispatch' && inputs.operation != 'audit-turnstile' && inputs.operation != 'configure-turnstile' && inputs.operation != 'audit-secrets' && inputs.operation != 'diagnose-public' && inputs.operation != 'audit-access' && inputs.operation != 'configure-access' && inputs.operation != 'configure-access-runtime' && inputs.operation != 'migrate-access-policy' && inputs.operation != 'configure-encryption' && inputs.operation != 'configure-admin-password'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -205,6 +210,13 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: node scripts/access-emdash-preview.mjs audit
+
+      - name: Diagnose fixed anonymous public routes with a temporary Worker Tail
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'diagnose-public'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/diagnose-emdash-public.mjs --run
 
       - name: Configure or verify dedicated preview Access applications
         id: preview-access-apps
@@ -248,6 +260,15 @@ jobs:
           CF_ACCESS_CINA_AUTH_IDP_TYPE: oidc
           EMDASH_ACCESS_ADMIN_EMAIL: ${{ secrets.EMDASH_ACCESS_ADMIN_EMAIL }}
         run: node scripts/configure-emdash-access-runtime.mjs configure
+
+      - name: Migrate the exact legacy preview admin Access policy
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'migrate-access-policy'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_ACCESS_CINA_AUTH_IDP_ID: ${{ secrets.CF_ACCESS_CINA_AUTH_IDP_ID }}
+          EMDASH_ACCESS_ADMIN_EMAIL: ${{ secrets.EMDASH_ACCESS_ADMIN_EMAIL }}
+        run: node scripts/configure-emdash-access-preview.mjs migrate-policy
 
       - name: Provision missing isolated preview D1 and R2
         if: github.event_name == 'workflow_dispatch' && inputs.operation == 'provision'
@@ -339,10 +360,14 @@ jobs:
             echo "Configured the isolated preview admin password only if absent; existing passwords were preserved. The first administrator must complete browser passkey registration." >> "$GITHUB_STEP_SUMMARY"
           elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "audit-secrets" ]; then
             echo "Audited isolated preview secret names only; no values retrieved or changes made." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "diagnose-public" ]; then
+            echo "Probed only fixed anonymous preview public routes and removed the temporary Worker Tail; no Worker code or data changed." >> "$GITHUB_STEP_SUMMARY"
           elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "audit-access" ]; then
             echo "Audited Cloudflare Access organization, IdPs, and applications for the isolated preview host using read-only API requests; no changes made." >> "$GITHUB_STEP_SUMMARY"
           elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "configure-access" ]; then
             echo "Verified or created only the two isolated preview Access applications and created six previously absent runtime bindings from the verified admin AUD. Existing unrelated secrets were preserved; no Worker code deployed." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "migrate-access-policy" ]; then
+            echo "Migrated or verified only the exact owned preview admin Access policy, preserving the selected email and dedicated login method. Worker identity verification remains mandatory; no runtime bindings or Worker code changed." >> "$GITHUB_STEP_SUMMARY"
           elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "configure-access-runtime" ]; then
             echo "Verified the existing isolated preview Access applications and created six previously absent runtime bindings. Existing or partial runtime configurations are never blindly replaced; no Worker code deployed." >> "$GITHUB_STEP_SUMMARY"
           elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then

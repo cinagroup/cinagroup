@@ -6,6 +6,8 @@ const API_ORIGIN = 'https://api.cloudflare.com';
 const ACCOUNT_ID = '7ea8e46d8210bad342fa7595f7935fea';
 const TEAM_DOMAIN = 'cinagroup.cloudflareaccess.com';
 const WORKER_NAME = 'cinagroup-emdash-preview';
+// Pin the one already-deployed, audited CinaAuth guard for this one-time migration.
+const AUTH_GUARD_VERSION = '8a486133-6176-43ed-9812-eabd5b2969b0';
 const PREVIEW_HOST = 'cinagroup-emdash-preview.cinagroup.workers.dev';
 const IDP_ENDPOINTS = Object.freeze({
   auth_url: 'https://auth.cinaseek.si/api/auth/oauth2/authorize',
@@ -16,6 +18,10 @@ const ADMIN_PATH = '/_emdash';
 const MEDIA_PATH = '/_emdash/api/media/file/*';
 const PAGE_SIZE = 100;
 const MAX_PAGES = 20;
+const LEGACY_REQUIRE = (idpId) => [
+  { oidc: { claim_name: 'email_verified', claim_value: 'true', identity_provider_id: idpId } },
+];
+const LOGIN_METHOD_REQUIRE = (idpId) => [{ login_method: { id: idpId } }];
 
 const APPS = Object.freeze([
   { role: 'admin', name: 'CinaGroup EmDash preview admin', path: ADMIN_PATH },
@@ -28,11 +34,15 @@ const fail = (message) => {
 };
 
 function isId(value) {
-  return typeof value === 'string' && /^(?:[a-f0-9]{32}|[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})$/i.test(value);
+  return (
+    typeof value === 'string' &&
+    value.trim() === value &&
+    /^(?:[a-f0-9]{32}|[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})$/i.test(value)
+  );
 }
 
 function safeAud(value) {
-  return typeof value === 'string' && /^[A-Za-z0-9_-]{1,64}$/.test(value) ? value : null;
+  return typeof value === 'string' && value.trim() === value && /^[A-Za-z0-9_-]{1,64}$/.test(value) ? value : null;
 }
 
 function normalizedEmail(value) {
@@ -76,11 +86,18 @@ function hostPatternMatches(pattern) {
 
 function appTargetsPreviewHost(app) {
   const destinations = Array.isArray(app?.destinations) ? app.destinations : [];
-  const legacyDomains = destinations.length === 0 && Array.isArray(app?.self_hosted_domains) ? app.self_hosted_domains : [];
-  const candidates = [app?.domain, ...destinations.filter((item) => item?.type === 'public').map((item) => item.uri), ...legacyDomains];
+  const legacyDomains =
+    destinations.length === 0 && Array.isArray(app?.self_hosted_domains) ? app.self_hosted_domains : [];
+  const candidates = [
+    app?.domain,
+    ...destinations.filter((item) => item?.type === 'public').map((item) => item.uri),
+    ...legacyDomains,
+  ];
   return candidates.some((candidate) => {
     const parsed = parsePublicDestination(candidate);
-    return parsed ? hostPatternMatches(parsed.hostname) : typeof candidate === 'string' && candidate.includes(PREVIEW_HOST);
+    return parsed
+      ? hostPatternMatches(parsed.hostname)
+      : typeof candidate === 'string' && candidate.includes(PREVIEW_HOST);
   });
 }
 
@@ -114,7 +131,7 @@ function appBody(spec, email, idpId) {
           name: 'Verified CinaAuth preview administrator',
           decision: 'allow',
           include: [{ email: { email } }],
-          require: [{ oidc: { claim_name: 'email_verified', claim_value: 'true', identity_provider_id: idpId } }],
+          require: LOGIN_METHOD_REQUIRE(idpId),
         },
       ],
     };
@@ -123,6 +140,11 @@ function appBody(spec, email, idpId) {
     ...body,
     policies: [{ name: 'Public preview file media', decision: 'bypass', include: [{ everyone: {} }] }],
   };
+}
+
+function legacyAdminPolicy(email, idpId) {
+  const admin = APPS[0];
+  return { ...appBody(admin, email, idpId).policies[0], require: LEGACY_REQUIRE(idpId) };
 }
 
 function sameRules(actual, expected) {
@@ -136,18 +158,20 @@ function samePolicy(actual, expected) {
     actual?.decision === expected.decision &&
     sameRules(actual.include, expected.include) &&
     sameRules(actual.require ?? [], expected.require ?? []) &&
-    (!Array.isArray(actual.exclude) || actual.exclude.length === 0)
+    (actual.exclude == null || (Array.isArray(actual.exclude) && actual.exclude.length === 0))
   );
 }
 
-function verifyExistingApp(app, policies, spec, email, idpId) {
+function verifyExistingApp(app, policies, spec, email, idpId, policyOverride) {
   const expected = appBody(spec, email, idpId);
+  const aud = safeAud(app?.aud);
   const destination = app?.destinations;
   const actualDomain = parsePublicDestination(app?.domain);
   const actualDestination = Array.isArray(destination) && destination.length === 1 ? destination[0] : null;
   const publicUri = parsePublicDestination(actualDestination?.uri);
   if (
     !isId(app?.id) ||
+    !aud ||
     app.name !== spec.name ||
     app.type !== 'self_hosted' ||
     actualDomain?.hostname !== PREVIEW_HOST ||
@@ -158,7 +182,7 @@ function verifyExistingApp(app, policies, spec, email, idpId) {
     (Array.isArray(actualDestination.overrides) && actualDestination.overrides.length > 0) ||
     !Array.isArray(policies) ||
     policies.length !== 1 ||
-    !samePolicy(policies[0], expected.policies[0])
+    !samePolicy(policies[0], policyOverride ?? expected.policies[0])
   ) {
     fail('An existing preview Access application differs from the expected configuration');
   }
@@ -173,7 +197,37 @@ function verifyExistingApp(app, policies, spec, email, idpId) {
       fail('The existing preview admin Access application has incompatible identity settings');
     }
   }
-  return { role: spec.role, name: spec.name, path: spec.path, id: app.id, aud: safeAud(app.aud) };
+  return { role: spec.role, name: spec.name, path: spec.path, id: app.id, aud };
+}
+
+/** Reject meaningful policy settings that a narrow PUT might otherwise reset. */
+function migrationPolicyBody(actual, oldExpected, newExpected) {
+  if (!isId(actual?.id) || !samePolicy(actual, oldExpected)) fail('The legacy admin policy is no longer exact');
+  const structural = new Set([
+    'id',
+    'account_id',
+    'app_id',
+    'created_at',
+    'updated_at',
+    'name',
+    'decision',
+    'include',
+    'require',
+    'exclude',
+  ]);
+  const body = { ...newExpected, exclude: [] };
+  for (const [key, value] of Object.entries(actual)) {
+    if (structural.has(key)) continue;
+    if (key === 'precedence') {
+      if (!Number.isSafeInteger(value) || value < 0) fail('The legacy admin policy precedence is invalid');
+      body.precedence = value;
+      continue;
+    }
+    if (value !== null && value !== false && value !== '' && !(Array.isArray(value) && value.length === 0)) {
+      fail('The legacy admin policy has additional settings that cannot be safely replaced');
+    }
+  }
+  return body;
 }
 
 function validateIdp(provider, idpId) {
@@ -197,9 +251,16 @@ function validateIdp(provider, idpId) {
   }
 }
 
-/** Preflight all Access state; only `configure` can create the two fixed preview applications. */
-export async function configureEmDashPreviewAccess({ operation = 'plan', accountId, token, adminEmail, idpId, fetchImpl = fetch } = {}) {
-  if (!['plan', 'configure'].includes(operation)) fail('Unsupported preview Access operation');
+/** Preflight all Access state; `configure` creates apps and `migrate-policy` updates one owned policy. */
+export async function configureEmDashPreviewAccess({
+  operation = 'plan',
+  accountId,
+  token,
+  adminEmail,
+  idpId,
+  fetchImpl = fetch,
+} = {}) {
+  if (!['plan', 'configure', 'migrate-policy'].includes(operation)) fail('Unsupported preview Access operation');
   if (accountId !== ACCOUNT_ID) fail('CLOUDFLARE_ACCOUNT_ID is not the isolated preview account');
   if (typeof token !== 'string' || token !== token.trim() || !/^[\x21-\x7e]{1,4096}$/.test(token))
     fail('CLOUDFLARE_API_TOKEN is missing or invalid');
@@ -208,19 +269,28 @@ export async function configureEmDashPreviewAccess({ operation = 'plan', account
   const prefix = `/client/v4/accounts/${ACCOUNT_ID}`;
 
   async function request(path, method = 'GET', body) {
+    const write = method !== 'GET';
+    const unknown =
+      method === 'PUT'
+        ? 'Access policy update outcome unknown; run read-only audit before retrying'
+        : 'Access create outcome unknown; run read-only audit before retrying';
     let response;
     try {
       response = await fetchImpl(new URL(`${prefix}${path}`, API_ORIGIN).href, {
         method,
         redirect: 'error',
-        headers: { Authorization: `Bearer ${token}`, Accept: 'application/json', ...(body ? { 'Content-Type': 'application/json' } : {}) },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          ...(body ? { 'Content-Type': 'application/json' } : {}),
+        },
         ...(body ? { body: JSON.stringify(body) } : {}),
         signal: AbortSignal.timeout(15_000),
       });
     } catch {
-      fail(method === 'POST' ? 'Access create outcome unknown; run read-only audit before retrying' : 'Access preflight request failed');
+      fail(write ? unknown : 'Access preflight request failed');
     }
-    if (method === 'POST' && !response.ok) fail('Access create outcome unknown; run read-only audit before retrying');
+    if (write && !response.ok) fail(unknown);
     if (response.status === 403) fail('Cloudflare Access permission_limited');
     if (response.status === 401) fail('Cloudflare Access authentication failed');
     if (!response.ok) fail('Access preflight HTTP error');
@@ -228,10 +298,9 @@ export async function configureEmDashPreviewAccess({ operation = 'plan', account
     try {
       result = await response.json();
     } catch {
-      fail(method === 'POST' ? 'Access create outcome unknown; run read-only audit before retrying' : 'Cloudflare Access returned an invalid response');
+      fail(write ? unknown : 'Cloudflare Access returned an invalid response');
     }
-    if (result?.success !== true)
-      fail(method === 'POST' ? 'Access create outcome unknown; run read-only audit before retrying' : 'Cloudflare Access rejected the request');
+    if (result?.success !== true) fail(write ? unknown : 'Cloudflare Access rejected the request');
     return result;
   }
 
@@ -252,7 +321,8 @@ export async function configureEmDashPreviewAccess({ operation = 'plan', account
   }
 
   const organization = (await request('/access/organizations')).result;
-  if (!isExpectedTeamDomain(organization?.auth_domain)) fail('Cloudflare Access team domain does not match the isolated preview account');
+  if (!isExpectedTeamDomain(organization?.auth_domain))
+    fail('Cloudflare Access team domain does not match the isolated preview account');
   const providers = await list('/access/identity_providers');
   const selectedProvider = providers.find((provider) => provider?.id === idpId);
   validateIdp(selectedProvider, idpId);
@@ -265,7 +335,8 @@ export async function configureEmDashPreviewAccess({ operation = 'plan', account
   const owned = new Map();
   for (const app of applications) {
     const spec = APPS.find((item) => item.name === app?.name);
-    if (hasBroadWorkerDestination(app, previewWorkerId)) fail('An existing Access application covers the preview Worker');
+    if (hasBroadWorkerDestination(app, previewWorkerId))
+      fail('An existing Access application covers the preview Worker');
     if (!spec && appTargetsPreviewHost(app)) fail('Another Access application targets the isolated preview hostname');
     if (!spec) continue;
     if (!isId(app.id) || owned.has(spec.role)) fail('Duplicate or invalid preview Access application');
@@ -273,12 +344,100 @@ export async function configureEmDashPreviewAccess({ operation = 'plan', account
   }
 
   const result = [];
+  let legacyAdmin = null;
   for (const spec of APPS) {
     const id = owned.get(spec.role);
     if (!id) continue;
     const full = (await request(`/access/apps/${id}`)).result;
     const policies = (await request(`/access/apps/${id}/policies`)).result;
-    result.push({ ...verifyExistingApp(full, policies, spec, email, idpId), state: 'existing' });
+    if (
+      operation === 'migrate-policy' &&
+      spec.role === 'admin' &&
+      Array.isArray(policies) &&
+      policies.length === 1 &&
+      samePolicy(policies[0], legacyAdminPolicy(email, idpId))
+    ) {
+      result.push({
+        ...verifyExistingApp(full, policies, spec, email, idpId, legacyAdminPolicy(email, idpId)),
+        state: 'existing',
+      });
+      legacyAdmin = { appId: id, policyId: policies[0].id };
+    } else {
+      result.push({ ...verifyExistingApp(full, policies, spec, email, idpId), state: 'existing' });
+    }
+  }
+
+  if (operation === 'migrate-policy') {
+    if (
+      owned.size !== APPS.length ||
+      result.length !== APPS.length ||
+      !result[0]?.aud ||
+      !/^[a-f0-9]{64}$/.test(result[0].aud)
+    ) {
+      fail('The two owned preview Access applications or the admin audience are incomplete');
+    }
+    if (!legacyAdmin) {
+      return { operation, previewHostname: PREVIEW_HOST, applications: result, state: 'already-current' };
+    }
+    if (!isId(legacyAdmin.policyId)) fail('The legacy admin policy ID is invalid');
+    const deploymentList = (await request(`/workers/scripts/${WORKER_NAME}/deployments?page=1&per_page=1`)).result;
+    const deployment = deploymentList?.deployments?.[0];
+    if (
+      !Array.isArray(deploymentList?.deployments) ||
+      deploymentList.deployments.length < 1 ||
+      !isId(deployment?.id) ||
+      deployment?.versions?.length !== 1 ||
+      deployment.versions[0].version_id !== AUTH_GUARD_VERSION ||
+      deployment.versions[0].percentage !== 100
+    ) {
+      fail('The audited CinaAuth guard is not the sole active preview Worker version');
+    }
+    const policyPath = `/access/apps/${legacyAdmin.appId}/policies/${legacyAdmin.policyId}`;
+    const oldExpected = legacyAdminPolicy(email, idpId);
+    const newExpected = appBody(APPS[0], email, idpId).policies[0];
+    const original = (await request(policyPath)).result;
+    const update = migrationPolicyBody(original, oldExpected, newExpected);
+    // Repeat the app, policy, inventory, and version checks immediately before the only write.
+    const [latestApps, latestAdmin, latestMedia, latestPolicies, latestPolicy, latestDeployment] = await Promise.all([
+      list('/access/apps'),
+      request(`/access/apps/${legacyAdmin.appId}`).then((response) => response.result),
+      request(`/access/apps/${owned.get('publicMedia')}`).then((response) => response.result),
+      request(`/access/apps/${legacyAdmin.appId}/policies`).then((response) => response.result),
+      request(policyPath).then((response) => response.result),
+      request(`/workers/scripts/${WORKER_NAME}/deployments?page=1&per_page=1`).then((response) => response.result),
+    ]);
+    if (
+      latestApps.length !== applications.length ||
+      latestApps.some((app, index) => !isDeepStrictEqual(app, applications[index])) ||
+      !Array.isArray(latestPolicies) ||
+      latestPolicies.length !== 1 ||
+      latestPolicies[0]?.id !== legacyAdmin.policyId ||
+      !isDeepStrictEqual(latestPolicy, original) ||
+      !isDeepStrictEqual(latestDeployment, deploymentList)
+    ) {
+      fail('Preview Access state changed during policy migration preflight');
+    }
+    verifyExistingApp(latestAdmin, latestPolicies, APPS[0], email, idpId, oldExpected);
+    const latestMediaPolicies = (await request(`/access/apps/${owned.get('publicMedia')}/policies`)).result;
+    verifyExistingApp(latestMedia, latestMediaPolicies, APPS[1], email, idpId);
+    await request(policyPath, 'PUT', update);
+    try {
+      const [verifiedAdmin, verifiedPolicies, verifiedPolicy, verifiedMedia, verifiedMediaPolicies] = await Promise.all(
+        [
+          request(`/access/apps/${legacyAdmin.appId}`).then((response) => response.result),
+          request(`/access/apps/${legacyAdmin.appId}/policies`).then((response) => response.result),
+          request(policyPath).then((response) => response.result),
+          request(`/access/apps/${owned.get('publicMedia')}`).then((response) => response.result),
+          request(`/access/apps/${owned.get('publicMedia')}/policies`).then((response) => response.result),
+        ]
+      );
+      verifyExistingApp(verifiedAdmin, verifiedPolicies, APPS[0], email, idpId);
+      verifyExistingApp(verifiedMedia, verifiedMediaPolicies, APPS[1], email, idpId);
+      if (verifiedPolicy?.id !== legacyAdmin.policyId || !samePolicy(verifiedPolicy, newExpected)) throw new Error();
+    } catch {
+      fail('Access policy update outcome unknown; run read-only audit before retrying');
+    }
+    return { operation, previewHostname: PREVIEW_HOST, applications: result, state: 'migrated' };
   }
 
   for (const spec of APPS) {
@@ -304,6 +463,7 @@ export async function configureEmDashPreviewAccess({ operation = 'plan', account
 function cliOperation(args) {
   if (args.length === 0 || (args.length === 1 && ['plan', '--operation=plan'].includes(args[0]))) return 'plan';
   if (args.length === 1 && ['configure', '--operation=configure'].includes(args[0])) return 'configure';
+  if (args.length === 1 && ['migrate-policy', '--operation=migrate-policy'].includes(args[0])) return 'migrate-policy';
   fail('Unsupported preview Access operation');
 }
 
@@ -318,7 +478,9 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     });
     process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
   } catch (error) {
-    process.stderr.write(`${error instanceof SafeConfigurationError ? error.message : 'Access configuration failed; diagnostics suppressed'}\n`);
+    process.stderr.write(
+      `${error instanceof SafeConfigurationError ? error.message : 'Access configuration failed; diagnostics suppressed'}\n`
+    );
     process.exitCode = 1;
   }
 }
