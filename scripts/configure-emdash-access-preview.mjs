@@ -203,8 +203,12 @@ function verifyExistingApp(app, policies, spec, email, idpId, policyOverride) {
 /** Reject meaningful policy settings that a narrow PUT might otherwise reset. */
 function migrationPolicyBody(actual, oldExpected, newExpected) {
   if (!isId(actual?.id) || !samePolicy(actual, oldExpected)) fail('The legacy admin policy is no longer exact');
+  if (actual.uid !== undefined && (!isId(actual.uid) || actual.uid !== actual.id)) {
+    fail('The legacy admin policy UID does not match its ID');
+  }
   const structural = new Set([
     'id',
+    'uid',
     'account_id',
     'app_id',
     'created_at',

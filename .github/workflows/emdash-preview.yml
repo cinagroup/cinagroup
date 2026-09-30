@@ -91,7 +91,7 @@ jobs:
         run: node --test tests/access-emdash-preview.test.mjs tests/access-emdash-preview-workflow.test.mjs
 
       - name: Test isolated public runtime diagnostics
-        run: node --test tests/diagnose-emdash-public.test.mjs
+        run: node --test tests/diagnose-emdash-public.test.mjs tests/public-500-diagnostic.test.mjs
 
       - name: Test isolated Access application and runtime configuration
         run: node --test tests/configure-emdash-access-preview.test.mjs tests/configure-emdash-access-runtime.test.mjs tests/configure-emdash-access-workflow.test.mjs
@@ -334,11 +334,19 @@ jobs:
         run: node scripts/secrets-emdash-preview.mjs "$OPERATION"
 
       - name: Verify preview route isolation, noindex, and closed admin setup
+        id: preview-live-check
         if: github.event_name == 'workflow_dispatch' && inputs.operation == 'deploy'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: node scripts/verify-emdash-preview-deployment.mjs
+
+      - name: Diagnose public failures after preview deployment
+        if: failure() && github.event_name == 'workflow_dispatch' && inputs.operation == 'deploy' && steps.preview-live-check.conclusion == 'failure'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/diagnose-emdash-public.mjs --run
 
       - name: Deployment summary
         env:

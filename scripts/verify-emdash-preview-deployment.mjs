@@ -47,20 +47,39 @@ const subdomain = accountSubdomain?.subdomain;
 if (subdomain !== 'cinagroup') throw new Error('Unexpected account workers.dev subdomain');
 const origin = `https://${workerName}.${subdomain}.workers.dev`;
 
-async function checkPath(path, expectedStatuses) {
+async function checkPath(path, expectedStatuses, { method = 'GET', html = false } = {}) {
   let lastStatus;
   for (let attempt = 0; attempt < 4; attempt++) {
-    const response = await fetch(`${origin}${path}`, { redirect: 'manual' });
+    const response = await fetch(`${origin}${path}`, { method, redirect: 'manual' });
     lastStatus = response.status;
     if (expectedStatuses.includes(lastStatus)) {
       if (!response.headers.get('X-Robots-Tag')?.includes('noindex')) {
-        throw new Error(`Preview ${path}: missing Worker-level noindex header`);
+        await response.body?.cancel();
+        throw new Error(`Preview ${method} ${path}: missing Worker-level noindex header`);
+      }
+      if (html && method === 'GET') {
+        const body = await response.text();
+        if (!response.headers.get('Content-Type')?.includes('text/html') || !/<html(?:\s|>)/i.test(body)) {
+          throw new Error(`Preview GET ${path}: expected a complete HTML page`);
+        }
+      } else if (html && method === 'HEAD') {
+        if ((await response.arrayBuffer()).byteLength !== 0) {
+          throw new Error(`Preview HEAD ${path}: response unexpectedly contains a body`);
+        }
+      } else {
+        await response.body?.cancel();
       }
       return lastStatus;
     }
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await response.body?.cancel();
+    if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, 3000));
   }
-  throw new Error(`Preview ${path}: expected HTTP ${expectedStatuses.join(' or ')}, received ${lastStatus}`);
+  throw new Error(`Preview ${method} ${path}: expected HTTP ${expectedStatuses.join(' or ')}, received ${lastStatus}`);
+}
+
+async function checkPublicHtmlPath(path) {
+  await checkPath(path, [200], { method: 'GET', html: true });
+  await checkPath(path, [200], { method: 'HEAD', html: true });
 }
 
 async function checkAccessPath(path) {
@@ -82,13 +101,11 @@ async function checkAccessPath(path) {
   throw new Error(`Preview ${path}: expected the fixed Cloudflare Access login challenge, received HTTP ${lastStatus}`);
 }
 
-await checkPath('/', [200]);
+await checkPublicHtmlPath('/');
 await checkPath('/zh/', [200]);
 await checkPath('/favicon.svg', [200]);
-await checkPath('/blog/', [200]);
-await checkPath('/zh/blog/', [200]);
-await checkPath('/ja/blog/', [200]);
-for (const locale of ['ko', 'ru', 'es', 'pt', 'fr']) await checkPath(`/${locale}/blog/`, [200]);
+await checkPublicHtmlPath('/blog/');
+for (const locale of ['zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr']) await checkPublicHtmlPath(`/${locale}/blog/`);
 const legacyArticlePath = '/zh/blog/news-briefing-2026-06-15-06-zh/';
 await checkPath(legacyArticlePath, [200]);
 const legacyArticle = await fetch(`${origin}${legacyArticlePath}`);
@@ -167,7 +184,8 @@ const lines = [
   `- URL: ${origin}`,
   '- Routes/custom domains: none',
   '- Public homepages and a static asset: HTTP 200 with noindex',
-  '- All eight blog indexes, legacy/fresh articles, RSS, robots, and CMS sitemap: HTTP 200 with noindex',
+  '- Home and all eight blog indexes: full GET HTML and bodyless HEAD, HTTP 200 with noindex',
+  '- Legacy/fresh articles, RSS, robots, and CMS sitemap: HTTP 200 with noindex',
   '- Public security headers and legacy redirects verified; signed preview excluded from sitemap',
   '- Anonymous public media reaches EmDash; missing file returns 404',
   '- EmDash admin, setup API, native passkey auth, and former password entry: fixed-host Cloudflare Access HTTP 302 login challenge',

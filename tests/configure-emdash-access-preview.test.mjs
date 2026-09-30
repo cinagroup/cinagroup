@@ -93,6 +93,8 @@ async function legacyCloudflare(options) {
   const admin = cloudflare.apps[0];
   admin.aud = 'a'.repeat(64);
   admin.policies[0].id = appId(30);
+  admin.policies[0].uid = appId(30);
+  admin.policies[0].reusable = false;
   admin.policies[0].precedence = 1;
   admin.policies[0].require = [
     { oidc: { claim_name: 'email_verified', claim_value: 'true', identity_provider_id: IDP_ID } },
@@ -246,6 +248,8 @@ test('migrate-policy replaces only the exact legacy admin Require rule with the 
   assert.deepEqual(update.require, [{ login_method: { id: IDP_ID } }]);
   assert.equal(update.precedence, 1);
   assert.deepEqual(update.exclude, []);
+  assert.ok(!Object.hasOwn(update, 'uid'));
+  assert.ok(!Object.hasOwn(update, 'reusable'));
   assert.deepEqual(cloudflare.apps[0].policies[0].require, [{ login_method: { id: IDP_ID } }]);
   for (const secret of [TOKEN, EMAIL, 'PRIVATE-CLIENT-ID', 'PRIVATE-CLIENT-SECRET']) {
     assert.ok(!JSON.stringify(report).includes(secret));
@@ -283,6 +287,9 @@ test('migrate-policy refuses changed app domain, extra rule, extra policy or wro
     },
     (c) => {
       c.apps[0].policies[0].approval_required = true;
+    },
+    (c) => {
+      c.apps[0].policies[0].uid = appId(90);
     },
   ]) {
     const cloudflare = await legacyCloudflare();

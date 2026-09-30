@@ -1,0 +1,26 @@
+---
+import { classifyPublic500 } from '~/emdash/public-500-diagnostic.mjs';
+
+export const prerender = false;
+
+const diagnostic = classifyPublic500(Astro.props.error);
+console.error(`[cinagroup-preview-500] ${JSON.stringify(diagnostic)}`);
+Astro.response.status = 500;
+Astro.response.headers.set('Cache-Control', 'no-store');
+Astro.response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Service temporarily unavailable | CinaGroup</title>
+  </head>
+  <body>
+    <main>
+      <h1>Service temporarily unavailable</h1>
+      <p>Please try again later.</p>
+    </main>
+  </body>
+</html>

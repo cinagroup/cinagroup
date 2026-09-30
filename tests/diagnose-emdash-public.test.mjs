@@ -102,7 +102,7 @@ function fakeCloudflare({
             scriptName: WORKER,
             event: { request: { method: init.method, url: input, headers: { Cookie: TOKEN } }, response: { status } },
             outcome: 'exception',
-            logs: [{ message: ['Setup probe failed (non-fatal):', { secret: TOKEN, email: PRIVATE }] }],
+            logs: [{ level: 'error', message: ['Setup probe failed (non-fatal):', { secret: TOKEN, email: PRIVATE }] }],
             exceptions: [
               {
                 name: 'TypeError',
@@ -145,6 +145,8 @@ test('fixed preview inventory, ephemeral tail, eight anonymous probes, and clean
   assert.equal(report.probes.length, 8);
   assert.ok(report.probes.every((probe) => probe.status === 500 && probe.tail.length === 1));
   assert.equal(report.probes[0].tail[0].stage, 'setup_probe');
+  assert.equal(report.probes[0].tail[0].logCount, 1);
+  assert.equal(report.probes[0].tail[0].errorLogCount, 1);
   assert.equal(report.probes[0].tail[0].exceptionName, 'TypeError');
   assert.equal(report.probes[0].tail[0].exceptionCode, 'D1_ERROR');
   assert.equal(fake.sockets[0].protocol, 'trace-v1');
@@ -182,6 +184,10 @@ test('raw URL, method, and Worker name must match exactly before any tail conten
     outcome: 'ok',
     responseStatus: null,
     stage: 'emdash_middleware',
+    logCount: 1,
+    errorLogCount: 0,
+    warningLogCount: 0,
+    astro500: null,
     exceptionName: 'Other',
     exceptionCode: null,
   });
@@ -204,6 +210,34 @@ test('known runtime I/O and resource failures use fixed categories only', () => 
     assert.ok(!JSON.stringify(output).includes(PRIVATE));
   }
   assert.equal(summarizeTailEvent({ ...base, outcome: 'exceededCpu' }).stage, 'resource_limit');
+});
+
+test('Astro 500 route diagnostic is accepted only as a fixed safe projection', () => {
+  const diagnostic = {
+    category: 'cross_request_io',
+    errorName: 'TypeError',
+    errorCode: 'D1_ERROR',
+    workerLine: 1234,
+    workerColumn: 20,
+    secret: TOKEN,
+  };
+  const trace = {
+    scriptName: WORKER,
+    event: { request: { method: 'GET', url: `${ORIGIN}/ko/blog/` }, response: { status: 500 } },
+    outcome: 'ok',
+    logs: [{ level: 'error', message: [`[cinagroup-preview-500] ${JSON.stringify(diagnostic)}`] }],
+  };
+  const safe = summarizeTailEvent(trace);
+  assert.equal(safe.stage, 'astro_500');
+  assert.deepEqual(safe.astro500, {
+    category: 'cross_request_io',
+    errorName: 'TypeError',
+    errorCode: 'D1_ERROR',
+    workerLine: 1234,
+    workerColumn: 20,
+  });
+  assert.equal(safe.errorLogCount, 1);
+  assert.ok(!JSON.stringify(safe).includes(TOKEN));
 });
 
 test('deployment and settings projections reject malformed state and never echo secret values', () => {

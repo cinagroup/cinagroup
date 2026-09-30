@@ -38,6 +38,18 @@ const KNOWN_EXCEPTION_CODES = new Set([
   'ERR_MODULE_NOT_FOUND',
   'ERR_INVALID_ARG_TYPE',
 ]);
+const ASTRO_500_PREFIX = '[cinagroup-preview-500] ';
+const ASTRO_500_CATEGORIES = new Set([
+  'no_error',
+  'cross_request_io',
+  'global_scope_io',
+  'resource_limit',
+  'binding_missing',
+  'database',
+  'module_resolution',
+  'astro_route',
+  'unknown',
+]);
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 const TAIL_ID = /^(?:[a-f0-9]{32}|[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})$/i;
 
@@ -57,6 +69,7 @@ const safeId = (value) => typeof value === 'string' && value === value.trim() &&
 function stageFromText(texts) {
   for (const text of texts) {
     if (typeof text !== 'string') continue;
+    if (text.startsWith(ASTRO_500_PREFIX)) return 'astro_500';
     if (text.includes('Cannot perform I/O on behalf of a different request')) return 'cross_request_io';
     if (
       text.includes('Disallowed operation called within global scope') ||
@@ -84,6 +97,39 @@ function stageFromText(texts) {
   return 'unknown';
 }
 
+function safeAstro500(texts) {
+  for (const text of texts) {
+    if (typeof text !== 'string' || !text.startsWith(ASTRO_500_PREFIX) || text.length > 4096) continue;
+    let candidate;
+    try {
+      candidate = JSON.parse(text.slice(ASTRO_500_PREFIX.length));
+    } catch {
+      continue;
+    }
+    if (!candidate || !ASTRO_500_CATEGORIES.has(candidate.category)) continue;
+    const errorName =
+      KNOWN_EXCEPTION_NAMES.has(candidate.errorName) || candidate.errorName === 'AstroError'
+        ? candidate.errorName
+        : 'Other';
+    const errorCode =
+      KNOWN_EXCEPTION_CODES.has(candidate.errorCode) || candidate.errorCode === 'BINDING_NOT_FOUND'
+        ? candidate.errorCode
+        : Number.isInteger(candidate.errorCode) && candidate.errorCode >= 0 && candidate.errorCode <= 9999
+          ? candidate.errorCode
+          : null;
+    const workerLine =
+      Number.isInteger(candidate.workerLine) && candidate.workerLine > 0 && candidate.workerLine <= 10_000_000
+        ? candidate.workerLine
+        : null;
+    const workerColumn =
+      Number.isInteger(candidate.workerColumn) && candidate.workerColumn > 0 && candidate.workerColumn <= 100_000
+        ? candidate.workerColumn
+        : null;
+    return { category: candidate.category, errorName, errorCode, workerLine, workerColumn };
+  }
+  return null;
+}
+
 function safeException(exception) {
   if (!exception || typeof exception !== 'object') return null;
   const name = KNOWN_EXCEPTION_NAMES.has(exception.name) ? exception.name : 'Other';
@@ -101,14 +147,21 @@ export function summarizeTailEvent(trace) {
   if (trace.scriptName && trace.scriptName !== WORKER_NAME) return null;
   const request = trace.event?.request;
   if (!request || !PROBE_KEYS.has(`${request.method} ${request.url}`)) return null;
+  const logs = Array.isArray(trace.logs) ? trace.logs : [];
   const logTexts = [];
-  for (const log of Array.isArray(trace.logs) ? trace.logs : []) {
+  let errorLogCount = 0;
+  let warningLogCount = 0;
+  for (const log of logs) {
+    if (log?.level === 'error') errorLogCount += 1;
+    if (log?.level === 'warn') warningLogCount += 1;
     for (const item of Array.isArray(log?.message) ? log.message : [log?.message]) {
       if (typeof item === 'string') logTexts.push(item);
+      else if (item && typeof item === 'object' && typeof item.message === 'string') logTexts.push(item.message);
     }
   }
   const exceptions = Array.isArray(trace.exceptions) ? trace.exceptions : [];
   const firstException = exceptions.length > 0 ? safeException(exceptions[0]) : null;
+  const astro500 = safeAstro500(logTexts);
   const stageFromLogs = stageFromText([...logTexts, ...exceptions.map((item) => item?.message)]);
   const stage =
     stageFromLogs === 'unknown' && ['exceededCpu', 'exceededMemory'].includes(trace.outcome)
@@ -120,6 +173,10 @@ export function summarizeTailEvent(trace) {
     outcome: KNOWN_OUTCOMES.has(trace.outcome) ? trace.outcome : 'unknown',
     responseStatus: safeStatus(trace.event?.response?.status),
     stage,
+    logCount: logs.length,
+    errorLogCount,
+    warningLogCount,
+    astro500,
     exceptionName: firstException?.name ?? null,
     exceptionCode: firstException?.code ?? null,
   };
@@ -391,12 +448,16 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
       accountId: process.env.CLOUDFLARE_ACCOUNT_ID,
       token: process.env.CLOUDFLARE_API_TOKEN,
     });
-    process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
-    if (!report.tailComplete) process.exitCode = 1;
+    await new Promise((resolveWrite) => process.stdout.write(`${JSON.stringify(report, null, 2)}\n`, resolveWrite));
+    // The temporary Tail has already been deleted; a closing WebSocket can still
+    // keep Node alive while waiting for its peer's close handshake.
+    process.exit(report.tailComplete ? 0 : 1);
   } catch (error) {
     const code = error instanceof SafeDiagnosticError ? error.code : 'diagnostic_failed';
     const cleanup = error instanceof SafeDiagnosticError ? error.cleanup : undefined;
-    process.stderr.write(`${JSON.stringify({ error: code, ...(cleanup ? { cleanup } : {}) })}\n`);
-    process.exitCode = 1;
+    await new Promise((resolveWrite) =>
+      process.stderr.write(`${JSON.stringify({ error: code, ...(cleanup ? { cleanup } : {}) })}\n`, resolveWrite)
+    );
+    process.exit(1);
   }
 }
