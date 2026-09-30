@@ -5,6 +5,7 @@ import test from 'node:test';
 import {
   canonicalizeCmsBlogResponse,
   createPublicResponseParity,
+  fetchGeneratedSitemapAsset,
   fetchPublicCanonicalRedirect,
 } from '../src/emdash/public-response-parity.ts';
 
@@ -304,4 +305,85 @@ test('native admin/API/media, signed previews, encoded aliases, and unknown shap
     assert.equal(request.headers.get('Authorization'), 'Bearer example', path);
     assert.equal(await rendered.text(), 'untouched', path);
   }
+});
+
+test('generated sitemap index and canonical numeric chunks use the static asset response unchanged', async () => {
+  for (const path of ['/sitemap-index.xml', '/sitemap-0.xml', '/sitemap-1.xml', '/sitemap-123.xml']) {
+    for (const method of ['GET', 'HEAD']) {
+      const request = new Request(origin + path + '?source=one&token=a%2Fb', {
+        method,
+        headers: { 'If-None-Match': '"sitemap-version"', Accept: 'application/xml' },
+      });
+      const asset = new Response(method === 'HEAD' ? null : '<xml>legacy</xml>', {
+        headers: { 'Content-Type': 'application/xml', ETag: '"sitemap-version"' },
+      });
+      let calls = 0;
+      const response = await fetchGeneratedSitemapAsset(request, {
+        async fetch(actual) {
+          calls++;
+          assert.equal(actual, request, path);
+          assert.equal(actual.url, origin + path + '?source=one&token=a%2Fb', path);
+          assert.equal(actual.method, method, path);
+          assert.equal(actual.headers.get('If-None-Match'), '"sitemap-version"', path);
+          assert.equal(actual.headers.get('Accept'), 'application/xml', path);
+          return asset;
+        },
+      });
+      assert.equal(calls, 1, path);
+      assert.equal(response, asset, path);
+      assert.equal(response.headers.get('ETag'), '"sitemap-version"', path);
+      assert.equal(await response.text(), method === 'HEAD' ? '' : '<xml>legacy</xml>', path);
+    }
+  }
+});
+
+test('conditional and missing generated sitemap assets never fall through to the EmDash collection route', async () => {
+  for (const status of [304, 404]) {
+    const request = new Request(origin + '/sitemap-0.xml?revision=one', {
+      headers: { 'If-None-Match': '"sitemap-version"' },
+    });
+    const asset = new Response(status === 304 ? null : 'Not found', { status });
+    const response = await fetchGeneratedSitemapAsset(request, {
+      async fetch(actual) {
+        assert.equal(actual, request);
+        return asset;
+      },
+    });
+    assert.equal(response, asset);
+    assert.equal(response.status, status);
+  }
+});
+
+test('governed and native feeds, aliases, slashed paths, and unsafe methods bypass the static sitemap probe', async () => {
+  let calls = 0;
+  const assets = {
+    async fetch() {
+      calls++;
+      return new Response('unexpected');
+    },
+  };
+  for (const path of [
+    '/sitemap.xml',
+    '/sitemap-emdash.xml',
+    '/sitemap-posts.xml',
+    '/sitemap-00.xml',
+    '/sitemap-0.xml/',
+    '/SITEMAP-0.XML',
+    '/%73itemap-0.xml',
+    '/sitemap-0.xml/other',
+    '/cms-preview/?_preview=signed',
+    '/_emdash/api/media/file/photo.png',
+  ]) {
+    assert.equal(await fetchGeneratedSitemapAsset(new Request(origin + path), assets), undefined, path);
+  }
+  const post = new Request(origin + '/sitemap-0.xml?keep=one', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer example' },
+    body: 'unchanged body',
+  });
+  assert.equal(await fetchGeneratedSitemapAsset(post, assets), undefined);
+  assert.equal(post.url, origin + '/sitemap-0.xml?keep=one');
+  assert.equal(post.headers.get('Authorization'), 'Bearer example');
+  assert.equal(await post.text(), 'unchanged body');
+  assert.equal(calls, 0);
 });

@@ -155,3 +155,18 @@ export function canonicalizeCmsBlogResponse(request: Request, response: Response
     headers: { Location: `${url.pathname}/${url.search}`, 'Cache-Control': 'no-store' },
   });
 }
+
+/** The generated sitemap index/chunks must win over EmDash's dynamic sitemap-[collection].xml route. */
+export async function fetchGeneratedSitemapAsset(
+  request: Request,
+  assets: LegacyAssetFetcher
+): Promise<Response | undefined> {
+  if (request.method !== 'GET' && request.method !== 'HEAD') return undefined;
+  const pathname = new URL(request.url).pathname;
+  if (pathname !== '/sitemap-index.xml' && !/^\/sitemap-(?:0|[1-9][0-9]*)\.xml$/.test(pathname)) {
+    return undefined;
+  }
+  // Pass the original request through, including query and conditional headers. A missing
+  // generated asset stays a 404 rather than falling through to EmDash's collection route.
+  return assets.fetch(request);
+}

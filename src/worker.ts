@@ -8,6 +8,7 @@ import { fetchLegacyArticleAsset, type LegacyAssetFetcher } from './emdash/legac
 import {
   canonicalizeCmsBlogResponse,
   createPublicResponseParity,
+  fetchGeneratedSitemapAsset,
   fetchPublicCanonicalRedirect,
 } from './emdash/public-response-parity';
 import publicRedirects from '../public/_redirects?raw';
@@ -43,6 +44,8 @@ export default {
         const assets = (env as unknown as { ASSETS: LegacyAssetFetcher }).ASSETS;
         const redirect = publicParity.redirect(forwarded) ?? (await fetchPublicCanonicalRedirect(forwarded, assets));
         if (redirect) return redirect;
+        const staticSitemap = await fetchGeneratedSitemapAsset(forwarded, assets);
+        if (staticSitemap) return staticSitemap;
         const legacyArticle = await fetchLegacyArticleAsset(forwarded, assets);
         if (legacyArticle) return legacyArticle;
         const rendered = await astroFetch(forwarded as typeof request, env, ctx);
