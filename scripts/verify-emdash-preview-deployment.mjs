@@ -105,6 +105,12 @@ for (const path of ['/', '/zh/', '/ja/', '/contact/', '/zh/contact/', '/not-a-pr
 }
 for (const [path, location, status] of [
   ['/zh', '/zh/', 308],
+  ['/ja', '/ja/', 308],
+  ['/ko', '/ko/', 308],
+  ['/ru', '/ru/', 308],
+  ['/es', '/es/', 308],
+  ['/pt', '/pt/', 308],
+  ['/fr', '/fr/', 308],
   ['/homes/saas', '/', 301],
   ['/homes/saas/x/', '/', 301],
   ['/index-new/', '/', 301],
