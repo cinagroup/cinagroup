@@ -2,7 +2,11 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
-import { createPublicResponseParity, fetchPublicCanonicalRedirect } from '../src/emdash/public-response-parity.ts';
+import {
+  canonicalizeCmsBlogResponse,
+  createPublicResponseParity,
+  fetchPublicCanonicalRedirect,
+} from '../src/emdash/public-response-parity.ts';
 
 const redirects = readFileSync(new URL('../public/_redirects', import.meta.url), 'utf8');
 const headerSource = readFileSync(new URL('../public/_headers', import.meta.url), 'utf8');
@@ -199,4 +203,105 @@ test('unsupported policy syntax fails validation rather than silently dropping a
     assert.throws(() => createPublicResponseParity(source, headerSource), /Unsupported public/);
   }
   assert.throws(() => createPublicResponseParity(redirects, 'Header: unattached'), /Unsupported public/);
+});
+
+test('successful CMS-only blog indexes and published details canonicalize without losing the query', () => {
+  for (const path of [
+    '/ko/blog',
+    '/ru/blog',
+    '/es/blog',
+    '/pt/blog',
+    '/fr/blog',
+    '/blog/new-post',
+    '/zh/blog/new-post',
+    '/ja/blog/new-post',
+  ]) {
+    const request = new Request(origin + path + '?source=one&token=a%2Fb&source=two');
+    const rendered = new Response('<html>published</html>', {
+      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' },
+    });
+    const response = canonicalizeCmsBlogResponse(request, rendered);
+    assert.equal(response.status, 308, path);
+    assert.equal(response.headers.get('Location'), path + '/?source=one&token=a%2Fb&source=two', path);
+    assert.equal(response.headers.get('Cache-Control'), 'no-store', path);
+    assert.equal(response.body, null, path);
+    assert.equal(request.url, origin + path + '?source=one&token=a%2Fb&source=two', path);
+  }
+  for (const path of ['/blog', '/zh/blog', '/ja/blog']) {
+    const response = canonicalizeCmsBlogResponse(
+      new Request(origin + path),
+      new Response('<html>index</html>', { headers: { 'Content-Type': 'text/html' } })
+    );
+    assert.equal(response.status, 308, path);
+    assert.equal(response.headers.get('Location'), path + '/', path);
+  }
+});
+
+test('HEAD canonical redirect has no body; slash and legacy asset paths retain existing behavior', async () => {
+  const head = new Request(origin + '/ko/blog/new-post?lang=ko', { method: 'HEAD' });
+  const rendered = new Response(null, { headers: { 'Content-Type': 'text/html' } });
+  const canonical = canonicalizeCmsBlogResponse(head, rendered);
+  assert.equal(canonical.status, 308);
+  assert.equal(canonical.headers.get('Location'), '/ko/blog/new-post/?lang=ko');
+  assert.equal(canonical.headers.get('Cache-Control'), 'no-store');
+  assert.equal(canonical.body, null);
+
+  const slash = new Response('<html>canonical</html>', { headers: { 'Content-Type': 'text/html' } });
+  assert.equal(canonicalizeCmsBlogResponse(new Request(origin + '/ko/blog/new-post/'), slash), slash);
+
+  const legacy = new Request(origin + '/zh/blog/legacy-post?src=old');
+  const assetRedirect = await fetchPublicCanonicalRedirect(legacy, {
+    async fetch(candidate) {
+      assert.equal(candidate.url, origin + '/zh/blog/legacy-post/?src=old');
+      return new Response('<html>legacy</html>', { headers: { 'Content-Type': 'text/html' } });
+    },
+  });
+  assert.equal(assetRedirect.status, 308);
+  assert.equal(assetRedirect.headers.get('Location'), '/zh/blog/legacy-post/?src=old');
+});
+
+test('missing, draft, failed, non-HTML, and unsafe-method CMS responses do not canonicalize', async () => {
+  const url = origin + '/ko/blog/new-post?draft=1';
+  for (const status of [404, 503]) {
+    const rendered = new Response('unavailable', { status, headers: { 'Content-Type': 'text/html' } });
+    assert.equal(canonicalizeCmsBlogResponse(new Request(url), rendered), rendered);
+  }
+  for (const contentType of ['application/json', 'text/plain', 'text/htmlbogus']) {
+    const rendered = new Response('not a rendered page', { headers: { 'Content-Type': contentType } });
+    assert.equal(canonicalizeCmsBlogResponse(new Request(url), rendered), rendered);
+  }
+  const request = new Request(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer example' },
+    body: '{"draft":true}',
+  });
+  const rendered = new Response('untouched', { headers: { 'Content-Type': 'text/html' } });
+  assert.equal(canonicalizeCmsBlogResponse(request, rendered), rendered);
+  assert.equal(request.method, 'POST');
+  assert.equal(request.headers.get('Authorization'), 'Bearer example');
+  assert.equal(await request.text(), '{"draft":true}');
+  assert.equal(await rendered.text(), 'untouched');
+});
+
+test('native admin/API/media, signed previews, encoded aliases, and unknown shapes are untouched', async () => {
+  for (const path of [
+    '/_emdash/admin/setup',
+    '/_emdash/api/setup/status',
+    '/_emdash/api/auth/mode',
+    '/_emdash/api/media/file/example.png',
+    '/cms-preview/secret-post?_preview=signed%2Ftoken',
+    '/zh/cms-preview/secret-post?_preview=signed%2Ftoken',
+    '/%62log/new-post',
+    '/blog/%6eew-post',
+    '/blog/Bad-Slug',
+    '/blog/unknown/path',
+    '/en/blog/new-post',
+  ]) {
+    const request = new Request(origin + path, { headers: { Authorization: 'Bearer example' } });
+    const rendered = new Response('untouched', { headers: { 'Content-Type': 'text/html' } });
+    assert.equal(canonicalizeCmsBlogResponse(request, rendered), rendered, path);
+    assert.equal(request.url, origin + path, path);
+    assert.equal(request.headers.get('Authorization'), 'Bearer example', path);
+    assert.equal(await rendered.text(), 'untouched', path);
+  }
 });

@@ -139,3 +139,19 @@ export async function fetchPublicCanonicalRedirect(
   if (!exists) return undefined;
   return new Response(null, { status: 308, headers: { Location: destination } });
 }
+
+/** Canonicalize only successfully rendered CMS blog pages absent from the legacy asset inventory. */
+export function canonicalizeCmsBlogResponse(request: Request, response: Response): Response {
+  if ((request.method !== 'GET' && request.method !== 'HEAD') || response.status !== 200) return response;
+  if (!/^\s*text\/html(?:\s*;|$)/i.test(response.headers.get('Content-Type') ?? '')) return response;
+
+  const url = new URL(request.url);
+  // Exact public route shapes only. Encoded aliases, private routes, and unknown slugs retain their response.
+  if (!/^\/(?:(?:zh|ja|ko|ru|es|pt|fr)\/)?blog(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?$/.test(url.pathname)) {
+    return response;
+  }
+  return new Response(null, {
+    status: 308,
+    headers: { Location: `${url.pathname}/${url.search}`, 'Cache-Control': 'no-store' },
+  });
+}

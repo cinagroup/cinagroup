@@ -5,7 +5,11 @@ import {
   isIsolatedPreviewHostname,
 } from './emdash-preview-access';
 import { fetchLegacyArticleAsset, type LegacyAssetFetcher } from './emdash/legacy-article-asset';
-import { createPublicResponseParity, fetchPublicCanonicalRedirect } from './emdash/public-response-parity';
+import {
+  canonicalizeCmsBlogResponse,
+  createPublicResponseParity,
+  fetchPublicCanonicalRedirect,
+} from './emdash/public-response-parity';
 import publicRedirects from '../public/_redirects?raw';
 import publicHeaders from '../public/_headers?raw';
 
@@ -40,7 +44,9 @@ export default {
         const redirect = publicParity.redirect(forwarded) ?? (await fetchPublicCanonicalRedirect(forwarded, assets));
         if (redirect) return redirect;
         const legacyArticle = await fetchLegacyArticleAsset(forwarded, assets);
-        return legacyArticle ?? astroFetch(forwarded as typeof request, env, ctx);
+        if (legacyArticle) return legacyArticle;
+        const rendered = await astroFetch(forwarded as typeof request, env, ctx);
+        return canonicalizeCmsBlogResponse(forwarded, rendered);
       }
     );
     const result = publicParity.applyHeaders(request, new Response(response.body, response));

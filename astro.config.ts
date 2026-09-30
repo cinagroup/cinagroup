@@ -53,6 +53,21 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 const siteLocales = ['en', 'zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'];
 
+/** Astrowind configures trailingSlash from SITE; run after it so native EmDash routes accept their bare URLs. */
+const emdashNativeRouteCompatibility = (): AstroIntegration => ({
+  name: 'emdash-native-route-compatibility',
+  hooks: {
+    'astro:config:setup': ({ updateConfig }) => {
+      updateConfig({ trailingSlash: 'ignore' });
+    },
+    'astro:config:done': ({ config }) => {
+      if (config.trailingSlash !== 'ignore' || config.build.format !== 'directory') {
+        throw new Error('EmDash native routes require trailingSlash: ignore and directory-format static assets');
+      }
+    },
+  },
+});
+
 /** Maps a localized pathname such as `/zh/blog/<slug>` back to `/blog/<slug>`. */
 const stripLocalePrefix = (pathname: string): string => {
   const segments = pathname.split('/').filter(Boolean);
@@ -76,7 +91,8 @@ const shouldIncludeInSitemap = (page: string) => {
 export default defineConfig({
   output: 'server',
   adapter: cloudflare(),
-  trailingSlash: 'always',
+  trailingSlash: 'ignore',
+  build: { format: 'directory' },
 
   i18n: {
     locales: ['en', 'zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'],
@@ -137,6 +153,7 @@ export default defineConfig({
     astrowind({
       config: './src/config.yaml',
     }),
+    emdashNativeRouteCompatibility(),
   ],
 
   image: {
