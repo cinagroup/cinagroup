@@ -424,3 +424,22 @@ test('CLI requires an explicit run flag before reading credentials or using netw
   assert.match(child.stderr, /explicit_run_flag_required/);
   assert.ok(!`${child.stdout}${child.stderr}`.includes(TOKEN));
 });
+
+test('formatted Astro module errors preserve safe error name and offsets', () => {
+  const safe = summarizeTailEvent({
+    scriptName: WORKER,
+    event: { request: { method: 'GET', url: ORIGIN + '/fr/blog/' }, response: { status: 500 } },
+    outcome: 'ok',
+    logs: [
+      {
+        level: 'error',
+        message: ['11:00:00 [ERROR] TypeError: private body\n    at handler (chunks/astro_BuildPrivate.mjs:24681:29)'],
+      },
+    ],
+  });
+  assert.deepEqual(safe.nonDiagnosticErrors, [
+    { category: 'unknown', errorName: 'TypeError', errorCode: null, workerLine: 24681, workerColumn: 29 },
+  ]);
+  assert.ok(!JSON.stringify(safe).includes('BuildPrivate'));
+  assert.ok(!JSON.stringify(safe).includes('private body'));
+});

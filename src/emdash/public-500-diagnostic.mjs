@@ -19,7 +19,8 @@ const ERROR_CODES = new Set([
   'ERR_MODULE_NOT_FOUND',
   'ERR_INVALID_ARG_TYPE',
 ]);
-const WORKER_FRAME = /(?:^|[\s(/\\])(?:_worker|worker|index)\.js:(\d{1,7}):(\d{1,5})(?=$|[\s)])/m;
+const WORKER_FRAME =
+  /(?:^|[\s(/\\])(?:_worker|worker|index|entry|chunks\/[A-Za-z0-9_-]{1,120})\.m?js:(\d{1,7}):(\d{1,5})(?=$|[\s)])/m;
 
 function property(error, key) {
   if (error === null || (typeof error !== 'object' && typeof error !== 'function')) return undefined;

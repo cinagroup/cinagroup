@@ -156,17 +156,47 @@ jobs:
       - name: Check Worker bundle without uploading
         id: worker-bundle
         run: |
-          npx wrangler deploy --dry-run --name cinagroup-emdash-preview --outdir "$RUNNER_TEMP/emdash-worker-bundle" --upload-source-maps
+          npx wrangler deploy --dry-run --name cinagroup-emdash-preview
           node --input-type=module <<'NODE'
-          import { readdirSync } from 'node:fs';
-          import { join } from 'node:path';
+          import { copyFileSync, mkdirSync, readFileSync, readdirSync, realpathSync, statSync } from 'node:fs';
+          import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 
-          const directory = join(process.env.RUNNER_TEMP, 'emdash-worker-bundle');
-          const files = new Set(readdirSync(directory));
-          const hasEntryAndMap = [...files].some(
-            (name) => /\.(?:m?js|cjs)$/.test(name) && files.has(`${name}.map`)
-          );
-          if (!hasEntryAndMap) throw new Error('The local Worker bundle or source map is missing');
+          const pointerPath = resolve('.wrangler/deploy/config.json');
+          const pointer = JSON.parse(readFileSync(pointerPath, 'utf8'));
+          if (typeof pointer.configPath !== 'string') throw new Error('Missing generated Wrangler config path');
+          const configPath = resolve(dirname(pointerPath), pointer.configPath);
+          const config = JSON.parse(readFileSync(configPath, 'utf8'));
+          if (typeof config.main !== 'string') throw new Error('Missing generated Worker entry');
+          const sourceDirectory = realpathSync(resolve('dist/server'));
+          const entryPath = realpathSync(resolve(dirname(configPath), config.main));
+          const entryRelativePath = relative(sourceDirectory, entryPath);
+          const isOutside = (path) => isAbsolute(path) || path === '..' || path.startsWith(`..${sep}`);
+          if (isOutside(entryRelativePath) || !/\.(?:m?js|cjs)$/.test(entryRelativePath) || !statSync(entryPath).isFile()) {
+            throw new Error('Generated Worker entry must be a JavaScript module inside dist/server');
+          }
+          const destinationDirectory = join(process.env.RUNNER_TEMP, 'emdash-worker-bundle');
+          const copiedModules = new Set();
+          const excludedDirectory = /^(?:assets|static[-_]?maps?|client|\.wrangler)$/i;
+          const walk = (directory) => {
+            for (const entry of readdirSync(directory, { withFileTypes: true })) {
+              const sourcePath = join(directory, entry.name);
+              if (entry.isSymbolicLink()) throw new Error('Worker diagnostic source contains a symbolic link');
+              if (entry.isDirectory()) {
+                if (!excludedDirectory.test(entry.name)) walk(sourcePath);
+              } else if (entry.isFile() && /\.(?:m?js|cjs)(?:\.map)?$/i.test(entry.name)) {
+                const modulePath = relative(sourceDirectory, sourcePath);
+                const destinationPath = join(destinationDirectory, modulePath);
+                mkdirSync(dirname(destinationPath), { recursive: true });
+                copyFileSync(sourcePath, destinationPath);
+                if (!entry.name.endsWith('.map')) copiedModules.add(modulePath);
+              }
+            }
+          };
+          walk(sourceDirectory);
+          if (!copiedModules.has(entryRelativePath) || copiedModules.size < 2) {
+            throw new Error('The Worker entry and supporting module are required for failure mapping');
+          }
+          process.stdout.write(`Saved ${copiedModules.size} generated Worker modules for failure mapping.\n`);
           NODE
 
       - name: Check Worker startup and static asset limits
@@ -367,10 +397,10 @@ jobs:
         with:
           name: emdash-preview-worker-bundle-${{ github.run_id }}
           path: |
-            ${{ runner.temp }}/emdash-worker-bundle/*.js
-            ${{ runner.temp }}/emdash-worker-bundle/*.mjs
-            ${{ runner.temp }}/emdash-worker-bundle/*.cjs
-            ${{ runner.temp }}/emdash-worker-bundle/*.map
+            ${{ runner.temp }}/emdash-worker-bundle/**/*.js
+            ${{ runner.temp }}/emdash-worker-bundle/**/*.mjs
+            ${{ runner.temp }}/emdash-worker-bundle/**/*.cjs
+            ${{ runner.temp }}/emdash-worker-bundle/**/*.map
           if-no-files-found: error
           retention-days: 1
 

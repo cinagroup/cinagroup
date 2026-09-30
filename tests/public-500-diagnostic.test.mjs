@@ -59,3 +59,13 @@ test('a hostile thrown object cannot break the diagnostics route', () => {
   assert.ok(!JSON.stringify(output).includes(TOKEN));
   assert.ok(!JSON.stringify(output).includes(PRIVATE));
 });
+
+test('compiled module frames expose only numeric offsets', () => {
+  const error = new TypeError('private body');
+  error.stack = 'TypeError: private body\n    at handler (chunks/astro_BuildPrivate.mjs:24681:29)';
+  const result = classifyPublic500(error);
+  assert.equal(result.workerLine, 24681);
+  assert.equal(result.workerColumn, 29);
+  assert.ok(!JSON.stringify(result).includes('BuildPrivate'));
+  assert.ok(!JSON.stringify(result).includes('private body'));
+});

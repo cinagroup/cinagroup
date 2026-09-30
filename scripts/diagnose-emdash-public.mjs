@@ -161,9 +161,10 @@ function nonDiagnosticError(log) {
     .filter(Boolean);
   if (texts.some((item) => item.startsWith(ASTRO_500_PREFIX) || item.startsWith(ROUTE_BOUNDARY_PREFIX))) return null;
   const raw = texts.join('\n').slice(0, 8192);
+  const plain = raw.replaceAll(String.fromCharCode(27), '').replace(/\[[0-9;]+m/g, '');
   const name =
-    /^(Error|TypeError|ReferenceError|RangeError|SyntaxError|DOMException|D1Error|SqliteError|DatabaseError|AstroError)(?=[:\s]|$)/.exec(
-      raw
+    /(?:^|\[ERROR\]\s+)(Error|TypeError|ReferenceError|RangeError|SyntaxError|DOMException|D1Error|SqliteError|DatabaseError|AstroError)(?=[:\s]|$)/.exec(
+      plain
     )?.[1] ?? 'Other';
   return classifyPublic500({ name, message: raw, stack: raw });
 }
