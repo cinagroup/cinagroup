@@ -2,6 +2,8 @@ const COOKIE_NAME = 'emdash_preview_access';
 const SESSION_SECONDS = 60 * 60 * 8;
 const encoder = new TextEncoder();
 const PREVIEW_HOSTNAME = 'cinagroup-emdash-preview.cinagroup.workers.dev';
+const ACCESS_PATH = '/_emdash/access/';
+const FORM_BODY_LIMIT = 2048;
 
 export function isIsolatedPreviewHostname(url: string): boolean {
   return new URL(url).hostname.toLowerCase() === PREVIEW_HOSTNAME;
@@ -111,6 +113,103 @@ function basicPassword(request: Request): string | undefined {
   }
 }
 
+function accessHeaders(): Headers {
+  return new Headers({
+    'Cache-Control': 'no-store',
+    'Content-Security-Policy':
+      "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
+    'Referrer-Policy': 'no-referrer',
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'X-Robots-Tag': 'noindex, nofollow',
+  });
+}
+
+function accessPage(head = false, failed = false): Response {
+  const headers = accessHeaders();
+  headers.set('Content-Type', 'text/html; charset=utf-8');
+  const html = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Preview access | CinaGroup</title>
+<style>body{margin:0;min-height:100svh;display:grid;place-items:center;background:#f4f6f8;color:#152333;font:16px/1.5 system-ui,sans-serif}main{box-sizing:border-box;width:min(440px,calc(100% - 32px));padding:32px;background:white;border:1px solid #d6dce3;border-radius:12px}h1{margin:0 0 12px;font-size:26px}p{margin:0 0 20px}label{display:block;font-weight:600;margin-bottom:8px}input,button{box-sizing:border-box;width:100%;font:inherit;padding:12px;border-radius:6px}input{border:1px solid #8190a0}button{margin-top:20px;background:#152333;color:white;border:0;cursor:pointer}:focus-visible{outline:3px solid #4788cb;outline-offset:3px}.error{color:#a32626}</style></head>
+<body><main><h1>Preview access</h1><p>Sign in with your preview password to continue to EmDash.</p><p>Username: <strong>preview</strong></p>${failed ? '<p class="error" role="alert">Sign-in failed. Check your preview password.</p>' : ''}
+<form method="post" action="${ACCESS_PATH}"><label for="preview-password">Preview password</label><input id="preview-password" name="password" type="password" autocomplete="current-password" minlength="32" maxlength="128" required autofocus><button type="submit">Continue to EmDash</button></form></main></body></html>`;
+  return new Response(head ? null : html, { headers });
+}
+
+function rejectAccess(status: number, headers = accessHeaders()): Response {
+  headers.set('Content-Type', 'text/plain; charset=utf-8');
+  return new Response('Preview login request rejected', { status, headers });
+}
+
+async function readAccessPassword(request: Request): Promise<string | Response> {
+  if (request.headers.get('Content-Type')?.split(';')[0].trim().toLowerCase() !== 'application/x-www-form-urlencoded')
+    return rejectAccess(415);
+  const declaredSize = request.headers.get('Content-Length');
+  if (/^\d+$/.test(declaredSize ?? '') && Number(declaredSize) > FORM_BODY_LIMIT) return rejectAccess(413);
+  const reader = request.body?.getReader();
+  if (!reader) return rejectAccess(400);
+  const parts: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > FORM_BODY_LIMIT) {
+        await reader.cancel();
+        return rejectAccess(413);
+      }
+      parts.push(value);
+    }
+  } catch {
+    return rejectAccess(400);
+  } finally {
+    reader.releaseLock();
+  }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const part of parts) {
+    bytes.set(part, offset);
+    offset += part.byteLength;
+  }
+  let fields: URLSearchParams;
+  try {
+    fields = new URLSearchParams(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
+  } catch {
+    return rejectAccess(400);
+  }
+  const password = fields.get('password');
+  if (fields.size !== 1 || fields.getAll('password').length !== 1 || !/^[\x21-\x7e]{32,128}$/.test(password ?? ''))
+    return rejectAccess(400);
+  return password!;
+}
+
+async function accessCookie(secret: string, issuedAt: number): Promise<string> {
+  const value = `v1.${issuedAt}.${await sign(secret, `v1.${issuedAt}`)}`;
+  return `${COOKIE_NAME}=${value}; Path=/_emdash; Max-Age=${SESSION_SECONDS}; HttpOnly; Secure; SameSite=Strict`;
+}
+
+async function handleAccessPage(request: Request, secret: string | undefined, now: number): Promise<Response> {
+  const url = new URL(request.url);
+  if (url.origin !== `https://${PREVIEW_HOSTNAME}`) return rejectAccess(403);
+  if (!secret || secret.length < 32) return deny(503);
+  if (request.method === 'GET' || request.method === 'HEAD') return accessPage(request.method === 'HEAD');
+  if (request.method !== 'POST') {
+    const headers = accessHeaders();
+    headers.set('Allow', 'GET, HEAD, POST');
+    return rejectAccess(405, headers);
+  }
+  if (request.headers.get('Origin') !== url.origin) return rejectAccess(403);
+  const password = await readAccessPassword(request);
+  if (password instanceof Response) return password;
+  if (!equalHex(await sign(password, 'preview-password'), await sign(secret, 'preview-password')))
+    return accessPage(false, true);
+  const headers = accessHeaders();
+  headers.set('Location', '/_emdash/admin/');
+  headers.set('Set-Cookie', await accessCookie(secret, now));
+  return new Response(null, { status: 303, headers });
+}
+
 /** Gate the public workers.dev admin until a preview-only secret is provisioned. */
 export async function fetchWithPreviewAdminAccess(
   request: Request,
@@ -118,6 +217,7 @@ export async function fetchWithPreviewAdminAccess(
   next: (request: Request) => Promise<Response>,
   now = Math.floor(Date.now() / 1000)
 ): Promise<Response> {
+  if (new URL(request.url).pathname === ACCESS_PATH) return handleAccessPage(request, secret, now);
   if (isPublicPreviewMediaRequest(request)) return next(request);
   if (!isPreviewAdminRequest(request)) return next(request);
   if (!secret || secret.length < 32) return deny(503);
@@ -140,11 +240,7 @@ export async function fetchWithPreviewAdminAccess(
   const headers = new Headers(response.headers);
   headers.set('Cache-Control', 'no-store');
   if (issuedAt !== undefined) {
-    const value = `v1.${issuedAt}.${await sign(secret, `v1.${issuedAt}`)}`;
-    headers.append(
-      'Set-Cookie',
-      `${COOKIE_NAME}=${value}; Path=/_emdash; Max-Age=${SESSION_SECONDS}; HttpOnly; Secure; SameSite=Strict`
-    );
+    headers.append('Set-Cookie', await accessCookie(secret, issuedAt));
   }
   return new Response(response.body, {
     status: response.status,
