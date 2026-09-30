@@ -1,4 +1,5 @@
 import { appendFileSync } from 'node:fs';
+import { classifyPrivatePreviewResponse } from './verify-emdash-preview-access-challenge.mjs';
 
 const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
 const token = process.env.CLOUDFLARE_API_TOKEN;
@@ -55,17 +56,30 @@ async function checkPath(path, expectedStatuses) {
       if (!response.headers.get('X-Robots-Tag')?.includes('noindex')) {
         throw new Error(`Preview ${path}: missing Worker-level noindex header`);
       }
-      if (path.startsWith('/_emdash') && response.headers.get('Cache-Control') !== 'no-store') {
-        throw new Error('Preview admin guard did not disable caching');
-      }
-      if (lastStatus === 401 && !response.headers.get('WWW-Authenticate')?.startsWith('Basic ')) {
-        throw new Error('Preview admin guard did not challenge with HTTP Basic');
-      }
       return lastStatus;
     }
     await new Promise((resolve) => setTimeout(resolve, 3000));
   }
   throw new Error(`Preview ${path}: expected HTTP ${expectedStatuses.join(' or ')}, received ${lastStatus}`);
+}
+
+async function checkAccessPath(path) {
+  let lastStatus;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const response = await fetch(`${origin}${path}`, { redirect: 'manual' });
+    await response.body?.cancel();
+    lastStatus = response.status;
+    if (lastStatus === 302) {
+      classifyPrivatePreviewResponse(response, path, origin);
+      return;
+    }
+    if (lastStatus === 401 || lastStatus === 503) {
+      // A Worker denial is safely closed, but does not prove the Access application is active.
+      classifyPrivatePreviewResponse(response, path, origin);
+    }
+    if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, 3000));
+  }
+  throw new Error(`Preview ${path}: expected the fixed Cloudflare Access login challenge, received HTTP ${lastStatus}`);
 }
 
 await checkPath('/', [200]);
@@ -137,7 +151,14 @@ if (staticSitemap.includes('/cms-preview/'))
 if (/<loc>https:\/\/cinagroup\.com\/(?:ko|ru|es|pt|fr)\/blog\/<\/loc>/.test(staticSitemap)) {
   throw new Error('CMS-only indexes must be discovered dynamically only after approved content exists');
 }
-const adminStatus = await checkPath('/_emdash/admin/setup', [401, 503]);
+for (const path of [
+  '/_emdash/admin/setup',
+  '/_emdash/api/setup/status',
+  '/_emdash/api/auth/passkey/verify',
+  '/_emdash/access/',
+]) {
+  await checkAccessPath(path);
+}
 
 const lines = [
   '',
@@ -149,7 +170,7 @@ const lines = [
   '- All eight blog indexes, legacy/fresh articles, RSS, robots, and CMS sitemap: HTTP 200 with noindex',
   '- Public security headers and legacy redirects verified; signed preview excluded from sitemap',
   '- Anonymous public media reaches EmDash; missing file returns 404',
-  `- EmDash admin setup: HTTP ${adminStatus} (${adminStatus === 401 ? 'outer Basic gate enabled' : 'closed until preview-only password is set'})`,
+  '- EmDash admin, setup API, native passkey auth, and former password entry: fixed-host Cloudflare Access HTTP 302 login challenge',
 ];
 if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join('\n')}\n`);
 console.log(`Verified isolated preview Worker at ${origin}`);

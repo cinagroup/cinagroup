@@ -35,7 +35,11 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function requiredString(bindings: Record<string, unknown>, key: string, pattern: RegExp): string {
   const value = bindings[key];
-  if (typeof value !== 'string' || !pattern.test(value)) throw new CinaAuthAccessError(503);
+  // JavaScript's $ anchor also matches immediately before a final line break.
+  // Reject surrounding whitespace instead of silently trimming configuration.
+  if (typeof value !== 'string' || value.trim() !== value || !pattern.test(value)) {
+    throw new CinaAuthAccessError(503);
+  }
   return value;
 }
 

@@ -23,6 +23,8 @@ on:
           - configure-turnstile
           - audit-secrets
           - audit-access
+          - configure-access
+          - configure-access-runtime
           - configure-encryption
           - configure-admin-password
           - deploy
@@ -85,6 +87,12 @@ jobs:
 
       - name: Test read-only Access preview audit
         run: node --test tests/access-emdash-preview.test.mjs tests/access-emdash-preview-workflow.test.mjs
+
+      - name: Test isolated Access application and runtime configuration
+        run: node --test tests/configure-emdash-access-preview.test.mjs tests/configure-emdash-access-runtime.test.mjs tests/configure-emdash-access-workflow.test.mjs
+
+      - name: Test Access authentication and public media boundaries
+        run: node --test tests/cinaauth-access.test.mjs tests/cinaauth-access-guard.test.mjs tests/verify-emdash-preview-access-challenge.test.mjs
 
       - name: Test blog i18n rules
         run: npm run test:blog-i18n
@@ -168,7 +176,7 @@ jobs:
           OPERATION: ${{ inputs.operation }}
         run: |
           case "$OPERATION" in
-            audit|provision|migrate-contact|audit-turnstile|configure-turnstile|audit-secrets|audit-access|configure-encryption|configure-admin-password|deploy) ;;
+            audit|provision|migrate-contact|audit-turnstile|configure-turnstile|audit-secrets|audit-access|configure-access|configure-access-runtime|configure-encryption|configure-admin-password|deploy) ;;
             *) echo "::error::Unsupported preview operation."; exit 1 ;;
           esac
 
@@ -184,7 +192,7 @@ jobs:
           fi
 
       - name: Audit Cloudflare preview resources and existing Worker
-        if: github.event_name == 'workflow_dispatch' && inputs.operation != 'audit-turnstile' && inputs.operation != 'configure-turnstile' && inputs.operation != 'audit-secrets' && inputs.operation != 'audit-access' && inputs.operation != 'configure-encryption' && inputs.operation != 'configure-admin-password'
+        if: github.event_name == 'workflow_dispatch' && inputs.operation != 'audit-turnstile' && inputs.operation != 'configure-turnstile' && inputs.operation != 'audit-secrets' && inputs.operation != 'audit-access' && inputs.operation != 'configure-access' && inputs.operation != 'configure-access-runtime' && inputs.operation != 'configure-encryption' && inputs.operation != 'configure-admin-password'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -197,6 +205,49 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: node scripts/access-emdash-preview.mjs audit
+
+      - name: Configure or verify dedicated preview Access applications
+        id: preview-access-apps
+        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'configure-access' || inputs.operation == 'configure-access-runtime')
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_ACCESS_CINA_AUTH_IDP_ID: ${{ secrets.CF_ACCESS_CINA_AUTH_IDP_ID }}
+          EMDASH_ACCESS_ADMIN_EMAIL: ${{ secrets.EMDASH_ACCESS_ADMIN_EMAIL }}
+          ACCESS_OPERATION: ${{ inputs.operation == 'configure-access' && 'configure' || 'plan' }}
+        run: |
+          node scripts/configure-emdash-access-preview.mjs "$ACCESS_OPERATION" > "$RUNNER_TEMP/emdash-access-applications.json"
+          node --input-type=module <<'NODE'
+          import { appendFileSync, readFileSync } from 'node:fs';
+          import { join } from 'node:path';
+
+          const report = JSON.parse(readFileSync(join(process.env.RUNNER_TEMP, 'emdash-access-applications.json'), 'utf8'));
+          const apps = report.applications;
+          const admin = Array.isArray(apps) ? apps.filter((app) => app.role === 'admin') : [];
+          const media = Array.isArray(apps) ? apps.filter((app) => app.role === 'publicMedia') : [];
+          if (
+            report.previewHostname !== 'cinagroup-emdash-preview.cinagroup.workers.dev' ||
+            admin.length !== 1 || media.length !== 1 ||
+            ![admin[0], media[0]].every((app) => ['existing', 'created'].includes(app.state)) ||
+            typeof admin[0].aud !== 'string' || admin[0].aud.trim() !== admin[0].aud ||
+            !/^[a-f0-9]{64}$/.test(admin[0].aud)
+          ) throw new Error('The complete isolated Access applications and admin audience must be verified before runtime configuration');
+          appendFileSync(process.env.GITHUB_OUTPUT, `aud=${admin[0].aud}\n`);
+          process.stdout.write('Verified the isolated Access applications and admin audience.\n');
+          NODE
+
+      - name: Configure absent preview Access runtime bindings
+        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'configure-access' || inputs.operation == 'configure-access-runtime')
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          EMDASH_AUTH_MODE: cinaauth-access
+          CF_ACCESS_TEAM_DOMAIN: cinagroup.cloudflareaccess.com
+          CF_ACCESS_AUDIENCE: ${{ steps.preview-access-apps.outputs.aud }}
+          CF_ACCESS_CINA_AUTH_IDP_ID: ${{ secrets.CF_ACCESS_CINA_AUTH_IDP_ID }}
+          CF_ACCESS_CINA_AUTH_IDP_TYPE: oidc
+          EMDASH_ACCESS_ADMIN_EMAIL: ${{ secrets.EMDASH_ACCESS_ADMIN_EMAIL }}
+        run: node scripts/configure-emdash-access-runtime.mjs configure
 
       - name: Provision missing isolated preview D1 and R2
         if: github.event_name == 'workflow_dispatch' && inputs.operation == 'provision'
@@ -290,6 +341,10 @@ jobs:
             echo "Audited isolated preview secret names only; no values retrieved or changes made." >> "$GITHUB_STEP_SUMMARY"
           elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "audit-access" ]; then
             echo "Audited Cloudflare Access organization, IdPs, and applications for the isolated preview host using read-only API requests; no changes made." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "configure-access" ]; then
+            echo "Verified or created only the two isolated preview Access applications and created six previously absent runtime bindings from the verified admin AUD. Existing unrelated secrets were preserved; no Worker code deployed." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "configure-access-runtime" ]; then
+            echo "Verified the existing isolated preview Access applications and created six previously absent runtime bindings. Existing or partial runtime configurations are never blindly replaced; no Worker code deployed." >> "$GITHUB_STEP_SUMMARY"
           elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
             echo "Cloudflare preview resource audit only; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
           else

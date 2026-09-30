@@ -194,6 +194,16 @@ for (const key of Object.keys(bindings())) {
     await assert.rejects(f.authorize(await request()), unavailable);
     assert.deepEqual(f.calls, { jwks: 0, identity: 0 });
   });
+
+  test(`runtime ${key} rejects trailing whitespace before any JWKS or identity request`, async () => {
+    for (const suffix of ['\n', '\r\n', ' ']) {
+      const env = bindings();
+      env[key] += suffix;
+      const f = fixture({ bindings: env });
+      await assert.rejects(f.authorize(await request()), unavailable);
+      assert.deepEqual(f.calls, { jwks: 0, identity: 0 });
+    }
+  });
 }
 
 test('request cache only reuses the same request, JWT and runtime configuration', async () => {
