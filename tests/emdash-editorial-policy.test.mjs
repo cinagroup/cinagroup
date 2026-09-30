@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
 
-import { adaptSandboxEntry } from 'emdash/internal/plugins/adapt-sandbox-entry';
+import { definePlugin, HookPipeline } from 'emdash';
 
-import editorialPolicy, { editorialPolicyPlugin, validatePostPublication } from '../src/emdash/editorial-policy.ts';
-
-const createPlugin = () => adaptSandboxEntry(editorialPolicy, editorialPolicyPlugin());
+import { createPlugin, editorialPolicyPlugin, validatePostPublication } from '../src/emdash/editorial-policy.ts';
 
 const approvedPost = () => ({
   id: 'post-1',
@@ -37,12 +39,12 @@ const schedule = (entry, collection = 'posts') =>
     scheduledAt: '2026-10-01T10:00:00.000Z',
   });
 
-test('registers a standard policy with normalized aborting publish and schedule hooks', () => {
+test('registers a native policy with normalized aborting publish and schedule hooks', () => {
   const descriptor = editorialPolicyPlugin();
   const plugin = createPlugin();
   assert.equal(descriptor.id, plugin.id);
   assert.equal(descriptor.version, plugin.version);
-  assert.equal(descriptor.format, 'standard');
+  assert.equal(descriptor.format, 'native');
   assert.equal(descriptor.entrypoint, '/src/emdash/editorial-policy.ts');
   assert.ok(plugin.capabilities.includes('hooks.content-policy:register'));
   assert.equal(policyHooks['content:beforePublish'].errorPolicy, 'abort');
@@ -56,6 +58,105 @@ test('registers a standard policy with normalized aborting publish and schedule 
   }
   assert.deepEqual(plugin.routes, {});
   assert.deepEqual(plugin.allowedHosts, []);
+});
+
+test('fixed native metadata and hooks match EmDash native normalization', () => {
+  const plugin = createPlugin();
+  const expected = definePlugin({
+    id: 'cinagroup-editorial-policy',
+    version: '1.0.0',
+    capabilities: ['hooks.content-policy:register'],
+    hooks: {
+      'content:beforePublish': {
+        errorPolicy: 'abort',
+        handler: plugin.hooks['content:beforePublish'].handler,
+      },
+      'content:beforeSchedule': {
+        errorPolicy: 'abort',
+        handler: plugin.hooks['content:beforeSchedule'].handler,
+      },
+    },
+  });
+
+  assert.deepEqual(plugin, expected);
+});
+
+test('EmDash dispatch preserves publication cancellation and aborts hook failures', async () => {
+  for (const name of ['content:beforePublish', 'content:beforeSchedule']) {
+    const plugin = createPlugin();
+    const event = {
+      collection: 'posts',
+      content: approvedPost(),
+      origin: { source: 'api' },
+      scheduledAt: '2026-10-01T10:00:00.000Z',
+    };
+    const pipeline = new HookPipeline([plugin], { db: {} });
+    assert.equal((await pipeline.runContentPolicy(name, event)).cancellation, undefined);
+
+    event.content.data.editorial_status = 'withdrawn';
+    const rejected = await pipeline.runContentPolicy(name, event);
+    assert.equal(rejected.cancellation.pluginId, plugin.id);
+    assert.match(rejected.cancellation.reason, /cannot be published or scheduled/);
+
+    const failure = new Error('Editorial policy failure');
+    plugin.hooks[name].handler = async () => {
+      throw failure;
+    };
+    const failingPipeline = new HookPipeline([plugin], { db: {} });
+    await assert.rejects(failingPipeline.runContentPolicy(name, event), (error) => error === failure);
+
+    plugin.hooks[name].handler = async () => new Promise(() => {});
+    plugin.hooks[name].timeout = 10;
+    const timingOutPipeline = new HookPipeline([plugin], { db: {} });
+    await assert.rejects(timingOutPipeline.runContentPolicy(name, event), /Hook timeout/);
+  }
+});
+
+test('native factory can register before its module constants initialize', () => {
+  const fixture = mkdtempSync(join(tmpdir(), 'cinagroup-policy-init-'));
+
+  try {
+    const source = readFileSync(new URL('../src/emdash/editorial-policy.ts', import.meta.url), 'utf8');
+    writeFileSync(join(fixture, 'policy.ts'), `import './factory-consumer.mjs';\n${source}`);
+    writeFileSync(
+      join(fixture, 'factory-consumer.mjs'),
+      `import { createPlugin, editorialPolicyPlugin } from './policy.ts';
+export const plugin = createPlugin();
+export const descriptor = editorialPolicyPlugin();
+`
+    );
+
+    const result = spawnSync(
+      process.execPath,
+      [
+        '--experimental-strip-types',
+        '--input-type=module',
+        '-e',
+        `import assert from 'node:assert/strict';
+await import('./policy.ts');
+const { plugin, descriptor } = await import('./factory-consumer.mjs');
+assert.equal(plugin.id, 'cinagroup-editorial-policy');
+assert.equal(descriptor.id, plugin.id);
+assert.equal(descriptor.version, plugin.version);
+assert.equal(descriptor.format, 'native');
+const approved = ${JSON.stringify(approvedPost())};
+for (const name of ['content:beforePublish', 'content:beforeSchedule']) {
+  const hook = plugin.hooks[name];
+  assert.equal(hook.errorPolicy, 'abort');
+  assert.equal(await hook.handler({ collection: 'posts', content: approved }), undefined);
+  const rejected = await hook.handler({ collection: 'posts', content: { data: {} } });
+  assert.equal(rejected.cancel, true);
+}
+`,
+      ],
+      { cwd: fixture, encoding: 'utf8', timeout: 10000 }
+    );
+
+    assert.ifError(result.error);
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+  } finally {
+    rmSync(fixture, { recursive: true, force: true });
+  }
 });
 
 test('approved, sourced, reviewed posts may publish and schedule', async () => {

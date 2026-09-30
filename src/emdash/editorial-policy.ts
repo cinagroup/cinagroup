@@ -1,8 +1,5 @@
-import type { PluginDescriptor } from 'emdash';
-import type { ContentPolicyDecision, SandboxedPlugin } from 'emdash/plugin';
+import type { ContentPolicyDecision, PluginDescriptor, ResolvedPlugin } from 'emdash';
 
-const PLUGIN_ID = 'cinagroup-editorial-policy';
-const PLUGIN_VERSION = '1.0.0';
 const ALLOWED_ORIGINS = new Set([
   'editorial',
   'automated_news_workflow',
@@ -97,32 +94,52 @@ export function validatePostPublication(entry: unknown): ContentPolicyDecision {
 /** Registered in `emdash({ plugins: [editorialPolicyPlugin()] })`. */
 export function editorialPolicyPlugin(): PluginDescriptor {
   return {
-    id: PLUGIN_ID,
-    version: PLUGIN_VERSION,
-    format: 'standard',
+    id: 'cinagroup-editorial-policy',
+    version: '1.0.0',
+    format: 'native',
     capabilities: ['hooks.content-policy:register'],
     entrypoint: '/src/emdash/editorial-policy.ts',
   };
 }
 
 /**
- * Keep this entrypoint free of runtime imports from the EmDash barrel. Its
- * virtual plugins module loads it during runtime initialization; importing the
- * barrel here creates a cycle that can instantiate the policy before its
- * module constants initialize. EmDash adapts this standard definition and
- * normalizes the hooks using the descriptor above.
+ * EmDash's virtual plugin registry calls this factory during module loading.
+ * Keep it self-contained: the SDK barrel and standard adapter introduce a
+ * circular initialization path on Workers. Fixed metadata and hook defaults
+ * live inside this function so registration cannot read uninitialized module
+ * constants. Publication validation still runs when each hook is dispatched.
  */
-const editorialPolicy = {
-  hooks: {
-    'content:beforePublish': {
-      errorPolicy: 'abort',
-      handler: async (event) => (event.collection === 'posts' ? validatePostPublication(event.content) : undefined),
-    },
-    'content:beforeSchedule': {
-      errorPolicy: 'abort',
-      handler: async (event) => (event.collection === 'posts' ? validatePostPublication(event.content) : undefined),
-    },
-  },
-} satisfies SandboxedPlugin;
+export function createPlugin(): ResolvedPlugin {
+  const pluginId = 'cinagroup-editorial-policy';
 
-export default editorialPolicy;
+  return {
+    id: pluginId,
+    version: '1.0.0',
+    capabilities: ['hooks.content-policy:register'],
+    allowedHosts: [],
+    storage: {},
+    hooks: {
+      'content:beforePublish': {
+        pluginId,
+        priority: 100,
+        timeout: 5000,
+        dependencies: [],
+        errorPolicy: 'abort',
+        exclusive: false,
+        handler: async (event) => (event.collection === 'posts' ? validatePostPublication(event.content) : undefined),
+      },
+      'content:beforeSchedule': {
+        pluginId,
+        priority: 100,
+        timeout: 5000,
+        dependencies: [],
+        errorPolicy: 'abort',
+        exclusive: false,
+        handler: async (event) => (event.collection === 'posts' ? validatePostPublication(event.content) : undefined),
+      },
+    },
+    routes: {},
+    mcp: { tools: {} },
+    admin: {},
+  };
+}
