@@ -1,5 +1,6 @@
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { classifyPublic500 } from '../src/emdash/public-500-diagnostic.mjs';
 
 // Cloudflare Worker Tail API: https://developers.cloudflare.com/api/resources/workers/subresources/scripts/subresources/tail/
 // The installed Wrangler 4.127.1 sends { filters: [{ method: [...] }] }, uses trace-v1,
@@ -39,6 +40,7 @@ const KNOWN_EXCEPTION_CODES = new Set([
   'ERR_INVALID_ARG_TYPE',
 ]);
 const ASTRO_500_PREFIX = '[cinagroup-preview-500] ';
+const ROUTE_BOUNDARY_PREFIX = '[cinagroup-preview-route-boundary] ';
 const ASTRO_500_CATEGORIES = new Set([
   'no_error',
   'cross_request_io',
@@ -49,6 +51,13 @@ const ASTRO_500_CATEGORIES = new Set([
   'module_resolution',
   'astro_route',
   'unknown',
+]);
+const ROUTE_KINDS = new Set([
+  'home',
+  'native_cms_index',
+  'localized_blog_endpoint',
+  'localized_legacy_index',
+  'other_or_absent',
 ]);
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 const TAIL_ID = /^(?:[a-f0-9]{32}|[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})$/i;
@@ -69,6 +78,7 @@ const safeId = (value) => typeof value === 'string' && value === value.trim() &&
 function stageFromText(texts) {
   for (const text of texts) {
     if (typeof text !== 'string') continue;
+    if (text.startsWith(ROUTE_BOUNDARY_PREFIX)) return 'route_boundary';
     if (text.startsWith(ASTRO_500_PREFIX)) return 'astro_500';
     if (text.includes('Cannot perform I/O on behalf of a different request')) return 'cross_request_io';
     if (
@@ -98,6 +108,9 @@ function stageFromText(texts) {
 }
 
 function safeAstro500(texts) {
+  let selected = null;
+  let logCount = 0;
+  const categories = [];
   for (const text of texts) {
     if (typeof text !== 'string' || !text.startsWith(ASTRO_500_PREFIX) || text.length > 4096) continue;
     let candidate;
@@ -125,7 +138,90 @@ function safeAstro500(texts) {
       Number.isInteger(candidate.workerColumn) && candidate.workerColumn > 0 && candidate.workerColumn <= 100_000
         ? candidate.workerColumn
         : null;
-    return { category: candidate.category, errorName, errorCode, workerLine, workerColumn };
+    const projected = { category: candidate.category, errorName, errorCode, workerLine, workerColumn };
+    logCount += 1;
+    if (categories.length < 8) categories.push(projected.category);
+    // A later caught error is more useful than an earlier 500 page with null props.
+    const priority = (item) => (item.category === 'no_error' ? 0 : item.category === 'unknown' ? 1 : 2);
+    if (selected === null || priority(projected) > priority(selected)) selected = projected;
+  }
+  return { selected, logCount, categories };
+}
+
+function nonDiagnosticError(log) {
+  const items = Array.isArray(log?.message) ? log.message : [log?.message];
+  const texts = items
+    .map((item) =>
+      typeof item === 'string'
+        ? item
+        : item && typeof item === 'object' && typeof item.message === 'string'
+          ? item.message
+          : ''
+    )
+    .filter(Boolean);
+  if (texts.some((item) => item.startsWith(ASTRO_500_PREFIX) || item.startsWith(ROUTE_BOUNDARY_PREFIX))) return null;
+  const raw = texts.join('\n').slice(0, 8192);
+  const name =
+    /^(Error|TypeError|ReferenceError|RangeError|SyntaxError|DOMException|D1Error|SqliteError|DatabaseError|AstroError)(?=[:\s]|$)/.exec(
+      raw
+    )?.[1] ?? 'Other';
+  return classifyPublic500({ name, message: raw, stack: raw });
+}
+
+function safeRouteBoundary(texts, method, path) {
+  for (const text of texts) {
+    if (typeof text !== 'string' || !text.startsWith(ROUTE_BOUNDARY_PREFIX) || text.length > 4096) continue;
+    let candidate;
+    try {
+      candidate = JSON.parse(text.slice(ROUTE_BOUNDARY_PREFIX.length));
+    } catch {
+      continue;
+    }
+    if (!candidate || candidate.method !== method || candidate.path !== path) continue;
+    const routeKind = ROUTE_KINDS.has(candidate.routeKind) ? candidate.routeKind : 'other_or_absent';
+    if (candidate.kind === 'response_500') {
+      if (
+        typeof candidate.bodyPresent !== 'boolean' ||
+        typeof candidate.rerouteDisabled !== 'boolean' ||
+        typeof candidate.astroErrorFlag !== 'boolean'
+      )
+        continue;
+      return {
+        kind: 'response_500',
+        routeKind,
+        bodyPresent: candidate.bodyPresent,
+        routeType: ['page', 'fallback', 'other_or_absent'].includes(candidate.routeType)
+          ? candidate.routeType
+          : 'other_or_absent',
+        rerouteDisabled: candidate.rerouteDisabled,
+        astroErrorFlag: candidate.astroErrorFlag,
+      };
+    }
+    if (candidate.kind === 'throw' && ASTRO_500_CATEGORIES.has(candidate.category)) {
+      return {
+        kind: 'throw',
+        routeKind,
+        category: candidate.category,
+        errorName:
+          KNOWN_EXCEPTION_NAMES.has(candidate.errorName) || candidate.errorName === 'AstroError'
+            ? candidate.errorName
+            : 'Other',
+        errorCode:
+          KNOWN_EXCEPTION_CODES.has(candidate.errorCode) || candidate.errorCode === 'BINDING_NOT_FOUND'
+            ? candidate.errorCode
+            : Number.isInteger(candidate.errorCode) && candidate.errorCode >= 0 && candidate.errorCode <= 9999
+              ? candidate.errorCode
+              : null,
+        workerLine:
+          Number.isInteger(candidate.workerLine) && candidate.workerLine > 0 && candidate.workerLine <= 10_000_000
+            ? candidate.workerLine
+            : null,
+        workerColumn:
+          Number.isInteger(candidate.workerColumn) && candidate.workerColumn > 0 && candidate.workerColumn <= 100_000
+            ? candidate.workerColumn
+            : null,
+      };
+    }
   }
   return null;
 }
@@ -151,8 +247,17 @@ export function summarizeTailEvent(trace) {
   const logTexts = [];
   let errorLogCount = 0;
   let warningLogCount = 0;
+  let nonDiagnosticErrorLogCount = 0;
+  const nonDiagnosticErrors = [];
   for (const log of logs) {
-    if (log?.level === 'error') errorLogCount += 1;
+    if (log?.level === 'error') {
+      errorLogCount += 1;
+      const projected = nonDiagnosticError(log);
+      if (projected) {
+        nonDiagnosticErrorLogCount += 1;
+        if (nonDiagnosticErrors.length < 4) nonDiagnosticErrors.push(projected);
+      }
+    }
     if (log?.level === 'warn') warningLogCount += 1;
     for (const item of Array.isArray(log?.message) ? log.message : [log?.message]) {
       if (typeof item === 'string') logTexts.push(item);
@@ -161,7 +266,8 @@ export function summarizeTailEvent(trace) {
   }
   const exceptions = Array.isArray(trace.exceptions) ? trace.exceptions : [];
   const firstException = exceptions.length > 0 ? safeException(exceptions[0]) : null;
-  const astro500 = safeAstro500(logTexts);
+  const astro500Logs = safeAstro500(logTexts);
+  const routeBoundary = safeRouteBoundary(logTexts, request.method, new URL(request.url).pathname);
   const stageFromLogs = stageFromText([...logTexts, ...exceptions.map((item) => item?.message)]);
   const stage =
     stageFromLogs === 'unknown' && ['exceededCpu', 'exceededMemory'].includes(trace.outcome)
@@ -176,7 +282,12 @@ export function summarizeTailEvent(trace) {
     logCount: logs.length,
     errorLogCount,
     warningLogCount,
-    astro500,
+    astro500: astro500Logs.selected,
+    astro500LogCount: astro500Logs.logCount,
+    astro500Categories: astro500Logs.categories,
+    nonDiagnosticErrorLogCount,
+    nonDiagnosticErrors,
+    routeBoundary,
     exceptionName: firstException?.name ?? null,
     exceptionCode: firstException?.code ?? null,
   };

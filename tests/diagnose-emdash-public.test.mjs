@@ -147,6 +147,7 @@ test('fixed preview inventory, ephemeral tail, eight anonymous probes, and clean
   assert.equal(report.probes[0].tail[0].stage, 'setup_probe');
   assert.equal(report.probes[0].tail[0].logCount, 1);
   assert.equal(report.probes[0].tail[0].errorLogCount, 1);
+  assert.equal(report.probes[0].tail[0].nonDiagnosticErrorLogCount, 1);
   assert.equal(report.probes[0].tail[0].exceptionName, 'TypeError');
   assert.equal(report.probes[0].tail[0].exceptionCode, 'D1_ERROR');
   assert.equal(fake.sockets[0].protocol, 'trace-v1');
@@ -188,6 +189,11 @@ test('raw URL, method, and Worker name must match exactly before any tail conten
     errorLogCount: 0,
     warningLogCount: 0,
     astro500: null,
+    astro500LogCount: 0,
+    astro500Categories: [],
+    nonDiagnosticErrorLogCount: 0,
+    nonDiagnosticErrors: [],
+    routeBoundary: null,
     exceptionName: 'Other',
     exceptionCode: null,
   });
@@ -237,6 +243,107 @@ test('Astro 500 route diagnostic is accepted only as a fixed safe projection', (
     workerColumn: 20,
   });
   assert.equal(safe.errorLogCount, 1);
+  assert.equal(safe.astro500LogCount, 1);
+  assert.deepEqual(safe.astro500Categories, ['cross_request_io']);
+  assert.equal(safe.nonDiagnosticErrorLogCount, 0);
+  assert.deepEqual(safe.nonDiagnosticErrors, []);
+  assert.ok(!JSON.stringify(safe).includes(TOKEN));
+});
+
+test('two no-error 500 logs remain distinguishable from one raw error and one no-error log', () => {
+  const noError = `[cinagroup-preview-500] ${JSON.stringify({ category: 'no_error', errorName: 'Other', errorCode: null, workerLine: null, workerColumn: null })}`;
+  const base = {
+    scriptName: WORKER,
+    event: { request: { method: 'GET', url: `${ORIGIN}/ko/blog/` }, response: { status: 500 } },
+    outcome: 'ok',
+  };
+  const duplicate = summarizeTailEvent({
+    ...base,
+    logs: [
+      { level: 'error', message: [noError] },
+      { level: 'error', message: [noError] },
+    ],
+  });
+  assert.equal(duplicate.errorLogCount, 2);
+  assert.equal(duplicate.astro500LogCount, 2);
+  assert.deepEqual(duplicate.astro500Categories, ['no_error', 'no_error']);
+  assert.equal(duplicate.nonDiagnosticErrorLogCount, 0);
+  assert.deepEqual(duplicate.nonDiagnosticErrors, []);
+
+  const raw = `TypeError: Cannot perform I/O on behalf of a different request ${PRIVATE} ${TOKEN}\n    at handler (worker.js:123456:78)`;
+  const mixed = summarizeTailEvent({
+    ...base,
+    logs: [
+      { level: 'error', message: [raw] },
+      { level: 'error', message: [noError] },
+    ],
+  });
+  assert.equal(mixed.errorLogCount, 2);
+  assert.equal(mixed.astro500LogCount, 1);
+  assert.deepEqual(mixed.astro500Categories, ['no_error']);
+  assert.equal(mixed.nonDiagnosticErrorLogCount, 1);
+  assert.deepEqual(mixed.nonDiagnosticErrors, [
+    { category: 'cross_request_io', errorName: 'TypeError', errorCode: null, workerLine: 123456, workerColumn: 78 },
+  ]);
+  for (const secret of [PRIVATE, TOKEN, raw]) assert.ok(!JSON.stringify(mixed).includes(secret));
+});
+
+test('500 diagnostic prefers real error and raw error projections never echo arbitrary names or PII', () => {
+  const base = {
+    scriptName: WORKER,
+    event: { request: { method: 'HEAD', url: `${ORIGIN}/fr/blog/` }, response: { status: 500 } },
+    outcome: 'ok',
+  };
+  const marker = (category, errorName) =>
+    `[cinagroup-preview-500] ${JSON.stringify({ category, errorName, workerLine: 42, workerColumn: 7, secret: PRIVATE })}`;
+  const raw = `PersonalName${PRIVATE}: secret ${TOKEN}\n    at page (worker.js:321:4)`;
+  const safe = summarizeTailEvent({
+    ...base,
+    logs: [
+      { level: 'error', message: [marker('no_error', 'Other')] },
+      { level: 'error', message: [raw] },
+      { level: 'error', message: [marker('database', 'D1Error')] },
+    ],
+  });
+  assert.deepEqual(safe.astro500Categories, ['no_error', 'database']);
+  assert.equal(safe.astro500LogCount, 2);
+  assert.equal(safe.astro500.category, 'database');
+  assert.equal(safe.astro500.errorName, 'D1Error');
+  assert.equal(safe.nonDiagnosticErrorLogCount, 1);
+  assert.deepEqual(safe.nonDiagnosticErrors, [
+    { category: 'unknown', errorName: 'Other', errorCode: null, workerLine: 321, workerColumn: 4 },
+  ]);
+  for (const secret of [PRIVATE, TOKEN, raw]) assert.ok(!JSON.stringify(safe).includes(secret));
+});
+
+test('earlier route-boundary 500 is projected without arbitrary headers or secrets', () => {
+  const diagnostic = {
+    kind: 'response_500',
+    method: 'HEAD',
+    path: '/fr/blog/',
+    routeKind: 'native_cms_index',
+    bodyPresent: false,
+    routeType: 'fallback',
+    rerouteDisabled: false,
+    astroErrorFlag: false,
+    secret: TOKEN,
+  };
+  const trace = {
+    scriptName: WORKER,
+    event: { request: { method: 'HEAD', url: `${ORIGIN}/fr/blog/` }, response: { status: 500 } },
+    outcome: 'ok',
+    logs: [{ level: 'error', message: [`[cinagroup-preview-route-boundary] ${JSON.stringify(diagnostic)}`] }],
+  };
+  const safe = summarizeTailEvent(trace);
+  assert.equal(safe.stage, 'route_boundary');
+  assert.deepEqual(safe.routeBoundary, {
+    kind: 'response_500',
+    routeKind: 'native_cms_index',
+    bodyPresent: false,
+    routeType: 'fallback',
+    rerouteDisabled: false,
+    astroErrorFlag: false,
+  });
   assert.ok(!JSON.stringify(safe).includes(TOKEN));
 });
 

@@ -91,7 +91,7 @@ jobs:
         run: node --test tests/access-emdash-preview.test.mjs tests/access-emdash-preview-workflow.test.mjs
 
       - name: Test isolated public runtime diagnostics
-        run: node --test tests/diagnose-emdash-public.test.mjs tests/public-500-diagnostic.test.mjs
+        run: node --test tests/diagnose-emdash-public.test.mjs tests/public-500-diagnostic.test.mjs tests/public-route-boundary.test.mjs
 
       - name: Test isolated Access application and runtime configuration
         run: node --test tests/configure-emdash-access-preview.test.mjs tests/configure-emdash-access-runtime.test.mjs tests/configure-emdash-access-workflow.test.mjs
@@ -154,7 +154,20 @@ jobs:
           NODE
 
       - name: Check Worker bundle without uploading
-        run: npx wrangler deploy --dry-run --name cinagroup-emdash-preview
+        id: worker-bundle
+        run: |
+          npx wrangler deploy --dry-run --name cinagroup-emdash-preview --outdir "$RUNNER_TEMP/emdash-worker-bundle" --upload-source-maps
+          node --input-type=module <<'NODE'
+          import { readdirSync } from 'node:fs';
+          import { join } from 'node:path';
+
+          const directory = join(process.env.RUNNER_TEMP, 'emdash-worker-bundle');
+          const files = new Set(readdirSync(directory));
+          const hasEntryAndMap = [...files].some(
+            (name) => /\.(?:m?js|cjs)$/.test(name) && files.has(`${name}.map`)
+          );
+          if (!hasEntryAndMap) throw new Error('The local Worker bundle or source map is missing');
+          NODE
 
       - name: Check Worker startup and static asset limits
         run: |
@@ -347,6 +360,19 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: node scripts/diagnose-emdash-public.mjs --run
+
+      - name: Save local Worker bundle for public failure mapping
+        if: always() && github.event_name == 'workflow_dispatch' && (inputs.operation == 'deploy' || inputs.operation == 'diagnose-public') && steps.worker-bundle.conclusion == 'success'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: emdash-preview-worker-bundle-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/emdash-worker-bundle/*.js
+            ${{ runner.temp }}/emdash-worker-bundle/*.mjs
+            ${{ runner.temp }}/emdash-worker-bundle/*.cjs
+            ${{ runner.temp }}/emdash-worker-bundle/*.map
+          if-no-files-found: error
+          retention-days: 1
 
       - name: Deployment summary
         env:

@@ -1,5 +1,10 @@
 import { defineMiddleware } from 'astro:middleware';
 import { defaultLang, languages } from './i18n';
+import {
+  previewPublicProbeScope,
+  projectPublicRouteResponse,
+  projectPublicRouteThrow,
+} from './emdash/public-route-boundary.mjs';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url);
@@ -18,5 +23,15 @@ export const onRequest = defineMiddleware(async (context, next) => {
   context.locals.lang = lang;
   context.locals.pathWithoutLang = lang === defaultLang ? pathname : pathname.replace(`/${lang}`, '') || '/';
 
-  return next();
+  const probeScope = previewPublicProbeScope(context.request, context.routePattern);
+  try {
+    const response = await next();
+    const diagnostic = projectPublicRouteResponse(probeScope, response);
+    if (diagnostic) console.error(`[cinagroup-preview-route-boundary] ${JSON.stringify(diagnostic)}`);
+    return response;
+  } catch (error) {
+    const diagnostic = projectPublicRouteThrow(probeScope, error);
+    if (diagnostic) console.error(`[cinagroup-preview-route-boundary] ${JSON.stringify(diagnostic)}`);
+    throw error;
+  }
 });

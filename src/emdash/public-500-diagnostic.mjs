@@ -1,5 +1,4 @@
-// Astro's default production error handler passes its caught error to 500.astro
-// but does not log it. This projection never returns messages, paths, or stacks.
+// Project the error object available to 500.astro without returning messages, paths, or stacks.
 const ERROR_NAMES = new Set([
   'Error',
   'TypeError',
