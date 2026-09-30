@@ -31,6 +31,22 @@ function isPreviewAdminRequest(request: Request): boolean {
   return path === '/_emdash' || path.startsWith('/_emdash/');
 }
 
+/** Only canonical public file reads bypass the gate; upload and metadata APIs stay protected. */
+function isPublicPreviewMediaRequest(request: Request): boolean {
+  if (request.method !== 'GET' && request.method !== 'HEAD') return false;
+  const prefix = '/_emdash/api/media/file/';
+  const path = new URL(request.url).pathname;
+  if (!path.startsWith(prefix)) return false;
+
+  // Reject encoded separators, ambiguous paths and private backup/transfer keys
+  // before passing the key to EmDash's own public-file storage guard.
+  const key = path.slice(prefix.length);
+  if (!key || !/^[A-Za-z0-9._~/-]+$/.test(key)) return false;
+  const segments = key.split('/');
+  if (segments.some((segment) => !segment || segment === '.' || segment === '..')) return false;
+  return !['backups', 'transfers'].includes(segments[0].toLowerCase());
+}
+
 function deny(status: 401 | 503): Response {
   const headers = new Headers({
     'Cache-Control': 'no-store',
@@ -95,6 +111,7 @@ export async function fetchWithPreviewAdminAccess(
   next: (request: Request) => Promise<Response>,
   now = Math.floor(Date.now() / 1000)
 ): Promise<Response> {
+  if (isPublicPreviewMediaRequest(request)) return next(request);
   if (!isPreviewAdminRequest(request)) return next(request);
   if (!secret || secret.length < 32) return deny(503);
 

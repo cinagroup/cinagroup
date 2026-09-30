@@ -1,8 +1,7 @@
 import { validatePostPublication } from './editorial-policy.ts';
 
-// The pilot has public blog indexes only in these locales. Extend this list
-// together with index routes before publishing CMS content in other languages.
-export const PUBLIC_POST_LOCALES = ['en', 'zh', 'ja'] as const;
+// Every admitted locale has either a legacy index bridge or a native CMS index.
+export const PUBLIC_POST_LOCALES = ['en', 'zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'] as const;
 
 export type PublicPostLocale = (typeof PUBLIC_POST_LOCALES)[number];
 

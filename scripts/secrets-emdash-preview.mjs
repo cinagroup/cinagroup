@@ -8,6 +8,14 @@ const hostname = `${workerName}.cinagroup.workers.dev`;
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const encryptionName = 'EMDASH_ENCRYPTION_KEY';
 
+class PreviewSecretError extends Error {}
+
+export function safePreviewSecretError(error) {
+  return error instanceof PreviewSecretError
+    ? error.message
+    : 'Preview secret operation failed; sensitive diagnostics suppressed';
+}
+
 function assertPreviewConfig() {
   const raw = readFileSync(resolve(scriptDirectory, '../wrangler.jsonc'), 'utf8');
   const config = JSON.parse(raw.replace(/,\s*([}\]])/g, '$1'));
@@ -23,7 +31,7 @@ function assertPreviewConfig() {
     db('CONTACT_DB')?.database_id !== 'a24a999d-f784-4ee1-8dcd-888a7be43e7c' ||
     config.r2_buckets?.find((item) => item.binding === 'MEDIA')?.bucket_name !== 'cinagroup-emdash-media-preview'
   ) {
-    throw new Error('Checked-in Wrangler config is not the isolated preview target');
+    throw new PreviewSecretError('Checked-in Wrangler config is not the isolated preview target');
   }
 }
 
@@ -42,10 +50,10 @@ async function uploadEncryptionKey(key, accountId, token) {
     child.stdout.resume();
     child.stderr.resume();
     child.stdin.on('error', () => {});
-    child.once('error', () => rejectPromise(new Error('Unable to start Wrangler secret bulk')));
+    child.once('error', () => rejectPromise(new PreviewSecretError('Unable to start Wrangler secret bulk')));
     child.once('close', (code) => {
       if (code === 0) resolvePromise();
-      else rejectPromise(new Error(`Preview encryption secret upload failed (exit ${code})`));
+      else rejectPromise(new PreviewSecretError(`Preview encryption secret upload failed (exit ${code})`));
     });
     child.stdin.end(JSON.stringify({ [encryptionName]: key }));
   });
@@ -62,24 +70,36 @@ export async function runPreviewSecrets({
   pauseImpl = (duration) => new Promise((done) => setTimeout(done, duration)),
 }) {
   if (!['audit-secrets', 'configure-encryption'].includes(operation))
-    throw new Error('Unknown preview secrets operation');
-  if (!/^[a-f0-9]{32}$/i.test(accountId ?? '') || !token) throw new Error('Cloudflare credentials are missing');
+    throw new PreviewSecretError('Unknown preview secrets operation');
+  if (!/^[a-f0-9]{32}$/i.test(accountId ?? '') || typeof token !== 'string' || !/^[\x21-\x7e]+$/.test(token)) {
+    throw new PreviewSecretError('Cloudflare credentials are missing or invalid');
+  }
   assertPreviewConfig();
 
   async function api(path) {
-    const response = await fetchImpl(`https://api.cloudflare.com/client/v4/accounts/${accountId}${path}`, {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    let response;
+    try {
+      response = await fetchImpl(`https://api.cloudflare.com/client/v4/accounts/${accountId}${path}`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch {
+      throw new PreviewSecretError('Preview secret audit: Cloudflare request failed');
+    }
     let body;
     try {
       body = await response.json();
     } catch {
-      throw new Error(`Preview secret audit: HTTP ${response.status} without JSON`);
+      throw new PreviewSecretError(`Preview secret audit: HTTP ${response.status} without JSON`);
     }
     if (!response.ok || body.success !== true) {
-      const codes = Array.isArray(body.errors) ? body.errors.map((error) => error.code).join(',') : 'unknown';
-      throw new Error(`Preview secret audit: Cloudflare HTTP ${response.status}, error code(s) ${codes}`);
+      const codes = Array.isArray(body.errors)
+        ? body.errors
+            .slice(0, 10)
+            .map((error) => (Number.isSafeInteger(error?.code) ? error.code : 'unknown'))
+            .join(',')
+        : 'unknown';
+      throw new PreviewSecretError(`Preview secret audit: Cloudflare HTTP ${response.status}, error code(s) ${codes}`);
     }
     return body.result;
   }
@@ -93,11 +113,11 @@ export async function runPreviewSecrets({
       api('/workers/subdomain'),
     ]);
     if (!Array.isArray(settings?.bindings) || !Array.isArray(scripts) || !Array.isArray(domains)) {
-      throw new Error('Unexpected preview Worker inventory');
+      throw new PreviewSecretError('Unexpected preview Worker inventory');
     }
     const binding = (name) => {
       const matches = settings.bindings.filter((item) => item.name === name);
-      if (matches.length !== 1) throw new Error(`Preview Worker ${name} binding is missing or duplicated`);
+      if (matches.length !== 1) throw new PreviewSecretError(`Preview Worker ${name} binding is missing or duplicated`);
       return matches[0];
     };
     const db = binding('DB');
@@ -117,14 +137,14 @@ export async function runPreviewSecrets({
       subdomain?.enabled !== true ||
       account?.subdomain !== 'cinagroup'
     ) {
-      throw new Error('Worker is not isolated to the exact preview bindings and workers.dev hostname');
+      throw new PreviewSecretError('Worker is not isolated to the exact preview bindings and workers.dev hostname');
     }
   }
 
   async function secretNames() {
     const secrets = await api(`/workers/scripts/${workerName}/secrets`);
     if (!Array.isArray(secrets) || secrets.some((item) => typeof item.name !== 'string')) {
-      throw new Error('Unexpected preview Worker secret inventory');
+      throw new PreviewSecretError('Unexpected preview Worker secret inventory');
     }
     return new Set(secrets.map((item) => item.name));
   }
@@ -135,19 +155,22 @@ export async function runPreviewSecrets({
   if (operation === 'configure-encryption' && !before.has(encryptionName)) {
     if (
       !/^emdash_enc_v1_[A-Za-z0-9_-]{43}$/.test(encryptionKey) ||
-      Buffer.from(encryptionKey.slice(14), 'base64url').length !== 32
+      Buffer.from(encryptionKey.slice(14), 'base64url').length !== 32 ||
+      Buffer.from(encryptionKey.slice(14), 'base64url').toString('base64url') !== encryptionKey.slice(14)
     ) {
-      throw new Error('GitHub EMDASH_ENCRYPTION_KEY must be an EmDash v1 key generated from 32 random bytes');
+      throw new PreviewSecretError(
+        'GitHub EMDASH_ENCRYPTION_KEY must be an EmDash v1 key generated from 32 random bytes'
+      );
     }
     // Recheck immediately before the write, including the absence of a key.
     await inspectBoundary();
     if ((await secretNames()).has(encryptionName))
-      throw new Error('Encryption key appeared during audit; refusing to replace it');
+      throw new PreviewSecretError('Encryption key appeared during audit; refusing to replace it');
     await uploadKey(encryptionKey, accountId, token);
     created = true;
     const after = await secretNames();
     if (!after.has(encryptionName) || [...before].some((name) => !after.has(name))) {
-      throw new Error('Encryption secret upload did not preserve existing preview secret names');
+      throw new PreviewSecretError('Encryption secret upload did not preserve existing preview secret names');
     }
     await inspectBoundary();
     for (const [path, statuses] of [
@@ -160,19 +183,19 @@ export async function runPreviewSecrets({
         await response.body?.cancel();
         if (statuses.includes(response.status)) {
           if (!response.headers.get('X-Robots-Tag')?.includes('noindex'))
-            throw new Error('Secret deployment lost preview noindex');
+            throw new PreviewSecretError('Secret deployment lost preview noindex');
           if (
             path.startsWith('/_emdash') &&
             (!response.headers.get('Cache-Control')?.includes('no-store') ||
               (response.status === 401 && !response.headers.get('WWW-Authenticate')?.startsWith('Basic ')))
           )
-            throw new Error('Secret deployment lost the preview admin guard');
+            throw new PreviewSecretError('Secret deployment lost the preview admin guard');
           accepted = true;
           break;
         }
         if (attempt < 3) await pauseImpl(3000);
       }
-      if (!accepted) throw new Error(`Secret deployment returned an unexpected status at ${path}`);
+      if (!accepted) throw new PreviewSecretError(`Secret deployment returned an unexpected status at ${path}`);
     }
   }
   return {
@@ -184,19 +207,24 @@ export async function runPreviewSecrets({
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const result = await runPreviewSecrets({
-    operation: process.argv[2],
-    accountId: process.env.CLOUDFLARE_ACCOUNT_ID,
-    token: process.env.CLOUDFLARE_API_TOKEN,
-    encryptionKey: process.env.EMDASH_ENCRYPTION_KEY ?? '',
-  });
-  const lines = [
-    '### Isolated preview secrets',
-    '',
-    `- Encryption key: ${result.encryptionKeyPresent ? 'present' : 'missing'}`,
-    `- Admin password: ${result.adminPasswordPresent ? 'present (value not inspected)' : 'missing'}`,
-    `- Encryption key write: ${result.created ? 'created; existing secret names preserved; live guards verified' : 'none; existing keys never replaced'}`,
-  ];
-  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join('\n')}\n`);
-  console.log(lines.slice(2).join('\n'));
+  try {
+    const result = await runPreviewSecrets({
+      operation: process.argv[2],
+      accountId: process.env.CLOUDFLARE_ACCOUNT_ID,
+      token: process.env.CLOUDFLARE_API_TOKEN,
+      encryptionKey: process.env.EMDASH_ENCRYPTION_KEY ?? '',
+    });
+    const lines = [
+      '### Isolated preview secrets',
+      '',
+      `- Encryption key: ${result.encryptionKeyPresent ? 'present' : 'missing'}`,
+      `- Admin password: ${result.adminPasswordPresent ? 'present (value not inspected)' : 'missing'}`,
+      `- Encryption key write: ${result.created ? 'created; existing secret names preserved; live guards verified' : 'none; existing keys never replaced'}`,
+    ];
+    if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join('\n')}\n`);
+    console.log(lines.slice(2).join('\n'));
+  } catch (error) {
+    console.error(safePreviewSecretError(error));
+    process.exitCode = 1;
+  }
 }

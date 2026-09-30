@@ -1,0 +1,15 @@
+---
+import EmDashBlogIndex from '~/components/blog/EmDashBlogIndex.astro';
+import { cmsBlogIndexHeaders, cmsBlogIndexHeadResponse } from '~/emdash/cms-blog-index';
+import { loadCmsBlogIndexFromRuntime } from '~/emdash/cms-blog-index-runtime';
+
+export const prerender = false;
+
+const result = await loadCmsBlogIndexFromRuntime('pt', Astro.request.url);
+if (Astro.request.method === 'HEAD') return cmsBlogIndexHeadResponse(result);
+
+Astro.response.status = result.status;
+for (const [name, value] of cmsBlogIndexHeaders(result)) Astro.response.headers.set(name, value);
+---
+
+<EmDashBlogIndex locale="pt" result={result} />

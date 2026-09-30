@@ -34,7 +34,10 @@ const published = (overrides = {}) => ({
 
 test('only known locales and path-safe slugs can form public URLs', () => {
   assert.equal(isPublicPostLocale('zh'), true);
-  assert.equal(isPublicPostLocale('ko'), false);
+  for (const locale of ['en', 'zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr']) {
+    assert.equal(isPublicPostLocale(locale), true);
+  }
+  assert.equal(isPublicPostLocale('de'), false);
   assert.equal(isPublicPostLocale('zh-CN'), false);
   assert.equal(isPublicPostSlug('new-article'), true);
   for (const slug of ['../admin', 'draft/entry', 'News', 'bad slug', 'a%2fb']) {
@@ -59,6 +62,15 @@ test('exactly published EmDash locale becomes a public post', () => {
   assert.equal(post?.title, '新文章');
   assert.equal(post?.locale, 'zh');
   assert.equal(post?.publishDate?.toISOString(), '2026-09-29T03:00:00.000Z');
+});
+
+test('every CMS-only locale can publish only its own exact locale entry', () => {
+  for (const locale of ['ko', 'ru', 'es', 'pt', 'fr']) {
+    const post = publicPostFromEntry(published({ locale }), locale, 'new-article', { isPreview: false });
+    assert.equal(post?.locale, locale);
+    assert.equal(publicPostPath(locale, 'new-article'), `/${locale}/blog/new-article/`);
+    assert.equal(publicPostFromEntry(published(), locale, 'new-article', { isPreview: false }), undefined);
+  }
 });
 
 test('drafts, signed previews, locale fallback, and slug mismatch stay private', () => {

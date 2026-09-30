@@ -228,12 +228,12 @@ jobs:
           command: deploy --name cinagroup-emdash-preview
 
       - name: Audit preview secrets or create an absent encryption key
-        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'audit-secrets' || inputs.operation == 'configure-encryption')
+        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'audit-secrets' || inputs.operation == 'configure-encryption' || inputs.operation == 'deploy')
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           EMDASH_ENCRYPTION_KEY: ${{ secrets.EMDASH_ENCRYPTION_KEY }}
-          OPERATION: ${{ inputs.operation }}
+          OPERATION: ${{ inputs.operation == 'audit-secrets' && 'audit-secrets' || 'configure-encryption' }}
         run: node scripts/secrets-emdash-preview.mjs "$OPERATION"
 
       - name: Verify preview route isolation, noindex, and closed admin setup

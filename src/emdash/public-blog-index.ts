@@ -1,6 +1,6 @@
-import { publicPostFromEntry, publicPostPath, type PublicPost } from './public-post.ts';
+import { PUBLIC_POST_LOCALES, publicPostFromEntry, publicPostPath, type PublicPost } from './public-post.ts';
 
-export const ACTIVE_BLOG_INDEX_LOCALES = ['en', 'zh', 'ja'] as const;
+export const ACTIVE_BLOG_INDEX_LOCALES = PUBLIC_POST_LOCALES;
 export type ActiveBlogIndexLocale = (typeof ACTIVE_BLOG_INDEX_LOCALES)[number];
 
 type CmsEntry = { data: Record<string, unknown> };
@@ -14,6 +14,11 @@ const sectionTitles: Record<ActiveBlogIndexLocale, string> = {
   en: 'Latest editorial posts',
   zh: '最新编辑文章',
   ja: '新着記事',
+  ko: '최신 편집 기사',
+  ru: 'Новые редакционные статьи',
+  es: 'Últimos artículos editoriales',
+  pt: 'Artigos editoriais recentes',
+  fr: 'Derniers articles de la rédaction',
 };
 
 export function isActiveBlogIndexLocale(value: string): value is ActiveBlogIndexLocale {

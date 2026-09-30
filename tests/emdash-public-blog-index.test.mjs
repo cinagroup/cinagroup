@@ -32,11 +32,11 @@ const entry = (slug, overrides = {}) => ({
   },
 });
 
-test('only existing blog index locales are admitted', () => {
-  assert.equal(isActiveBlogIndexLocale('en'), true);
-  assert.equal(isActiveBlogIndexLocale('zh'), true);
-  assert.equal(isActiveBlogIndexLocale('ja'), true);
-  assert.equal(isActiveBlogIndexLocale('ko'), false);
+test('legacy and native CMS index locales are admitted', () => {
+  for (const locale of ['en', 'zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr']) {
+    assert.equal(isActiveBlogIndexLocale(locale), true);
+  }
+  assert.equal(isActiveBlogIndexLocale('de'), false);
 });
 
 test('no published CMS entries return the original static asset response untouched', async () => {

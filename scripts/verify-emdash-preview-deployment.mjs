@@ -43,7 +43,7 @@ if (domains.some((item) => item.service === workerName)) {
 }
 if (scriptSubdomain?.enabled !== true) throw new Error('Preview Worker workers.dev route is disabled');
 const subdomain = accountSubdomain?.subdomain;
-if (!/^[a-z0-9-]+$/i.test(subdomain ?? '')) throw new Error('Invalid account workers.dev subdomain');
+if (subdomain !== 'cinagroup') throw new Error('Unexpected account workers.dev subdomain');
 const origin = `https://${workerName}.${subdomain}.workers.dev`;
 
 async function checkPath(path, expectedStatuses) {
@@ -74,6 +74,7 @@ await checkPath('/favicon.svg', [200]);
 await checkPath('/blog/', [200]);
 await checkPath('/zh/blog/', [200]);
 await checkPath('/ja/blog/', [200]);
+for (const locale of ['ko', 'ru', 'es', 'pt', 'fr']) await checkPath(`/${locale}/blog/`, [200]);
 const legacyArticlePath = '/zh/blog/news-briefing-2026-06-15-06-zh/';
 await checkPath(legacyArticlePath, [200]);
 const legacyArticle = await fetch(`${origin}${legacyArticlePath}`);
@@ -90,6 +91,41 @@ if (
 await checkPath('/rss.xml', [200]);
 await checkPath('/robots.txt', [200]);
 await checkPath('/sitemap-emdash.xml', [200]);
+await checkPath('/blog/ai-news-briefing-2026-09-29-18/', [200]);
+await checkPath('/blog/ai-news-briefing-2026-09-30-06/', [200]);
+for (const path of ['/', '/zh/', '/ja/', '/contact/', '/zh/contact/', '/not-a-preview-route/']) {
+  const response = await fetch(`${origin}${path}`, { redirect: 'manual' });
+  await response.body?.cancel();
+  if (
+    !response.headers.get('Content-Security-Policy')?.includes('frame-ancestors') ||
+    response.headers.get('Strict-Transport-Security') !== 'max-age=31536000' ||
+    response.headers.get('X-Frame-Options') !== 'DENY'
+  )
+    throw new Error(`Preview ${path}: production public security headers are missing`);
+}
+for (const [path, location, status] of [
+  ['/homes/saas', '/', 301],
+  ['/homes/saas/x/', '/', 301],
+  ['/index-new/', '/', 301],
+  ['/decapcms/', '/', 301],
+  ['/blog/ai-news-briefing-2026-05-03-06', '/zh/blog/ai-news-briefing-2026-05-03-06', 301],
+  ['/zh/blog/ai-news-briefing-2026-05-03-06', '/zh/blog/ai-news-briefing-2026-05-03-06/', 308],
+]) {
+  const response = await fetch(`${origin}${path}`, { redirect: 'manual' });
+  await response.body?.cancel();
+  const destination = response.headers.get('Location');
+  if (response.status !== status || !destination || new URL(destination, origin).href !== `${origin}${location}`) {
+    throw new Error(`Preview ${path}: expected legacy redirect was not preserved`);
+  }
+}
+const publicMedia = await fetch(`${origin}/_emdash/api/media/file/deploy-smoke-missing.png`);
+await publicMedia.body?.cancel();
+if (publicMedia.status !== 404 || !publicMedia.headers.get('X-Robots-Tag')?.includes('noindex')) {
+  throw new Error('Public missing media must reach EmDash and return 404 without the admin gate');
+}
+const sitemap = await fetch(`${origin}/sitemap-0.xml`);
+if ((await sitemap.text()).includes('/cms-preview/'))
+  throw new Error('Internal signed preview route leaked into public sitemap');
 const adminStatus = await checkPath('/_emdash/admin/setup', [401, 503]);
 
 const lines = [
@@ -99,7 +135,9 @@ const lines = [
   `- URL: ${origin}`,
   '- Routes/custom domains: none',
   '- Public homepages and a static asset: HTTP 200 with noindex',
-  '- Blog indexes, a legacy article, RSS, robots, and CMS sitemap: HTTP 200 with noindex',
+  '- All eight blog indexes, legacy/fresh articles, RSS, robots, and CMS sitemap: HTTP 200 with noindex',
+  '- Public security headers and legacy redirects verified; signed preview excluded from sitemap',
+  '- Anonymous public media reaches EmDash; missing file returns 404',
   `- EmDash admin setup: HTTP ${adminStatus} (${adminStatus === 401 ? 'outer Basic gate enabled' : 'closed until preview-only password is set'})`,
 ];
 if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join('\n')}\n`);

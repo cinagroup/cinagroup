@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { runPreviewSecrets } from '../scripts/secrets-emdash-preview.mjs';
+import { runPreviewSecrets, safePreviewSecretError } from '../scripts/secrets-emdash-preview.mjs';
 
 const accountId = 'a'.repeat(32);
 const token = 'local-test-token';
@@ -82,7 +82,10 @@ test('configure creates a missing key once, preserves existing secrets, and neve
 });
 
 test('invalid key format and unknown operations fail before a write', async () => {
-  for (const key of ['', 'random-string'.repeat(5), `emdash_enc_v1_${'A'.repeat(42)}`]) {
+  // The final character's unused low bits must be zero (EmDash rejects aliases).
+  const noncanonical = encryptionKey.slice(0, -1) + 'l';
+  assert.equal(Buffer.from(noncanonical.slice(14), 'base64url').toString('base64url'), encryptionKey.slice(14));
+  for (const key of ['', 'random-string'.repeat(5), `emdash_enc_v1_${'A'.repeat(42)}`, noncanonical]) {
     const mock = mockCloudflare();
     await assert.rejects(run(mock, 'configure-encryption', { encryptionKey: key }), /EmDash v1 key/);
     assert.equal(mock.state.uploads, 0);
@@ -160,4 +163,36 @@ test('secret update must preserve names and live noindex/admin guards', async ()
       /noindex|unexpected status|not isolated/
     );
   }
+});
+
+test('invalid credentials and unknown diagnostics never enter operator output', async () => {
+  const mock = mockCloudflare();
+  await assert.rejects(run(mock, 'audit-secrets', { token: `${token}\n` }), (error) => {
+    assert.match(safePreviewSecretError(error), /credentials/);
+    assert(!safePreviewSecretError(error).includes(token));
+    return true;
+  });
+  assert.equal(mock.state.requests.length, 0);
+  await assert.rejects(
+    run(mock, 'audit-secrets', {
+      fetchImpl: async () => {
+        throw new TypeError(`unsafe ${token} ${encryptionKey}`);
+      },
+    }),
+    (error) => {
+      assert.equal(safePreviewSecretError(error), 'Preview secret audit: Cloudflare request failed');
+      return true;
+    }
+  );
+  assert(!safePreviewSecretError(new Error(encryptionKey)).includes(encryptionKey));
+  await assert.rejects(
+    run(mock, 'audit-secrets', {
+      fetchImpl: async () => Response.json({ success: false, errors: [{ code: token }] }, { status: 403 }),
+    }),
+    (error) => {
+      assert.match(safePreviewSecretError(error), /HTTP 403.*unknown/);
+      assert(!safePreviewSecretError(error).includes(token));
+      return true;
+    }
+  );
 });

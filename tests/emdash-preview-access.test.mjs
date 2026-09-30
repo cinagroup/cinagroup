@@ -125,3 +125,74 @@ test('public preview routes bypass the admin gate, while an admin path on any ho
   );
   assert.equal(mismatchedHostAdmin.status, 503);
 });
+
+test('canonical public media GET and HEAD reads bypass the admin gate without issuing an access cookie', async () => {
+  let calls = 0;
+  const next = async (request) => {
+    calls++;
+    return new Response(request.method === 'HEAD' ? null : 'media', {
+      headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=300' },
+    });
+  };
+  for (const method of ['GET', 'HEAD']) {
+    for (const configured of [undefined, secret]) {
+      for (const key of ['01K7P4J26T0WYS88MQ72GHAFBJ.png', 'images/pilot-image_1~small.webp']) {
+        const response = await fetchWithPreviewAdminAccess(
+          new Request(`${host}/_emdash/api/media/file/${key}`, { method }),
+          configured,
+          next,
+          now
+        );
+        assert.equal(response.status, 200);
+        assert.equal(response.headers.get('Content-Type'), 'image/png');
+        assert.equal(response.headers.get('Cache-Control'), 'public, max-age=300');
+        assert.equal(response.headers.get('Set-Cookie'), null);
+      }
+    }
+  }
+  assert.equal(calls, 8);
+});
+
+test('media writes, private keys, ambiguous paths and administrative APIs cannot bypass the preview gate', async () => {
+  let forwarded = false;
+  const next = async () => {
+    forwarded = true;
+    return new Response('unexpected');
+  };
+  const paths = [
+    '/_emdash/api/media/file/',
+    '/_emdash/api/media/file/backups/snapshot.zip',
+    '/_emdash/api/media/file/Backups/snapshot.zip',
+    '/_emdash/api/media/file/transfers/imports/staged.png',
+    '/_emdash/api/media/file/transfers',
+    '/_emdash/api/media/file/images//pilot.png',
+    '/_emdash/api/media/file/pilot.png/',
+    '/_emdash/api/media/file/pilot%2epng',
+    '/_emdash/api/media/file/%62ackups/snapshot.zip',
+    '/_emdash/api/media/file/%2562ackups/snapshot.zip',
+    '/_emdash/api/media/file/images%2f..%2fbackups/snapshot.zip',
+    '/_emdash/api/media/file/images%5c..%5cbackups/snapshot.zip',
+    '/_emdash/api/media/file/%2e%2e/%2e%2e/%2e%2e/admin/setup',
+    '/%5Femdash/api/media/file/pilot.png',
+    '/_emdash//api/media/file/pilot.png',
+    '/_EMDASH/api/media/file/pilot.png',
+    '/_emdash/api/media/file/pilot%zz.png',
+    '/_emdash/api/media/asset/01K7P4J26T0WYS88MQ72GHAFBJ/pilot.png',
+    '/_emdash/api/media/upload-url',
+    '/_emdash/api/media/01K7P4J26T0WYS88MQ72GHAFBJ/upload',
+    '/_emdash/api/media/01K7P4J26T0WYS88MQ72GHAFBJ/confirm',
+    '/_emdash/api/setup/admin',
+  ];
+  for (const path of paths) {
+    for (const method of ['GET', 'HEAD']) {
+      const request = new Request(`${host}${path}`, { method });
+      assert.equal((await fetchWithPreviewAdminAccess(request, undefined, next, now)).status, 503, path);
+      assert.equal((await fetchWithPreviewAdminAccess(request, secret, next, now)).status, 401, path);
+    }
+  }
+  for (const method of ['POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']) {
+    const request = new Request(`${host}/_emdash/api/media/file/pilot.png`, { method });
+    assert.equal((await fetchWithPreviewAdminAccess(request, secret, next, now)).status, 401, method);
+  }
+  assert.equal(forwarded, false);
+});

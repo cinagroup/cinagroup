@@ -1,0 +1,100 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { getBlogStrings } from '~/i18n/blog';
+import { getCanonical } from '~/utils/permalinks';
+import type { CmsBlogIndex } from '~/emdash/cms-blog-index';
+import { publicPostPath, type PublicPostLocale } from '~/emdash/public-post';
+import type { MetaData } from '~/types';
+
+export interface Props {
+  locale: PublicPostLocale;
+  result: CmsBlogIndex;
+}
+
+const { locale, result } = Astro.props;
+const strings = getBlogStrings(locale);
+const copy = {
+  en: {
+    empty: 'No articles have been published in English yet.',
+    unavailable: 'Articles are temporarily unavailable.',
+  },
+  zh: { empty: '尚未发布中文文章。', unavailable: '文章暂时无法加载。' },
+  ja: { empty: '日本語の記事はまだ公開されていません。', unavailable: '現在、記事を読み込めません。' },
+  ko: { empty: '아직 한국어로 게시된 글이 없습니다.', unavailable: '현재 글을 불러올 수 없습니다.' },
+  ru: { empty: 'Статьи на русском языке пока не опубликованы.', unavailable: 'Статьи временно недоступны.' },
+  es: {
+    empty: 'Todavía no hay artículos publicados en español.',
+    unavailable: 'Los artículos no están disponibles temporalmente.',
+  },
+  pt: {
+    empty: 'Ainda não há artigos publicados em português.',
+    unavailable: 'Os artigos estão temporariamente indisponíveis.',
+  },
+  fr: {
+    empty: 'Aucun article n’a encore été publié en français.',
+    unavailable: 'Les articles sont temporairement indisponibles.',
+  },
+}[locale];
+const metadata: MetaData = {
+  title: strings.listTitle,
+  description: strings.listDescription,
+  canonical: String(getCanonical(`/${locale}/blog/`)),
+  language: locale,
+  robots: { index: result.indexable, follow: true },
+  openGraph: { type: 'blog' },
+  // A locale's existence does not establish independently published translations.
+  alternates: [],
+};
+---
+
+<Layout metadata={metadata} languageAlternates={[]}>
+  <section class="cg-blog-index" data-blog-collection="index" data-blog-locale={locale} data-blog-source="emdash">
+    <header class="cg-blog-headline">
+      <p class="cg-eyebrow">{strings.listEyebrow}</p>
+      <h1>{strings.listTitle}</h1>
+      <div class="cg-blog-headline-lead">
+        {
+          result.status === 503
+            ? copy.unavailable
+            : result.posts.length === 0
+              ? copy.empty
+              : strings.listSubtitle(result.posts.length)
+        }
+      </div>
+    </header>
+    {
+      result.posts.length > 0 && (
+        <ul class="cg-blog-list">
+          {result.posts.map((post) => (
+            <li>
+              <article
+                class="cg-blog-item"
+                data-content-kind="editorial-summary"
+                data-content-status="published"
+                data-content-source="emdash"
+              >
+                <div class="cg-blog-item-copy">
+                  <header>
+                    {post.publishDate && (
+                      <div class="cg-blog-meta">
+                        <time datetime={post.publishDate.toISOString()}>
+                          {post.publishDate.toLocaleDateString(locale)}
+                        </time>
+                      </div>
+                    )}
+                    <h2>
+                      <a class="cg-blog-title-link" href={publicPostPath(locale, post.slug)}>
+                        {post.title}
+                      </a>
+                    </h2>
+                  </header>
+                  {post.excerpt && <p>{post.excerpt}</p>}
+                </div>
+              </article>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</Layout>

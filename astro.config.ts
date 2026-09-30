@@ -63,6 +63,7 @@ const shouldIncludeInSitemap = (page: string) => {
   const pathname = stripLocalePrefix(new URL(page).pathname.replace(/\/+$/, '') || '/');
 
   return (
+    !/^\/(?:cms-preview|_emdash)(?:\/|$)/.test(pathname) &&
     !/^\/tag(?:\/|$)/.test(pathname) &&
     !archivedBlogPaths.has(pathname) &&
     !/^\/category\/ai-news(?:\/|$)/.test(pathname)
@@ -86,6 +87,7 @@ export default defineConfig({
   integrations: [
     react(),
     emdash({
+      siteUrl: 'https://cinagroup-emdash-preview.cinagroup.workers.dev',
       database: d1({ binding: 'DB' }),
       storage: r2({ binding: 'MEDIA' }),
       plugins: [editorialPolicyPlugin()],
