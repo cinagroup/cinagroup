@@ -113,12 +113,45 @@ function basicPassword(request: Request): string | undefined {
   }
 }
 
+const ACCESS_SCRIPT = String.raw`(() => {
+  const form = document.querySelector('form');
+  const button = form && form.querySelector('button[type="submit"]');
+  const error = document.getElementById('preview-access-error');
+  if (!form || !button || !error) return;
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (button.disabled) return;
+    button.disabled = true;
+    error.hidden = true;
+    error.textContent = '';
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(form)),
+        credentials: 'same-origin',
+        mode: 'same-origin',
+        redirect: 'follow',
+      });
+      const destination = new URL(response.url);
+      if (!response.ok || destination.origin !== location.origin || destination.username || destination.password || !/^\/_emdash\/admin(?:\/|$)/.test(destination.pathname)) {
+        throw new Error('Sign-in failed');
+      }
+      location.assign('/_emdash/admin/');
+    } catch {
+      error.textContent = 'Sign-in failed. Check your preview password.';
+      error.hidden = false;
+    } finally {
+      button.disabled = false;
+    }
+  });
+})();`;
+
 function accessHeaders(): Headers {
   return new Headers({
     'Cache-Control': 'no-store',
     'Content-Security-Policy':
-      "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
-    'Referrer-Policy': 'no-referrer',
+      "default-src 'none'; style-src 'unsafe-inline'; script-src 'sha256-2yR28yZaY0X815CP6tyZnAtV92Hw3IfEIUhc2G2IPWk='; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
+    'Referrer-Policy': 'same-origin',
     'X-Content-Type-Options': 'nosniff',
     'X-Frame-Options': 'DENY',
     'X-Robots-Tag': 'noindex, nofollow',
@@ -131,8 +164,8 @@ function accessPage(head = false, failed = false): Response {
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Preview access | CinaGroup</title>
 <style>body{margin:0;min-height:100svh;display:grid;place-items:center;background:#f4f6f8;color:#152333;font:16px/1.5 system-ui,sans-serif}main{box-sizing:border-box;width:min(440px,calc(100% - 32px));padding:32px;background:white;border:1px solid #d6dce3;border-radius:12px}h1{margin:0 0 12px;font-size:26px}p{margin:0 0 20px}label{display:block;font-weight:600;margin-bottom:8px}input,button{box-sizing:border-box;width:100%;font:inherit;padding:12px;border-radius:6px}input{border:1px solid #8190a0}button{margin-top:20px;background:#152333;color:white;border:0;cursor:pointer}:focus-visible{outline:3px solid #4788cb;outline-offset:3px}.error{color:#a32626}</style></head>
-<body><main><h1>Preview access</h1><p>Sign in with your preview password to continue to EmDash.</p><p>Username: <strong>preview</strong></p>${failed ? '<p class="error" role="alert">Sign-in failed. Check your preview password.</p>' : ''}
-<form method="post" action="${ACCESS_PATH}"><label for="preview-password">Preview password</label><input id="preview-password" name="password" type="password" autocomplete="current-password" minlength="32" maxlength="128" required autofocus><button type="submit">Continue to EmDash</button></form></main></body></html>`;
+<body><main><h1>Preview access</h1><p>Sign in with your preview password to continue to EmDash.</p><p>Username: <strong>preview</strong></p><p id="preview-access-error" class="error" role="alert" ${failed ? '' : 'hidden'}>${failed ? 'Sign-in failed. Check your preview password.' : ''}</p>
+<form method="post" action="${ACCESS_PATH}"><label for="preview-password">Preview password</label><input id="preview-password" name="password" type="password" autocomplete="current-password" minlength="32" maxlength="128" required autofocus><button type="submit">Continue to EmDash</button></form></main><script>${ACCESS_SCRIPT}</script></body></html>`;
   return new Response(head ? null : html, { headers });
 }
 

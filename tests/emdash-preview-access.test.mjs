@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
+import { createHash } from 'node:crypto';
+import { runInNewContext } from 'node:vm';
 import test from 'node:test';
 
 import {
@@ -239,9 +241,13 @@ function assertLoginSecurityHeaders(response) {
   assert.match(policy, /(?:^|;)\s*base-uri\s+'none'(?:;|$)/);
   assert.match(policy, /(?:^|;)\s*frame-ancestors\s+'none'(?:;|$)/);
   assert.equal(response.headers.get('WWW-Authenticate'), null);
+  assert.equal(response.headers.get('Referrer-Policy'), 'same-origin');
+  assert.equal(response.headers.get('X-Content-Type-Options'), 'nosniff');
+  assert.equal(response.headers.get('X-Frame-Options'), 'DENY');
+  assert.match(response.headers.get('X-Robots-Tag'), /noindex/);
 }
 
-test('canonical access GET and HEAD serve a private, script-free form without Basic challenges or a password value', async () => {
+test('canonical access GET and HEAD serve a private enhanced form without Basic challenges or a password value', async () => {
   const get = await fetchWithPreviewAdminAccess(new Request(accessUrl), secret, forbiddenLoginForward, now);
   assert.equal(get.status, 200);
   assertLoginSecurityHeaders(get);
@@ -251,7 +257,7 @@ test('canonical access GET and HEAD serve a private, script-free form without Ba
   assert.match(html, /<form\b[^>]*action=["']\/_emdash\/access\/["']/i);
   assert.match(html, /<input\b[^>]*type=["']password["']/i);
   assert.match(html, /<input\b[^>]*name=["']password["']/i);
-  assert.doesNotMatch(html, /<script\b/i);
+  assert.equal([...html.matchAll(/<script\b/gi)].length, 1);
   assert(!html.includes(secret));
   assert(!html.includes(Buffer.from('preview:' + secret).toString('base64')));
   const head = await fetchWithPreviewAdminAccess(
@@ -548,4 +554,191 @@ test('invalid UTF-8 login bytes are rejected before decoding or password compari
   assert.equal(response.status, 400);
   assert.equal(response.headers.get('Set-Cookie'), null);
   assert.equal(response.headers.get('WWW-Authenticate'), null);
+});
+
+async function accessScriptHarness(fetchImpl) {
+  const response = await fetchWithPreviewAdminAccess(new Request(accessUrl), secret, forbiddenLoginForward, now);
+  const html = await response.text();
+  const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+  assert.equal(scripts.length, 1);
+  const button = { disabled: false };
+  const error = { hidden: true, textContent: '' };
+  const state = { submit: undefined, requests: 0, assigned: [], logs: 0, prevented: 0 };
+  const form = {
+    action: accessUrl,
+    querySelector(selector) {
+      assert.equal(selector, 'button[type="submit"]');
+      return button;
+    },
+    addEventListener(type, handler) {
+      assert.equal(type, 'submit');
+      state.submit = handler;
+    },
+  };
+  class MockFormData {
+    constructor(element) {
+      assert.equal(element, form);
+    }
+    *[Symbol.iterator]() {
+      yield ['password', secret];
+    }
+  }
+  runInNewContext(scripts[0][1], {
+    document: {
+      querySelector(selector) {
+        assert.equal(selector, 'form');
+        return form;
+      },
+      getElementById(id) {
+        assert.equal(id, 'preview-access-error');
+        return error;
+      },
+    },
+    location: {
+      origin: accessOrigin,
+      assign(path) {
+        state.assigned.push(path);
+      },
+    },
+    FormData: MockFormData,
+    URLSearchParams,
+    URL,
+    fetch: async (url, options) => {
+      state.requests++;
+      assert.equal(url, form.action);
+      assert.equal(options.method, 'POST');
+      assert.equal(options.credentials, 'same-origin');
+      assert.equal(options.mode, 'same-origin');
+      assert.equal(options.redirect, 'follow');
+      assert.deepEqual([...options.body], [['password', secret]]);
+      return fetchImpl(url, options);
+    },
+    console: {
+      log() {
+        state.logs++;
+      },
+      warn() {
+        state.logs++;
+      },
+      error() {
+        state.logs++;
+      },
+    },
+  });
+  return {
+    state,
+    button,
+    error,
+    submit: () =>
+      state.submit({
+        preventDefault() {
+          state.prevented++;
+        },
+      }),
+  };
+}
+
+test('access script has one exact CSP SHA-256 hash and permits only same-origin fetch while native fallback stays intact', async () => {
+  for (const request of [
+    new Request(accessUrl),
+    accessPost(encodedPassword('incorrect-preview-password-with-32-characters')),
+  ]) {
+    const response = await fetchWithPreviewAdminAccess(request, secret, forbiddenLoginForward, now);
+    assertLoginSecurityHeaders(response);
+    const policy = response.headers.get('Content-Security-Policy');
+    const html = await response.text();
+    const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+    assert.equal(scripts.length, 1);
+    const hash = createHash('sha256').update(scripts[0][1]).digest('base64');
+    const scriptDirective = policy
+      .split(';')
+      .map((value) => value.trim())
+      .find((value) => value.startsWith('script-src '));
+    assert.equal(scriptDirective, "script-src 'sha256-" + hash + "'");
+    assert.match(policy, /(?:^|;)\s*connect-src\s+'self'(?:;|$)/);
+    assert.doesNotMatch(scriptDirective, /unsafe-inline|unsafe-eval|https?:|nonce-/);
+    assert.match(html, /<form\b[^>]*method=["']post["']/i);
+    assert.match(html, /<form\b[^>]*action=["']\/_emdash\/access\/["']/i);
+    assert.match(html, /<button\b[^>]*type=["']submit["']/i);
+    assert(!scripts[0][1].includes(secret));
+  }
+});
+
+test('enhanced form submits the original URL-encoded password and navigates only to the fixed admin home after an allowed final URL', async () => {
+  for (const path of ['/_emdash/admin', '/_emdash/admin/', '/_emdash/admin/setup?next=https://evil.example/']) {
+    const harness = await accessScriptHarness(async () => ({ ok: true, url: accessOrigin + path }));
+    await harness.submit();
+    assert.equal(harness.state.prevented, 1);
+    assert.equal(harness.state.requests, 1);
+    assert.deepEqual(harness.state.assigned, ['/_emdash/admin/']);
+    assert.equal(harness.button.disabled, false);
+    assert.equal(harness.error.hidden, true);
+    assert.equal(harness.state.logs, 0);
+  }
+});
+
+test('enhanced form failures reveal only a fixed generic message and always restore the submit button', async () => {
+  for (const fetchImpl of [
+    async () => ({ ok: true, url: accessUrl }),
+    async () => ({ ok: false, url: accessOrigin + '/_emdash/admin/' }),
+    async () => ({ ok: true, url: 'https://evil.example/_emdash/admin/' }),
+    async () => ({ ok: true, url: accessOrigin + '/_emdash/admin-other/' }),
+    async () => ({ ok: true, url: 'http://cinagroup-emdash-preview.cinagroup.workers.dev/_emdash/admin/' }),
+    async () => ({
+      ok: true,
+      url: 'https://user:password@cinagroup-emdash-preview.cinagroup.workers.dev/_emdash/admin/',
+    }),
+    async () => {
+      throw new TypeError('unsafe diagnostic ' + secret);
+    },
+  ]) {
+    const harness = await accessScriptHarness(fetchImpl);
+    await harness.submit();
+    assert.deepEqual(harness.state.assigned, []);
+    assert.equal(harness.error.textContent, 'Sign-in failed. Check your preview password.');
+    assert.equal(harness.error.hidden, false);
+    assert.equal(harness.button.disabled, false);
+    assert.equal(harness.state.logs, 0);
+    assert(!harness.error.textContent.includes(secret));
+  }
+});
+
+test('enhanced form prevents duplicate submissions while a same-origin fetch is pending', async () => {
+  let finish;
+  const harness = await accessScriptHarness(
+    () =>
+      new Promise((resolve) => {
+        finish = resolve;
+      })
+  );
+  const pending = harness.submit();
+  assert.equal(harness.button.disabled, true);
+  await harness.submit();
+  assert.equal(harness.state.requests, 1);
+  assert.equal(harness.state.prevented, 2);
+  finish({ ok: true, url: accessOrigin + '/_emdash/admin/' });
+  await pending;
+  assert.equal(harness.button.disabled, false);
+  assert.deepEqual(harness.state.assigned, ['/_emdash/admin/']);
+  assert.equal(harness.state.logs, 0);
+});
+
+test('same-origin referrer policy does not weaken the exact POST Origin requirement', async () => {
+  for (const origin of [null, 'null', 'https://evil.example']) {
+    const response = await fetchWithPreviewAdminAccess(
+      accessPost(encodedPassword(secret), {
+        origin,
+        headers: { Referer: accessUrl },
+      }),
+      secret,
+      forbiddenLoginForward,
+      now
+    );
+    assert.equal(response.status, 403);
+    assert.equal(response.headers.get('Referrer-Policy'), 'same-origin');
+    assert.equal(response.headers.get('Cache-Control'), 'no-store');
+    assert.match(response.headers.get('Content-Security-Policy'), /form-action 'self'/);
+    assert.equal(response.headers.get('Set-Cookie'), null);
+    assert.equal(response.headers.get('WWW-Authenticate'), null);
+  }
 });
