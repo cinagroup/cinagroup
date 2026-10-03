@@ -62,6 +62,7 @@ async function token(overrides = {}, key = privateKey) {
 function fixture(options = {}) {
   const runtimeBindings = options.bindings ?? bindings();
   const calls = { jwks: 0, identity: 0 };
+  const denials = [];
   const verifyAccessJwt = createAccessJwtVerifier({
     jwtVerify: jose.jwtVerify,
     createRemoteJWKSet(url, init) {
@@ -87,8 +88,12 @@ function fixture(options = {}) {
       assert.match(new Headers(init.headers).get('Cookie'), /^CF_Authorization=[A-Za-z0-9_.-]+$/);
       return options.response ? options.response() : Response.json(options.identity ?? identity());
     },
+    onDenied: (diagnostic) => {
+      denials.push(diagnostic);
+      options.onDenied?.(diagnostic);
+    },
   });
-  return { authorize, authenticate: createCinaAuthAccessAuthenticate(authorize), calls, runtimeBindings };
+  return { authorize, authenticate: createCinaAuthAccessAuthenticate(authorize), calls, runtimeBindings, denials };
 }
 
 async function request(overrides = {}) {
@@ -268,4 +273,154 @@ test('native descriptor must explicitly permit controlled provisioning and role 
   await assert.rejects(f.authenticate(await request(), {}), unavailable);
   await assert.rejects(f.authenticate(await request(), { autoProvision: true, syncRoles: false }), unavailable);
   assert.deepEqual(f.calls, { jwks: 0, identity: 0 });
+});
+
+for (const [stage, options, buildRequest] of [
+  ['runtime_configuration', { bindings: {} }, request],
+  [
+    'request_protocol',
+    {},
+    async () =>
+      new Request('http://preview.example.test/_emdash/admin/', {
+        headers: { 'Cf-Access-Jwt-Assertion': await token() },
+      }),
+  ],
+  [
+    'assertion_missing',
+    {},
+    async () =>
+      new Request('https://preview.example.test/_emdash/admin/', {
+        headers: { Cookie: 'CF_Authorization=untrusted-cookie; session=sensitive-session' },
+      }),
+  ],
+  [
+    'assertion_shape',
+    {},
+    async () =>
+      new Request('https://preview.example.test/_emdash/admin/', {
+        headers: { 'Cf-Access-Jwt-Assertion': 'sensitive-invalid-assertion' },
+      }),
+  ],
+  ['jwt_verification', {}, async () => request({ aud: ['b'.repeat(64)] })],
+  ['jwt_claims', {}, async () => request({ email: 'other@example.test' })],
+  [
+    'identity_fetch',
+    {
+      response: () => {
+        throw new Error('upstream-sensitive-error');
+      },
+    },
+    request,
+  ],
+  ['identity_http', { response: () => new Response('upstream-sensitive-error', { status: 502 }) }, request],
+  [
+    'identity_content_type',
+    {
+      response: () =>
+        new Response('upstream-sensitive-error', {
+          headers: { 'Content-Type': 'text/html' },
+        }),
+    },
+    request,
+  ],
+  [
+    'identity_body_limit',
+    {
+      response: () =>
+        new Response('upstream-sensitive-error', {
+          headers: { 'Content-Type': 'application/json', 'Content-Length': '65537' },
+        }),
+    },
+    request,
+  ],
+  [
+    'identity_body_missing',
+    {
+      response: () =>
+        new Response(null, {
+          headers: { 'Content-Type': 'application/json' },
+        }),
+    },
+    request,
+  ],
+  [
+    'identity_body_read',
+    {
+      response: () =>
+        new Response(
+          new ReadableStream({
+            start(controller) {
+              controller.error(new Error('sensitive-stream-error'));
+            },
+          }),
+          { headers: { 'Content-Type': 'application/json' } }
+        ),
+    },
+    request,
+  ],
+  [
+    'identity_json',
+    {
+      response: () =>
+        new Response('upstream-sensitive-error', {
+          headers: { 'Content-Type': 'application/json' },
+        }),
+    },
+    request,
+  ],
+  ['identity_email', { identity: { ...identity(), email: 'other@example.test' } }, request],
+  ['identity_idp', { identity: { ...identity(), idp: { id: 'other-sensitive-idp', type: 'oidc' } } }, request],
+  ['identity_oidc_fields', { identity: { ...identity(), oidc_fields: undefined } }, request],
+  ['identity_email_verified', { identity: { ...identity(), oidc_fields: { email_verified: 'true' } } }, request],
+  ['identity_service', { identity: { ...identity(), service_token_status: true } }, request],
+]) {
+  test(`denial diagnostic projects only fixed stage ${stage} and optional HTTP status`, async () => {
+    const f = fixture(options);
+    await assert.rejects(f.authorize(await buildRequest()), stage === 'runtime_configuration' ? unavailable : denied);
+    assert.deepEqual(f.denials, [{ stage, ...(stage === 'identity_http' ? { identityHttpStatus: 502 } : {}) }]);
+    const serialized = JSON.stringify(f.denials);
+    for (const sensitive of [ADMIN_EMAIL, 'other@example.test', 'sensitive', 'CF_Authorization', 'https://']) {
+      assert.equal(serialized.includes(sensitive), false);
+    }
+  });
+}
+
+test('successful authorization emits no denial diagnostic', async () => {
+  const f = fixture();
+  assert.equal((await f.authorize(await request())).role, 50);
+  assert.deepEqual(f.denials, []);
+});
+
+test('throwing diagnostic sink cannot change rejection or expose its error', async () => {
+  const f = fixture({
+    onDenied: () => {
+      throw new Error('sink-sensitive-error', { cause: 'sensitive-cause' });
+    },
+  });
+  await assert.rejects(f.authorize(await request({ aud: ['b'.repeat(64)] })), denied);
+  assert.deepEqual(f.denials, [{ stage: 'jwt_verification' }]);
+  assert.deepEqual(f.calls, { jwks: 1, identity: 0 });
+});
+
+test('throwing diagnostic sink preserves unavailable status and cannot authorize', async () => {
+  const f = fixture({
+    bindings: {},
+    onDenied: () => {
+      throw new Error('sink-sensitive-error');
+    },
+  });
+  await assert.rejects(f.authorize(await request()), unavailable);
+  assert.deepEqual(f.denials, [{ stage: 'runtime_configuration' }]);
+  assert.deepEqual(f.calls, { jwks: 0, identity: 0 });
+});
+
+test('concurrent request cache retains the actual sanitized denial stage', async () => {
+  const f = fixture({ identity: { ...identity(), oidc_fields: { email_verified: false } } });
+  const r = await request();
+  await Promise.all([
+    assert.rejects(f.authorize(r), denied),
+    assert.rejects(f.authenticate(r, { autoProvision: true, syncRoles: true }), denied),
+  ]);
+  assert.equal(f.calls.identity, 1);
+  assert.deepEqual(f.denials, [{ stage: 'identity_email_verified' }, { stage: 'identity_email_verified' }]);
 });

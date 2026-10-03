@@ -9,6 +9,7 @@ export const authorizeCinaAuthAccess = createCinaAuthAccessAuthorizer({
   runtimeBindings: () => env,
   verifyAccessJwt: createAccessJwtVerifier({ createRemoteJWKSet, jwtVerify }),
   fetchIdentity: (input, init) => fetch(input, init),
+  onDenied: (diagnostic) => console.warn(`[cinagroup-preview-access-denied] ${JSON.stringify(diagnostic)}`),
 });
 
 export const authenticate = createCinaAuthAccessAuthenticate(authorizeCinaAuthAccess);

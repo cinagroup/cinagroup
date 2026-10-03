@@ -13,10 +13,39 @@ export interface RuntimeConfig {
   adminEmail: string;
 }
 
+export type AccessDenialStage =
+  | 'runtime_configuration'
+  | 'request_protocol'
+  | 'assertion_missing'
+  | 'assertion_shape'
+  | 'jwt_verification'
+  | 'jwt_claims'
+  | 'identity_fetch'
+  | 'identity_http'
+  | 'identity_content_type'
+  | 'identity_body_limit'
+  | 'identity_body_missing'
+  | 'identity_body_read'
+  | 'identity_json'
+  | 'identity_email'
+  | 'identity_idp'
+  | 'identity_oidc_fields'
+  | 'identity_email_verified'
+  | 'identity_service'
+  | 'identity_expired'
+  | 'authorization_unexpected';
+
+/** Fixed categories only: never attach claims, credentials, upstream bodies or causes. */
+export interface AccessDenialDiagnostic {
+  stage: AccessDenialStage;
+  identityHttpStatus?: number;
+}
+
 export interface AccessDependencies {
   runtimeBindings: () => unknown;
   verifyAccessJwt: (jwt: string, config: RuntimeConfig) => Promise<JWTPayload>;
   fetchIdentity: typeof fetch;
+  onDenied?: (diagnostic: AccessDenialDiagnostic) => void;
 }
 
 export class CinaAuthAccessError extends Error {
@@ -26,6 +55,16 @@ export class CinaAuthAccessError extends Error {
     super(status === 503 ? 'CinaAuth Access authentication unavailable' : DENIED_MESSAGE);
     this.name = 'CinaAuthAccessError';
     this.status = status;
+  }
+}
+
+/** Internal sentinel; the public error remains the existing sanitized 401/503. */
+class AccessDiagnosticError extends Error {
+  readonly diagnostic: AccessDenialDiagnostic;
+
+  constructor(stage: AccessDenialStage, identityHttpStatus?: number) {
+    super(DENIED_MESSAGE);
+    this.diagnostic = identityHttpStatus === undefined ? { stage } : { stage, identityHttpStatus };
   }
 }
 
@@ -71,14 +110,15 @@ function matchesIdp(value: unknown, config: RuntimeConfig): boolean {
 }
 
 async function readIdentity(response: Response): Promise<unknown> {
-  if (response.status !== 200 || !/^application\/json(?:\s*;|$)/i.test(response.headers.get('Content-Type') ?? '')) {
-    throw new Error(DENIED_MESSAGE);
+  if (response.status !== 200) throw new AccessDiagnosticError('identity_http', response.status);
+  if (!/^application\/json(?:\s*;|$)/i.test(response.headers.get('Content-Type') ?? '')) {
+    throw new AccessDiagnosticError('identity_content_type');
   }
   const length = response.headers.get('Content-Length');
   if (length !== null && (!/^\d+$/.test(length) || Number(length) > IDENTITY_BODY_LIMIT)) {
-    throw new Error(DENIED_MESSAGE);
+    throw new AccessDiagnosticError('identity_body_limit');
   }
-  if (!response.body) throw new Error(DENIED_MESSAGE);
+  if (!response.body) throw new AccessDiagnosticError('identity_body_missing');
   const reader = response.body.getReader();
   const chunks: Uint8Array[] = [];
   let size = 0;
@@ -87,12 +127,12 @@ async function readIdentity(response: Response): Promise<unknown> {
       const { done, value } = await reader.read();
       if (done) break;
       size += value.byteLength;
-      if (size > IDENTITY_BODY_LIMIT) throw new Error(DENIED_MESSAGE);
+      if (size > IDENTITY_BODY_LIMIT) throw new AccessDiagnosticError('identity_body_limit');
       chunks.push(value);
     }
-  } catch {
+  } catch (error) {
     await reader.cancel().catch(() => undefined);
-    throw new Error(DENIED_MESSAGE);
+    throw error instanceof AccessDiagnosticError ? error : new AccessDiagnosticError('identity_body_read');
   } finally {
     reader.releaseLock();
   }
@@ -102,7 +142,11 @@ async function readIdentity(response: Response): Promise<unknown> {
     bytes.set(chunk, offset);
     offset += chunk.byteLength;
   }
-  return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
+  try {
+    return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
+  } catch {
+    throw new AccessDiagnosticError('identity_json');
+  }
 }
 
 /**
@@ -121,13 +165,10 @@ export function createCinaAuthAccessAuthorizer(dependencies: AccessDependencies)
       // Access injects this header on requests to the origin. Do not authorize
       // from an unverified email header or a native EmDash/preview cookie.
       const jwt = request.headers.get('Cf-Access-Jwt-Assertion');
-      if (
-        new URL(request.url).protocol !== 'https:' ||
-        !jwt ||
-        jwt.length > 16_384 ||
-        !/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(jwt)
-      ) {
-        throw new Error(DENIED_MESSAGE);
+      if (new URL(request.url).protocol !== 'https:') throw new AccessDiagnosticError('request_protocol');
+      if (!jwt) throw new AccessDiagnosticError('assertion_missing');
+      if (jwt.length > 16_384 || !/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(jwt)) {
+        throw new AccessDiagnosticError('assertion_shape');
       }
       const configKey = [config.teamDomain, config.audience, config.idpId, config.idpType, config.adminEmail].join(
         '\0'
@@ -138,7 +179,12 @@ export function createCinaAuthAccessAuthorizer(dependencies: AccessDependencies)
       }
       let expiresAt = Number.POSITIVE_INFINITY;
       const pending = (async (): Promise<AuthResult> => {
-        const verified = await dependencies.verifyAccessJwt(jwt, config);
+        let verified: JWTPayload;
+        try {
+          verified = await dependencies.verifyAccessJwt(jwt, config);
+        } catch {
+          throw new AccessDiagnosticError('jwt_verification');
+        }
         if (
           verified.type !== 'app' ||
           verified.email !== config.adminEmail ||
@@ -149,27 +195,27 @@ export function createCinaAuthAccessAuthorizer(dependencies: AccessDependencies)
           !Number.isFinite(verified.exp) ||
           verified.exp * 1000 <= Date.now()
         ) {
-          throw new Error(DENIED_MESSAGE);
+          throw new AccessDiagnosticError('jwt_claims');
         }
         expiresAt = verified.exp * 1000;
-        const response = await dependencies.fetchIdentity(`https://${config.teamDomain}/cdn-cgi/access/get-identity`, {
-          method: 'GET',
-          headers: { Cookie: `CF_Authorization=${jwt}`, Accept: 'application/json' },
-          redirect: 'error',
-          signal: AbortSignal.timeout(8000),
-        });
-        const identity = await readIdentity(response);
-        if (
-          !isRecord(identity) ||
-          identity.email !== verified.email ||
-          !matchesIdp(identity.idp, config) ||
-          !isRecord(identity.oidc_fields) ||
-          identity.oidc_fields.email_verified !== true ||
-          identity.service_token_status === true ||
-          expiresAt <= Date.now()
-        ) {
-          throw new Error(DENIED_MESSAGE);
+        let response: Response;
+        try {
+          response = await dependencies.fetchIdentity(`https://${config.teamDomain}/cdn-cgi/access/get-identity`, {
+            method: 'GET',
+            headers: { Cookie: `CF_Authorization=${jwt}`, Accept: 'application/json' },
+            redirect: 'error',
+            signal: AbortSignal.timeout(8000),
+          });
+        } catch {
+          throw new AccessDiagnosticError('identity_fetch');
         }
+        const identity = await readIdentity(response);
+        if (!isRecord(identity) || identity.email !== verified.email) throw new AccessDiagnosticError('identity_email');
+        if (!matchesIdp(identity.idp, config)) throw new AccessDiagnosticError('identity_idp');
+        if (!isRecord(identity.oidc_fields)) throw new AccessDiagnosticError('identity_oidc_fields');
+        if (identity.oidc_fields.email_verified !== true) throw new AccessDiagnosticError('identity_email_verified');
+        if (identity.service_token_status === true) throw new AccessDiagnosticError('identity_service');
+        if (expiresAt <= Date.now()) throw new AccessDiagnosticError('identity_expired');
         const name =
           typeof identity.name === 'string' && identity.name.length > 0 && identity.name.length <= 256
             ? identity.name
@@ -193,14 +239,24 @@ export function createCinaAuthAccessAuthorizer(dependencies: AccessDependencies)
       requests.set(request, state);
       try {
         return await state.pending;
-      } catch {
+      } catch (error) {
         if (requests.get(request) === state) requests.delete(request);
-        throw new Error(DENIED_MESSAGE);
+        throw error;
       }
     } catch (error) {
       // EmDash logs provider errors. Do not propagate tokens, identity data,
       // fetch URLs with credentials, upstream response bodies, or error causes.
-      throw new CinaAuthAccessError(error instanceof CinaAuthAccessError && error.status === 503 ? 503 : 401);
+      const status = error instanceof CinaAuthAccessError && error.status === 503 ? 503 : 401;
+      const diagnostic: AccessDenialDiagnostic =
+        error instanceof AccessDiagnosticError
+          ? error.diagnostic
+          : { stage: status === 503 ? 'runtime_configuration' : 'authorization_unexpected' };
+      try {
+        dependencies.onDenied?.(diagnostic);
+      } catch {
+        // Diagnostics are best-effort; a broken sink must never affect authorization.
+      }
+      throw new CinaAuthAccessError(status);
     }
   };
 }
