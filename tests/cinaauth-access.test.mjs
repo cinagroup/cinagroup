@@ -84,7 +84,7 @@ function fixture(options = {}) {
       calls.identity++;
       assert.equal(String(input), `https://${TEAM_DOMAIN}/cdn-cgi/access/get-identity`);
       assert.equal(init.method, 'GET');
-      assert.equal(init.redirect, 'error');
+      assert.equal(init.redirect, 'manual');
       assert.match(new Headers(init.headers).get('Cookie'), /^CF_Authorization=[A-Za-z0-9_.-]+$/);
       return options.response ? options.response() : Response.json(options.identity ?? identity());
     },
@@ -424,3 +424,111 @@ test('concurrent request cache retains the actual sanitized denial stage', async
   assert.equal(f.calls.identity, 1);
   assert.deepEqual(f.denials, [{ stage: 'identity_email_verified' }, { stage: 'identity_email_verified' }]);
 });
+
+for (const status of [301, 302, 303, 307, 308]) {
+  test(`identity redirect ${status} is denied without following or trusting its JSON body`, async () => {
+    const f = fixture({
+      response: () =>
+        Response.json(identity(), {
+          status,
+          headers: { Location: 'https://untrusted.example.test/captured' },
+        }),
+    });
+    await assert.rejects(f.authorize(await request()), denied);
+    assert.equal(f.calls.identity, 1);
+    assert.deepEqual(f.denials, [{ stage: 'identity_http', identityHttpStatus: status }]);
+  });
+}
+
+test(
+  'workerd authorizer accepts fixed-origin identity and never follows credential redirects',
+  {
+    skip:
+      process.platform === 'win32'
+        ? 'Windows workerd has a startup access violation; Linux CI runs this runtime regression'
+        : false,
+    timeout: 40000,
+  },
+  async () => {
+    const { readFile } = await import('node:fs/promises');
+    const esbuild = await import(pathToFileURL(requireFromProject.resolve('esbuild')).href);
+    const runtime = await import(pathToFileURL(requireFromProject.resolve('miniflare')).href);
+    const productionCore = await readFile(new URL('../src/emdash/cinaauth-access-core.ts', import.meta.url), 'utf8');
+    const { code } = await esbuild.transform(productionCore, { loader: 'ts', format: 'esm', target: 'es2022' });
+    const testBindings = bindings();
+    const testIdentity = identity();
+    let identityStatus = 200;
+    const calls = { identity: 0, redirectTarget: 0, unexpected: 0 };
+    const options = {
+      modules: true,
+      compatibilityDate: '2026-03-18',
+      compatibilityFlags: ['nodejs_compat'],
+      cf: false,
+      log: new runtime.Log(runtime.LogLevel.NONE),
+      script:
+        code +
+        `
+      export default { async fetch() {
+        const denials = [];
+        const authorize = createCinaAuthAccessAuthorizer({
+          runtimeBindings: () => ${JSON.stringify(testBindings)},
+          verifyAccessJwt: async () => ({
+            type: 'app', email: ${JSON.stringify(ADMIN_EMAIL)}, sub: 'offline-runtime-subject',
+            exp: Math.floor(Date.now() / 1000) + 300,
+          }),
+          fetchIdentity: (input, init) => fetch(input, init),
+          onDenied: (diagnostic) => denials.push(diagnostic),
+        });
+        try {
+          const result = await authorize(new Request('https://preview.example.test/_emdash/admin/', {
+            headers: { 'Cf-Access-Jwt-Assertion': 'offline.fixture.assertion' },
+          }));
+          return Response.json({ allowed: true, role: result.role, denials });
+        } catch (error) {
+          return Response.json({ allowed: false, status: error.status, denials });
+        }
+      } };
+    `,
+      outboundService: (upstreamRequest) => {
+        const url = new URL(upstreamRequest.url);
+        if (url.origin === `https://${TEAM_DOMAIN}` && url.pathname === '/cdn-cgi/access/get-identity') {
+          assert.equal(url.href, `https://${TEAM_DOMAIN}/cdn-cgi/access/get-identity`);
+          assert.equal(upstreamRequest.method, 'GET');
+          assert.equal(upstreamRequest.headers.get('Cookie'), 'CF_Authorization=offline.fixture.assertion');
+          assert.equal(upstreamRequest.headers.get('Accept'), 'application/json');
+          calls.identity++;
+          return runtime.Response.json(testIdentity, {
+            status: identityStatus,
+            ...(identityStatus === 200
+              ? {}
+              : {
+                  headers: { Location: 'https://untrusted.example.test/captured' },
+                }),
+          });
+        }
+        if (url.origin === 'https://untrusted.example.test') calls.redirectTarget++;
+        else calls.unexpected++;
+        return new runtime.Response('offline fixture refuses unexpected request', { status: 500 });
+      },
+    };
+    const mf = new runtime.Miniflare(
+      runtime.convertV4MiniflareOptions ? runtime.convertV4MiniflareOptions(options) : options
+    );
+    try {
+      const allowed = await mf.dispatchFetch('http://runtime-fixture.example.test/');
+      assert.deepEqual(await allowed.json(), { allowed: true, role: 50, denials: [] });
+      for (const status of [301, 302, 303, 307, 308]) {
+        identityStatus = status;
+        const redirected = await mf.dispatchFetch('http://runtime-fixture.example.test/');
+        assert.deepEqual(await redirected.json(), {
+          allowed: false,
+          status: 401,
+          denials: [{ stage: 'identity_http', identityHttpStatus: status }],
+        });
+      }
+      assert.deepEqual(calls, { identity: 6, redirectTarget: 0, unexpected: 0 });
+    } finally {
+      await mf.dispose();
+    }
+  }
+);

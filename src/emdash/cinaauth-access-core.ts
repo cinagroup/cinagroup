@@ -203,7 +203,8 @@ export function createCinaAuthAccessAuthorizer(dependencies: AccessDependencies)
           response = await dependencies.fetchIdentity(`https://${config.teamDomain}/cdn-cgi/access/get-identity`, {
             method: 'GET',
             headers: { Cookie: `CF_Authorization=${jwt}`, Accept: 'application/json' },
-            redirect: 'error',
+            // Workers supports follow/manual only. Never forward the credential through a redirect.
+            redirect: 'manual',
             signal: AbortSignal.timeout(8000),
           });
         } catch {
