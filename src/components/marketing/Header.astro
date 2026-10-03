@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import Logo from '~/components/Logo.astro';
 import { headerData } from '~/navigation';
 import { changeLangPath, getLangFromUrl, getLocalizedLabel, languages, localizeInternalHref, type Lang } from '~/i18n';
 interface Props {
@@ -24,7 +25,9 @@ const alternates = new Map(languageAlternates.map((item) => [item.hreflang, item
 
 <header class="site-header" id="marketing-header">
   <div class="nav">
-    <a href={href('/')} class="site-logo">CinaGroup</a>
+    <a href={href('/')} class="site-logo" aria-label={lang === 'zh' ? '海内集团首页' : 'CinaGroup home'}>
+      <Logo />
+    </a>
     <nav class="nav-links" aria-label={label('Main navigation')}>
       {
         headerData.links.map((group) => (

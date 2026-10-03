@@ -14,7 +14,7 @@ there is no runtime dependency on GitHub or a third-party CDN.
 | `public/brand/favicon-32.png`                 | `assets/icons/web/favicon-32.png`                    | `6e0dc0d6b34e5c94bd35237fd5ba7927065dc6bbcaea67a67763e07883de71dd` |
 | `public/apple-touch-icon.png`                 | `assets/icons/web/apple-touch-icon.png`              | `5e59dfef3271b09a708830e808dc59c4f2e48491274c0119fd8ff5fcad26df8d` |
 
-All page headers use the official horizontal lockup containing the original
+All page headers and the marketing footer use the official horizontal lockup containing the original
 Chinese `海内集团` lettering and the custom rounded Geist Regular `CINAGROUP`
 wordmark. The v2.1.1 English artwork preserves the two sharp inner joins in the
 letter N. Lettering is part of the supplied PNG and does not depend on web fonts.
@@ -33,3 +33,8 @@ unused compatibility asset.
 
 Copyright © CinaGroup. All rights reserved. Follow the upstream
 `BRAND_GUIDELINES.md` and `BRAND_POLICY.md`; do not redraw or modify the logo.
+
+The marketing-cloudflare shell reuses `src/components/Logo.astro`. On phones at
+540 CSS pixels wide or narrower, the header contact button moves out of the
+visible action row; contact links remain in the navigation menu and page content.
+The original 56px lockup, lettering, aspect ratio and safety padding stay intact.
