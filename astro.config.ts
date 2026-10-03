@@ -138,6 +138,21 @@ export default defineConfig({
     icon({
       include: {
         tabler: ['*'],
+        ph: [
+          'lightning',
+          'shield-check',
+          'users-three',
+          'chart-bar',
+          'code',
+          'globe',
+          'heart',
+          'star',
+          'check-circle',
+          'lock',
+          'clock',
+          'cloud',
+          'sparkle',
+        ],
         'flat-color-icons': [
           'template',
           'gallery',

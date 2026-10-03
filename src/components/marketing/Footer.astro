@@ -1,0 +1,91 @@
+---
+import { Icon } from 'astro-icon/components';
+import { footerData } from '~/navigation';
+import { getLangFromUrl, getLocalizedLabel, localizeInternalHref } from '~/i18n';
+const lang = getLangFromUrl(Astro.url);
+const label = (text?: string) => getLocalizedLabel(lang, text);
+const href = (url?: string) => localizeInternalHref(url, lang);
+---
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <span class="footer-logo">CinaGroup</span>
+      <p class="footer-tagline">{label(footerData.description)}</p>
+      <div class="footer-social">
+        {
+          footerData.socialLinks.map((item) => (
+            <a href={item.href} aria-label={item.ariaLabel}>
+              <Icon name={item.icon} />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+    <nav class="footer-links" aria-label={label('Footer navigation')}>
+      {
+        footerData.links.map((group) => (
+          <div class="footer-col">
+            <h4>{label(group.title)}</h4>
+            {group.links.map((item) => (
+              <a href={href(item.href)}>{label(item.text)}</a>
+            ))}
+          </div>
+        ))
+      }
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p>© {new Date().getFullYear()} CinaGroup</p>
+    <div class="theme-switcher" aria-label={lang === 'zh' ? '显示模式' : 'Theme'}>
+      {
+        (['light', 'dark', 'system'] as const).map((theme) => (
+          <button type="button" class="theme-btn" data-marketing-theme={theme} aria-pressed="false">
+            {lang === 'zh'
+              ? { light: '浅色', dark: '深色', system: '系统' }[theme]
+              : { light: 'Light', dark: 'Dark', system: 'System' }[theme]}
+          </button>
+        ))
+      }
+    </div>
+    <p>
+      {
+        footerData.secondaryLinks.map((item, index) => (
+          <>
+            <a href={href(item.href)}>{label(item.text)}</a>
+            {index === 0 && ' · '}
+          </>
+        ))
+      }
+    </p>
+  </div>
+</footer>
+<script>
+  function setupMarketingTheme() {
+    const buttons = document.querySelectorAll<HTMLButtonElement>('[data-marketing-theme]');
+    const update = (theme: string) => {
+      buttons.forEach((button) => {
+        const active = button.dataset.marketingTheme === theme;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+    };
+    const stored = localStorage.getItem('theme') || 'system';
+    update(stored);
+    buttons.forEach((button) => {
+      if (button.dataset.bound) return;
+      button.dataset.bound = 'true';
+      button.addEventListener('click', () => {
+        const theme = button.dataset.marketingTheme || 'system';
+        if (theme === 'system') localStorage.removeItem('theme');
+        else localStorage.setItem('theme', theme);
+        const dark = theme === 'dark' || (theme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', dark);
+        document.documentElement.classList.toggle('light', !dark);
+        update(theme);
+      });
+    });
+  }
+  setupMarketingTheme();
+  document.addEventListener('astro:page-load', setupMarketingTheme);
+</script>

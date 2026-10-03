@@ -1,8 +1,9 @@
 ---
-import CinaPageHero from '~/components/CinaPageHero.astro';
+import Hero from '~/components/marketing/Hero.astro';
+import Features from '~/components/marketing/Features.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
-type Locale = 'zh' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+type Locale = 'en' | 'zh' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
 
 type Copy = {
   title: string;
@@ -27,6 +28,68 @@ type Copy = {
 };
 
 const copy: Record<Locale, Copy> = {
+  en: {
+    title: 'CinaGroup | Agent workspaces, gateways, skills, and testnet apps',
+    description:
+      'CinaGroup builds an early-access agent workspace, local-first and model gateways, the CinaClaw SKILL.md format, and a Base Sepolia NFT DApp beta.',
+    eyebrow: 'CinaGroup',
+    heroTitle: 'Agent workspaces, gateways, and reusable skills.',
+    heroLead:
+      'Find knowledge, automate repeated work, and manage model access with tools your team can understand and control.',
+    explore: 'Explore products',
+    contact: 'Plan a workflow',
+    productsEyebrow: 'Products',
+    productsTitle: 'Five products. A clear starting point for each task.',
+    productsLead: 'Choose the scope you need and connect it to your existing systems and review process.',
+    learn: 'Learn more',
+    products: [
+      {
+        name: 'CinaSeek',
+        role: 'Early-access agent workspace',
+        description: 'Agent chat, private Gadgets, and scoped Gatekeepers in one workspace.',
+        href: '/cinaseek',
+      },
+      {
+        name: 'CinaClaw',
+        role: 'Local-first agent gateway',
+        description: 'Run agents through an operator-controlled Gateway, channel adapters, and skills.',
+        href: '/cinaclaw',
+      },
+      {
+        name: 'CinaToken',
+        role: 'Open-source model gateway',
+        description: 'Manage credentials, routing, usage policy, and cost boundaries in one layer.',
+        href: '/cinatoken',
+      },
+      {
+        name: 'CinaSkill',
+        role: 'CinaClaw SKILL.md format',
+        description: 'Package instructions and resources for CinaClaw workspaces.',
+        href: '/cinaskill',
+      },
+      {
+        name: 'CinaChain',
+        role: 'Base Sepolia NFT DApp beta',
+        description: 'Evaluate an NFT gallery and mint flow on Base Sepolia testnet.',
+        href: '/cinachain',
+      },
+    ],
+    methodEyebrow: 'Our approach',
+    methodTitle: 'Start small. Keep boundaries clear. Improve with evidence.',
+    methodLead: 'Define the users, systems, constraints, and acceptance criteria before choosing what to build.',
+    methods: [
+      { title: 'Define the task.', description: 'Make it clear who needs to accomplish which outcome.' },
+      {
+        title: 'Connect the necessary context.',
+        description: 'Include access boundaries and human review in the design.',
+      },
+      { title: 'Verify the result.', description: 'Use observable evidence to decide the next improvement.' },
+    ],
+    nextEyebrow: 'Next step',
+    nextTitle: 'Start with a real workflow.',
+    nextLead: 'Tell us about your users, current process, constraints, and desired outcome.',
+  },
+
   zh: {
     title: '海内集团 — 搜索、自动化、API 与基础设施',
     description: '海内集团帮助团队构建搜索、工作流自动化、模型访问、可复用能力与互联基础设施。',
@@ -456,70 +519,61 @@ interface Props {
 
 const { lang } = Astro.props;
 const content = copy[lang];
+const contactHref = lang === 'en' ? '/contact/' : `/${lang}/contact/`;
+const icons = ['users', 'shield', 'chart', 'code', 'globe'];
 ---
 
-<Layout metadata={{ title: content.title, description: content.description }}>
-  <div class="cg-page">
-    <CinaPageHero
-      eyebrow={content.eyebrow}
-      title={content.heroTitle}
-      lead={content.heroLead}
-      primary={{ text: content.explore, href: '#products' }}
-      secondary={{ text: content.contact, href: `/${lang}/contact/` }}
+<Layout
+  metadata={{
+    title: content.title,
+    description: content.description,
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'CinaGroup',
+      url: 'https://cinagroup.com',
+      logo: 'https://cinagroup.com/logo.png',
+      sameAs: ['https://github.com/cinagroup', 'https://x.com/cinagroup'],
+    },
+  }}
+>
+  <div class="marketing-blocks" data-marketing-template="marketing-cloudflare">
+    <Hero
+      value={{
+        headline: content.heroTitle,
+        subheadline: content.heroLead,
+        primary_cta_label: content.explore,
+        primary_cta_url: '#products',
+        secondary_cta_label: content.contact,
+        secondary_cta_url: contactHref,
+      }}
     />
-
-    <section id="products" class="cg-page-section" aria-labelledby="localized-home-products">
-      <div class="cg-page-shell">
-        <div class="cg-section-heading">
-          <p class="cg-eyebrow">{content.productsEyebrow}</p>
-          <h2 id="localized-home-products">{content.productsTitle}</h2>
-          <p>{content.productsLead}</p>
-        </div>
-        <div class="cg-card-grid">
-          {
-            content.products.map((product) => (
-              <article class="cg-card">
-                <p class="cg-card-meta">{product.role}.</p>
-                <h3>{product.name}</h3>
-                <p>{product.description}</p>
-                <a href={`${product.href.replace(/\/+$/, '')}/`}>{content.learn} →</a>
-              </article>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <section class="cg-page-section cg-page-section-soft" aria-labelledby="localized-home-method">
-      <div class="cg-page-shell">
-        <div class="cg-section-heading">
-          <p class="cg-eyebrow">{content.methodEyebrow}</p>
-          <h2 id="localized-home-method">{content.methodTitle}</h2>
-          <p>{content.methodLead}</p>
-        </div>
-        <div class="cg-card-grid">
-          {
-            content.methods.map((method, index) => (
-              <article class="cg-card">
-                <p class="cg-card-meta">0{index + 1}.</p>
-                <h3>{method.title}</h3>
-                <p>{method.description}</p>
-              </article>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <section class="cg-page-section cg-page-section-dark" aria-labelledby="localized-home-next">
-      <div class="cg-page-shell cg-section-heading cg-section-heading-center">
-        <p class="cg-eyebrow">{content.nextEyebrow}</p>
-        <h2 id="localized-home-next">{content.nextTitle}</h2>
-        <p>{content.nextLead}</p>
-        <div class="cg-page-actions">
-          <a class="cg-page-button cg-page-button-primary" href={`/${lang}/contact/`}>{content.contact}</a>
-        </div>
-      </div>
+    <Features
+      value={{
+        anchor_id: 'products',
+        headline: content.productsTitle,
+        subheadline: content.productsLead,
+        link_label: content.learn,
+        features: content.products.map((product, index) => ({
+          icon: icons[index],
+          title: product.name,
+          role: product.role,
+          description: product.description,
+          href: `${product.href.replace(/\/+$/, '')}/`,
+        })),
+      }}
+    />
+    <Features
+      value={{
+        anchor_id: 'approach',
+        headline: content.methodTitle,
+        subheadline: content.methodLead,
+        features: content.methods.map((method, index) => ({ icon: ['check', 'lock', 'chart'][index], ...method })),
+      }}
+    />
+    <section class="marketing-next" aria-labelledby="next-title">
+      <h2 id="next-title">{content.nextTitle}</h2><p>{content.nextLead}</p>
+      <a class="btn btn-primary btn-lg" href={contactHref}>{content.contact}</a>
     </section>
   </div>
 </Layout>

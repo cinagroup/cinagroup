@@ -1,6 +1,6 @@
 ---
 import CinaPageHero from '~/components/CinaPageHero.astro';
-import PricingDisclosure from '~/components/PricingDisclosure.astro';
+import Pricing from '~/components/marketing/Pricing.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 type Locale = 'zh' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
@@ -545,43 +545,23 @@ const servicesHref = `/${lang}/services/`;
       primary={{ text: page.primary, href: contactHref }}
       secondary={{ text: page.secondary, href: servicesHref }}
     />
-    <section class="cg-page-section" aria-labelledby="localized-pricing-title">
-      <div class="cg-page-shell">
-        <div class="cg-section-heading cg-section-heading-center">
-          <p class="cg-eyebrow">{page.sectionEyebrow}</p><h2 id="localized-pricing-title">{page.sectionTitle}</h2><p>
-            {page.sectionLead}
-          </p>
-        </div><div class="cg-pricing-grid">
-          {
-            page.cards.map((card, index) => (
-              <article class:list={['cg-price-card', { 'cg-price-card-featured': index === 1 }]}>
-                <>
-                  <p class="cg-card-meta">{card.label}</p>
-                  <h3>{card.title}</h3>
-                  <p>{card.description}</p>
-                  <PricingDisclosure
-                    budget={details.cards[index].budget}
-                    timeline={details.cards[index].timeline}
-                    included={details.cards[index].included}
-                    excluded={details.cards[index].excluded}
-                    labels={details.labels}
-                  />
-                  <ul>
-                    {card.items.map((item) => (
-                      <li>{item}</li>
-                    ))}
-                  </ul>
-                  <a class:list={['cg-page-button', { 'cg-page-button-primary': index !== 1 }]} href={contactHref}>
-                    {page.primary}
-                  </a>
-                </>
-              </article>
-            ))
-          }
-        </div>
-        <p class="cg-pricing-terms">{details.disclaimer}</p>
-      </div>
-    </section>
+
+    <Pricing
+      value={{
+        anchor_id: 'localized-pricing-title',
+        headline: page.sectionTitle,
+        plans: page.cards.map((card, index) => ({
+          name: card.label,
+          description: `${card.title} ${card.description}`,
+          features: card.items.join('\n'),
+          cta_label: page.primary,
+          cta_url: contactHref,
+          highlighted: index === 1,
+          quote: { ...details.cards[index], labels: details.labels },
+        })),
+      }}
+    />
+    <p class="cg-pricing-terms">{details.disclaimer}</p>
     <section class="cg-page-section cg-page-section-soft" aria-labelledby="localized-factors-title">
       <div class="cg-page-shell">
         <div class="cg-section-heading">
