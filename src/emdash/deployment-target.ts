@@ -34,7 +34,7 @@ export function productionAliasRedirect(request: Request, target: DeploymentTarg
 export function applyDeploymentHeaders(request: Request, response: Response, target: DeploymentTarget): Response {
   const result = new Response(response.body, response);
   const url = new URL(request.url);
-  const privatePath = /^\/(?:_emdash|cms-preview)(?:\/|$)/i.test(url.pathname);
+  const privatePath = /^\/(?:(?:en|zh|ja|ko|ru|es|pt|fr)\/)?(?:_emdash|cms-preview)(?:\/|$)/i.test(url.pathname);
   if (target !== 'production' || url.hostname !== PRODUCTION_HOST || privatePath) {
     const robots = result.headers.get('X-Robots-Tag');
     result.headers.set('X-Robots-Tag', robots ? robots + ', noindex, nofollow' : 'noindex, nofollow');

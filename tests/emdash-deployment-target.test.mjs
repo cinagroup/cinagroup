@@ -43,7 +43,7 @@ test('only canonical production HTML is indexable; archive restrictions are reta
     'production'
   );
   assert.equal(archive.headers.get('X-Robots-Tag'), 'noindex,follow');
-  for (const path of ['/_emdash/admin/', '/cms-preview/token'])
+  for (const path of ['/_emdash/admin/', '/cms-preview/token', '/zh/cms-preview/token/', '/fr/cms-preview/token/'])
     assert.match(
       applyDeploymentHeaders(
         new Request('https://cinagroup.com' + path),

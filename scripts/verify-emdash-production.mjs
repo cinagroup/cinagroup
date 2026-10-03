@@ -1,4 +1,5 @@
 import { appendFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { STAGING_HOST, ADMIN_AUD } from './emdash-production.mjs';
 
 const staging = process.argv.includes('--staging');
@@ -55,9 +56,27 @@ if (staging) {
     ['/rss.xml', rss],
     ['/sitemap-0.xml', sitemap],
   ]) {
-    const baseline = await fetch('https://cinagroup.com' + path, { signal: AbortSignal.timeout(20000) });
-    if (!baseline.ok || (await baseline.text()) !== candidate)
-      throw new Error('Staging differs from current production ' + path);
+    let matched = false;
+    let diagnostic;
+    for (let attempt = 0; attempt < 4; attempt++) {
+      const baseline = await fetch('https://cinagroup.com' + path, { signal: AbortSignal.timeout(20000) });
+      const baselineBody = await baseline.text();
+      const stagedBody = attempt === 0 ? candidate : await publicPath(path);
+      if (baseline.status === 200 && baselineBody === stagedBody) {
+        matched = true;
+        break;
+      }
+      const digest = (body) => createHash('sha256').update(body).digest('hex');
+      diagnostic = {
+        path,
+        baselineStatus: baseline.status,
+        baselineType: baseline.headers.get('Content-Type'),
+        bytes: [Buffer.byteLength(baselineBody), Buffer.byteLength(stagedBody)],
+        hashes: [digest(baselineBody), digest(stagedBody)],
+      };
+      if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+    if (!matched) throw new Error('Staging differs from current production: ' + JSON.stringify(diagnostic));
   }
 }
 const fresh = /<item>[\s\S]*?<link>([^<]+)<\/link>/.exec(rss)?.[1];
