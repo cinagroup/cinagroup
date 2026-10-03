@@ -8,6 +8,7 @@ import { Kysely, SqliteAdapter } from 'kysely';
 import { D1Dialect } from 'kysely-d1';
 import { MediaRepository } from 'emdash';
 import { sealSiteContentBackup } from './site-content-backup.mjs';
+import { readD1ApplicationBackupPlan, composeD1ApplicationBackupSql } from './d1-application-backup.mjs';
 import { validateSeed } from 'emdash/seed';
 import { initializeSiteContent } from '../src/emdash/initialize-site-content.ts';
 import { ACCOUNT, DATABASE, productionApi, verifyProductionConfig } from './emdash-production.mjs';
@@ -167,24 +168,44 @@ export async function downloadPresentationBackup(
   fetchBackup = fetch,
   wait = (ms) => new Promise((resolveWait) => setTimeout(resolveWait, ms))
 ) {
+  const query = async (sql) => {
+    const result = await api(`/accounts/${ACCOUNT}/d1/database/${DATABASE}/query`, 'POST', { sql, params: [] });
+    if (
+      !Array.isArray(result) ||
+      result.length !== 1 ||
+      result[0].success !== true ||
+      !Array.isArray(result[0].results)
+    )
+      throw new Error('Application backup metadata query failed');
+    return result[0].results;
+  };
+  const plan = await readD1ApplicationBackupPlan(query);
+  const dump_options = { tables: plan.tables };
   const path = `/accounts/${ACCOUNT}/d1/database/${DATABASE}/export`;
-  let backup = await api(path, 'POST', { output_format: 'polling' });
+  let backup = await api(path, 'POST', { output_format: 'polling', dump_options });
   for (let attempt = 0; backup.status !== 'complete' && attempt < 60; attempt++) {
     if (backup.status === 'error') throw new Error('Production backup failed');
     if (!backup.at_bookmark) throw new Error('Production backup polling bookmark missing');
     await wait(1000);
-    backup = await api(path, 'POST', { output_format: 'polling', current_bookmark: backup.at_bookmark });
+    backup = await api(path, 'POST', { output_format: 'polling', current_bookmark: backup.at_bookmark, dump_options });
   }
   if (backup.status !== 'complete' || !backup.result?.signed_url || !backup.at_bookmark)
     throw new Error('Production backup did not complete');
   const response = await fetchBackup(backup.result.signed_url, { signal: AbortSignal.timeout(60000) });
   if (!response.ok) throw new Error('Production backup download failed');
-  const bytes = Buffer.from(await response.arrayBuffer());
-  if (!bytes.length || !bytes.toString('utf8').trim()) throw new Error('Production backup download was empty');
+  const exported = Buffer.from(await response.arrayBuffer());
+  if (!exported.length || !exported.toString('utf8').trim()) throw new Error('Production backup download was empty');
+  const after = await readD1ApplicationBackupPlan(query);
+  if (after.schemaSha256 !== plan.schemaSha256) throw new Error('Application backup schema changed during export');
+  const bytes = composeD1ApplicationBackupSql(plan, exported);
   return {
     bytes,
     proof: {
       database: DATABASE,
+      format: 'cinagroup-d1-application-sql-v1',
+      tableCount: plan.tables.length,
+      ftsIndexCount: plan.nativeFts.length,
+      schemaSha256: plan.schemaSha256,
       bookmark: backup.at_bookmark,
       bytes: bytes.length,
       sha256: createHash('sha256').update(bytes).digest('hex'),

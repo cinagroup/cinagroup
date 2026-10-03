@@ -306,39 +306,50 @@ test('native publication, settings and menu edits survive a repeated fully bound
 });
 
 test('backup polling must complete with a bookmark and nonempty private SQL bytes', async () => {
+  const api = (onExport) => async (path, _method, body) => {
+    if (!path.endsWith('/query')) return onExport(body);
+    const results = body.sql.startsWith('PRAGMA table_list')
+      ? [{ schema: 'main', name: 'options', type: 'table', ncol: 1, wr: 0, strict: 0 }]
+      : [{ type: 'table', name: 'options', tbl_name: 'options', sql: 'CREATE TABLE options(name TEXT)' }];
+    return [{ success: true, results }];
+  };
   const calls = [];
   const responses = [
     { at_bookmark: 'bookmark' },
     { status: 'complete', at_bookmark: 'bookmark', result: { signed_url: 'https://backup.example.test/private.sql' } },
   ];
   const result = await downloadPresentationBackup(
-    async (_path, _method, body) => {
+    api(async (body) => {
       calls.push(body);
       return responses.shift();
-    },
+    }),
     async () => new Response('CREATE TABLE options(name TEXT);'),
     async () => {}
   );
   assert.equal(calls[1].current_bookmark, 'bookmark');
+  assert.deepEqual(
+    calls.map((body) => body.dump_options.tables),
+    [['options'], ['options']]
+  );
+  assert.equal(result.proof.format, 'cinagroup-d1-application-sql-v1');
+  assert.equal(result.proof.tableCount, 1);
+  assert.equal(result.proof.ftsIndexCount, 0);
   assert.equal(result.proof.bytes, result.bytes.length);
   assert.match(result.proof.sha256, /^[a-f0-9]{64}$/);
   for (const bytes of ['', '  \n ']) {
     await assert.rejects(
       downloadPresentationBackup(
-        async () => ({
+        api(async () => ({
           status: 'complete',
           at_bookmark: 'bookmark',
           result: { signed_url: 'https://backup.example.test/private.sql' },
-        }),
+        })),
         async () => new Response(bytes)
       ),
       /empty/
     );
   }
-  await assert.rejects(
-    downloadPresentationBackup(async () => ({ status: 'error' })),
-    /backup failed/
-  );
+  await assert.rejects(downloadPresentationBackup(api(async () => ({ status: 'error' }))), /backup failed/);
 });
 
 test('native settings drive only the CMS list page size, date format and timezone', async () => {
