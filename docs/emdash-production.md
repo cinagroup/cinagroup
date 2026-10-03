@@ -4,7 +4,7 @@ The production Worker is `cinagroup-emdash-production`. Its primary origin is `h
 
 ## Release policy
 
-GitHub Actions remains the code deployment path. `.github/workflows/deploy.yml` validates pushes to `main` and pull requests without deployment. Only an explicit manual dispatch writes production state. Future automatic production deployment has not been authorized.
+GitHub Actions remains the code deployment path. `.github/workflows/deploy.yml` validates pushes to `main` and pull requests without deployment. Only an explicit manual dispatch uploads production code. Domain route mutations remain explicit operations; the initial cutover used the same scoped helper from the operator network after GitHub-hosted online probes were blocked by existing domain protection. Future automatic production deployment has not been authorized.
 
 The manual operations are:
 
@@ -47,3 +47,15 @@ Before route attachment, verify the Worker endpoint and compare RSS and sitemap 
 After attachment, verify `https://cinagroup.com`, its primary administrator entry and the Chinese-domain canonical redirect. Confirm the selected administrator is Admin/Active after refresh and deployment, and test the real contact form with production Turnstile before claiming complete form acceptance. New CMS publishing, media uploads and import automation require their own content-level acceptance; this infrastructure cutover preserves the static content and existing publication rules.
 
 References: [Worker routes](https://developers.cloudflare.com/workers/configuration/routing/routes/), [D1 export](https://developers.cloudflare.com/api/resources/d1/subresources/database/methods/export/), [D1 import](https://developers.cloudflare.com/api/resources/d1/subresources/database/methods/import/), and the [CinaAuth Access runbook](emdash-cinaauth-access.md).
+
+## Production acceptance: 2026-10-03
+
+Production is live on `cinagroup.com` with Worker version `9d58c535-d9c6-4624-bcb1-2a890d6077e0` at 100%. [PR 3](https://github.com/cinagroup/cinagroup/pull/3) merged the candidate into `main` as `f4a39f4`; [main Linux validation](https://github.com/cinagroup/cinagroup/actions/runs/37107576236) passed. [Upload run 37107256894](https://github.com/cinagroup/cinagroup/actions/runs/37107256894) passed the build, startup, content audits, production resource audit, contact migration and Worker upload; its final staging-to-primary comparison failed because the current primary-domain Cloudflare protection returned 403 to the GitHub runner. This run must not be described as an overall success.
+
+The exact same staging and live verifiers then passed from the operator's current network. RSS remained byte-identical at 411 entries and the static sitemap at 345 URLs. Public GET/HEAD, all eight indexes, preserved articles, redirects, security and indexing headers, canonical public-file handling and anonymous Access boundaries passed. An initial route attempt automatically rolled back after a locale request still returned Pages; bounded readiness reads subsequently required every public response to carry the production Worker marker before acceptance. No protection was disabled.
+
+Active owned routes are `9067c1035df2482f8f951de76721ef0f` for the primary domain and `06b2e257c47048dfaab2b0a842bdffa7` for the existing Chinese domain. Both use `request_limit_fail_open: false`; the Chinese domain returns the fixed 308 canonical redirect with path and query retained. Existing DNS, Pages and unrelated subdomain Workers remain intact.
+
+The selected native user showed Admin/Active on the formal domain after reload and Worker redeployment; production D1 retained exactly one matching verified administrator. Native site settings were saved as CinaGroup and `https://cinagroup.com`. With the user's explicit consent to the current human verification and form terms, a real Chinese contact submission completed production Turnstile and stored exactly one clearly marked migration test record in the production contact D1. An invalid challenge returned 403 and stored no record. Inquiry notification delivery remains unconfigured, so submission success confirms storage only. The local ignored acceptance report and screenshots record the operational proof without credentials.
+
+When a future online probe receives 403 from existing protection, keep it as a failed check. Inspect whether upload already succeeded before retrying deployment. Run `node scripts/verify-emdash-production.mjs --staging` and the live verifier from an authorized operator network, and retain their results. Any subsequent cutover or rollback must be explicitly requested and use the scoped `scripts/emdash-production.mjs` operation with the pinned account and selected identity; do not turn production changes into automatic main-push actions.
