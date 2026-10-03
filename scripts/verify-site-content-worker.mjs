@@ -16,7 +16,7 @@ import { initializeSiteContent } from '../src/emdash/initialize-site-content.ts'
 export async function verifySiteContentWorker(server) {
   if (process.env.CLOUDFLARE_API_TOKEN || process.env.CLOUDFLARE_ACCOUNT_ID)
     throw new Error('Site content Worker verification must remain offline');
-  const environment = await server.getWorker().getEnv();
+  let environment = await server.getWorker().getEnv();
   const db = createPresentationD1Database(async (sql, params) =>
     environment.DB.prepare(sql)
       .bind(...params)
@@ -98,6 +98,8 @@ export async function verifySiteContentWorker(server) {
         config: { ...worker.config, vars: { ...worker.config.vars, CINA_CONTENT_AUDIT: 'seeded' } },
       })),
     }));
+    // Reload invalidates binding proxies; reacquire while retaining storage.
+    environment = await server.getWorker().getEnv();
     const html = async (route, method = 'GET') => {
       const response = await server.fetch('https://cinagroup.com' + route, { method, redirect: 'manual' });
       assert.equal(response.status, 200, route);
