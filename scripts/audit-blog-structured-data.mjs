@@ -14,7 +14,7 @@ import {
 } from '../src/utils/blog-content.js';
 
 const root = process.cwd();
-const distDir = path.join(root, 'dist');
+const distDir = path.join(root, 'dist', ...(process.env.EMDASH_BUILD_TARGET === 'production' ? ['audit'] : []));
 const automatedSourceDir = path.join(root, 'src', 'data', 'post');
 const curatedSourceDir = path.join(root, 'src', 'content', 'blog');
 const sourceDirectories = [automatedSourceDir, curatedSourceDir];

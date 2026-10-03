@@ -1,0 +1,14 @@
+---
+export const prerender = false;
+
+const locales = ['zh', 'ja', 'ko', 'ru', 'es', 'pt', 'fr'];
+const locale = Astro.params.lang;
+const slug = Astro.params.slug;
+
+if (!locale || !locales.includes(locale) || !slug) return new Response('Not found', { status: 404 });
+
+const target = new URL(`/cms-preview/${encodeURIComponent(slug)}/`, Astro.url);
+target.search = Astro.url.search;
+target.searchParams.set('locale', locale);
+return Astro.redirect(`${target.pathname}${target.search}`, 302);
+---

@@ -417,6 +417,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY?.trim() || '0
 </form>
 
 <script>
+  const isRecord = (value: unknown): value is Record<string, unknown> =>
+    typeof value === 'object' && value !== null && !Array.isArray(value);
+
   const resetContactTurnstile = (form: HTMLFormElement) => {
     const widget = form.querySelector('[data-contact-turnstile]');
     const turnstile = (
@@ -473,10 +476,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY?.trim() || '0
             },
             body: body.toString(),
           });
-          const payload = await response.json().catch(() => null);
+          const payload: unknown = await response.json().catch(() => null);
 
-          if (!response.ok || !payload?.ok) {
-            const fields = payload?.error?.fields;
+          if (!response.ok || !isRecord(payload) || !payload.ok) {
+            const fields = isRecord(payload) && isRecord(payload.error) ? payload.error.fields : undefined;
             const visibleLabels: string[] = [];
             if (fields && typeof fields === 'object' && !Array.isArray(fields)) {
               Object.keys(fields).forEach((fieldName) => {

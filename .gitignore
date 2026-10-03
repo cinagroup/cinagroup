@@ -23,6 +23,7 @@ pnpm-lock.yaml
 
 .astro
 .wrangler/
+.emdash/migrations.json
 
 # nested git repositories (local workspaces)
 10001/

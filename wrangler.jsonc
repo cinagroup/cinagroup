@@ -1,24 +1,28 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "cinagroup",
-  "pages_build_output_dir": "./dist",
+  "name": "cinagroup-emdash-preview",
+  "main": "./src/worker.ts",
+  "assets": { "run_worker_first": true },
+  "vars": { "EMDASH_DEPLOYMENT_TARGET": "preview" },
   "compatibility_date": "2026-03-18",
+  "compatibility_flags": ["nodejs_compat"],
   "d1_databases": [
     {
+      "binding": "DB",
+      "database_name": "cinagroup-emdash-preview",
+      "database_id": "050ec919-1b18-4de8-86a8-62c16c28e59c",
+    },
+    {
       "binding": "CONTACT_DB",
-      "database_name": "cinagroup-contact-submissions",
-      "database_id": "0cfb1da1-2079-411b-bb21-f5a04fed292b",
+      "database_name": "cinagroup-contact-submissions-preview",
+      "database_id": "a24a999d-f784-4ee1-8dcd-888a7be43e7c",
     },
   ],
-  "env": {
-    "preview": {
-      "d1_databases": [
-        {
-          "binding": "CONTACT_DB",
-          "database_name": "cinagroup-contact-submissions-preview",
-          "database_id": "a24a999d-f784-4ee1-8dcd-888a7be43e7c",
-        },
-      ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "cinagroup-emdash-media-preview",
     },
-  },
+  ],
+  "triggers": { "crons": ["* * * * *"] },
 }

@@ -1,3 +1,12 @@
+# Match the production Pages canonical URLs for localized homepages.
+/zh /zh/ 308
+/ja /ja/ 308
+/ko /ko/ 308
+/ru /ru/ 308
+/es /es/ 308
+/pt /pt/ 308
+/fr /fr/ 308
+
 /homes/mobile-app / 301
 /homes/mobile-app/* / 301
 /homes/personal / 301

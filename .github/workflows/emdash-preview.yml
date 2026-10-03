@@ -1,0 +1,442 @@
+name: Deploy EmDash preview Worker
+
+# Migration-branch pushes validate only. Manual dispatch audits or deploys the isolated preview.
+on:
+  push:
+    branches:
+      - codex/emdash-migration
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Cloudflare preview operation
+        required: true
+        type: choice
+        default: audit
+        options:
+          - audit
+          - provision
+          - migrate-contact
+          - audit-turnstile
+          - configure-turnstile
+          - audit-secrets
+          - diagnose-public
+          - audit-access
+          - configure-access
+          - configure-access-runtime
+          - migrate-access-policy
+          - configure-encryption
+          - configure-admin-password
+          - deploy
+
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('emdash-preview-pr-{0}', github.event.pull_request.number) || 'emdash-preview' }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    if: github.event_name != 'pull_request' || (github.head_ref == 'codex/emdash-migration' && github.event.pull_request.head.repo.full_name == github.repository)
+    name: Validate migration branch; deploy preview only when dispatched
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Require the isolated migration branch
+        if: github.ref != 'refs/heads/codex/emdash-migration' && !(github.event_name == 'pull_request' && github.head_ref == 'codex/emdash-migration' && github.event.pull_request.head.repo.full_name == github.repository)
+        run: |
+          echo "::error::This preview workflow may only run from codex/emdash-migration."
+          exit 1
+
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.19'
+          cache: 'npm'
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Check Astro types
+        run: npm run check:astro
+
+      - name: Check Cloudflare Worker types
+        run: npm run check:cloudflare
+
+      - name: Check ESLint
+        run: npm run check:eslint
+
+      - name: Check formatting
+        run: npm run check:prettier
+
+      - name: Test contact endpoint
+        run: npm run test:contact
+
+      - name: Test isolated Turnstile setup
+        run: node --test tests/turnstile-emdash-preview.test.mjs
+
+      - name: Test isolated preview secret provisioning
+        run: node --test tests/secrets-emdash-preview.test.mjs
+
+      - name: Test read-only Access preview audit
+        run: node --test tests/access-emdash-preview.test.mjs tests/access-emdash-preview-workflow.test.mjs
+
+      - name: Test isolated public runtime diagnostics
+        run: node --test tests/diagnose-emdash-public.test.mjs tests/public-500-diagnostic.test.mjs tests/public-route-boundary.test.mjs
+
+      - name: Test isolated Access application and runtime configuration
+        run: node --test tests/configure-emdash-access-preview.test.mjs tests/configure-emdash-access-runtime.test.mjs tests/configure-emdash-access-workflow.test.mjs
+
+      - name: Test Access authentication and public media boundaries
+        run: node --test tests/cinaauth-access.test.mjs tests/cinaauth-access-guard.test.mjs tests/verify-emdash-preview-access-challenge.test.mjs
+
+      - name: Test blog i18n rules
+        run: npm run test:blog-i18n
+
+      - name: Test EmDash editorial policy and draft preparation
+        run: npm run test:emdash
+
+      - name: Audit governed source content
+        run: npm run audit:source
+
+      - name: Build preview Worker
+        run: npm run build
+        env:
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.EMDASH_PREVIEW_TURNSTILE_SITE_KEY }}
+
+      - name: Verify generated deploy target and isolated bindings
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          import { dirname, resolve } from 'node:path';
+
+          const pointerPath = resolve('.wrangler/deploy/config.json');
+          const pointer = JSON.parse(readFileSync(pointerPath, 'utf8'));
+          if (typeof pointer.configPath !== 'string') throw new Error('Missing generated Wrangler config path');
+          const configPath = resolve(dirname(pointerPath), pointer.configPath);
+          const config = JSON.parse(readFileSync(configPath, 'utf8'));
+          const binding = (name) => config.d1_databases?.find((item) => item.binding === name);
+          const media = config.r2_buckets?.find((item) => item.binding === 'MEDIA');
+          const session = config.kv_namespaces?.find((item) => item.binding === 'SESSION');
+
+          if (config.name !== 'cinagroup-emdash-preview') throw new Error('Unexpected Worker name');
+          if (config.route || config.routes?.length || config.domains?.length) {
+            throw new Error('Preview Worker must not claim any domain or route');
+          }
+          if (config.workers_dev === false) throw new Error('Preview Worker must have a workers.dev URL');
+          if (config.assets?.run_worker_first !== true) {
+            throw new Error('Preview static assets must pass through the noindex Worker');
+          }
+          if (binding('DB')?.database_name !== 'cinagroup-emdash-preview') {
+            throw new Error('Preview EmDash D1 binding is missing or points elsewhere');
+          }
+          if (
+            binding('CONTACT_DB')?.database_name !== 'cinagroup-contact-submissions-preview' ||
+            binding('CONTACT_DB')?.database_id !== 'a24a999d-f784-4ee1-8dcd-888a7be43e7c'
+          ) {
+            throw new Error('Preview contact D1 binding is missing or points elsewhere');
+          }
+          if (media?.bucket_name !== 'cinagroup-emdash-media-preview') {
+            throw new Error('Preview R2 binding is missing or points elsewhere');
+          }
+          if (!session || config.images?.binding !== 'IMAGES') {
+            throw new Error('Astro Cloudflare session or images binding is missing');
+          }
+          NODE
+
+      - name: Check Worker bundle without uploading
+        id: worker-bundle
+        run: |
+          npx wrangler deploy --dry-run --name cinagroup-emdash-preview
+          node --input-type=module <<'NODE'
+          import { copyFileSync, mkdirSync, readFileSync, readdirSync, realpathSync, statSync } from 'node:fs';
+          import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
+
+          const pointerPath = resolve('.wrangler/deploy/config.json');
+          const pointer = JSON.parse(readFileSync(pointerPath, 'utf8'));
+          if (typeof pointer.configPath !== 'string') throw new Error('Missing generated Wrangler config path');
+          const configPath = resolve(dirname(pointerPath), pointer.configPath);
+          const config = JSON.parse(readFileSync(configPath, 'utf8'));
+          if (typeof config.main !== 'string') throw new Error('Missing generated Worker entry');
+          const sourceDirectory = realpathSync(resolve('dist/server'));
+          const entryPath = realpathSync(resolve(dirname(configPath), config.main));
+          const entryRelativePath = relative(sourceDirectory, entryPath);
+          const isOutside = (path) => isAbsolute(path) || path === '..' || path.startsWith(`..${sep}`);
+          if (isOutside(entryRelativePath) || !/\.(?:m?js|cjs)$/.test(entryRelativePath) || !statSync(entryPath).isFile()) {
+            throw new Error('Generated Worker entry must be a JavaScript module inside dist/server');
+          }
+          const destinationDirectory = join(process.env.RUNNER_TEMP, 'emdash-worker-bundle');
+          const copiedModules = new Set();
+          const excludedDirectory = /^(?:assets|static[-_]?maps?|client|\.wrangler)$/i;
+          const walk = (directory) => {
+            for (const entry of readdirSync(directory, { withFileTypes: true })) {
+              const sourcePath = join(directory, entry.name);
+              if (entry.isSymbolicLink()) throw new Error('Worker diagnostic source contains a symbolic link');
+              if (entry.isDirectory()) {
+                if (!excludedDirectory.test(entry.name)) walk(sourcePath);
+              } else if (entry.isFile() && /\.(?:m?js|cjs)(?:\.map)?$/i.test(entry.name)) {
+                const modulePath = relative(sourceDirectory, sourcePath);
+                const destinationPath = join(destinationDirectory, modulePath);
+                mkdirSync(dirname(destinationPath), { recursive: true });
+                copyFileSync(sourcePath, destinationPath);
+                if (!entry.name.endsWith('.map')) copiedModules.add(modulePath);
+              }
+            }
+          };
+          walk(sourceDirectory);
+          if (!copiedModules.has(entryRelativePath) || copiedModules.size < 2) {
+            throw new Error('The Worker entry and supporting module are required for failure mapping');
+          }
+          process.stdout.write(`Saved ${copiedModules.size} generated Worker modules for failure mapping.\n`);
+          NODE
+
+      - name: Check Worker startup and static asset limits
+        run: |
+          node --input-type=module <<'NODE'
+          import { readdirSync, statSync } from 'node:fs';
+          import { join } from 'node:path';
+
+          const walk = (directory) => {
+            for (const entry of readdirSync(directory, { withFileTypes: true })) {
+              const path = join(directory, entry.name);
+              if (entry.isDirectory()) walk(path);
+              else if (statSync(path).size > 25 * 1024 * 1024) {
+                throw new Error(`Static asset exceeds Cloudflare's 25 MiB limit: ${path}`);
+              }
+            }
+          };
+          walk('dist/client');
+          NODE
+          npx wrangler check startup --outfile "$RUNNER_TEMP/emdash-startup.cpuprofile"
+
+      - name: Validate manual preview operation
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          OPERATION: ${{ inputs.operation }}
+        run: |
+          case "$OPERATION" in
+            audit|provision|migrate-contact|audit-turnstile|configure-turnstile|audit-secrets|diagnose-public|audit-access|configure-access|configure-access-runtime|migrate-access-policy|configure-encryption|configure-admin-password|deploy) ;;
+            *) echo "::error::Unsupported preview operation."; exit 1 ;;
+          esac
+
+      - name: Verify preview deploy credentials
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          CF_TOKEN_SET: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+          CF_ACCOUNT_SET: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+        run: |
+          if [ "$CF_TOKEN_SET" != "true" ] || [ "$CF_ACCOUNT_SET" != "true" ]; then
+            echo "::error::Configure CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID before dispatching this workflow."
+            exit 1
+          fi
+
+      - name: Audit Cloudflare preview resources and existing Worker
+        if: github.event_name == 'workflow_dispatch' && inputs.operation != 'audit-turnstile' && inputs.operation != 'configure-turnstile' && inputs.operation != 'audit-secrets' && inputs.operation != 'diagnose-public' && inputs.operation != 'audit-access' && inputs.operation != 'configure-access' && inputs.operation != 'configure-access-runtime' && inputs.operation != 'migrate-access-policy' && inputs.operation != 'configure-encryption' && inputs.operation != 'configure-admin-password'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          OPERATION: ${{ inputs.operation }}
+        run: node scripts/audit-emdash-preview.mjs "$OPERATION"
+
+      - name: Audit isolated preview Access configuration (read-only)
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'audit-access'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/access-emdash-preview.mjs audit
+
+      - name: Diagnose fixed anonymous public routes with a temporary Worker Tail
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'diagnose-public'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/diagnose-emdash-public.mjs --run
+
+      - name: Configure or verify dedicated preview Access applications
+        id: preview-access-apps
+        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'configure-access' || inputs.operation == 'configure-access-runtime')
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_ACCESS_CINA_AUTH_IDP_ID: ${{ secrets.CF_ACCESS_CINA_AUTH_IDP_ID }}
+          EMDASH_ACCESS_ADMIN_EMAIL: ${{ secrets.EMDASH_ACCESS_ADMIN_EMAIL }}
+          ACCESS_OPERATION: ${{ inputs.operation == 'configure-access' && 'configure' || 'plan' }}
+        run: |
+          node scripts/configure-emdash-access-preview.mjs "$ACCESS_OPERATION" > "$RUNNER_TEMP/emdash-access-applications.json"
+          node --input-type=module <<'NODE'
+          import { appendFileSync, readFileSync } from 'node:fs';
+          import { join } from 'node:path';
+
+          const report = JSON.parse(readFileSync(join(process.env.RUNNER_TEMP, 'emdash-access-applications.json'), 'utf8'));
+          const apps = report.applications;
+          const admin = Array.isArray(apps) ? apps.filter((app) => app.role === 'admin') : [];
+          const media = Array.isArray(apps) ? apps.filter((app) => app.role === 'publicMedia') : [];
+          if (
+            report.previewHostname !== 'cinagroup-emdash-preview.cinagroup.workers.dev' ||
+            admin.length !== 1 || media.length !== 1 ||
+            ![admin[0], media[0]].every((app) => ['existing', 'created'].includes(app.state)) ||
+            typeof admin[0].aud !== 'string' || admin[0].aud.trim() !== admin[0].aud ||
+            !/^[a-f0-9]{64}$/.test(admin[0].aud)
+          ) throw new Error('The complete isolated Access applications and admin audience must be verified before runtime configuration');
+          appendFileSync(process.env.GITHUB_OUTPUT, `aud=${admin[0].aud}\n`);
+          process.stdout.write('Verified the isolated Access applications and admin audience.\n');
+          NODE
+
+      - name: Configure absent preview Access runtime bindings
+        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'configure-access' || inputs.operation == 'configure-access-runtime')
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          EMDASH_AUTH_MODE: cinaauth-access
+          CF_ACCESS_TEAM_DOMAIN: cinagroup.cloudflareaccess.com
+          CF_ACCESS_AUDIENCE: ${{ steps.preview-access-apps.outputs.aud }}
+          CF_ACCESS_CINA_AUTH_IDP_ID: ${{ secrets.CF_ACCESS_CINA_AUTH_IDP_ID }}
+          CF_ACCESS_CINA_AUTH_IDP_TYPE: oidc
+          EMDASH_ACCESS_ADMIN_EMAIL: ${{ secrets.EMDASH_ACCESS_ADMIN_EMAIL }}
+        run: node scripts/configure-emdash-access-runtime.mjs configure
+
+      - name: Migrate the exact legacy preview admin Access policy
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'migrate-access-policy'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_ACCESS_CINA_AUTH_IDP_ID: ${{ secrets.CF_ACCESS_CINA_AUTH_IDP_ID }}
+          EMDASH_ACCESS_ADMIN_EMAIL: ${{ secrets.EMDASH_ACCESS_ADMIN_EMAIL }}
+        run: node scripts/configure-emdash-access-preview.mjs migrate-policy
+
+      - name: Provision missing isolated preview D1 and R2
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'provision'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/provision-emdash-preview.mjs
+
+      - name: Verify exact preview contact migration target and schema
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'migrate-contact'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/verify-contact-preview-migration.mjs
+
+      - name: Apply tracked contact migrations to preview D1 only
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'migrate-contact'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler d1 migrations apply CONTACT_DB --remote --config wrangler.jsonc
+
+      - name: Verify migrated preview contact schema
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'migrate-contact'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/audit-emdash-preview.mjs deploy
+
+      - name: Audit or configure exact preview Turnstile widget
+        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'audit-turnstile' || inputs.operation == 'configure-turnstile')
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          EMDASH_PREVIEW_TURNSTILE_SITE_KEY: ${{ vars.EMDASH_PREVIEW_TURNSTILE_SITE_KEY }}
+          OPERATION: ${{ inputs.operation }}
+        run: node scripts/turnstile-emdash-preview.mjs "$OPERATION"
+
+      - name: Deploy preview Worker
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'deploy'
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --name cinagroup-emdash-preview
+
+      - name: Audit preview secrets or create an absent encryption key
+        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'audit-secrets' || inputs.operation == 'configure-encryption' || inputs.operation == 'deploy')
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          EMDASH_ENCRYPTION_KEY: ${{ secrets.EMDASH_ENCRYPTION_KEY }}
+          OPERATION: ${{ inputs.operation == 'audit-secrets' && 'audit-secrets' || 'configure-encryption' }}
+        run: node scripts/secrets-emdash-preview.mjs "$OPERATION"
+
+      - name: Configure an absent preview admin password
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'configure-admin-password'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          EMDASH_PREVIEW_ADMIN_PASSWORD: ${{ secrets.EMDASH_PREVIEW_ADMIN_PASSWORD }}
+          OPERATION: ${{ inputs.operation }}
+        run: node scripts/secrets-emdash-preview.mjs "$OPERATION"
+
+      - name: Verify preview route isolation, noindex, and closed admin setup
+        id: preview-live-check
+        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'deploy'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/verify-emdash-preview-deployment.mjs
+
+      - name: Diagnose public failures after preview deployment
+        if: failure() && github.event_name == 'workflow_dispatch' && inputs.operation == 'deploy' && steps.preview-live-check.conclusion == 'failure'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/diagnose-emdash-public.mjs --run
+
+      - name: Save local Worker bundle for public failure mapping
+        if: always() && github.event_name == 'workflow_dispatch' && (inputs.operation == 'deploy' || inputs.operation == 'diagnose-public') && steps.worker-bundle.conclusion == 'success'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: emdash-preview-worker-bundle-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/emdash-worker-bundle/**/*.js
+            ${{ runner.temp }}/emdash-worker-bundle/**/*.mjs
+            ${{ runner.temp }}/emdash-worker-bundle/**/*.cjs
+            ${{ runner.temp }}/emdash-worker-bundle/**/*.map
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Deployment summary
+        env:
+          OPERATION: ${{ inputs.operation }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "deploy" ]; then
+            echo "Manually deployed preview Worker: cinagroup-emdash-preview" >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "provision" ]; then
+            echo "Provisioned only missing isolated EmDash preview D1/R2 resources; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "migrate-contact" ]; then
+            echo "Applied the tracked contact migration to the exact preview D1 database; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "configure-turnstile" ]; then
+            echo "Configured the exact-host preview Turnstile widget and secrets; Wrangler deployed a new preview Worker version and post-deploy isolation checks passed. Set the GitHub site key variable before the next code deployment." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "audit-turnstile" ]; then
+            echo "Audited only the exact-host preview Turnstile widget and Worker secret names; no changes made." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "configure-encryption" ]; then
+            echo "Created the isolated preview encryption key only if absent; existing keys were never replaced." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "configure-admin-password" ]; then
+            echo "Configured the isolated preview admin password only if absent; existing passwords were preserved. The first administrator must complete browser passkey registration." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "audit-secrets" ]; then
+            echo "Audited isolated preview secret names only; no values retrieved or changes made." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "diagnose-public" ]; then
+            echo "Probed only fixed anonymous preview public routes and removed the temporary Worker Tail; no Worker code or data changed." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "audit-access" ]; then
+            echo "Audited Cloudflare Access organization, IdPs, and applications for the isolated preview host using read-only API requests; no changes made." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "configure-access" ]; then
+            echo "Verified or created only the two isolated preview Access applications and created six previously absent runtime bindings from the verified admin AUD. Existing unrelated secrets were preserved; no Worker code deployed." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "migrate-access-policy" ]; then
+            echo "Migrated or verified only the exact owned preview admin Access policy, preserving the selected email and dedicated login method. Worker identity verification remains mandatory; no runtime bindings or Worker code changed." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$OPERATION" = "configure-access-runtime" ]; then
+            echo "Verified the existing isolated preview Access applications and created six previously absent runtime bindings. Existing or partial runtime configurations are never blindly replaced; no Worker code deployed." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "Cloudflare preview resource audit only; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Migration branch validation only; no Worker deployed." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "Production Pages project and cinagroup.com were not targeted by this workflow." >> "$GITHUB_STEP_SUMMARY"

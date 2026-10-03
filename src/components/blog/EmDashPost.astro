@@ -1,0 +1,53 @@
+---
+import { PortableText, type PortableTextProps } from 'emdash/ui';
+
+import Layout from '~/layouts/PageLayout.astro';
+import ToBlogLink from '~/components/blog/ToBlogLink.astro';
+import { getBlogStrings } from '~/i18n/blog';
+import type { Lang } from '~/i18n';
+import type { MetaData } from '~/types';
+import { getCanonical } from '~/utils/permalinks';
+import { publicPostPath, type PublicPost } from '~/emdash/public-post';
+
+export interface Props {
+  post: PublicPost;
+}
+
+const { post } = Astro.props;
+const lang = post.locale as Lang;
+const strings = getBlogStrings(lang);
+const canonical = String(getCanonical(publicPostPath(post.locale, post.slug)));
+const metadata: MetaData = {
+  title: post.title,
+  description: post.excerpt,
+  canonical,
+  language: post.locale,
+  robots: { index: true, follow: true },
+  openGraph: { type: 'article', url: canonical },
+  // Locale variants must be linked only after their own publication is verified.
+  alternates: [],
+};
+---
+
+<Layout metadata={metadata}>
+  <article class="cg-blog-post" data-content-kind="editorial" data-content-status="published" data-content-source="emdash">
+    <header class="cg-blog-post-header">
+      <div class="cg-blog-post-copy">
+        <p class="cg-eyebrow">{strings.journal}.</p>
+        <h1>{post.title}</h1>
+        {post.excerpt && <p class="cg-blog-post-lead">{post.excerpt}</p>}
+        {(post.publishDate || post.author) && (
+          <p class="cg-blog-meta">
+            {post.publishDate && <time datetime={post.publishDate.toISOString()}>{post.publishDate.toLocaleDateString(post.locale)}</time>}
+            {post.publishDate && post.author && <span aria-hidden="true"> / </span>}
+            {post.author && <span>{post.author}</span>}
+          </p>
+        )}
+      </div>
+    </header>
+    <div class="cg-prose cg-blog-post-body">
+      <PortableText value={post.content as PortableTextProps['value']} />
+    </div>
+  </article>
+  <ToBlogLink lang={lang} />
+</Layout>

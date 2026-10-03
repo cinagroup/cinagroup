@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cinagroup-emdash-production",
+  "main": "./src/worker.ts",
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": { "run_worker_first": true },
+  "vars": { "EMDASH_DEPLOYMENT_TARGET": "production" },
+  "compatibility_date": "2026-03-18",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cinagroup-emdash-production",
+      "database_id": "88da0e99-bbf0-45f6-82f6-74922e1ba2f7",
+    },
+    {
+      "binding": "CONTACT_DB",
+      "database_name": "cinagroup-contact-submissions",
+      "database_id": "0cfb1da1-2079-411b-bb21-f5a04fed292b",
+    },
+  ],
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "cinagroup-emdash-media-production" }],
+  "kv_namespaces": [{ "binding": "SESSION", "id": "4cd278d6330c47d6a82537393650e405" }],
+  "triggers": { "crons": ["* * * * *"] },
+}
