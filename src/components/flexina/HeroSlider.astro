@@ -1,0 +1,665 @@
+---
+import { Icon } from 'astro-icon/components';
+import { sanitizeHref } from 'emdash';
+import { getLangFromUrl } from '~/i18n';
+
+interface Slide {
+  title: string;
+  lead: string;
+  eyebrow?: string;
+  image: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  primary: { text: string; href: string };
+  secondary: { text: string; href: string };
+  slides?: Slide[];
+}
+
+const { eyebrow, title, lead, primary, secondary, slides: additionalSlides = [] } = Astro.props;
+const slides: Slide[] = [{ eyebrow, title, lead, image: '/images/flexina/city-workspace.webp' }, ...additionalSlides];
+const lang = getLangFromUrl(Astro.url);
+const labels = {
+  en: {
+    carousel: 'CinaGroup introduction',
+    slide: 'slide',
+    previous: 'Previous slide',
+    next: 'Next slide',
+    pause: 'Pause slides',
+    play: 'Resume slides',
+  },
+  zh: {
+    carousel: '海内集团介绍',
+    slide: '幻灯片',
+    previous: '上一张',
+    next: '下一张',
+    pause: '暂停轮播',
+    play: '继续轮播',
+  },
+  ja: {
+    carousel: 'CinaGroup の紹介',
+    slide: 'スライド',
+    previous: '前のスライド',
+    next: '次のスライド',
+    pause: '一時停止',
+    play: '再開',
+  },
+  ko: {
+    carousel: 'CinaGroup 소개',
+    slide: '슬라이드',
+    previous: '이전 슬라이드',
+    next: '다음 슬라이드',
+    pause: '슬라이드 일시 정지',
+    play: '슬라이드 재개',
+  },
+  ru: {
+    carousel: 'О CinaGroup',
+    slide: 'слайд',
+    previous: 'Предыдущий слайд',
+    next: 'Следующий слайд',
+    pause: 'Приостановить слайды',
+    play: 'Продолжить слайды',
+  },
+  es: {
+    carousel: 'Presentación de CinaGroup',
+    slide: 'diapositiva',
+    previous: 'Diapositiva anterior',
+    next: 'Siguiente diapositiva',
+    pause: 'Pausar diapositivas',
+    play: 'Reanudar diapositivas',
+  },
+  pt: {
+    carousel: 'Apresentação da CinaGroup',
+    slide: 'slide',
+    previous: 'Slide anterior',
+    next: 'Próximo slide',
+    pause: 'Pausar slides',
+    play: 'Retomar slides',
+  },
+  fr: {
+    carousel: 'Présentation de CinaGroup',
+    slide: 'diapositive',
+    previous: 'Diapositive précédente',
+    next: 'Diapositive suivante',
+    pause: 'Mettre en pause',
+    play: 'Reprendre',
+  },
+}[lang];
+---
+
+<section
+  class="fx-hero"
+  data-fx-hero
+  role="region"
+  aria-roledescription={slides.length > 1 ? 'carousel' : undefined}
+  aria-label={labels.carousel}
+  data-pause-label={labels.pause}
+  data-play-label={labels.play}
+>
+  <div class="fx-hero-track" aria-live="off">
+    {
+      slides.map((slide, index) => (
+        <div
+          class:list={['fx-hero-slide', { 'is-active': index === 0 }]}
+          data-fx-slide
+          role="group"
+          aria-roledescription={slides.length > 1 ? labels.slide : undefined}
+          aria-label={slides.length > 1 ? `${index + 1} / ${slides.length}` : undefined}
+          aria-hidden={index !== 0 ? 'true' : undefined}
+          inert={index !== 0}
+        >
+          <img
+            class="fx-hero-image"
+            src={slide.image}
+            width="1920"
+            height="1080"
+            alt=""
+            aria-hidden="true"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            fetchpriority={index === 0 ? 'high' : 'low'}
+            decoding="async"
+          />
+          <div class="fx-hero-container">
+            <div class="fx-hero-content">
+              {slide.eyebrow && <p class="fx-hero-eyebrow">{slide.eyebrow}</p>}
+              {index === 0 ? (
+                <h1 class="fx-hero-title">{slide.title}</h1>
+              ) : (
+                <h2 class="fx-hero-title">{slide.title}</h2>
+              )}
+              <p class="fx-hero-lead">{slide.lead}</p>
+              <div class="fx-hero-actions">
+                <a class="fx-hero-button fx-hero-primary" href={sanitizeHref(primary.href)}>
+                  {primary.text}
+                </a>
+                <a class="fx-hero-button fx-hero-secondary" href={sanitizeHref(secondary.href)}>
+                  {secondary.text}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+  {
+    slides.length > 1 && (
+      <div class="fx-hero-controls" data-fx-controls hidden>
+        <button class="fx-hero-control fx-hero-previous" type="button" data-fx-previous aria-label={labels.previous}>
+          <Icon name="tabler:arrow-left" aria-hidden="true" />
+        </button>
+        <button class="fx-hero-control fx-hero-next" type="button" data-fx-next aria-label={labels.next}>
+          <Icon name="tabler:arrow-right" aria-hidden="true" />
+        </button>
+        <button
+          class="fx-hero-control fx-hero-pause"
+          type="button"
+          data-fx-pause
+          aria-label={labels.pause}
+          aria-pressed="false"
+        >
+          <span data-fx-pause-icon>
+            <Icon name="tabler:player-pause" aria-hidden="true" />
+          </span>
+          <span data-fx-play-icon hidden>
+            <Icon name="tabler:player-play" aria-hidden="true" />
+          </span>
+        </button>
+        <span class="fx-hero-position" data-fx-position aria-hidden="true">
+          1 / {slides.length}
+        </span>
+      </div>
+    )
+  }
+  <p class="fx-hero-announcement" data-fx-announcement aria-live="polite" aria-atomic="true"></p>
+</section>
+
+<script>
+  let cleanups: Array<() => void> = [];
+
+  function cleanupHeroes() {
+    cleanups.forEach((cleanup) => cleanup());
+    cleanups = [];
+  }
+
+  function initializeHeroes() {
+    cleanupHeroes();
+    document.querySelectorAll<HTMLElement>('[data-fx-hero]').forEach((root) => {
+      const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-fx-slide]'));
+      const controls = root.querySelector<HTMLElement>('[data-fx-controls]');
+      const previous = root.querySelector<HTMLButtonElement>('[data-fx-previous]');
+      const next = root.querySelector<HTMLButtonElement>('[data-fx-next]');
+      const pause = root.querySelector<HTMLButtonElement>('[data-fx-pause]');
+      const announcement = root.querySelector<HTMLElement>('[data-fx-announcement]');
+      const position = root.querySelector<HTMLElement>('[data-fx-position]');
+      if (panels.length < 2 || !controls || !previous || !next || !pause) return;
+
+      const controller = new AbortController();
+      const { signal } = controller;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let current = 0;
+      let manuallyPaused = false;
+      let hovered = false;
+      let focused = root.contains(document.activeElement);
+      let timer: number | undefined;
+
+      function clearTimer() {
+        if (timer !== undefined) window.clearTimeout(timer);
+        timer = undefined;
+      }
+
+      function scheduleRotation() {
+        clearTimer();
+        if (
+          signal.aborted ||
+          !root.isConnected ||
+          manuallyPaused ||
+          hovered ||
+          focused ||
+          document.hidden ||
+          reducedMotion.matches
+        )
+          return;
+        timer = window.setTimeout(() => showSlide(current + 1, false), 12_000);
+      }
+
+      function showSlide(index: number, announce: boolean) {
+        if (panels[current].contains(document.activeElement)) next?.focus({ preventScroll: true });
+        current = (index + panels.length) % panels.length;
+        panels.forEach((panel, panelIndex) => {
+          const active = panelIndex === current;
+          panel.classList.toggle('is-active', active);
+          panel.inert = !active;
+          panel.setAttribute('aria-hidden', String(!active));
+        });
+        const status = `${current + 1} / ${panels.length}`;
+        if (position) position.textContent = status;
+        if (announce && announcement)
+          announcement.textContent = `${panels[current].querySelector('.fx-hero-title')?.textContent ?? ''} (${status})`;
+        scheduleRotation();
+      }
+
+      function updatePauseButton() {
+        if (!pause) return;
+        pause.hidden = reducedMotion.matches;
+        pause.setAttribute('aria-pressed', String(manuallyPaused));
+        pause.setAttribute('aria-label', (manuallyPaused ? root.dataset.playLabel : root.dataset.pauseLabel) ?? '');
+        const pauseIcon = pause.querySelector<HTMLElement>('[data-fx-pause-icon]');
+        const playIcon = pause.querySelector<HTMLElement>('[data-fx-play-icon]');
+        if (pauseIcon) pauseIcon.hidden = manuallyPaused;
+        if (playIcon) playIcon.hidden = !manuallyPaused;
+        scheduleRotation();
+      }
+
+      previous.addEventListener('click', () => showSlide(current - 1, true), { signal });
+      next.addEventListener('click', () => showSlide(current + 1, true), { signal });
+      pause.addEventListener(
+        'click',
+        () => {
+          manuallyPaused = !manuallyPaused;
+          updatePauseButton();
+        },
+        { signal }
+      );
+      root.addEventListener(
+        'keydown',
+        (event) => {
+          if (event.altKey || event.ctrlKey || event.metaKey) return;
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            event.preventDefault();
+            showSlide(current + (event.key === 'ArrowLeft' ? -1 : 1), true);
+          }
+        },
+        { signal }
+      );
+      root.addEventListener(
+        'pointerenter',
+        (event) => {
+          if (event.pointerType !== 'mouse') return;
+          hovered = true;
+          scheduleRotation();
+        },
+        { signal }
+      );
+      root.addEventListener(
+        'pointerleave',
+        () => {
+          hovered = false;
+          scheduleRotation();
+        },
+        { signal }
+      );
+      root.addEventListener(
+        'focusin',
+        () => {
+          focused = true;
+          scheduleRotation();
+        },
+        { signal }
+      );
+      root.addEventListener(
+        'focusout',
+        () => {
+          queueMicrotask(() => {
+            focused = root.contains(document.activeElement);
+            scheduleRotation();
+          });
+        },
+        { signal }
+      );
+      document.addEventListener('visibilitychange', scheduleRotation, { signal });
+      reducedMotion.addEventListener('change', updatePauseButton, { signal });
+      controls.hidden = false;
+      updatePauseButton();
+      showSlide(0, false);
+      cleanups.push(() => {
+        clearTimer();
+        controller.abort();
+      });
+    });
+  }
+
+  initializeHeroes();
+  document.addEventListener('astro:page-load', initializeHeroes);
+  document.addEventListener('astro:before-swap', cleanupHeroes);
+</script>
+
+<style>
+  .fx-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    color: #fff;
+    background: #131313;
+    font-family: var(--fx-font-body, 'DM Sans', sans-serif);
+  }
+
+  .fx-hero-track {
+    display: grid;
+  }
+
+  .fx-hero-slide {
+    position: relative;
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    min-height: 422px;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 1s ease,
+      visibility 0s linear 1s;
+  }
+
+  .fx-hero-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+    transition: opacity 1s ease;
+  }
+
+  .fx-hero-slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgb(0 0 0 / 60%);
+    pointer-events: none;
+  }
+
+  .fx-hero-image {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .fx-hero-container {
+    width: 100%;
+    max-width: 1252px;
+    margin-inline: auto;
+    padding: 64px 24px 96px;
+  }
+
+  .fx-hero-content {
+    max-width: 780px;
+  }
+
+  .fx-hero-eyebrow {
+    margin: 0 0 16px;
+    color: #03c2f6;
+    font-family: var(--fx-font-heading, 'Red Hat Display', sans-serif);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: 0.03em;
+  }
+
+  .fx-hero-title {
+    margin: 0 0 20px;
+    color: #fff;
+    font-family: var(--fx-font-heading, 'Red Hat Display', sans-serif);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    overflow-wrap: break-word;
+    text-wrap: balance;
+  }
+
+  .fx-hero-lead {
+    max-width: 760px;
+    margin: 0 0 32px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .fx-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 21px;
+  }
+
+  .fx-hero-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    padding: 12px 26px;
+    border: 1px solid transparent;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .fx-hero-primary {
+    color: #061b22;
+    background: #03c2f6;
+    border-color: #03c2f6;
+  }
+
+  .fx-hero-primary:hover {
+    color: #061b22;
+    background: #42d7ff;
+    border-color: #42d7ff;
+  }
+
+  .fx-hero-secondary {
+    color: #131313;
+    background: #fff;
+  }
+
+  .fx-hero-secondary:hover {
+    color: #131313;
+    background: #dcf7ff;
+  }
+
+  .fx-hero-button:focus-visible,
+  .fx-hero-control:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+  }
+
+  .fx-hero-controls {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .fx-hero-control {
+    position: absolute;
+    bottom: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid rgb(255 255 255 / 45%);
+    border-radius: 50%;
+    color: #fff;
+    background: rgb(0 0 0 / 30%);
+    cursor: pointer;
+    pointer-events: auto;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .fx-hero-control:hover {
+    color: #131313;
+    background: #fff;
+  }
+
+  .fx-hero-control :global(svg) {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+
+  .fx-hero-previous {
+    left: 24px;
+  }
+
+  .fx-hero-next {
+    left: 80px;
+  }
+
+  .fx-hero-pause {
+    right: 24px;
+  }
+
+  .fx-hero-position {
+    position: absolute;
+    right: 82px;
+    bottom: 96px;
+    font-size: 14px;
+    line-height: 22px;
+    color: #fff;
+  }
+
+  .fx-hero-controls[hidden],
+  .fx-hero-control[hidden],
+  .fx-hero-control span[hidden] {
+    display: none;
+  }
+
+  .fx-hero-announcement {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 991px) {
+    .fx-hero-content {
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .fx-hero-actions {
+      justify-content: center;
+    }
+
+    .fx-hero-control {
+      top: 14px;
+      bottom: auto;
+    }
+
+    .fx-hero-next {
+      left: auto;
+      right: 24px;
+    }
+
+    .fx-hero-pause {
+      left: calc(50% + 32px);
+      right: auto;
+    }
+
+    .fx-hero-position {
+      top: 25px;
+      bottom: auto;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (min-width: 576px) {
+    .fx-hero-slide {
+      min-height: 458px;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .fx-hero-slide {
+      min-height: 680px;
+    }
+
+    .fx-hero-container {
+      padding: 80px;
+    }
+
+    .fx-hero-title {
+      font-size: 60px;
+    }
+
+    .fx-hero-eyebrow {
+      font-size: 22px;
+    }
+
+    .fx-hero-previous,
+    .fx-hero-next {
+      top: 50%;
+      bottom: auto;
+      width: 60px;
+      height: 60px;
+      transform: translateY(-50%);
+    }
+
+    .fx-hero-previous {
+      left: 16px;
+    }
+
+    .fx-hero-next {
+      left: auto;
+      right: 16px;
+    }
+
+    .fx-hero-control :global(svg) {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .fx-hero-slide {
+      min-height: 670px;
+    }
+
+    .fx-hero-container {
+      padding: 80px 16px;
+    }
+
+    .fx-hero-title {
+      font-size: 80px;
+    }
+
+    .fx-hero-previous {
+      left: 30px;
+    }
+
+    .fx-hero-next {
+      right: 30px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fx-hero-slide,
+    .fx-hero-button,
+    .fx-hero-control {
+      transition: none;
+    }
+  }
+</style>

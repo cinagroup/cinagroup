@@ -1,8 +1,8 @@
 ---
 import '~/assets/styles/tailwind.css';
 import '~/styles/marketing/tokens.css';
-import '~/styles/marketing/base.css';
-import '~/styles/marketing/theme.css';
+import marketingBaseStyles from '~/styles/marketing/base.css?url';
+import flexinaThemeStyles from '~/styles/marketing/theme.css?url';
 
 import { I18N } from 'astrowind:config';
 
@@ -39,6 +39,8 @@ const structuredDataJson = metadata.structuredData
     <CommonMeta />
     <Favicons />
     <CustomStyles />
+    <link rel="stylesheet" href={marketingBaseStyles} />
+    <link rel="stylesheet" href={flexinaThemeStyles} />
     <ApplyColorMode />
     <Metadata {...metadata} />
     <SiteVerification />
