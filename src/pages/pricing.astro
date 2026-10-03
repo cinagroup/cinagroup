@@ -1,6 +1,6 @@
 ---
 import CinaPageHero from '~/components/CinaPageHero.astro';
-import PricingDisclosure from '~/components/PricingDisclosure.astro';
+import Pricing from '~/components/marketing/Pricing.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
@@ -71,49 +71,31 @@ const engagements = [
       secondary={{ text: 'Review services', href: '/services/' }}
     />
 
-    <section class="cg-page-section" aria-labelledby="engagements-title">
-      <div class="cg-page-shell">
-        <div class="cg-section-heading cg-section-heading-center">
-          <p class="cg-eyebrow">Engagement shapes.</p>
-          <h2 id="engagements-title">Three ways to start.</h2>
-          <p>
-            These are working shapes, not fixed bundles. The scope is confirmed against the actual product and delivery
-            environment.
-          </p>
-        </div>
-        <div class="cg-pricing-grid">
-          {
-            engagements.map((engagement) => (
-              <article class:list={['cg-price-card', { 'cg-price-card-featured': engagement.featured }]}>
-                <p class="cg-card-meta">{engagement.label}</p>
-                <h3>{engagement.title}</h3>
-                <p>{engagement.note}</p>
-                <PricingDisclosure
-                  budget={engagement.budget}
-                  timeline={engagement.timeline}
-                  included={engagement.included}
-                  excluded={engagement.excluded}
-                />
-                <ul>
-                  {engagement.items.map((item) => (
-                    <li>{item}</li>
-                  ))}
-                </ul>
-                <a class:list={['cg-page-button', { 'cg-page-button-primary': !engagement.featured }]} href="/contact/">
-                  Scope this work
-                </a>
-              </article>
-            ))
-          }
-        </div>
-        <p class="cg-pricing-terms">
-          All engagements are proposal-based. After scope, dependencies, acceptance criteria, and delivery location are
-          confirmed, the written proposal will state the quote, currency, applicable taxes, and any third-party charges
-          before work begins.
-        </p>
-      </div>
-    </section>
-
+    <Pricing
+      value={{
+        anchor_id: 'engagements-title',
+        headline: 'Three ways to start.',
+        plans: engagements.map((engagement) => ({
+          name: engagement.label,
+          description: `${engagement.title} ${engagement.note}`,
+          features: engagement.items.join('\n'),
+          cta_label: 'Scope this work',
+          cta_url: '/contact/',
+          highlighted: engagement.featured,
+          quote: {
+            budget: engagement.budget,
+            timeline: engagement.timeline,
+            included: engagement.included,
+            excluded: engagement.excluded,
+          },
+        })),
+      }}
+    />
+    <p class="cg-pricing-terms">
+      All engagements are proposal-based. After scope, dependencies, acceptance criteria, and delivery location are
+      confirmed, the written proposal will state the quote, currency, applicable taxes, and any third-party charges
+      before work begins.
+    </p>
     <section class="cg-page-section cg-page-section-soft" aria-labelledby="scope-factors-title">
       <div class="cg-page-shell">
         <div class="cg-section-heading">

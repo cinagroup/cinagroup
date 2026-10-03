@@ -1,0 +1,127 @@
+---
+import { Icon } from 'astro-icon/components';
+import { headerData } from '~/navigation';
+import { changeLangPath, getLangFromUrl, getLocalizedLabel, languages, localizeInternalHref, type Lang } from '~/i18n';
+interface Props {
+  languageAlternates?: Array<{ hreflang: string; href: string }>;
+}
+const { languageAlternates = [] } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const pricingLabel = {
+  en: 'Pricing',
+  zh: '价格',
+  ja: '料金',
+  ko: '가격',
+  ru: 'Стоимость',
+  es: 'Precios',
+  pt: 'Preços',
+  fr: 'Tarifs',
+}[lang];
+const label = (text: string) => getLocalizedLabel(lang, text);
+const href = (url?: string) => localizeInternalHref(url, lang);
+const alternates = new Map(languageAlternates.map((item) => [item.hreflang, item.href]));
+---
+
+<header class="site-header" id="marketing-header">
+  <div class="nav">
+    <a href={href('/')} class="site-logo">CinaGroup</a>
+    <nav class="nav-links" aria-label={label('Main navigation')}>
+      {
+        headerData.links.map((group) => (
+          <details class="nav-group">
+            <summary>{label(group.text)}</summary>
+            <div class="nav-dropdown">
+              {group.links.map((item) => (
+                <a href={href(item.href)}>{label(item.text)}</a>
+              ))}
+            </div>
+          </details>
+        ))
+      }
+      <a href={href('/pricing/')}
+        >{
+          lang === 'zh'
+            ? '价格'
+            : { en: 'Pricing', ja: '料金', ko: '가격', ru: 'Стоимость', es: 'Precios', pt: 'Preços', fr: 'Tarifs' }[
+                lang
+              ] || 'Pricing'
+        }</a
+      >
+    </nav>
+    <div class="nav-actions">
+      <details class="nav-group language-menu">
+        <summary aria-label={label('Language Switcher')}>{languages[lang]}</summary>
+        <div class="nav-dropdown">
+          {
+            Object.entries(languages).map(([locale, text]) => (
+              <a
+                href={alternates.get(locale) ?? changeLangPath(Astro.url, locale as Lang)}
+                hreflang={locale}
+                lang={locale}
+                aria-current={locale === lang ? 'true' : undefined}
+              >
+                {text}
+              </a>
+            ))
+          }
+        </div>
+      </details>
+      <a href={href('/contact/')} class="btn btn-primary nav-cta">{label('Contact')}</a>
+      <details class="mobile-menu">
+        <summary aria-label={label('Main navigation')}><Icon name="tabler:menu-2" width={24} height={24} /></summary>
+        <nav class="mobile-links" aria-label={label('Main navigation')}>
+          {
+            headerData.links.map((group) => (
+              <div>
+                <h3>{label(group.text)}</h3>
+                {group.links.map((item) => (
+                  <a href={href(item.href)}>{label(item.text)}</a>
+                ))}
+              </div>
+            ))
+          }
+          <a href={href('/pricing/')}>{pricingLabel}</a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+<script>
+  function setupMarketingNavigation() {
+    const header = document.getElementById('marketing-header');
+    if (!header || header.dataset.bound) return;
+    header.dataset.bound = 'true';
+    const menus = header.querySelectorAll<HTMLDetailsElement>('details');
+    menus.forEach((menu) =>
+      menu.addEventListener('toggle', () => {
+        if (menu.open)
+          menus.forEach((other) => {
+            if (other !== menu) other.open = false;
+          });
+      })
+    );
+    header.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      const menu = Array.from(menus).find((item) => item.open);
+      if (menu) {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    });
+    header.querySelectorAll('a').forEach((link) =>
+      link.addEventListener('click', () =>
+        menus.forEach((menu) => {
+          menu.open = false;
+        })
+      )
+    );
+    document.addEventListener('click', (event) => {
+      if (!header.contains(event.target as Node))
+        menus.forEach((menu) => {
+          menu.open = false;
+        });
+    });
+  }
+  setupMarketingNavigation();
+  document.addEventListener('astro:page-load', setupMarketingNavigation);
+</script>

@@ -1,9 +1,6 @@
 ---
-import Image from '~/components/common/Image.astro';
+import Hero from '~/components/marketing/Hero.astro';
 import { getPermalink } from '~/utils/permalinks';
-
-const meshImage = '~/assets/images/cinagroup-mesh-gradient-v1.png';
-
 export interface Props {
   eyebrow: string;
   title: string;
@@ -11,46 +8,20 @@ export interface Props {
   primary?: { text: string; href: string };
   secondary?: { text: string; href: string };
 }
-
-const { eyebrow, title, lead, primary, secondary } = Astro.props;
+const { title, lead, primary, secondary } = Astro.props;
+// Some existing source headings use line-break markup; the template renders plain text safely.
+const headline = title.replace(/<br\s*\/?\s*>/gi, ' ').replace(/<[^>]*>/g, '');
 ---
 
-<section class="cg-page-hero" aria-labelledby="page-title">
-  <div class="cg-page-hero-art" aria-hidden="true">
-    <Image
-      src={meshImage}
-      alt=""
-      width={1672}
-      height={941}
-      widths={[640, 960, 1280, 1672]}
-      sizes="100vw"
-      layout="fullWidth"
-      format="webp"
-      loading="eager"
-      decoding="async"
-      fetchpriority="high"
-      style="width: 100%; height: 100%; object-fit: cover; object-position: center top;"
-    />
-  </div>
-  <div class="cg-page-shell">
-    <p class="cg-eyebrow">{eyebrow}</p>
-    <h1 id="page-title" set:html={title} />
-    <p class="cg-page-lead">{lead}</p>
-    {
-      (primary || secondary) && (
-        <div class="cg-page-actions">
-          {primary && (
-            <a class="cg-page-button cg-page-button-primary" href={getPermalink(primary.href)}>
-              {primary.text}
-            </a>
-          )}
-          {secondary && (
-            <a class="cg-page-button" href={getPermalink(secondary.href)}>
-              {secondary.text}
-            </a>
-          )}
-        </div>
-      )
-    }
-  </div>
-</section>
+<Hero
+  value={{
+    anchor_id: 'page-title',
+    headline,
+    subheadline: lead,
+    centered: true,
+    primary_cta_label: primary?.text,
+    primary_cta_url: primary ? getPermalink(primary.href) : undefined,
+    secondary_cta_label: secondary?.text,
+    secondary_cta_url: secondary ? getPermalink(secondary.href) : undefined,
+  }}
+/>
