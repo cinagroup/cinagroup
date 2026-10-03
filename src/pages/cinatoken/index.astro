@@ -1,11 +1,17 @@
 ---
+import { ENGLISH_PAGE_DEFAULTS } from '~/data/site/english-page-defaults';
+import { loadEnglishPageText } from '~/emdash/english-page-text';
+import { getPageCopyMetadata } from '~/emdash/published-page-copy';
+
+const copy = await loadEnglishPageText(Astro, 'cinatoken', ENGLISH_PAGE_DEFAULTS.cinatoken);
+
 import CinaProductPage from '~/components/CinaProductPage.astro';
 
-const metadata = {
-  title: 'CinaToken — Open-source AI gateway',
+const metadata = await getPageCopyMetadata(Astro, {
+  title: copy.metadata_title,
   description:
-    'CinaToken is a self-hosted AI gateway with model routing, API keys, budgets, accounting, audit, and documented multimodal interfaces.',
-};
+    copy.metadata_description,
+});
 
 const code = `gateway "team" {
   protocol = "responses-api"
@@ -16,70 +22,71 @@ const code = `gateway "team" {
 ---
 
 <CinaProductPage
+  pageText={copy}
   product="cinatoken"
   {metadata}
-  eyebrow="CinaToken / open-source, self-hosted AI gateway."
-  title="Route model access through one governed gateway."
-  lead="CinaToken combines provider routing, API keys, model policy, budgets, accounting, and audit with local, Docker, database, and Cloudflare deployment paths. This page does not claim a managed-service SLA."
-  primary={{ text: 'Plan a gateway evaluation', href: '/contact/' }}
-  secondary={{ text: 'View the full stack', href: '/' }}
+  eyebrow={copy.hero_eyebrow}
+  title={copy.hero_title}
+  lead={copy.hero_lead}
+  primary={{ text: copy.hero_primary_text, href: '/contact/' }}
+  secondary={{ text: copy.hero_secondary_text, href: '/' }}
   capabilities={[
     {
-      label: 'Route.',
-      title: 'Expose unified model interfaces.',
-      description: 'Connect applications through documented Chat Completions, Responses, image, audio, embedding, Realtime, Claude, and Gemini routes.',
+      label: copy.capabilities_1_label,
+      title: copy.capabilities_1_title,
+      description: copy.capabilities_1_description,
     },
     {
-      label: 'Keys.',
-      title: 'Issue controlled downstream access.',
-      description: 'Keep provider credentials behind the gateway and manage user-facing API keys from the administration layer.',
+      label: copy.capabilities_2_label,
+      title: copy.capabilities_2_title,
+      description: copy.capabilities_2_description,
     },
     {
-      label: 'Policy.',
-      title: 'Select approved providers and models.',
-      description: 'Route by explicit provider, model, task, availability, and policy configuration.',
+      label: copy.capabilities_3_label,
+      title: copy.capabilities_3_title,
+      description: copy.capabilities_3_description,
     },
     {
-      label: 'Budget.',
-      title: 'Apply recurring usage boundaries.',
-      description: 'Use the project’s budget, accounting, status, and model-access controls for governed consumption.',
+      label: copy.capabilities_4_label,
+      title: copy.capabilities_4_title,
+      description: copy.capabilities_4_description,
     },
     {
-      label: 'Audit.',
-      title: 'Retain operational evidence.',
-      description: 'Inspect routing, policy, usage, and accounting through the documented console and management APIs.',
+      label: copy.capabilities_5_label,
+      title: copy.capabilities_5_title,
+      description: copy.capabilities_5_description,
     },
     {
-      label: 'Deploy.',
-      title: 'Choose a supported hosting path.',
-      description: 'Run locally, in Docker, with supported databases, or through the documented Cloudflare deployment path.',
+      label: copy.capabilities_6_label,
+      title: copy.capabilities_6_title,
+      description: copy.capabilities_6_description,
     },
   ]}
-  workflowTitle="Move one application through a governed model route."
-  workflowLead="A reference rollout starts with one protocol, provider route, downstream key, budget rule, and observable request."
+  workflowTitle={copy.hero_workflow_title}
+  workflowLead={copy.hero_workflow_lead}
   workflow={[
     {
-      title: 'Choose the interface',
-      description: 'Select the documented protocol and confirm the application request shape.',
+      title: copy.workflow_1_title,
+      description: copy.workflow_1_description,
     },
     {
-      title: 'Configure a provider route',
-      description: 'Add the provider credential securely and restrict the route to the intended models.',
+      title: copy.workflow_2_title,
+      description: copy.workflow_2_description,
     },
     {
-      title: 'Issue a downstream key',
-      description: 'Create the user or application identity with its applicable model and budget boundaries.',
+      title: copy.workflow_3_title,
+      description: copy.workflow_3_description,
     },
     {
-      title: 'Verify usage and audit',
-      description: 'Send a test request, then confirm routing, response, accounting, and trace evidence.',
+      title: copy.workflow_4_title,
+      description: copy.workflow_4_description,
     },
   ]}
   codeLabel="Illustrative gateway policy."
   {code}
   principles={[
-    { title: 'Self-hosted control.', description: 'Operators choose the hosting path, providers, keys, and data stores.' },
-    { title: 'Protocol clarity.', description: 'Applications should use only interfaces documented by the active release.' },
-    { title: 'Observable spend.', description: 'Routing, usage, budgets, and accounting should remain visible to operators.' },
+    { title: copy.principles_1_title, description: copy.principles_1_description },
+    { title: copy.principles_2_title, description: copy.principles_2_description },
+    { title: copy.principles_3_title, description: copy.principles_3_description },
   ]}
 />

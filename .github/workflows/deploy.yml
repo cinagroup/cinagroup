@@ -12,7 +12,7 @@ on:
         required: true
         type: choice
         default: validate
-        options: [validate, deploy, cutover, rollback]
+        options: [validate, deploy, deploy-and-initialize, deploy-and-resume-initialization, cutover, rollback]
 
 concurrency:
   group: emdash-production-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'live' }}
@@ -25,7 +25,7 @@ jobs:
   production:
     name: Validate production Worker and deploy only when authorized
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       EMDASH_BUILD_TARGET: production
       PUBLIC_TURNSTILE_SITE_KEY: '0x4AAAAAAEigqtYgQBcKUhpa'
@@ -52,13 +52,13 @@ jobs:
       - name: Test CMS, authentication and production isolation
         run: npm run test:emdash && node --experimental-strip-types --test tests/emdash-deployment-target.test.mjs tests/emdash-production.test.mjs
       - name: Audit source content and build production
-        run: npm run audit:source && npm run build
+        run: npm run validate:site-content && npm run audit:source && npm run build
       - name: Verify generated production deployment target
         run: node scripts/emdash-production.mjs verify-build
       - name: Check bundle and startup without upload
         run: npx wrangler deploy --dry-run --name cinagroup-emdash-production --outdir dist/offline-worker && npx wrangler check startup --outfile /tmp/emdash-production-startup.cpuprofile
       - name: Render compiled production public responses with ephemeral local bindings
-        run: node scripts/render-production-audit.mjs
+        run: node scripts/render-production-audit.mjs && node --experimental-strip-types scripts/verify-legacy-article-shell.mjs
       - name: Audit built public content and evidence
         run: npm run audit:evidence && npm run audit:content && npm run audit:blog && npm run audit:build
       - name: Verify live production resources
@@ -69,7 +69,7 @@ jobs:
           EMDASH_ACCESS_ADMIN_EMAIL: ${{ secrets.EMDASH_ACCESS_ADMIN_EMAIL }}
         run: node scripts/emdash-production.mjs audit
       - name: Apply tracked contact migrations with exact production target
-        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'deploy'
+        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'deploy' || inputs.operation == 'deploy-and-initialize' || inputs.operation == 'deploy-and-resume-initialization')
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -77,9 +77,30 @@ jobs:
           node scripts/emdash-production.mjs contact-before
           npx wrangler d1 migrations apply cinagroup-contact-submissions --remote --config wrangler.production.jsonc
           node scripts/emdash-production.mjs contact-after
+      - name: Initialize missing public site content and menus
+        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'deploy-and-initialize' || inputs.operation == 'deploy-and-resume-initialization')
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ "${{ inputs.operation }}" = "deploy-and-resume-initialization" ]; then
+            node --experimental-strip-types scripts/initialize-site-content.mjs resume
+          else
+            node --experimental-strip-types scripts/initialize-site-content.mjs apply
+          fi
+      - name: Retain encrypted backup and public initialization proof
+        if: always() && (inputs.operation == 'deploy-and-initialize' || inputs.operation == 'deploy-and-resume-initialization')
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: site-content-initialization-proof
+          path: |
+            site-content-initialization-report.json
+            site-content-backup.enc.json
+          if-no-files-found: ignore
+          retention-days: 30
       - name: Deploy validated production Worker
         id: deploy
-        if: github.event_name == 'workflow_dispatch' && inputs.operation == 'deploy'
+        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'deploy' || inputs.operation == 'deploy-and-initialize' || inputs.operation == 'deploy-and-resume-initialization')
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

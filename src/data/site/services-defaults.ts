@@ -1,0 +1,290 @@
+/** Existing localized copy preserved verbatim. Governance disclosures remain code controlled. */
+export type Locale = 'zh' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+
+export const DEFAULT_SERVICES_COPY: Record<
+  Locale,
+  {
+    metadataTitle: string;
+    eyebrow: string;
+    title: string;
+    lead: string;
+    primary: string;
+    secondary: string;
+    sectionEyebrow: string;
+    sectionTitle: string;
+    sectionLead: string;
+    cards: Array<{ label: string; title: string; description: string }>;
+    processEyebrow: string;
+    processTitle: string;
+    steps: Array<{ title: string; description: string }>;
+  }
+> = {
+  zh: {
+    metadataTitle: '服务 — 产品、工作流与平台交付',
+    eyebrow: '服务 / 从当前状态到经过验证的发布。',
+    title: '在下一次产品改动变得昂贵之前，把它讲清楚。',
+    lead: '海内集团帮助团队审计、设计、实现并强化搜索、自动化、模型网关与互联基础设施工作流。',
+    primary: '沟通需求',
+    secondary: '查看产品体系',
+    sectionEyebrow: '服务领域。',
+    sectionTitle: '从真实工作出发，而不是套用通用方案。',
+    sectionLead: '范围会根据用户、现有系统、风险与验收证据来确定。',
+    cards: [
+      {
+        label: '01 / 审计',
+        title: '产品与工作流审计。',
+        description: '审查用户旅程、源码、内容、可访问性与技术风险。',
+      },
+      {
+        label: '02 / 设计',
+        title: '搜索与自动化设计。',
+        description: '为小而清晰的流程明确数据源、权限、审核点与输出。',
+      },
+      {
+        label: '03 / 实现',
+        title: '实现与发布强化。',
+        description: '构建共享模式、测试、部署检查与恢复路径。',
+      },
+    ],
+    processEyebrow: '交付方式。',
+    processTitle: '在每次交接中留下证据。',
+    steps: [
+      { title: '审计', description: '记录当前体验、源码与约束。' },
+      { title: '界定', description: '就优先级与验收条件达成一致。' },
+      { title: '构建', description: '以可审核的增量交付改动。' },
+      { title: '验证', description: '执行静态检查、响应式 QA、部署与生产抽查。' },
+    ],
+  },
+  ja: {
+    metadataTitle: 'サービス — 製品・ワークフロー・プラットフォーム支援',
+    eyebrow: 'サービス / 現状から検証済みリリースへ。',
+    title: '高コストになる前に、次の製品変更を明確に。',
+    lead: 'CinaGroup は、検索、自動化、モデルゲートウェイ、接続インフラの監査・設計・実装・強化を支援します。',
+    primary: '相談する',
+    secondary: '製品一覧を見る',
+    sectionEyebrow: '支援領域。',
+    sectionTitle: '一般的なパッケージではなく、実際の仕事から始めます。',
+    sectionLead: 'ユーザー、既存システム、リスク、検証条件に合わせて範囲を決めます。',
+    cards: [
+      {
+        label: '01 / 監査',
+        title: '製品とワークフローの監査。',
+        description: 'ユーザージャーニー、ソース、コンテンツ、アクセシビリティ、技術的リスクを確認します。',
+      },
+      {
+        label: '02 / 設計',
+        title: '検索と自動化の設計。',
+        description: '情報源、権限、レビュー点、出力を明確にした小さなフローを設計します。',
+      },
+      {
+        label: '03 / 実装',
+        title: '実装とリリースの強化。',
+        description: '共有パターン、テスト、デプロイ確認、復旧手順まで一貫して整えます。',
+      },
+    ],
+    processEyebrow: '進め方。',
+    processTitle: '各引き継ぎに証拠を残します。',
+    steps: [
+      { title: '監査', description: '現在の体験、ソース、制約を記録します。' },
+      { title: '整理', description: '優先順位と受け入れ条件を合意します。' },
+      { title: '実装', description: 'レビュー可能な単位で変更を届けます。' },
+      { title: '検証', description: '静的チェック、レスポンシブ QA、デプロイ、本番確認を行います。' },
+    ],
+  },
+  ko: {
+    metadataTitle: '서비스 — 제품, 워크플로 및 플랫폼 제공',
+    eyebrow: '서비스 / 현재 상태에서 검증된 릴리스까지.',
+    title: '다음 제품 변경이 비싸지기 전에 명확하게 만드세요.',
+    lead: 'CinaGroup은 검색, 자동화, 모델 게이트웨이 및 연결형 인프라의 감사, 설계, 구현과 강화 작업을 지원합니다.',
+    primary: '상담하기',
+    secondary: '제품 스택 보기',
+    sectionEyebrow: '서비스 영역.',
+    sectionTitle: '일반 패키지가 아니라 실제 업무에서 시작합니다.',
+    sectionLead: '사용자, 기존 시스템, 위험 및 검증 기준에 맞춰 범위를 정합니다.',
+    cards: [
+      {
+        label: '01 / 감사',
+        title: '제품 및 워크플로 감사.',
+        description: '사용자 여정, 소스, 콘텐츠, 접근성 및 기술 위험을 확인합니다.',
+      },
+      {
+        label: '02 / 설계',
+        title: '검색 및 자동화 설계.',
+        description: '정보원, 권한, 검토 지점과 출력을 명확히 한 작은 흐름을 설계합니다.',
+      },
+      {
+        label: '03 / 구현',
+        title: '구현 및 릴리스 강화.',
+        description: '공유 패턴, 테스트, 배포 확인 및 복구 경로를 함께 제공합니다.',
+      },
+    ],
+    processEyebrow: '제공 방식.',
+    processTitle: '모든 인계 단계에 증거를 남깁니다.',
+    steps: [
+      { title: '감사', description: '현재 경험, 소스와 제약을 기록합니다.' },
+      { title: '구체화', description: '우선순위와 수용 기준을 합의합니다.' },
+      { title: '구현', description: '검토 가능한 단위로 변경을 제공합니다.' },
+      { title: '검증', description: '정적 검사, 반응형 QA, 배포 및 프로덕션 확인을 수행합니다.' },
+    ],
+  },
+  ru: {
+    metadataTitle: 'Услуги — продукт, процессы и платформенная доставка',
+    eyebrow: 'Услуги / от текущего состояния до проверенного релиза.',
+    title: 'Сделайте следующее изменение понятным до того, как оно станет дорогим.',
+    lead: 'CinaGroup помогает проводить аудит, проектировать, внедрять и укреплять поиск, автоматизацию, модельные шлюзы и связанную инфраструктуру.',
+    primary: 'Обсудить задачу',
+    secondary: 'Посмотреть продукты',
+    sectionEyebrow: 'Направления.',
+    sectionTitle: 'Начинаем с реальной работы, а не с типового пакета.',
+    sectionLead: 'Объём определяется пользователями, существующими системами, рисками и критериями приёмки.',
+    cards: [
+      {
+        label: '01 / Аудит',
+        title: 'Аудит продукта и процесса.',
+        description: 'Проверяем путь пользователя, исходный код, контент, доступность и технические риски.',
+      },
+      {
+        label: '02 / Проектирование',
+        title: 'Проектирование поиска и автоматизации.',
+        description: 'Определяем источники, права, точки проверки и результаты небольшого процесса.',
+      },
+      {
+        label: '03 / Реализация',
+        title: 'Внедрение и укрепление релиза.',
+        description: 'Создаём общие шаблоны, тесты, проверки развёртывания и путь восстановления.',
+      },
+    ],
+    processEyebrow: 'Процесс.',
+    processTitle: 'Доказательства на каждом этапе передачи.',
+    steps: [
+      { title: 'Аудит', description: 'Фиксируем текущее состояние, код и ограничения.' },
+      { title: 'Формирование', description: 'Согласуем приоритеты и критерии приёмки.' },
+      { title: 'Реализация', description: 'Поставляем изменения проверяемыми частями.' },
+      {
+        title: 'Проверка',
+        description: 'Проводим статические проверки, адаптивный QA, развёртывание и контроль production.',
+      },
+    ],
+  },
+  es: {
+    metadataTitle: 'Servicios — producto, flujos y entrega de plataforma',
+    eyebrow: 'Servicios / del estado actual a una versión verificada.',
+    title: 'Haz comprensible el próximo cambio antes de que resulte costoso.',
+    lead: 'CinaGroup ayuda a auditar, diseñar, implementar y reforzar flujos de búsqueda, automatización, pasarelas de modelos e infraestructura conectada.',
+    primary: 'Hablar del trabajo',
+    secondary: 'Ver los productos',
+    sectionEyebrow: 'Áreas de servicio.',
+    sectionTitle: 'Empezamos por el trabajo real, no por un paquete genérico.',
+    sectionLead: 'El alcance se ajusta al usuario, los sistemas existentes, el riesgo y la evidencia de aceptación.',
+    cards: [
+      {
+        label: '01 / Auditar',
+        title: 'Auditoría de producto y flujo.',
+        description: 'Revisamos el recorrido, el código, el contenido, la accesibilidad y los riesgos técnicos.',
+      },
+      {
+        label: '02 / Diseñar',
+        title: 'Diseño de búsqueda y automatización.',
+        description: 'Definimos fuentes, permisos, revisiones y resultados para flujos pequeños y claros.',
+      },
+      {
+        label: '03 / Implementar',
+        title: 'Implementación y entrega robusta.',
+        description:
+          'Construimos patrones compartidos, pruebas, comprobaciones de despliegue y una ruta de recuperación.',
+      },
+    ],
+    processEyebrow: 'Entrega.',
+    processTitle: 'Evidencia en cada traspaso.',
+    steps: [
+      { title: 'Auditar', description: 'Capturamos la experiencia, el código y las restricciones actuales.' },
+      { title: 'Definir', description: 'Acordamos prioridades y criterios de aceptación.' },
+      { title: 'Construir', description: 'Entregamos cambios en incrementos revisables.' },
+      {
+        title: 'Verificar',
+        description: 'Ejecutamos controles estáticos, QA responsive, despliegue y muestreo en producción.',
+      },
+    ],
+  },
+  pt: {
+    metadataTitle: 'Serviços — produto, fluxos e entrega de plataforma',
+    eyebrow: 'Serviços / do estado atual a uma versão verificada.',
+    title: 'Torne a próxima mudança compreensível antes que ela fique cara.',
+    lead: 'A CinaGroup ajuda a auditar, projetar, implementar e fortalecer fluxos de busca, automação, gateway de modelos e infraestrutura conectada.',
+    primary: 'Conversar sobre o trabalho',
+    secondary: 'Ver os produtos',
+    sectionEyebrow: 'Áreas de serviço.',
+    sectionTitle: 'Começamos pelo trabalho real, não por um pacote genérico.',
+    sectionLead: 'O escopo é ajustado ao usuário, aos sistemas existentes, aos riscos e às evidências de aceitação.',
+    cards: [
+      {
+        label: '01 / Auditar',
+        title: 'Auditoria de produto e fluxo.',
+        description: 'Revisamos a jornada, o código, o conteúdo, a acessibilidade e os riscos técnicos.',
+      },
+      {
+        label: '02 / Projetar',
+        title: 'Design de busca e automação.',
+        description: 'Definimos fontes, permissões, pontos de revisão e resultados para fluxos pequenos e claros.',
+      },
+      {
+        label: '03 / Implementar',
+        title: 'Implementação e entrega robusta.',
+        description: 'Criamos padrões compartilhados, testes, verificações de implantação e um caminho de recuperação.',
+      },
+    ],
+    processEyebrow: 'Entrega.',
+    processTitle: 'Evidência em cada passagem.',
+    steps: [
+      { title: 'Auditar', description: 'Registramos a experiência, o código e as restrições atuais.' },
+      { title: 'Definir', description: 'Alinhamos prioridades e critérios de aceitação.' },
+      { title: 'Construir', description: 'Entregamos mudanças em incrementos revisáveis.' },
+      {
+        title: 'Verificar',
+        description: 'Executamos verificações estáticas, QA responsivo, implantação e amostragem em produção.',
+      },
+    ],
+  },
+  fr: {
+    metadataTitle: 'Services — produit, flux de travail et livraison de plateforme',
+    eyebrow: 'Services / de l’état actuel à une version vérifiée.',
+    title: 'Rendez le prochain changement compréhensible avant qu’il ne devienne coûteux.',
+    lead: 'CinaGroup aide à auditer, concevoir, mettre en œuvre et renforcer la recherche, l’automatisation, les passerelles de modèles et l’infrastructure connectée.',
+    primary: 'Parler du besoin',
+    secondary: 'Voir les produits',
+    sectionEyebrow: 'Domaines de service.',
+    sectionTitle: 'Nous partons du travail réel, pas d’un forfait générique.',
+    sectionLead:
+      'Le périmètre est adapté à l’utilisateur, aux systèmes existants, aux risques et aux preuves de réception.',
+    cards: [
+      {
+        label: '01 / Auditer',
+        title: 'Audit du produit et du flux.',
+        description: 'Nous examinons le parcours, le code, le contenu, l’accessibilité et les risques techniques.',
+      },
+      {
+        label: '02 / Concevoir',
+        title: 'Conception de la recherche et de l’automatisation.',
+        description: 'Nous définissons les sources, droits, points de contrôle et résultats de flux petits et clairs.',
+      },
+      {
+        label: '03 / Mettre en œuvre',
+        title: 'Implémentation et livraison robuste.',
+        description:
+          'Nous créons des modèles partagés, des tests, des contrôles de déploiement et un chemin de reprise.',
+      },
+    ],
+    processEyebrow: 'Livraison.',
+    processTitle: 'Des preuves à chaque passage de relais.',
+    steps: [
+      { title: 'Auditer', description: 'Nous capturons l’expérience, le code et les contraintes actuelles.' },
+      { title: 'Cadrer', description: 'Nous convenons des priorités et des critères de réception.' },
+      { title: 'Construire', description: 'Nous livrons les changements par incréments vérifiables.' },
+      {
+        title: 'Vérifier',
+        description:
+          'Nous exécutons les contrôles statiques, le QA responsive, le déploiement et l’échantillonnage en production.',
+      },
+    ],
+  },
+};

@@ -1,3 +1,4 @@
+import { publicPostSeo, type PublicPostSeo } from './post-seo.ts';
 import { validatePostPublication } from './editorial-policy.ts';
 
 // Every admitted locale has either a legacy index bridge or a native CMS index.
@@ -13,6 +14,7 @@ export interface PublicPost {
   content: unknown[];
   author?: string;
   publishDate?: Date;
+  seo?: PublicPostSeo;
 }
 
 export type AssetFetcher = { fetch(request: Request): Promise<Response> };
@@ -80,6 +82,7 @@ export function publicPostFromEntry(
     excerpt: optionalText(entry.data.excerpt) ?? optionalText(entry.data.description) ?? '',
     content: Array.isArray(entry.data.content) ? entry.data.content : [],
     author: optionalText(entry.data.author_name),
+    seo: publicPostSeo(entry.data.seo),
     publishDate: validDate(entry.data.publish_date) ?? validDate(entry.data.publishedAt),
   };
 }

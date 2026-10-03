@@ -5,7 +5,8 @@ import { SITE, METADATA, I18N } from 'astrowind:config';
 import type { MetaData } from '~/types';
 import { getCanonical } from '~/utils/permalinks';
 import { adaptOpenGraphImages, type OpenGraph } from '~/utils/images';
-import { getLangFromUrl, getLanguageAlternates } from '~/i18n';
+import { getLangFromUrl, getLanguageAlternates, getLocalizedLabel } from '~/i18n';
+import { loadSitePresentation } from '~/emdash/site-presentation';
 
 export interface Props extends MetaData {
   dontUseTitleTemplate?: boolean;
@@ -53,7 +54,14 @@ const localeByLanguage: Record<MetadataLanguage, string> = {
 const currentLanguage = language || getLangFromUrl(Astro.url);
 const currentLocale = localeByLanguage[currentLanguage];
 const isChinese = currentLanguage === 'zh' || currentLanguage === 'zh-CN';
-const localizedSiteName = isChinese ? '海内集团' : SITE?.name;
+const presentation = await loadSitePresentation(Astro);
+const localizedSiteName = getLocalizedLabel(getLangFromUrl(Astro.url), presentation.siteName ?? SITE?.name);
+const globalTitleTemplate =
+  presentation.siteName || presentation.titleSeparator
+    ? `%s ${presentation.titleSeparator ?? '—'} ${localizedSiteName}`
+    : isChinese
+      ? '%s — 海内集团'
+      : METADATA?.title?.template;
 // Page-provided alternates (e.g. a blog post's translations) win over the
 // static route matrix, which cannot know data-driven localized routes.
 const languageAlternates = alternates
@@ -63,6 +71,7 @@ const languageAlternates = alternates
     : getLanguageAlternates(Astro.url.pathname, new URL(String(canonical)).origin);
 const shouldIgnoreTitleTemplate =
   ignoreTitleTemplate ||
+  (!title && !!presentation.siteName) ||
   (typeof title === 'string' &&
     typeof localizedSiteName === 'string' &&
     title.toLowerCase().includes(localizedSiteName.toLowerCase()));
@@ -83,15 +92,15 @@ const seoProps: SeoMetadata = merge(
       type: 'website',
     },
     twitter: {
-      cardType: openGraph?.images?.length ? 'summary_large_image' : 'summary',
+      cardType: openGraph?.images?.length || presentation.defaultOgImage ? 'summary_large_image' : 'summary',
     },
   },
   {
-    title: METADATA?.title?.default,
-    titleTemplate: isChinese ? '%s — 海内集团' : METADATA?.title?.template,
+    title: presentation.siteName ? localizedSiteName : METADATA?.title?.default,
+    titleTemplate: globalTitleTemplate,
     noindex: typeof METADATA?.robots?.index !== 'undefined' ? !METADATA.robots.index : undefined,
     nofollow: typeof METADATA?.robots?.follow !== 'undefined' ? !METADATA.robots.follow : undefined,
-    description: METADATA?.description,
+    description: getLocalizedLabel(getLangFromUrl(Astro.url), presentation.tagline) ?? METADATA?.description,
     openGraph: METADATA?.openGraph,
     twitter: METADATA?.twitter,
   },
@@ -123,7 +132,17 @@ const robotsContent = [
 ]
   .filter(Boolean)
   .join(',');
-const renderedOpenGraph = await adaptOpenGraphImages(seoProps.openGraph, Astro.site);
+// CMS uploads already have a public delivery URL. Preserve it rather than trying
+// to optimize a database-backed asset during an SSR head render. Page images win.
+const renderedOpenGraph =
+  presentation.defaultOgImage && !openGraph?.images?.length
+    ? {
+        ...seoProps.openGraph,
+        images: [
+          { ...presentation.defaultOgImage, url: String(new URL(presentation.defaultOgImage.url, getCanonical('/'))) },
+        ],
+      }
+    : await adaptOpenGraphImages(seoProps.openGraph, Astro.site);
 ---
 
 {renderedTitle && <title>{renderedTitle}</title>}
@@ -166,3 +185,5 @@ const renderedOpenGraph = await adaptOpenGraphImages(seoProps.openGraph, Astro.s
 {seoProps.twitter?.handle && <meta name="twitter:creator" content={seoProps.twitter.handle} />}
 
 {keywords && keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+{presentation.googleVerification && <meta name="google-site-verification" content={presentation.googleVerification} />}
+{presentation.bingVerification && <meta name="msvalidate.01" content={presentation.bingVerification} />}

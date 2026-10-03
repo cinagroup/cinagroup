@@ -1,0 +1,45 @@
+---
+import '~/assets/styles/tailwind.css';
+import '~/styles/marketing/tokens.css';
+import marketingBaseStyles from '~/styles/marketing/base.css?url';
+import flexinaThemeStyles from '~/styles/marketing/theme.css?url';
+import Favicons from '~/components/Favicons.astro';
+import CustomStyles from '~/components/CustomStyles.astro';
+import ApplyColorMode from '~/components/common/ApplyColorMode.astro';
+import BasicScripts from '~/components/common/BasicScripts.astro';
+import Header from '~/components/marketing/Header.astro';
+import Footer from '~/components/marketing/Footer.astro';
+import { ClientRouter } from 'astro:transitions';
+import { loadSitePresentation } from '~/emdash/site-presentation';
+import type { LegacyArticleShell } from '~/emdash/legacy-article-shell';
+
+interface Props {
+  article: LegacyArticleShell;
+}
+const { article } = Astro.props;
+await loadSitePresentation(Astro);
+const skipLabel = article.language.startsWith('zh') ? '跳到主要内容' : 'Skip to content';
+---
+
+<!doctype html>
+<html lang={article.language} dir={article.direction} class={article.htmlClass || undefined}>
+  <head>
+    <!-- Original article metadata, JSON-LD and compiled styles stay literal. -->
+    <Fragment set:html={article.headHtml} />
+    <Favicons />
+    <CustomStyles />
+    <link rel="stylesheet" href={marketingBaseStyles} />
+    <link rel="stylesheet" href={flexinaThemeStyles} />
+    <ApplyColorMode />
+    <ClientRouter fallback="swap" />
+  </head>
+  <body class:list={[article.bodyClass, 'marketing-template', 'antialiased']} data-legacy-article-shell>
+    <a href="#main-content" class="skip-link">{skipLabel}</a>
+    <Header languageAlternates={article.languageAlternates} />
+    <!-- Only compiled ASSETS can supply this immutable main; CMS HTML cannot. -->
+    <Fragment set:html={article.mainHtml} />
+    <Footer />
+    <Fragment set:html={article.bodyScriptsHtml} />
+    <BasicScripts />
+  </body>
+</html>

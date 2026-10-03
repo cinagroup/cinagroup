@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { cmsBlogDisplaySettings, formatCmsBlogDate } from '../src/emdash/cms-blog-display.ts';
 
 import { cmsBlogIndexHeaders, cmsBlogIndexHeadResponse, loadCmsBlogIndex } from '../src/emdash/cms-blog-index.ts';
 
@@ -114,4 +115,54 @@ test('native HEAD response matches GET status, cache and robots policy without a
     assert.equal(response.headers.get('Content-Type'), 'text/html; charset=utf-8');
     assert.equal(response.headers.get('X-Robots-Tag'), result.indexable ? null : 'noindex, follow');
   }
+});
+
+test('CMS pagination uses the complete approved inventory and bounds malformed display input', async () => {
+  const result = await loadCmsBlogIndex(
+    'fr',
+    'https://cinagroup.com/fr/blog/?page=2',
+    missingAssets,
+    async () => ({
+      entries: [
+        approvedEntry('one', 'fr'),
+        approvedEntry('hidden-draft', 'fr', { status: 'draft' }),
+        approvedEntry('two', 'fr'),
+        approvedEntry('three', 'fr'),
+      ],
+    }),
+    { postsPerPage: 2 }
+  );
+  assert.deepEqual(
+    result.posts.map((post) => post.slug),
+    ['three']
+  );
+  assert.equal(result.pagination.total, 3);
+  assert.equal(result.pagination.previousHref, '/fr/blog/');
+  assert.equal(result.pagination.nextHref, undefined);
+  const settings = cmsBlogDisplaySettings({
+    postsPerPage: -1,
+    dateFormat: 'invalid token string',
+    timezone: 'Unknown/Timezone',
+  });
+  assert.equal(settings.postsPerPage, 6);
+  assert.equal(settings.timezone, 'Asia/Singapore');
+  assert.equal(settings.dateFormat, 'MMMM d, yyyy');
+  assert.equal(
+    formatCmsBlogDate(new Date('2026-01-23T00:30:00Z'), 'fr', cmsBlogDisplaySettings({ dateFormat: 'MMMM d, yyyy' })),
+    'janvier 23, 2026'
+  );
+});
+
+test('native setting lookup failures keep the approved CMS list usable', async () => {
+  const result = await loadCmsBlogIndex(
+    'es',
+    'https://cinagroup.com/es/blog/?page=999999',
+    missingAssets,
+    async () => ({ entries: [approvedEntry('published', 'es')] }),
+    Promise.reject(new Error('Settings unavailable'))
+  );
+  assert.equal(result.status, 200);
+  assert.equal(result.posts[0].slug, 'published');
+  assert.equal(result.pagination.page, 1);
+  assert.equal(result.pagination.canonicalHref, '/es/blog/');
 });

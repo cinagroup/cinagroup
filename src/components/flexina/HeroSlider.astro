@@ -1,13 +1,14 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { sanitizeHref } from 'emdash';
+import { sanitizeHref, type ImageValue } from 'emdash';
+import CMSImage from '~/components/CMSImage.astro';
 import { getLangFromUrl } from '~/i18n';
 
 interface Slide {
   title: string;
   lead: string;
   eyebrow?: string;
-  image: string;
+  image: string | ImageValue;
 }
 
 interface Props {
@@ -16,11 +17,20 @@ interface Props {
   lead: string;
   primary: { text: string; href: string };
   secondary: { text: string; href: string };
+  image?: string | ImageValue;
   slides?: Slide[];
 }
 
-const { eyebrow, title, lead, primary, secondary, slides: additionalSlides = [] } = Astro.props;
-const slides: Slide[] = [{ eyebrow, title, lead, image: '/images/flexina/city-workspace.webp' }, ...additionalSlides];
+const {
+  eyebrow,
+  title,
+  lead,
+  primary,
+  secondary,
+  image = '/images/flexina/city-workspace.webp',
+  slides: additionalSlides = [],
+} = Astro.props;
+const slides: Slide[] = [{ eyebrow, title, lead, image }, ...additionalSlides];
 const lang = getLangFromUrl(Astro.url);
 const labels = {
   en: {
@@ -111,11 +121,10 @@ const labels = {
           aria-hidden={index !== 0 ? 'true' : undefined}
           inert={index !== 0}
         >
-          <img
+          <CMSImage
+            image={slide.image}
+            fallback={index === 0 ? '/images/flexina/city-workspace.webp' : '/images/flexina/office-workspace.webp'}
             class="fx-hero-image"
-            src={slide.image}
-            width="1920"
-            height="1080"
             alt=""
             aria-hidden="true"
             loading={index === 0 ? 'eager' : 'lazy'}
@@ -370,7 +379,8 @@ const labels = {
     pointer-events: none;
   }
 
-  .fx-hero-image {
+  .fx-hero-image,
+  .fx-hero-slide :global(img.fx-hero-image) {
     position: absolute;
     inset: 0;
     z-index: -2;

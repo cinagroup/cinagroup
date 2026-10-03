@@ -1,0 +1,764 @@
+/** Existing localized copy preserved verbatim. Governance disclosures remain code controlled. */
+export type Locale = 'zh' | 'ja' | 'ko' | 'ru' | 'es' | 'pt' | 'fr';
+
+export type Product = 'cinaseek' | 'cinaclaw' | 'cinatoken' | 'cinaskill' | 'cinachain';
+
+export type ProductCopy = {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  capabilities: Array<{ title: string; description: string }>;
+};
+
+export const DEFAULT_PRODUCT_COPY: Record<
+  Locale,
+  {
+    contact: string;
+    stack: string;
+    scenarioQualifier: string;
+    capabilitiesEyebrow: string;
+    capabilitiesTitle: string;
+    capabilitiesLead: string;
+    workflowEyebrow: string;
+    workflowTitle: string;
+    steps: Array<{ title: string; description: string }>;
+    nextEyebrow: string;
+    nextTitle: string;
+    products: Record<Product, ProductCopy>;
+  }
+> = {
+  zh: {
+    contact: '沟通工作流',
+    stack: '查看产品体系',
+    scenarioQualifier: '此说明为参考使用场景。当前可用范围请以下方公开依据与发布状态为准。',
+    capabilitiesEyebrow: '能力。',
+    capabilitiesTitle: '聚焦团队真正需要完成的工作。',
+    capabilitiesLead: '从最小而有用的工作流开始，让边界与审核节点始终清晰可见。',
+    workflowEyebrow: '工作流。',
+    workflowTitle: '让从输入到验证结果的路径清晰可见。',
+    steps: [
+      { title: '定义任务', description: '明确用户、目标、输入与约束。' },
+      { title: '连接必要上下文', description: '只使用获准访问的数据源与系统。' },
+      { title: '审核结果', description: '在重要判断或外部操作前保留人工审核。' },
+      { title: '依据证据改进', description: '将失败、缺口与反馈用于下一轮改进。' },
+    ],
+    nextEyebrow: '下一步。',
+    nextTitle: '围绕一条真实工作流确定范围。',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / 抢先体验智能体工作空间。',
+        title: '在隔离的工作空间中评估智能体与个人 Gadget。',
+        lead: 'CinaSeek 是一个抢先体验环境，结合智能体对话、个人应用 Gadget，以及用于限制外部资源的 Gatekeeper。',
+        capabilities: [
+          { title: '创建个人 Gadget。', description: '在隔离的用户边界内生成小型个人应用。' },
+          { title: '限定 Gatekeeper 范围。', description: '只连接明确获准使用的外部资源。' },
+          { title: '保留人工审核。', description: '记录具有外部影响的操作，并保持其可审核。' },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / 本地优先智能体网关。',
+        title: '通过由操作者控制的本地优先 Gateway 运行智能体。',
+        lead: 'CinaClaw 提供本地优先 Gateway、CLI、消息适配器、技能与可选配套应用。',
+        capabilities: [
+          { title: '本地优先 Gateway。', description: '通过由操作者控制的 Gateway 运行会话、渠道与工具。' },
+          { title: '文档化渠道。', description: '连接 WebChat 或已配置的消息适配器。' },
+          { title: '工作空间技能。', description: '加载具有明确指令与支持资源的技能。' },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / 开源自托管模型网关。',
+        title: '在一个自托管网关中管理模型访问、用量与成本。',
+        lead: 'CinaToken 把凭据、模型路由、使用策略、追踪与成本边界整合到由您托管的一层中。',
+        capabilities: [
+          { title: '集中管理凭据。', description: '将供应商密钥保留在受控边界中，无需分发到每个应用。' },
+          { title: '路由到获准模型。', description: '依据任务、策略与可用性选择路径。' },
+          { title: '追踪决策。', description: '保留路由、策略与用量信息，供运营审核。' },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / CinaClaw 的 SKILL.md 能力格式。',
+        title: '将 CinaClaw 可复用的指令与资源打包为 SKILL.md。',
+        lead: 'CinaSkill 不是独立平台，而是 CinaClaw 内置、托管与工作空间技能所使用的 SKILL.md 能力格式。',
+        capabilities: [
+          { title: 'SKILL.md 约定。', description: '用 Markdown 描述适用条件、指令与所需支持资源。' },
+          { title: '文档化加载来源。', description: '从内置、托管与工作空间技能目录加载。' },
+          { title: '明确工作空间优先级。', description: '遵循已记录的加载顺序，让工作空间技能优先于托管与内置技能。' },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / Base Sepolia NFT DApp 测试版。',
+        title: '在 Base Sepolia 上评估 NFT 展示与铸造流程。',
+        lead: 'CinaChain 是面向 Base Sepolia 测试网的 NFT DApp 测试版，并非生产区块链网络。',
+        capabilities: [
+          { title: '测试网 NFT 展示。', description: '通过带 IPFS 网关回退的画廊展示 NFT 资产。' },
+          { title: '连接 Base Sepolia 钱包。', description: '在明确标示的测试网上执行白名单或公开铸造。' },
+          { title: '验证测试交易。', description: '在 Base Sepolia 区块浏览器中检查测试结果。' },
+        ],
+      },
+    },
+  },
+  ja: {
+    contact: 'ワークフローを相談する',
+    stack: '製品一覧を見る',
+    scenarioQualifier:
+      'この説明は参考ユースケースです。現在の提供範囲は、以下の公開根拠とリリース状態で確認してください。',
+    capabilitiesEyebrow: '機能。',
+    capabilitiesTitle: 'チームが完了すべき仕事に集中します。',
+    capabilitiesLead: '最小限の有用なワークフローから始め、境界とレビュー点を明確にします。',
+    workflowEyebrow: 'ワークフロー。',
+    workflowTitle: '入力から検証済み結果までを見える化します。',
+    steps: [
+      { title: '仕事を定義', description: 'ユーザー、目的、入力、制約を明確にします。' },
+      { title: '必要な文脈を接続', description: '承認された情報源とシステムだけを使用します。' },
+      { title: '結果をレビュー', description: '重要な判断や外部アクションの前に人が確認します。' },
+      { title: '証拠から改善', description: '失敗、欠落、フィードバックを次の改善に反映します。' },
+    ],
+    nextEyebrow: '次のステップ。',
+    nextTitle: '実際のワークフローに合わせて範囲を決めます。',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / アーリーアクセスのエージェントワークスペース。',
+        title: '分離されたワークスペースでエージェントとプライベート Gadget を試す。',
+        lead: 'CinaSeek は、エージェントチャット、個人用アプリの Gadget、外部リソースを限定する Gatekeeper を組み合わせたアーリーアクセス環境です。',
+        capabilities: [
+          {
+            title: 'プライベート Gadget を作成。',
+            description: '必要な仕事に合わせ、分離された個人用アプリを生成します。',
+          },
+          { title: 'Gatekeeper で範囲を限定。', description: '承認された外部リソースだけを明示的に接続します。' },
+          { title: '人の確認を保持。', description: '副作用のある操作を記録し、レビューできる状態にします。' },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / ローカルファーストのエージェントゲートウェイ。',
+        title: '自分で管理する Gateway 経由でエージェントを実行。',
+        lead: 'CinaClaw は、ローカルファースト Gateway、CLI、メッセージングアダプター、スキル、オプションのコンパニオンアプリを提供します。',
+        capabilities: [
+          {
+            title: 'ローカルファースト Gateway。',
+            description: 'セッション、チャネル、ツールを運用者管理の Gateway 経由で実行します。',
+          },
+          {
+            title: '文書化されたチャネル。',
+            description: 'WebChat または設定済みのメッセージングアダプターを接続します。',
+          },
+          { title: 'ワークスペーススキル。', description: '明示的な指示とリソースを持つスキルを読み込みます。' },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / オープンソース・セルフホスト型モデルゲートウェイ。',
+        title: 'モデルアクセス、利用量、コストを一つのゲートウェイで制御。',
+        lead: 'CinaToken は、認証情報、モデルルーティング、利用ポリシー、トレース、コスト境界を、利用者がホストする一つの層にまとめます。',
+        capabilities: [
+          {
+            title: '認証情報を集約。',
+            description: '各アプリにプロバイダーキーを配布せず、管理された境界に保持します。',
+          },
+          {
+            title: '承認済みモデルへルーティング。',
+            description: 'タスク、ポリシー、可用性に応じて経路を選択します。',
+          },
+          { title: '判断を追跡。', description: 'ルーティング、ポリシー、利用情報を運用レビューに残します。' },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / CinaClaw の SKILL.md 機能形式。',
+        title: 'CinaClaw 用の指示とリソースを SKILL.md にまとめる。',
+        lead: 'CinaSkill は独立プラットフォームではなく、CinaClaw のバンドル、管理対象、ワークスペーススキルで使われる SKILL.md ベースの機能形式です。',
+        capabilities: [
+          { title: 'SKILL.md 契約。', description: '適用条件、指示、必要なサポートリソースを Markdown で記述します。' },
+          {
+            title: '文書化された読み込み元。',
+            description: 'バンドル、管理対象、ワークスペースのスキルディレクトリから読み込みます。',
+          },
+          {
+            title: 'ワークスペース優先順位を明確に。',
+            description: 'ワークスペーススキルが管理対象・バンドル版より優先される読み込み順を文書化します。',
+          },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / Base Sepolia NFT DApp ベータ。',
+        title: 'Base Sepolia で NFT ギャラリーとミントを評価する。',
+        lead: 'CinaChain は Base Sepolia テストネット向けの NFT DApp ベータです。本番ブロックチェーンネットワークではありません。',
+        capabilities: [
+          { title: 'テストネット NFT を閲覧。', description: 'IPFS フォールバックを備えたギャラリーを表示します。' },
+          {
+            title: 'Base Sepolia ウォレットに接続。',
+            description: '明示されたテストネットでホワイトリストまたは公開ミントを試します。',
+          },
+          { title: 'トランザクションを検証。', description: 'Base Sepolia エクスプローラーでテスト結果を確認します。' },
+        ],
+      },
+    },
+  },
+  ko: {
+    contact: '워크플로 상담하기',
+    stack: '제품 스택 보기',
+    scenarioQualifier: '이 설명은 참조 사용 사례입니다. 현재 제공 범위는 아래 공개 근거와 릴리스 상태에서 확인하세요.',
+    capabilitiesEyebrow: '기능.',
+    capabilitiesTitle: '팀이 완료해야 하는 업무에 집중합니다.',
+    capabilitiesLead: '가장 작은 유용한 워크플로에서 시작하고 경계와 검토 지점을 명확히 합니다.',
+    workflowEyebrow: '워크플로.',
+    workflowTitle: '입력에서 검증된 결과까지의 경로를 보이게 합니다.',
+    steps: [
+      { title: '업무 정의', description: '사용자, 목표, 입력 및 제약을 명확히 합니다.' },
+      { title: '필요한 맥락 연결', description: '승인된 정보원과 시스템만 사용합니다.' },
+      { title: '결과 검토', description: '중요한 판단이나 외부 작업 전에 사람이 확인합니다.' },
+      { title: '증거로 개선', description: '실패, 누락 및 피드백을 다음 개선에 반영합니다.' },
+    ],
+    nextEyebrow: '다음 단계.',
+    nextTitle: '실제 워크플로에 맞춰 범위를 정합니다.',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / 얼리 액세스 에이전트 워크스페이스.',
+        title: '격리된 워크스페이스에서 에이전트와 개인용 Gadget을 평가하세요.',
+        lead: 'CinaSeek은 에이전트 채팅, Gadget 개인 앱, 외부 리소스를 제한하는 Gatekeeper를 결합한 얼리 액세스 환경입니다.',
+        capabilities: [
+          { title: '개인 Gadget.', description: '격리된 사용자 경계에서 작은 개인용 애플리케이션을 생성합니다.' },
+          { title: '범위 제한 Gatekeeper.', description: '명시적으로 승인된 외부 리소스만 연결합니다.' },
+          { title: '사람의 검토.', description: '부수 효과가 있는 작업을 로그로 남기고 검토 가능하게 유지합니다.' },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / 로컬 우선 에이전트 게이트웨이.',
+        title: '운영자가 제어하는 로컬 우선 Gateway로 에이전트를 실행하세요.',
+        lead: 'CinaClaw은 로컬 우선 Gateway, CLI, 메시징 어댑터, 스킬, 선택적 컴패니언 앱을 제공합니다.',
+        capabilities: [
+          { title: '로컬 우선 Gateway.', description: '세션, 채널, 도구를 운영자가 제어하는 Gateway로 실행합니다.' },
+          { title: '문서화된 채널.', description: 'WebChat 또는 설정된 메시징 어댑터를 연결합니다.' },
+          { title: '워크스페이스 스킬.', description: '명시적 지침과 지원 리소스가 있는 스킬을 불러옵니다.' },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / 오픈 소스 자체 호스팅 모델 게이트웨이.',
+        title: '모델 접근, 사용량 및 비용을 자체 호스팅 게이트웨이에서 관리하세요.',
+        lead: 'CinaToken은 자격 증명, 모델 라우팅, 사용 정책, 추적 및 비용 경계를 하나의 계층으로 모읍니다.',
+        capabilities: [
+          {
+            title: '자체 호스팅 제어.',
+            description: '운영자가 호스팅 경로, 공급자, 키, 데이터 저장소를 선택합니다.',
+          },
+          {
+            title: '문서화된 모델 라우팅.',
+            description: '지원되는 인터페이스, 정책, 공급자 경로를 통해 요청을 라우팅합니다.',
+          },
+          { title: '예산과 감사.', description: '사용량, 예산, 라우팅, 계산 정보를 운영자가 확인합니다.' },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / CinaClaw의 SKILL.md 기능 형식.',
+        title: 'CinaClaw에서 재사용할 지침과 리소스를 SKILL.md로 패키징하세요.',
+        lead: 'CinaSkill은 독립 플랫폼이 아니라 CinaClaw의 번들, 관리형, 워크스페이스 스킬에서 사용하는 SKILL.md 기반 기능 형식입니다.',
+        capabilities: [
+          { title: 'SKILL.md 계약.', description: '적용 조건, 지침, 필요한 지원 리소스를 Markdown로 기술합니다.' },
+          { title: '문서화된 로딩 소스.', description: '번들, 관리형, 워크스페이스 스킬 디렉토리에서 불러옵니다.' },
+          {
+            title: '워크스페이스 우선순위 명확화.',
+            description: '워크스페이스 스킬이 관리형과 번들 스킬보다 우선하는 문서화된 로딩 순서를 따릅니다.',
+          },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / Base Sepolia NFT DApp 베타.',
+        title: 'Base Sepolia에서 NFT 갤러리와 민팅 흐름을 평가하세요.',
+        lead: 'CinaChain은 Base Sepolia 테스트넷용 NFT DApp 베타이며 프로덕션 블록체인 네트워크가 아닙니다.',
+        capabilities: [
+          { title: '테스트넷 NFT 갤러리.', description: 'IPFS 게이트웨이 폴백으로 NFT 컬렉션 자산을 표시합니다.' },
+          { title: 'Base Sepolia 지갑.', description: '명시된 테스트넷에서 화이트리스트 또는 공개 민팅을 실행합니다.' },
+          { title: '테스트 거래 검증.', description: 'Base Sepolia 탐색기에서 테스트 결과를 확인합니다.' },
+        ],
+      },
+    },
+  },
+  ru: {
+    contact: 'Обсудить процесс',
+    stack: 'Посмотреть продукты',
+    scenarioQualifier:
+      'Это эталонный сценарий, а не обещание доступности. Текущий объём указан в публичных источниках и статусе релиза ниже.',
+    capabilitiesEyebrow: 'Возможности.',
+    capabilitiesTitle: 'Фокус на работе, которую команда должна завершить.',
+    capabilitiesLead: 'Начинаем с минимального полезного процесса и сохраняем видимыми его границы и точки проверки.',
+    workflowEyebrow: 'Процесс.',
+    workflowTitle: 'Делаем путь от входных данных до проверенного результата видимым.',
+    steps: [
+      { title: 'Определить работу', description: 'Уточнить пользователя, цель, входные данные и ограничения.' },
+      { title: 'Подключить контекст', description: 'Использовать только разрешённые источники и системы.' },
+      {
+        title: 'Проверить результат',
+        description: 'Сохранить человеческую проверку перед важным решением или внешним действием.',
+      },
+      {
+        title: 'Улучшать по данным',
+        description: 'Использовать ошибки, пробелы и обратную связь для следующего улучшения.',
+      },
+    ],
+    nextEyebrow: 'Следующий шаг.',
+    nextTitle: 'Определим объём по реальному рабочему процессу.',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / агентское рабочее пространство раннего доступа.',
+        title: 'Тестируйте агентов и личные Gadgets в изолированном рабочем пространстве.',
+        lead: 'CinaSeek — среда раннего доступа с чатом агентов, личными приложениями Gadgets и Gatekeepers для ограничения внешних ресурсов.',
+        capabilities: [
+          {
+            title: 'Создавать личные Gadgets.',
+            description: 'Генерировать небольшие приложения в изолированной пользовательской границе.',
+          },
+          {
+            title: 'Ограничивать Gatekeepers.',
+            description: 'Подключать только явно разрешённые внешние ресурсы.',
+          },
+          {
+            title: 'Сохранять проверку человеком.',
+            description: 'Журналировать действия с побочными эффектами и оставлять их доступными для проверки.',
+          },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / local-first шлюз агентов.',
+        title: 'Запускайте агента через Gateway под контролем оператора.',
+        lead: 'CinaClaw включает local-first Gateway, CLI, адаптеры сообщений, навыки и дополнительные приложения.',
+        capabilities: [
+          {
+            title: 'Local-first Gateway.',
+            description: 'Проводить сессии, каналы и инструменты через Gateway под контролем оператора.',
+          },
+          {
+            title: 'Документированные каналы.',
+            description: 'Подключать WebChat или настроенные адаптеры сообщений.',
+          },
+          {
+            title: 'Workspace-навыки.',
+            description: 'Загружать навыки с явными инструкциями и ресурсами.',
+          },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / open-source самостоятельно развёртываемый шлюз моделей.',
+        title: 'Управляйте доступом к моделям, использованием и затратами в одном шлюзе.',
+        lead: 'CinaToken объединяет учётные данные, маршрутизацию моделей, политики, трассировки и границы затрат.',
+        capabilities: [
+          {
+            title: 'Самостоятельно развёртывать.',
+            description: 'Оператор выбирает хостинг, провайдеров, ключи и хранилище данных.',
+          },
+          {
+            title: 'Маршрутизировать через документированные API.',
+            description: 'Использовать поддерживаемые интерфейсы, политики и маршруты провайдеров.',
+          },
+          {
+            title: 'Проверять бюджет и аудит.',
+            description: 'Оставлять оператору видимыми использование, бюджет, маршрутизацию и учёт.',
+          },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / формат возможностей SKILL.md для CinaClaw.',
+        title: 'Упаковывайте инструкции и ресурсы для CinaClaw в SKILL.md.',
+        lead: 'CinaSkill — не отдельная платформа, а формат SKILL.md для встроенных, управляемых и workspace-навыков CinaClaw.',
+        capabilities: [
+          {
+            title: 'Контракт SKILL.md.',
+            description: 'Описать условия применения, инструкции и нужные вспомогательные ресурсы в Markdown.',
+          },
+          {
+            title: 'Документированные источники.',
+            description: 'Загружать навыки из bundled, managed и workspace-каталогов CinaClaw.',
+          },
+          {
+            title: 'Учитывать приоритет workspace.',
+            description: 'Следовать документированному порядку загрузки, где workspace-навыки имеют приорит.',
+          },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / бета NFT DApp в Base Sepolia.',
+        title: 'Тестируйте NFT-галерею и минт в Base Sepolia.',
+        lead: 'CinaChain — бета NFT DApp для тестовой сети Base Sepolia, а не production-блокчейн-сеть.',
+        capabilities: [
+          {
+            title: 'NFT-галерея тестовой сети.',
+            description: 'Показывать активы коллекции с резервными IPFS-шлюзами.',
+          },
+          {
+            title: 'Кошелёк Base Sepolia.',
+            description: 'Выполнять whitelist- или public-mint в явно указанной тестовой сети.',
+          },
+          {
+            title: 'Проверка тестовой транзакции.',
+            description: 'Проверять результат в обозревателе Base Sepolia.',
+          },
+        ],
+      },
+    },
+  },
+  es: {
+    contact: 'Hablar del flujo',
+    stack: 'Ver los productos',
+    scenarioQualifier:
+      'Este es un caso de uso de referencia, no una promesa de disponibilidad. Confirma el alcance actual en la evidencia pública y el estado de versión siguientes.',
+    capabilitiesEyebrow: 'Capacidades.',
+    capabilitiesTitle: 'Una capa enfocada en el trabajo que el equipo debe terminar.',
+    capabilitiesLead: 'Empezamos por el flujo útil más pequeño y mantenemos visibles sus límites y revisiones.',
+    workflowEyebrow: 'Flujo.',
+    workflowTitle: 'Hacemos visible el camino desde la entrada hasta un resultado revisado.',
+    steps: [
+      {
+        title: 'Definir el trabajo',
+        description: 'Aclarar el usuario, el objetivo, las entradas y las restricciones.',
+      },
+      { title: 'Conectar el contexto', description: 'Usar solo fuentes y sistemas aprobados.' },
+      {
+        title: 'Revisar el resultado',
+        description: 'Mantener la revisión humana antes de decisiones o acciones importantes.',
+      },
+      { title: 'Mejorar con evidencia', description: 'Convertir fallos, vacíos y comentarios en la siguiente mejora.' },
+    ],
+    nextEyebrow: 'Siguiente paso.',
+    nextTitle: 'Definamos el alcance con un flujo real.',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / espacio de agentes en acceso anticipado.',
+        title: 'Evalúa agentes y Gadgets personales en espacios aislados.',
+        lead: 'CinaSeek combina chat de agentes, aplicaciones personales llamadas Gadgets y Gatekeepers que limitan el acceso a recursos externos.',
+        capabilities: [
+          {
+            title: 'Crea Gadgets personales.',
+            description: 'Genera aplicaciones pequeñas dentro de un límite aislado por usuario.',
+          },
+          {
+            title: 'Limita los Gatekeepers.',
+            description: 'Conecta solo los recursos externos que el usuario ha aprobado explícitamente.',
+          },
+          {
+            title: 'Conserva la revisión humana.',
+            description: 'Registra las acciones con efectos externos y las mantiene disponibles para revisar.',
+          },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / gateway de agentes local-first.',
+        title: 'Ejecuta un agente mediante un Gateway controlado por el operador.',
+        lead: 'CinaClaw incluye Gateway local-first, CLI, adaptadores de mensajería, skills y aplicaciones complementarias opcionales.',
+        capabilities: [
+          {
+            title: 'Gateway local-first.',
+            description: 'Ejecuta sesiones, canales y herramientas mediante un Gateway controlado por el operador.',
+          },
+          {
+            title: 'Canales documentados.',
+            description: 'Conecta WebChat o adaptadores de mensajería configurados.',
+          },
+          {
+            title: 'Skills de workspace.',
+            description: 'Carga skills con instrucciones y recursos de apoyo explícitos.',
+          },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / gateway de modelos abierto y autohospedado.',
+        title: 'Controla el acceso, el uso y el gasto desde una sola pasarela.',
+        lead: 'CinaToken reúne credenciales, enrutamiento de modelos, políticas, trazas y límites de coste en una sola capa.',
+        capabilities: [
+          {
+            title: 'Control autohospedado.',
+            description: 'El operador elige alojamiento, proveedores, claves y almacenes de datos.',
+          },
+          {
+            title: 'Rutas de modelo documentadas.',
+            description: 'Usa interfaces compatibles, políticas y rutas de proveedor documentadas.',
+          },
+          {
+            title: 'Presupuestos y auditoría.',
+            description: 'Mantiene visibles uso, presupuesto, enrutamiento y contabilidad para el operador.',
+          },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / formato de capacidad SKILL.md para CinaClaw.',
+        title: 'Empaqueta instrucciones y recursos reutilizables para CinaClaw en SKILL.md.',
+        lead: 'CinaSkill no es una plataforma independiente: es el formato SKILL.md usado por las skills integradas, gestionadas y de workspace de CinaClaw.',
+        capabilities: [
+          {
+            title: 'Contrato SKILL.md.',
+            description: 'Describe en Markdown cuándo se aplica, sus instrucciones y recursos necesarios.',
+          },
+          {
+            title: 'Fuentes de carga documentadas.',
+            description: 'Carga desde directorios de skills integradas, gestionadas o de workspace de CinaClaw.',
+          },
+          {
+            title: 'Mantén visible la precedencia del workspace.',
+            description: 'Sigue el orden documentado donde las skills del workspace tienen prioridad al cargarse.',
+          },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / NFT DApp beta en Base Sepolia.',
+        title: 'Evalúa una galería NFT y su mint en Base Sepolia.',
+        lead: 'CinaChain es una NFT DApp beta para la testnet Base Sepolia, no una red blockchain de producción.',
+        capabilities: [
+          {
+            title: 'Galería NFT de testnet.',
+            description: 'Muestra activos de la colección con rutas alternativas de gateway IPFS.',
+          },
+          {
+            title: 'Wallet de Base Sepolia.',
+            description: 'Ejecuta mint de whitelist o público en una testnet explícita.',
+          },
+          {
+            title: 'Verifica la transacción de prueba.',
+            description: 'Comprueba el resultado en el explorador de Base Sepolia.',
+          },
+        ],
+      },
+    },
+  },
+  pt: {
+    contact: 'Conversar sobre o fluxo',
+    stack: 'Ver os produtos',
+    scenarioQualifier:
+      'Este é um caso de uso de referência, não uma promessa de disponibilidade. Confirme o escopo atual nas evidências públicas e no status da versão abaixo.',
+    capabilitiesEyebrow: 'Capacidades.',
+    capabilitiesTitle: 'Uma camada focada no trabalho que a equipe precisa concluir.',
+    capabilitiesLead: 'Começamos pelo menor fluxo útil e mantemos seus limites e revisões visíveis.',
+    workflowEyebrow: 'Fluxo.',
+    workflowTitle: 'Tornamos visível o caminho da entrada até um resultado revisado.',
+    steps: [
+      { title: 'Definir o trabalho', description: 'Esclarecer o usuário, o objetivo, as entradas e as restrições.' },
+      { title: 'Conectar o contexto', description: 'Usar somente fontes e sistemas aprovados.' },
+      { title: 'Revisar o resultado', description: 'Manter a revisão humana antes de decisões ou ações importantes.' },
+      { title: 'Melhorar com evidências', description: 'Transformar falhas, lacunas e feedback na próxima melhoria.' },
+    ],
+    nextEyebrow: 'Próximo passo.',
+    nextTitle: 'Vamos definir o escopo com um fluxo real.',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / workspace de agentes em acesso antecipado.',
+        title: 'Avalie agentes e Gadgets pessoais em workspaces isolados.',
+        lead: 'O CinaSeek combina chat de agentes, aplicações pessoais chamadas Gadgets e Gatekeepers que limitam o acesso a recursos externos.',
+        capabilities: [
+          {
+            title: 'Crie Gadgets pessoais.',
+            description: 'Gere pequenas aplicações dentro de um limite isolado por usuário.',
+          },
+          {
+            title: 'Limite os Gatekeepers.',
+            description: 'Conecte somente recursos externos aprovados explicitamente pelo usuário.',
+          },
+          {
+            title: 'Mantenha a revisão humana.',
+            description: 'Registre ações com efeitos externos e as mantenha disponíveis para revisão.',
+          },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / gateway de agentes local-first.',
+        title: 'Execute um agente por um Gateway controlado pelo operador.',
+        lead: 'O CinaClaw inclui Gateway local-first, CLI, adaptadores de mensagens, skills e aplicativos complementares opcionais.',
+        capabilities: [
+          {
+            title: 'Gateway local-first.',
+            description: 'Execute sessões, canais e ferramentas por um Gateway controlado pelo operador.',
+          },
+          {
+            title: 'Canais documentados.',
+            description: 'Conecte WebChat ou adaptadores de mensagens configurados.',
+          },
+          {
+            title: 'Skills de workspace.',
+            description: 'Carregue skills com instruções e recursos de apoio explícitos.',
+          },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / gateway de modelos aberto e auto-hospedado.',
+        title: 'Controle acesso, uso e gastos em um único gateway.',
+        lead: 'O CinaToken reúne credenciais, roteamento de modelos, políticas, rastros e limites de custo em uma camada.',
+        capabilities: [
+          {
+            title: 'Controle auto-hospedado.',
+            description: 'O operador escolhe hospedagem, provedores, chaves e armazenamentos de dados.',
+          },
+          {
+            title: 'Rotas de modelo documentadas.',
+            description: 'Use interfaces compatíveis, políticas e rotas de provedor documentadas.',
+          },
+          {
+            title: 'Orçamentos e auditoria.',
+            description: 'Mantenha uso, orçamento, roteamento e contabilidade visíveis ao operador.',
+          },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / formato de capacidade SKILL.md para CinaClaw.',
+        title: 'Empacote instruções e recursos reutilizáveis para CinaClaw em SKILL.md.',
+        lead: 'O CinaSkill não é uma plataforma independente: é o formato SKILL.md usado pelas skills integradas, gerenciadas e de workspace do CinaClaw.',
+        capabilities: [
+          {
+            title: 'Contrato SKILL.md.',
+            description: 'Descreva em Markdown quando se aplica, suas instruções e recursos necessários.',
+          },
+          {
+            title: 'Fontes de carregamento documentadas.',
+            description: 'Carregue diretórios de skills integradas, gerenciadas ou de workspace do CinaClaw.',
+          },
+          {
+            title: 'Mantenha visível a precedência do workspace.',
+            description: 'Siga a ordem documentada em que skills do workspace têm prioridade no carregamento.',
+          },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / NFT DApp beta na Base Sepolia.',
+        title: 'Avalie uma galeria NFT e mint na Base Sepolia.',
+        lead: 'O CinaChain é uma NFT DApp beta para a testnet Base Sepolia, não uma rede blockchain de produção.',
+        capabilities: [
+          {
+            title: 'Galeria NFT de testnet.',
+            description: 'Mostre ativos da coleção com caminhos alternativos de gateway IPFS.',
+          },
+          {
+            title: 'Wallet Base Sepolia.',
+            description: 'Execute mint por whitelist ou público em uma testnet explícita.',
+          },
+          {
+            title: 'Verifique a transação de teste.',
+            description: 'Confira o resultado no explorador da Base Sepolia.',
+          },
+        ],
+      },
+    },
+  },
+  fr: {
+    contact: 'Parler du flux',
+    stack: 'Voir les produits',
+    scenarioQualifier:
+      'Il s’agit d’un cas d’usage de référence, pas d’une promesse de disponibilité. Vérifiez le périmètre actuel dans les preuves publiques et le statut de version ci-dessous.',
+    capabilitiesEyebrow: 'Capacités.',
+    capabilitiesTitle: 'Une couche concentrée sur le travail que l’équipe doit terminer.',
+    capabilitiesLead: 'Nous commençons par le plus petit flux utile et gardons ses limites et contrôles visibles.',
+    workflowEyebrow: 'Flux.',
+    workflowTitle: 'Nous rendons visible le chemin de l’entrée au résultat vérifié.',
+    steps: [
+      {
+        title: 'Définir le travail',
+        description: 'Clarifier l’utilisateur, l’objectif, les entrées et les contraintes.',
+      },
+      { title: 'Connecter le contexte', description: 'Utiliser uniquement les sources et systèmes approuvés.' },
+      {
+        title: 'Vérifier le résultat',
+        description: 'Conserver une revue humaine avant les décisions ou actions importantes.',
+      },
+      {
+        title: 'Améliorer par les preuves',
+        description: 'Transformer les erreurs, lacunes et retours en prochaine amélioration.',
+      },
+    ],
+    nextEyebrow: 'Étape suivante.',
+    nextTitle: 'Définissons le périmètre avec un flux réel.',
+    products: {
+      cinaseek: {
+        eyebrow: 'CinaSeek / espace d’agents en accès anticipé.',
+        title: 'Évaluez agents et Gadgets personnels dans des espaces isolés.',
+        lead: 'CinaSeek associe chat d’agents, applications personnelles appelées Gadgets et Gatekeepers qui limitent les ressources externes.',
+        capabilities: [
+          {
+            title: 'Créer des Gadgets personnels.',
+            description: 'Générer de petites applications dans une limite isolée par utilisateur.',
+          },
+          {
+            title: 'Limiter les Gatekeepers.',
+            description: 'Connecter uniquement les ressources externes explicitement approuvées.',
+          },
+          {
+            title: 'Conserver la revue humaine.',
+            description: 'Journaliser les actions à effets externes et les garder disponibles pour revue.',
+          },
+        ],
+      },
+      cinaclaw: {
+        eyebrow: 'CinaClaw / passerelle d’agents local-first.',
+        title: 'Exécutez un agent via un Gateway contrôlé par l’opérateur.',
+        lead: 'CinaClaw comprend un Gateway local-first, un CLI, des adaptateurs de messagerie, des skills et des applications compagnons optionnelles.',
+        capabilities: [
+          {
+            title: 'Gateway local-first.',
+            description: 'Exécuter sessions, canaux et outils via un Gateway contrôlé par l’opérateur.',
+          },
+          {
+            title: 'Canaux documentés.',
+            description: 'Connecter WebChat ou des adaptateurs de messagerie configurés.',
+          },
+          {
+            title: 'Skills de workspace.',
+            description: 'Charger des skills avec instructions et ressources de support explicites.',
+          },
+        ],
+      },
+      cinatoken: {
+        eyebrow: 'CinaToken / passerelle de modèles open source et auto-hébergée.',
+        title: 'Contrôlez l’accès, l’usage et les coûts depuis une seule passerelle.',
+        lead: 'CinaToken réunit identifiants, routage des modèles, politiques, traces et limites de coût dans une couche.',
+        capabilities: [
+          {
+            title: 'Contrôle auto-hébergé.',
+            description: 'L’opérateur choisit l’hébergement, les fournisseurs, les clés et les magasins de données.',
+          },
+          {
+            title: 'Routes de modèles documentées.',
+            description: 'Utiliser les interfaces compatibles, politiques et routes fournisseur documentées.',
+          },
+          {
+            title: 'Budgets et audit.',
+            description: 'Garder usage, budget, routage et comptabilité visibles pour l’opérateur.',
+          },
+        ],
+      },
+      cinaskill: {
+        eyebrow: 'CinaSkill / format de capacité SKILL.md pour CinaClaw.',
+        title: 'Regroupez instructions et ressources réutilisables pour CinaClaw dans SKILL.md.',
+        lead: 'CinaSkill n’est pas une plateforme autonome : c’est le format SKILL.md des skills intégrées, gérées et de workspace de CinaClaw.',
+        capabilities: [
+          {
+            title: 'Contrat SKILL.md.',
+            description: 'Décrire en Markdown les conditions d’application, instructions et ressources requises.',
+          },
+          {
+            title: 'Sources de chargement documentées.',
+            description: 'Charger les répertoires de skills intégrées, gérées ou de workspace de CinaClaw.',
+          },
+          {
+            title: 'Garder visible la priorité du workspace.',
+            description: 'Suivre l’ordre documenté où les skills du workspace sont chargées en priorité.',
+          },
+        ],
+      },
+      cinachain: {
+        eyebrow: 'CinaChain / NFT DApp bêta sur Base Sepolia.',
+        title: 'Évaluez une galerie NFT et son mint sur Base Sepolia.',
+        lead: 'CinaChain est une NFT DApp bêta pour le testnet Base Sepolia, pas un réseau blockchain de production.',
+        capabilities: [
+          {
+            title: 'Galerie NFT de testnet.',
+            description: 'Afficher les actifs de collection avec des chemins de repli de gateway IPFS.',
+          },
+          {
+            title: 'Wallet Base Sepolia.',
+            description: 'Exécuter un mint whitelist ou public sur un testnet explicite.',
+          },
+          {
+            title: 'Vérifier la transaction de test.',
+            description: 'Contrôler le résultat dans l’explorateur Base Sepolia.',
+          },
+        ],
+      },
+    },
+  },
+};
+
+export function defaultProductCopy(locale: Locale, product: Product) {
+  const { products, ...shared } = DEFAULT_PRODUCT_COPY[locale];
+  return { ...shared, ...products[product] };
+}

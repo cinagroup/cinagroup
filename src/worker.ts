@@ -7,7 +7,8 @@ import {
   resolveDeploymentTarget,
 } from './emdash/deployment-target';
 import { fetchWithCinaAuthAccess } from './emdash/cinaauth-access';
-import { fetchLegacyArticleAsset, type LegacyAssetFetcher } from './emdash/legacy-article-asset';
+import type { LegacyAssetFetcher } from './emdash/legacy-article-asset';
+import { withoutHeadBody } from './emdash/legacy-article-shell';
 import {
   canonicalizeCmsBlogResponse,
   createPublicResponseParity,
@@ -50,13 +51,12 @@ export default {
       if (redirect) return redirect;
       const staticSitemap = await fetchGeneratedSitemapAsset(forwarded, assets);
       if (staticSitemap) return staticSitemap;
-      const legacyArticle = await fetchLegacyArticleAsset(forwarded, assets);
-      if (legacyArticle) return legacyArticle;
+      // Governed legacy articles get current CMS chrome in the dynamic slug routes.
       const rendered = await astroFetch(forwarded as typeof request, env, ctx);
       return canonicalizeCmsBlogResponse(forwarded, rendered);
     });
     const result = publicParity.applyHeaders(request, new Response(response.body, response));
-    return applyDeploymentHeaders(request, result, target);
+    return withoutHeadBody(request, applyDeploymentHeaders(request, result, target));
   },
   scheduled: createScheduledHandler(),
 } satisfies ExportedHandler<CloudflareEnv>;

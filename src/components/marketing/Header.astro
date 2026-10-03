@@ -1,6 +1,9 @@
 ---
 import { Icon } from 'astro-icon/components';
 import Logo from '~/components/Logo.astro';
+import { SITE } from 'astrowind:config';
+import { loadSitePresentation } from '~/emdash/site-presentation';
+import { flattenPresentationMenu, type PresentationMenuItem } from '~/emdash/site-presentation-model';
 import { footerData, headerData } from '~/navigation';
 import { changeLangPath, getLangFromUrl, getLocalizedLabel, languages, localizeInternalHref, type Lang } from '~/i18n';
 
@@ -66,50 +69,88 @@ const label = (text: string) => getLocalizedLabel(lang, text);
 const href = (url?: string) => localizeInternalHref(url, lang);
 const alternates = new Map(languageAlternates.map((item) => [item.hreflang, item.href]));
 const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
-const isCurrent = (url?: string) => (href(url)?.replace(/\/+$/, '') || '/') === currentPath;
+const isCurrent = (url: string) => (url.replace(/\/+$/, '') || '/') === currentPath;
+const presentation = await loadSitePresentation(Astro);
+const siteName = getLocalizedLabel(lang, presentation.siteName ?? SITE?.name) ?? 'CinaGroup';
+const homeLabel = copy.home.replace(lang === 'zh' ? '海内集团' : 'CinaGroup', siteName);
+const contactEmail = presentation.contactEmail ?? 'info@cinagroup.com';
+const socialLinks = presentation.socialLinks ?? footerData.socialLinks;
+const primaryItems: PresentationMenuItem[] = presentation.menus.primary ?? [
+  ...headerData.links.map((group) => ({
+    label: label(group.text) ?? group.text,
+    url: '#',
+    children: group.links.map((item) => ({
+      label: label(item.text) ?? item.text,
+      url: href(item.href) ?? '#',
+      children: [],
+    })),
+  })),
+  { label: copy.pricing, url: href('/pricing/') ?? '#', children: [] },
+];
+const groupLinks = (group: PresentationMenuItem) =>
+  flattenPresentationMenu([...(group.url === '#' ? [] : [{ ...group, children: [] }]), ...group.children]).filter(
+    (item) => item.url !== '#'
+  );
+const ctaLabel = presentation.headerCtaLabel ?? label('Contact');
+const ctaHref = presentation.headerCtaHref ?? href('/contact/');
 ---
 
 <header class="site-header fx-header" id="marketing-header">
-  <a href={href('/')} class="site-logo fx-header-logo" aria-label={copy.home}>
-    <Logo />
+  <a href={href('/')} class="site-logo fx-header-logo" aria-label={homeLabel}>
+    <Logo variant="light" />
   </a>
   <div class="fx-header-body">
     <div class="fx-topbar">
       <div class="fx-topbar-social">
         <span>{copy.follow}:</span>
         {
-          footerData.socialLinks.map((item) => (
+          socialLinks.map((item) => (
             <a href={item.href} aria-label={item.ariaLabel}>
               <Icon name={item.icon} width={15} height={15} />
             </a>
           ))
         }
       </div>
-      <a href="mailto:info@cinagroup.com" class="fx-topbar-contact">
+      <a href={`mailto:${contactEmail}`} class="fx-topbar-contact">
         <Icon name="tabler:mail" width={17} height={17} />
-        <span>{copy.email}: <strong>info@cinagroup.com</strong></span>
+        <span>{copy.email}: <strong>{contactEmail}</strong></span>
       </a>
     </div>
     <div class="nav fx-header-main">
       <nav class="nav-links" aria-label={copy.menu}>
         {
-          headerData.links.map((group) => (
-            <details class="nav-group">
-              <summary>
-                {label(group.text)}
-                <Icon name="tabler:chevron-down" width={13} height={13} />
-              </summary>
-              <div class="nav-dropdown">
-                {group.links.map((item) => (
-                  <a href={href(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                    {label(item.text)}
-                  </a>
-                ))}
-              </div>
-            </details>
-          ))
+          primaryItems.map((group) =>
+            group.children.length ? (
+              <details class="nav-group">
+                <summary>
+                  {group.label}
+                  <Icon name="tabler:chevron-down" width={13} height={13} />
+                </summary>
+                <div class="nav-dropdown">
+                  {groupLinks(group).map((item) => (
+                    <a
+                      href={item.url}
+                      target={item.target}
+                      rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
+                      aria-current={isCurrent(item.url) ? 'page' : undefined}
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+              </details>
+            ) : (
+              <a
+                href={group.url}
+                target={group.target}
+                rel={group.target === '_blank' ? 'noopener noreferrer' : undefined}
+                aria-current={isCurrent(group.url) ? 'page' : undefined}
+              >
+                {group.label}
+              </a>
+            )
+          )
         }
-        <a href={href('/pricing/')} aria-current={isCurrent('/pricing/') ? 'page' : undefined}>{copy.pricing}</a>
       </nav>
       <div class="nav-actions">
         <details class="nav-group language-menu">
@@ -133,32 +174,43 @@ const isCurrent = (url?: string) => (href(url)?.replace(/\/+$/, '') || '/') === 
             }
           </div>
         </details>
-        <a href={href('/contact/')} class="nav-cta fx-header-cta">
-          {label('Contact')}
+        <a href={ctaHref} class="nav-cta fx-header-cta">
+          {ctaLabel}
           <Icon name="tabler:arrow-up-right" width={18} height={18} />
         </a>
         <details class="mobile-menu">
           <summary aria-label={copy.menu}><Icon name="tabler:menu-2" width={25} height={25} /></summary>
           <nav class="mobile-links" aria-label={copy.menu}>
             {
-              headerData.links.map((group) => (
-                <div class="fx-mobile-group">
-                  <h3>{label(group.text)}</h3>
-                  {group.links.map((item) => (
-                    <a href={href(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                      {label(item.text)}
-                    </a>
-                  ))}
-                </div>
-              ))
+              primaryItems.map((group) =>
+                group.children.length ? (
+                  <div class="fx-mobile-group">
+                    <h3>{group.label}</h3>
+                    {groupLinks(group).map((item) => (
+                      <a
+                        href={item.url}
+                        target={item.target}
+                        rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
+                        aria-current={isCurrent(item.url) ? 'page' : undefined}
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </div>
+                ) : (
+                  <a
+                    class="fx-mobile-pricing"
+                    href={group.url}
+                    target={group.target}
+                    rel={group.target === '_blank' ? 'noopener noreferrer' : undefined}
+                    aria-current={isCurrent(group.url) ? 'page' : undefined}
+                  >
+                    {group.label}
+                  </a>
+                )
+              )
             }
-            <a
-              class="fx-mobile-pricing"
-              href={href('/pricing/')}
-              aria-current={isCurrent('/pricing/') ? 'page' : undefined}
-            >
-              {copy.pricing}
-            </a>
+            <a class="fx-mobile-pricing" href={ctaHref}>{ctaLabel}</a>
           </nav>
         </details>
       </div>

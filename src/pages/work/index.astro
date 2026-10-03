@@ -1,24 +1,29 @@
 ---
+import { ENGLISH_PAGE_DEFAULTS } from '~/data/site/english-page-defaults';
+import { loadEnglishPageText } from '~/emdash/english-page-text';
+import { getPageCopyMetadata } from '~/emdash/published-page-copy';
+
+const copy = await loadEnglishPageText(Astro, 'work', ENGLISH_PAGE_DEFAULTS.work);
+
 import CinaPageHero from '~/components/CinaPageHero.astro';
 import PublicEvidenceLibrary from '~/components/PublicEvidenceLibrary.astro';
 import { publicCaseStudies } from '~/data/public-cases';
 import Layout from '~/layouts/PageLayout.astro';
 
-const metadata = {
-  title: 'Work and evidence — What CinaGroup can substantiate',
-  description:
-    'How CinaGroup separates repository, test, deployment, and customer-approved evidence—and the publication standard for future public case studies.',
-};
+const metadata = await getPageCopyMetadata(Astro, {
+  title: copy.metadata_title,
+  description: copy.metadata_description,
+});
 ---
 
 <Layout metadata={metadata}>
   <div class="cg-page">
     <CinaPageHero
-      eyebrow="Work / evidence before claims."
-      title="Show what can be verified. State what cannot."
-      lead="This page explains the evidence behind product and delivery claims. CinaGroup currently has no customer case study approved for public use."
-      primary={{ text: 'Inspect product evidence', href: '/#scenarios' }}
-      secondary={{ text: 'Discuss a workflow', href: '/contact/' }}
+      eyebrow={copy.hero_eyebrow}
+      title={copy.hero_title}
+      lead={copy.hero_lead}
+      primary={{ text: copy.hero_primary_text, href: '/#scenarios' }}
+      secondary={{ text: copy.hero_secondary_text, href: '/contact/' }}
     />
 
     <PublicEvidenceLibrary cases={publicCaseStudies} />
@@ -26,15 +31,14 @@ const metadata = {
     <section class="cg-page-section" aria-labelledby="work-cta-title">
       <div class="cg-page-shell">
         <div class="cg-section-heading cg-section-heading-center">
-          <p class="cg-eyebrow">Need a verifiable scope?</p>
-          <h2 id="work-cta-title">Define the acceptance evidence before implementation.</h2>
+          <p class="cg-eyebrow">{copy.work_cta_eyebrow}</p>
+          <h2 id="work-cta-title">{copy.work_cta_heading}</h2>
           <p>
-            Bring the workflow, constraints, and environment. We will help define what should be observable at review,
-            release, and production handoff.
+            {copy.work_cta_paragraph}
           </p>
           <div class="cg-page-actions">
-            <a class="cg-page-button cg-page-button-primary" href="/contact/">Contact CinaGroup</a>
-            <a class="cg-page-button" href="/services/">Review services</a>
+            <a class="cg-page-button cg-page-button-primary" href="/contact/">{copy.work_cta_link_label}</a>
+            <a class="cg-page-button" href="/services/">{copy.work_cta_link_label_2}</a>
           </div>
         </div>
       </div>

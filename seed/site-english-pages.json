@@ -1,0 +1,2322 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "defaultLocale": "en",
+  "meta": {
+    "name": "CinaGroup existing English marketing pages",
+    "description": "Existing English copy; URLs, examples, product evidence and pricing disclosures remain in code.",
+    "author": "CinaGroup"
+  },
+  "collections": [
+    {
+      "slug": "page_english",
+      "label": "English Marketing Pages",
+      "labelSingular": "English Marketing Page",
+      "description": "Edit the named plain text values, then publish. Signed preview shows drafts at the existing English route. SEO panel controls head metadata; URLs and evidence/disclosure logic remain fixed.",
+      "group": "Website",
+      "sortOrder": 80,
+      "supports": ["drafts", "revisions", "preview", "seo"],
+      "routable": false,
+      "editLocking": true,
+      "titleField": "title",
+      "admin": {
+        "quickCreate": false
+      },
+      "fields": [
+        {
+          "slug": "title",
+          "label": "SEO / Page title",
+          "type": "string",
+          "required": true,
+          "validation": {
+            "minLength": 1,
+            "maxLength": 240
+          }
+        },
+        {
+          "slug": "texts",
+          "label": "Page text / named locations",
+          "type": "repeater",
+          "required": true,
+          "validation": {
+            "minItems": 1,
+            "maxItems": 500,
+            "subFields": [
+              {
+                "slug": "key",
+                "label": "Binding key (keep unchanged)",
+                "type": "string",
+                "required": true
+              },
+              {
+                "slug": "label",
+                "label": "Text location",
+                "type": "string",
+                "required": true
+              },
+              {
+                "slug": "value",
+                "label": "Text (plain text only)",
+                "type": "text",
+                "required": true,
+                "validation": {
+                  "maxLength": 6000
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "urlPattern": "/{slug}"
+    }
+  ],
+  "content": {
+    "page_english": [
+      {
+        "id": "english-page-about",
+        "slug": "about",
+        "locale": "en",
+        "status": "published",
+        "data": {
+          "title": "About CinaGroup — Practical systems for real work",
+          "texts": [
+            {
+              "key": "metadata_description",
+              "label": "SEO / Page Description",
+              "value": "CinaGroup builds practical tools for search, workflow automation, model access, reusable skills, and connected infrastructure."
+            },
+            {
+              "key": "hero_eyebrow",
+              "label": "Hero / Eyebrow",
+              "value": "About CinaGroup."
+            },
+            {
+              "key": "hero_title",
+              "label": "Hero / Title",
+              "value": "Build useful systems without hiding how they work."
+            },
+            {
+              "key": "hero_lead",
+              "label": "Hero / Lead",
+              "value": "CinaGroup brings search, workflow automation, model access, reusable skills, and connected infrastructure into one practical product stack."
+            },
+            {
+              "key": "hero_primary_text",
+              "label": "Hero / Primary / Text",
+              "value": "Explore the products"
+            },
+            {
+              "key": "hero_secondary_text",
+              "label": "Hero / Secondary / Text",
+              "value": "Talk to us"
+            },
+            {
+              "key": "mission_eyebrow",
+              "label": "Mission / Eyebrow",
+              "value": "Mission."
+            },
+            {
+              "key": "mission_heading",
+              "label": "Mission / Heading",
+              "value": "Make advanced infrastructure understandable enough to adopt responsibly."
+            },
+            {
+              "key": "mission_paragraph",
+              "label": "Mission / Paragraph",
+              "value": "Technology becomes useful when teams can see its boundaries, connect it to a real workflow, and verify the outcome."
+            },
+            {
+              "key": "mission_card_label",
+              "label": "Mission / Card / Label",
+              "value": "Clarity."
+            },
+            {
+              "key": "mission_heading_2",
+              "label": "Mission / Heading / 2",
+              "value": "Explain the system."
+            },
+            {
+              "key": "mission_paragraph_2",
+              "label": "Mission / Paragraph / 2",
+              "value": "Keep inputs, sources, policies, review points, and delivery states visible to the people operating the product."
+            },
+            {
+              "key": "mission_card_label_2",
+              "label": "Mission / Card / Label / 2",
+              "value": "Practicality."
+            },
+            {
+              "key": "mission_heading_3",
+              "label": "Mission / Heading / 3",
+              "value": "Start with real work."
+            },
+            {
+              "key": "mission_paragraph_3",
+              "label": "Mission / Paragraph / 3",
+              "value": "Choose one valuable workflow and improve it before expanding into a broader platform story."
+            },
+            {
+              "key": "mission_card_label_3",
+              "label": "Mission / Card / Label / 3",
+              "value": "Responsibility."
+            },
+            {
+              "key": "mission_heading_4",
+              "label": "Mission / Heading / 4",
+              "value": "Design for control."
+            },
+            {
+              "key": "mission_paragraph_4",
+              "label": "Mission / Paragraph / 4",
+              "value": "Match human review, access boundaries, auditability, and recovery paths to the impact of the action."
+            },
+            {
+              "key": "stack_map_eyebrow",
+              "label": "Stack / Map / Eyebrow",
+              "value": "Product map."
+            },
+            {
+              "key": "stack_map_heading",
+              "label": "Stack / Map / Heading",
+              "value": "Five focused routes into production."
+            },
+            {
+              "key": "stack_map_paragraph",
+              "label": "Stack / Map / Paragraph",
+              "value": "Each product can stand alone. Together they support workflows that need knowledge, action, access, reusable capability, and connected state."
+            },
+            {
+              "key": "stack_map_item_label",
+              "label": "Stack / Map / Item / Label",
+              "value": "CinaSeek"
+            },
+            {
+              "key": "stack_map_item_description",
+              "label": "Stack / Map / Item / Description",
+              "value": "Search across documents, product context, support history, and operating knowledge."
+            },
+            {
+              "key": "stack_map_item_label_2",
+              "label": "Stack / Map / Item / Label / 2",
+              "value": "CinaClaw"
+            },
+            {
+              "key": "stack_map_item_description_2",
+              "label": "Stack / Map / Item / Description / 2",
+              "value": "Move repeated operational work through visible context gathering and review."
+            },
+            {
+              "key": "stack_map_item_label_3",
+              "label": "Stack / Map / Item / Label / 3",
+              "value": "CinaToken"
+            },
+            {
+              "key": "stack_map_item_description_3",
+              "label": "Stack / Map / Item / Description / 3",
+              "value": "Centralize model access, routing policy, usage boundaries, and request traces."
+            },
+            {
+              "key": "stack_map_item_label_4",
+              "label": "Stack / Map / Item / Label / 4",
+              "value": "CinaSkill"
+            },
+            {
+              "key": "stack_map_item_description_4",
+              "label": "Stack / Map / Item / Description / 4",
+              "value": "Package small, reviewable, versioned capabilities for reuse across workflows."
+            },
+            {
+              "key": "stack_map_item_label_5",
+              "label": "Stack / Map / Item / Label / 5",
+              "value": "CinaChain"
+            },
+            {
+              "key": "stack_map_item_description_5",
+              "label": "Stack / Map / Item / Description / 5",
+              "value": "Connect application state and services through explicit contracts and releases."
+            },
+            {
+              "key": "working_model_eyebrow",
+              "label": "Working / Model / Eyebrow",
+              "value": "Working model."
+            },
+            {
+              "key": "working_model_heading",
+              "label": "Working / Model / Heading",
+              "value": "Audit, shape, build, verify."
+            },
+            {
+              "key": "working_model_paragraph",
+              "label": "Working / Model / Paragraph",
+              "value": "We prefer evidence-backed increments: inspect the live and source state, define a coherent change, implement it, and prove the result in the environment that matters."
+            },
+            {
+              "key": "about_cta_eyebrow",
+              "label": "About / Cta / Eyebrow",
+              "value": "Work with us."
+            },
+            {
+              "key": "about_cta_heading",
+              "label": "About / Cta / Heading",
+              "value": "Bring a workflow that needs clarity."
+            },
+            {
+              "key": "about_cta_paragraph",
+              "label": "About / Cta / Paragraph",
+              "value": "We can help map the right product, service boundary, and first acceptance scope."
+            },
+            {
+              "key": "about_cta_link_label",
+              "label": "About / Cta / Link / Label",
+              "value": "Contact CinaGroup"
+            },
+            {
+              "key": "about_cta_link_label_2",
+              "label": "About / Cta / Link / Label / 2",
+              "value": "Review services"
+            }
+          ]
+        }
+      },
+      {
+        "id": "english-page-services",
+        "slug": "services",
+        "locale": "en",
+        "status": "published",
+        "data": {
+          "title": "Services — Product, workflow, and platform delivery",
+          "texts": [
+            {
+              "key": "metadata_description",
+              "label": "SEO / Page Description",
+              "value": "CinaGroup helps teams audit, design, implement, and harden search, automation, model gateway, and connected infrastructure workflows."
+            },
+            {
+              "key": "services_1_label",
+              "label": "Services / 1 / Label",
+              "value": "01 / Discover"
+            },
+            {
+              "key": "services_1_title",
+              "label": "Services / 1 / Title",
+              "value": "Product and workflow audit."
+            },
+            {
+              "key": "services_1_description",
+              "label": "Services / 1 / Description",
+              "value": "Map the current user journey, systems, content, constraints, and failure points before deciding what to build."
+            },
+            {
+              "key": "services_2_label",
+              "label": "Services / 2 / Label",
+              "value": "02 / Find"
+            },
+            {
+              "key": "services_2_title",
+              "label": "Services / 2 / Title",
+              "value": "Search and knowledge design."
+            },
+            {
+              "key": "services_2_description",
+              "label": "Services / 2 / Description",
+              "value": "Define source boundaries, retrieval flows, citations, access rules, and feedback loops for operational search."
+            },
+            {
+              "key": "services_3_label",
+              "label": "Services / 3 / Label",
+              "value": "03 / Automate"
+            },
+            {
+              "key": "services_3_title",
+              "label": "Services / 3 / Title",
+              "value": "Assistant-led workflow design."
+            },
+            {
+              "key": "services_3_description",
+              "label": "Services / 3 / Description",
+              "value": "Turn repeatable work into small flows with clear inputs, context gathering, review points, and outcomes."
+            },
+            {
+              "key": "services_4_label",
+              "label": "Services / 4 / Label",
+              "value": "04 / Connect"
+            },
+            {
+              "key": "services_4_title",
+              "label": "Services / 4 / Title",
+              "value": "API and model gateway integration."
+            },
+            {
+              "key": "services_4_description",
+              "label": "Services / 4 / Description",
+              "value": "Create understandable service boundaries for credentials, routing, policy, traces, and application integration."
+            },
+            {
+              "key": "services_5_label",
+              "label": "Services / 5 / Label",
+              "value": "05 / Ship"
+            },
+            {
+              "key": "services_5_title",
+              "label": "Services / 5 / Title",
+              "value": "Implementation and release hardening."
+            },
+            {
+              "key": "services_5_description",
+              "label": "Services / 5 / Description",
+              "value": "Move from approved design to tested code, observable delivery, deployment checks, and a defined recovery path."
+            },
+            {
+              "key": "services_6_label",
+              "label": "Services / 6 / Label",
+              "value": "06 / Improve"
+            },
+            {
+              "key": "services_6_title",
+              "label": "Services / 6 / Title",
+              "value": "Operational follow-through."
+            },
+            {
+              "key": "services_6_description",
+              "label": "Services / 6 / Description",
+              "value": "Use support signals, usage evidence, and workflow outcomes to prioritize the next practical improvement."
+            },
+            {
+              "key": "hero_eyebrow",
+              "label": "Hero / Eyebrow",
+              "value": "Services / from current state to reviewed release."
+            },
+            {
+              "key": "hero_title",
+              "label": "Hero / Title",
+              "value": "Make the next product change understandable before it becomes expensive."
+            },
+            {
+              "key": "hero_lead",
+              "label": "Hero / Lead",
+              "value": "CinaGroup helps teams audit, design, implement, and harden search, automation, gateway, and connected infrastructure workflows."
+            },
+            {
+              "key": "hero_primary_text",
+              "label": "Hero / Primary / Text",
+              "value": "Discuss the work"
+            },
+            {
+              "key": "hero_secondary_text",
+              "label": "Hero / Secondary / Text",
+              "value": "Explore the product stack"
+            },
+            {
+              "key": "services_eyebrow",
+              "label": "Services / Eyebrow",
+              "value": "Service areas."
+            },
+            {
+              "key": "services_heading",
+              "label": "Services / Heading",
+              "value": "Start with the job, not a generic package."
+            },
+            {
+              "key": "services_paragraph",
+              "label": "Services / Paragraph",
+              "value": "Each engagement is scoped around a real workflow and the systems, risks, and review points that make it succeed."
+            },
+            {
+              "key": "delivery_eyebrow",
+              "label": "Delivery / Eyebrow",
+              "value": "Delivery path."
+            },
+            {
+              "key": "delivery_heading",
+              "label": "Delivery / Heading",
+              "value": "Evidence at every handoff."
+            },
+            {
+              "key": "delivery_paragraph",
+              "label": "Delivery / Paragraph",
+              "value": "We keep the current state, proposed change, implementation boundary, and acceptance evidence visible throughout the work."
+            },
+            {
+              "key": "delivery_item_label",
+              "label": "Delivery / Item / Label",
+              "value": "01 / Audit"
+            },
+            {
+              "key": "delivery_item_description",
+              "label": "Delivery / Item / Description",
+              "value": "Capture the live experience, source architecture, content risks, accessibility issues, and measurable technical constraints."
+            },
+            {
+              "key": "delivery_item_label_2",
+              "label": "Delivery / Item / Label / 2",
+              "value": "02 / Shape"
+            },
+            {
+              "key": "delivery_item_description_2",
+              "label": "Delivery / Item / Description / 2",
+              "value": "Translate the findings into a prioritized design and implementation scope tied to user and business outcomes."
+            },
+            {
+              "key": "delivery_item_label_3",
+              "label": "Delivery / Item / Label / 3",
+              "value": "03 / Build"
+            },
+            {
+              "key": "delivery_item_description_3",
+              "label": "Delivery / Item / Description / 3",
+              "value": "Deliver in reviewable increments with shared patterns, realistic content, and explicit integration boundaries."
+            },
+            {
+              "key": "delivery_item_label_4",
+              "label": "Delivery / Item / Label / 4",
+              "value": "04 / Verify"
+            },
+            {
+              "key": "delivery_item_description_4",
+              "label": "Delivery / Item / Description / 4",
+              "value": "Run static checks, responsive QA, interaction tests, deployment checks, and production sampling before handoff."
+            },
+            {
+              "key": "scope_eyebrow",
+              "label": "Scope / Eyebrow",
+              "value": "A useful brief."
+            },
+            {
+              "key": "scope_heading",
+              "label": "Scope / Heading",
+              "value": "Bring one workflow and its constraints."
+            },
+            {
+              "key": "scope_paragraph",
+              "label": "Scope / Paragraph",
+              "value": "A strong starting brief names the user, current systems, desired outcome, sensitive actions, deployment target, and evidence required for acceptance."
+            },
+            {
+              "key": "services_cta_eyebrow",
+              "label": "Services / Cta / Eyebrow",
+              "value": "Next step."
+            },
+            {
+              "key": "services_cta_heading",
+              "label": "Services / Cta / Heading",
+              "value": "Start with the smallest valuable scope."
+            },
+            {
+              "key": "services_cta_paragraph",
+              "label": "Services / Cta / Paragraph",
+              "value": "Share the workflow that is slow, unclear, fragile, or expensive. We will help identify the first useful slice."
+            },
+            {
+              "key": "services_cta_link_label",
+              "label": "Services / Cta / Link / Label",
+              "value": "Contact CinaGroup"
+            },
+            {
+              "key": "services_cta_link_label_2",
+              "label": "Services / Cta / Link / Label / 2",
+              "value": "How scoping works"
+            }
+          ]
+        }
+      },
+      {
+        "id": "english-page-contact",
+        "slug": "contact",
+        "locale": "en",
+        "status": "published",
+        "data": {
+          "title": "Contact CinaGroup — Start with one workflow",
+          "texts": [
+            {
+              "key": "metadata_description",
+              "label": "SEO / Page Description",
+              "value": "Tell CinaGroup about the user, workflow, systems, constraints, and outcome you want to improve."
+            },
+            {
+              "key": "hero_eyebrow",
+              "label": "Hero / Eyebrow",
+              "value": "Contact / start with the work."
+            },
+            {
+              "key": "hero_title",
+              "label": "Hero / Title",
+              "value": "Tell us what your team is trying to move."
+            },
+            {
+              "key": "hero_lead",
+              "label": "Hero / Lead",
+              "value": "Share the user, workflow, current systems, constraints, and outcome. We will use that context to identify a sensible first scope."
+            },
+            {
+              "key": "hero_primary_text",
+              "label": "Hero / Primary / Text",
+              "value": "Start an inquiry"
+            },
+            {
+              "key": "hero_secondary_text",
+              "label": "Hero / Secondary / Text",
+              "value": "Review services"
+            },
+            {
+              "key": "contact_form_eyebrow",
+              "label": "Contact / Form / Eyebrow",
+              "value": "A useful first message."
+            },
+            {
+              "key": "contact_form_heading",
+              "label": "Contact / Form / Heading",
+              "value": "Give us enough context to respond usefully."
+            },
+            {
+              "key": "contact_form_paragraph",
+              "label": "Contact / Form / Paragraph",
+              "value": "A submission is confirmed only after it has been securely recorded. Keep the returned reference for follow-up."
+            },
+            {
+              "key": "contact_form_item_label",
+              "label": "Contact / Form / Item / Label",
+              "value": "User"
+            },
+            {
+              "key": "contact_form_item_description",
+              "label": "Contact / Form / Item / Description",
+              "value": "Who needs the outcome, and what are they trying to finish?"
+            },
+            {
+              "key": "contact_form_item_label_2",
+              "label": "Contact / Form / Item / Label / 2",
+              "value": "Current state"
+            },
+            {
+              "key": "contact_form_item_description_2",
+              "label": "Contact / Form / Item / Description / 2",
+              "value": "What product, page, workflow, or system exists today?"
+            },
+            {
+              "key": "contact_form_item_label_3",
+              "label": "Contact / Form / Item / Label / 3",
+              "value": "Constraints"
+            },
+            {
+              "key": "contact_form_item_description_3",
+              "label": "Contact / Form / Item / Description / 3",
+              "value": "What access, timing, integration, risk, or deployment boundaries matter?"
+            },
+            {
+              "key": "contact_form_item_label_4",
+              "label": "Contact / Form / Item / Label / 4",
+              "value": "Acceptance"
+            },
+            {
+              "key": "contact_form_item_description_4",
+              "label": "Contact / Form / Item / Description / 4",
+              "value": "What observable evidence would show that the change worked?"
+            },
+            {
+              "key": "other_routes_eyebrow",
+              "label": "Other / Routes / Eyebrow",
+              "value": "Other routes."
+            },
+            {
+              "key": "other_routes_heading",
+              "label": "Other / Routes / Heading",
+              "value": "Follow the work in public."
+            },
+            {
+              "key": "other_routes_card_label",
+              "label": "Other / Routes / Card / Label",
+              "value": "Email."
+            },
+            {
+              "key": "other_routes_heading_2",
+              "label": "Other / Routes / Heading / 2",
+              "value": "info@cinagroup.com"
+            },
+            {
+              "key": "other_routes_paragraph",
+              "label": "Other / Routes / Paragraph",
+              "value": "Use email for product, service, partnership, and support conversations."
+            },
+            {
+              "key": "other_routes_card_label_2",
+              "label": "Other / Routes / Card / Label / 2",
+              "value": "GitHub."
+            },
+            {
+              "key": "other_routes_heading_3",
+              "label": "Other / Routes / Heading / 3",
+              "value": "github.com/cinagroup"
+            },
+            {
+              "key": "other_routes_paragraph_2",
+              "label": "Other / Routes / Paragraph / 2",
+              "value": "Review public repositories, releases, and technical work."
+            },
+            {
+              "key": "other_routes_card_label_3",
+              "label": "Other / Routes / Card / Label / 3",
+              "value": "Updates."
+            },
+            {
+              "key": "other_routes_heading_4",
+              "label": "Other / Routes / Heading / 4",
+              "value": "CinaGroup blog."
+            },
+            {
+              "key": "other_routes_paragraph_3",
+              "label": "Other / Routes / Paragraph / 3",
+              "value": "Read product notes, engineering updates, and operating guidance."
+            }
+          ]
+        }
+      },
+      {
+        "id": "english-page-pricing",
+        "slug": "pricing",
+        "locale": "en",
+        "status": "published",
+        "data": {
+          "title": "Pricing — Scope the work before the quote",
+          "texts": [
+            {
+              "key": "metadata_description",
+              "label": "SEO / Page Description",
+              "value": "CinaGroup prices work around the workflow, systems, risk, and acceptance evidence required—not a generic template plan."
+            },
+            {
+              "key": "engagements_1_label",
+              "label": "Engagements / 1 / Label",
+              "value": "Focused audit"
+            },
+            {
+              "key": "engagements_1_title",
+              "label": "Engagements / 1 / Title",
+              "value": "Understand the current state."
+            },
+            {
+              "key": "engagements_1_note",
+              "label": "Engagements / 1 / Note",
+              "value": "Best for a product, page group, workflow, or technical surface that needs evidence-backed priorities."
+            },
+            {
+              "key": "engagements_1_items_1",
+              "label": "Engagements / 1 / Items / 1",
+              "value": "Source and live-state review"
+            },
+            {
+              "key": "engagements_1_items_2",
+              "label": "Engagements / 1 / Items / 2",
+              "value": "UX, content, accessibility, and technical findings"
+            },
+            {
+              "key": "engagements_1_items_3",
+              "label": "Engagements / 1 / Items / 3",
+              "value": "Prioritized recommendations"
+            },
+            {
+              "key": "engagements_1_items_4",
+              "label": "Engagements / 1 / Items / 4",
+              "value": "Acceptance criteria for the next step"
+            },
+            {
+              "key": "engagements_2_label",
+              "label": "Engagements / 2 / Label",
+              "value": "Implementation sprint"
+            },
+            {
+              "key": "engagements_2_title",
+              "label": "Engagements / 2 / Title",
+              "value": "Deliver one coherent change."
+            },
+            {
+              "key": "engagements_2_note",
+              "label": "Engagements / 2 / Note",
+              "value": "Best when the target, constraints, and desired outcome are understood well enough to build and verify."
+            },
+            {
+              "key": "engagements_2_items_1",
+              "label": "Engagements / 2 / Items / 1",
+              "value": "Design and implementation scope"
+            },
+            {
+              "key": "engagements_2_items_2",
+              "label": "Engagements / 2 / Items / 2",
+              "value": "Shared component and content work"
+            },
+            {
+              "key": "engagements_2_items_3",
+              "label": "Engagements / 2 / Items / 3",
+              "value": "Responsive and interaction QA"
+            },
+            {
+              "key": "engagements_2_items_4",
+              "label": "Engagements / 2 / Items / 4",
+              "value": "Build, deployment, and production checks"
+            },
+            {
+              "key": "engagements_3_label",
+              "label": "Engagements / 3 / Label",
+              "value": "Ongoing engineering"
+            },
+            {
+              "key": "engagements_3_title",
+              "label": "Engagements / 3 / Title",
+              "value": "Improve a system over time."
+            },
+            {
+              "key": "engagements_3_note",
+              "label": "Engagements / 3 / Note",
+              "value": "Best for products that need iterative delivery, integration work, operational follow-through, and release discipline."
+            },
+            {
+              "key": "engagements_3_items_1",
+              "label": "Engagements / 3 / Items / 1",
+              "value": "Prioritized delivery queue"
+            },
+            {
+              "key": "engagements_3_items_2",
+              "label": "Engagements / 3 / Items / 2",
+              "value": "Incremental design and engineering"
+            },
+            {
+              "key": "engagements_3_items_3",
+              "label": "Engagements / 3 / Items / 3",
+              "value": "Integration and deployment support"
+            },
+            {
+              "key": "engagements_3_items_4",
+              "label": "Engagements / 3 / Items / 4",
+              "value": "Recurring review and optimization"
+            },
+            {
+              "key": "hero_eyebrow",
+              "label": "Hero / Eyebrow",
+              "value": "Pricing / clear scope before commitment."
+            },
+            {
+              "key": "hero_title",
+              "label": "Hero / Title",
+              "value": "Price the work around the outcome, not a template."
+            },
+            {
+              "key": "hero_lead",
+              "label": "Hero / Lead",
+              "value": "The right scope depends on the workflow, systems, risk, integration depth, and evidence required for acceptance. We make those inputs visible before quoting."
+            },
+            {
+              "key": "hero_primary_text",
+              "label": "Hero / Primary / Text",
+              "value": "Request a scoped conversation"
+            },
+            {
+              "key": "hero_secondary_text",
+              "label": "Hero / Secondary / Text",
+              "value": "Review services"
+            },
+            {
+              "key": "value_headline",
+              "label": "Value / Headline",
+              "value": "Three ways to start."
+            },
+            {
+              "key": "value_plans_cta_label",
+              "label": "Value / Plans / Cta / Label",
+              "value": "Scope this work"
+            },
+            {
+              "key": "scope_factors_eyebrow",
+              "label": "Scope / Factors / Eyebrow",
+              "value": "What shapes the quote."
+            },
+            {
+              "key": "scope_factors_heading",
+              "label": "Scope / Factors / Heading",
+              "value": "Make the cost drivers explicit."
+            },
+            {
+              "key": "scope_factors_item_label",
+              "label": "Scope / Factors / Item / Label",
+              "value": "Workflow breadth"
+            },
+            {
+              "key": "scope_factors_item_description",
+              "label": "Scope / Factors / Item / Description",
+              "value": "Number of user journeys, page archetypes, roles, locales, and states included in the acceptance scope."
+            },
+            {
+              "key": "scope_factors_item_label_2",
+              "label": "Scope / Factors / Item / Label / 2",
+              "value": "System depth"
+            },
+            {
+              "key": "scope_factors_item_description_2",
+              "label": "Scope / Factors / Item / Description / 2",
+              "value": "Existing architecture, data sources, APIs, authentication, infrastructure, and migration requirements."
+            },
+            {
+              "key": "scope_factors_item_label_3",
+              "label": "Scope / Factors / Item / Label / 3",
+              "value": "Risk and review"
+            },
+            {
+              "key": "scope_factors_item_description_3",
+              "label": "Scope / Factors / Item / Description / 3",
+              "value": "Security, privacy, legal, financial, destructive, or externally visible actions that need stronger controls."
+            },
+            {
+              "key": "scope_factors_item_label_4",
+              "label": "Scope / Factors / Item / Label / 4",
+              "value": "Delivery evidence"
+            },
+            {
+              "key": "scope_factors_item_description_4",
+              "label": "Scope / Factors / Item / Description / 4",
+              "value": "Automated checks, browser coverage, environments, deployment targets, production validation, and documentation."
+            },
+            {
+              "key": "pricing_process_eyebrow",
+              "label": "Pricing / Process / Eyebrow",
+              "value": "Before a quote."
+            },
+            {
+              "key": "pricing_process_heading",
+              "label": "Pricing / Process / Heading",
+              "value": "A short discovery reduces expensive assumptions."
+            },
+            {
+              "key": "pricing_process_paragraph",
+              "label": "Pricing / Process / Paragraph",
+              "value": "We confirm the current state, desired outcome, in-scope systems, exclusions, dependencies, and acceptance evidence before proposing the work."
+            },
+            {
+              "key": "pricing_process_link_label",
+              "label": "Pricing / Process / Link / Label",
+              "value": "Start the conversation"
+            }
+          ]
+        }
+      },
+      {
+        "id": "english-page-cinaseek",
+        "slug": "cinaseek",
+        "locale": "en",
+        "status": "published",
+        "data": {
+          "title": "CinaSeek — Secure AI productivity environment",
+          "texts": [
+            {
+              "key": "metadata_description",
+              "label": "SEO / Page Description",
+              "value": "CinaSeek is an early-access environment for AI agents and sandboxed personal apps built on Cloudflare Workers and workerd."
+            },
+            {
+              "key": "hero_eyebrow",
+              "label": "Hero / Eyebrow",
+              "value": "CinaSeek / early-access AI productivity environment."
+            },
+            {
+              "key": "hero_title",
+              "label": "Hero / Title",
+              "value": "Build and run private AI-assisted apps inside capability-based sandboxes."
+            },
+            {
+              "key": "hero_lead",
+              "label": "Hero / Lead",
+              "value": "CinaSeek combines agent chat, personal applications called Gadgets, and scoped Gatekeepers. The project is early access; production readiness depends on the release and deployment configuration."
+            },
+            {
+              "key": "hero_primary_text",
+              "label": "Hero / Primary / Text",
+              "value": "Discuss an early-access evaluation"
+            },
+            {
+              "key": "hero_secondary_text",
+              "label": "Hero / Secondary / Text",
+              "value": "View the full stack"
+            },
+            {
+              "key": "capabilities_1_label",
+              "label": "Capabilities / 1 / Label",
+              "value": "Agent."
+            },
+            {
+              "key": "capabilities_1_title",
+              "label": "Capabilities / 1 / Title",
+              "value": "Work through an agent chat UI."
+            },
+            {
+              "key": "capabilities_1_description",
+              "label": "Capabilities / 1 / Description",
+              "value": "Ask an agent to complete tasks or build a focused personal application for the work in front of you."
+            },
+            {
+              "key": "capabilities_2_label",
+              "label": "Capabilities / 2 / Label",
+              "value": "Build."
+            },
+            {
+              "key": "capabilities_2_title",
+              "label": "Capabilities / 2 / Title",
+              "value": "Create private Gadgets."
+            },
+            {
+              "key": "capabilities_2_description",
+              "label": "Capabilities / 2 / Description",
+              "value": "Generate small applications whose client and server run in isolated, per-user boundaries."
+            },
+            {
+              "key": "capabilities_3_label",
+              "label": "Capabilities / 3 / Label",
+              "value": "Share."
+            },
+            {
+              "key": "capabilities_3_title",
+              "label": "Capabilities / 3 / Title",
+              "value": "Collaborate through explicit sharing."
+            },
+            {
+              "key": "capabilities_3_description",
+              "label": "Capabilities / 3 / Description",
+              "value": "Keep each Gadget private by default, then grant access to named users or through a deliberate share link."
+            },
+            {
+              "key": "capabilities_4_label",
+              "label": "Capabilities / 4 / Label",
+              "value": "Scope."
+            },
+            {
+              "key": "capabilities_4_title",
+              "label": "Capabilities / 4 / Title",
+              "value": "Introduce only approved resources."
+            },
+            {
+              "key": "capabilities_4_description",
+              "label": "Capabilities / 4 / Description",
+              "value": "Use Gatekeepers to narrow authorization to the specific external resources a user intended."
+            },
+            {
+              "key": "capabilities_5_label",
+              "label": "Capabilities / 5 / Label",
+              "value": "Review."
+            },
+            {
+              "key": "capabilities_5_title",
+              "label": "Capabilities / 5 / Title",
+              "value": "Inspect actions before release."
+            },
+            {
+              "key": "capabilities_5_description",
+              "label": "Capabilities / 5 / Description",
+              "value": "Log external actions and preserve human approval for operations with side effects."
+            },
+            {
+              "key": "capabilities_6_label",
+              "label": "Capabilities / 6 / Label",
+              "value": "Deploy."
+            },
+            {
+              "key": "capabilities_6_title",
+              "label": "Capabilities / 6 / Title",
+              "value": "Develop locally, deploy through the documented path."
+            },
+            {
+              "key": "capabilities_6_description",
+              "label": "Capabilities / 6 / Description",
+              "value": "Use workerd for local development and the documented Cloudflare path for production deployment."
+            },
+            {
+              "key": "hero_workflow_title",
+              "label": "Hero / Workflow / Title",
+              "value": "Move from a request to a sandboxed personal app."
+            },
+            {
+              "key": "hero_workflow_lead",
+              "label": "Hero / Workflow / Lead",
+              "value": "A reference evaluation keeps the requested job, generated Gadget, introduced resources, and review queue visible."
+            },
+            {
+              "key": "workflow_1_title",
+              "label": "Workflow / 1 / Title",
+              "value": "Define the job"
+            },
+            {
+              "key": "workflow_1_description",
+              "label": "Workflow / 1 / Description",
+              "value": "Describe the result, intended users, data sensitivity, and external resources required."
+            },
+            {
+              "key": "workflow_2_title",
+              "label": "Workflow / 2 / Title",
+              "value": "Build the Gadget"
+            },
+            {
+              "key": "workflow_2_description",
+              "label": "Workflow / 2 / Description",
+              "value": "Let the agent generate the focused client/server application inside its isolated workspace."
+            },
+            {
+              "key": "workflow_3_title",
+              "label": "Workflow / 3 / Title",
+              "value": "Introduce resources"
+            },
+            {
+              "key": "workflow_3_description",
+              "label": "Workflow / 3 / Description",
+              "value": "Connect only the approved external resources through Gatekeepers and explicit capabilities."
+            },
+            {
+              "key": "workflow_4_title",
+              "label": "Workflow / 4 / Title",
+              "value": "Review and share"
+            },
+            {
+              "key": "workflow_4_description",
+              "label": "Workflow / 4 / Description",
+              "value": "Inspect queued side effects, test the result, and choose whether to keep it private or share it."
+            },
+            {
+              "key": "principles_1_title",
+              "label": "Principles / 1 / Title",
+              "value": "Capability boundaries."
+            },
+            {
+              "key": "principles_1_description",
+              "label": "Principles / 1 / Description",
+              "value": "Agents and Gadgets begin without ambient access to external resources."
+            },
+            {
+              "key": "principles_2_title",
+              "label": "Principles / 2 / Title",
+              "value": "Private by default."
+            },
+            {
+              "key": "principles_2_description",
+              "label": "Principles / 2 / Description",
+              "value": "Each Gadget runs in an isolated boundary and is shared only through an explicit user action."
+            },
+            {
+              "key": "principles_3_title",
+              "label": "Principles / 3 / Title",
+              "value": "Visible review."
+            },
+            {
+              "key": "principles_3_description",
+              "label": "Principles / 3 / Description",
+              "value": "Actions with side effects should remain logged and available for human approval."
+            },
+            {
+              "key": "shared_capabilities_eyebrow",
+              "label": "Shared / Capabilities / Eyebrow",
+              "value": "Capabilities."
+            },
+            {
+              "key": "shared_capabilities_heading",
+              "label": "Shared / Capabilities / Heading",
+              "value": "A focused layer for the work your team needs to finish."
+            },
+            {
+              "key": "shared_workflow_eyebrow",
+              "label": "Shared / Workflow / Eyebrow",
+              "value": "Workflow."
+            },
+            {
+              "key": "shared_technical_heading",
+              "label": "Shared / Technical / Heading",
+              "value": "Keep the implementation understandable."
+            },
+            {
+              "key": "shared_technical_paragraph",
+              "label": "Shared / Technical / Paragraph",
+              "value": "Use explicit inputs, review points, and outputs so the system is easier to operate and change."
+            },
+            {
+              "key": "shared_principles_eyebrow",
+              "label": "Shared / Principles / Eyebrow",
+              "value": "Operating principles."
+            },
+            {
+              "key": "shared_principles_heading",
+              "label": "Shared / Principles / Heading",
+              "value": "Built for practical adoption."
+            },
+            {
+              "key": "shared_product_cta_eyebrow",
+              "label": "Shared / Product / Cta / Eyebrow",
+              "value": "Next step."
+            },
+            {
+              "key": "shared_product_cta_heading",
+              "label": "Shared / Product / Cta / Heading",
+              "value": "Map this product to one real workflow."
+            },
+            {
+              "key": "shared_product_cta_paragraph",
+              "label": "Shared / Product / Cta / Paragraph",
+              "value": "Tell us the work, systems, constraints, and review points your team already has. We will help identify a sensible starting scope."
+            },
+            {
+              "key": "shared_product_cta_link_label",
+              "label": "Shared / Product / Cta / Link / Label",
+              "value": "Plan a workflow"
+            },
+            {
+              "key": "shared_product_cta_link_label_2",
+              "label": "Shared / Product / Cta / Link / Label / 2",
+              "value": "View the product stack"
+            }
+          ]
+        }
+      },
+      {
+        "id": "english-page-cinaclaw",
+        "slug": "cinaclaw",
+        "locale": "en",
+        "status": "published",
+        "data": {
+          "title": "CinaClaw — Local-first personal AI assistant",
+          "texts": [
+            {
+              "key": "metadata_description",
+              "label": "SEO / Page Description",
+              "value": "CinaClaw is an open-source personal AI assistant with a local-first Gateway, channel adapters, skills, and companion apps."
+            },
+            {
+              "key": "hero_eyebrow",
+              "label": "Hero / Eyebrow",
+              "value": "CinaClaw / open-source personal AI assistant."
+            },
+            {
+              "key": "hero_title",
+              "label": "Hero / Title",
+              "value": "Run an assistant through your own local-first Gateway."
+            },
+            {
+              "key": "hero_lead",
+              "label": "Hero / Lead",
+              "value": "CinaClaw provides an installable CLI, Gateway, Control UI, messaging adapters, skills, and optional companion apps. Channel access and model credentials remain configuration the operator controls."
+            },
+            {
+              "key": "hero_primary_text",
+              "label": "Hero / Primary / Text",
+              "value": "Plan a CinaClaw setup"
+            },
+            {
+              "key": "hero_secondary_text",
+              "label": "Hero / Secondary / Text",
+              "value": "View the full stack"
+            },
+            {
+              "key": "capabilities_1_label",
+              "label": "Capabilities / 1 / Label",
+              "value": "Onboard."
+            },
+            {
+              "key": "capabilities_1_title",
+              "label": "Capabilities / 1 / Title",
+              "value": "Install through the guided CLI."
+            },
+            {
+              "key": "capabilities_1_description",
+              "label": "Capabilities / 1 / Description",
+              "value": "Configure the Gateway, workspace, models, channels, and skills from a documented onboarding path."
+            },
+            {
+              "key": "capabilities_2_label",
+              "label": "Capabilities / 2 / Label",
+              "value": "Gateway."
+            },
+            {
+              "key": "capabilities_2_title",
+              "label": "Capabilities / 2 / Title",
+              "value": "Keep the control plane local-first."
+            },
+            {
+              "key": "capabilities_2_description",
+              "label": "Capabilities / 2 / Description",
+              "value": "Run sessions, channels, tools, and events through a Gateway under the operator’s control."
+            },
+            {
+              "key": "capabilities_3_label",
+              "label": "Capabilities / 3 / Label",
+              "value": "Channels."
+            },
+            {
+              "key": "capabilities_3_title",
+              "label": "Capabilities / 3 / Title",
+              "value": "Connect documented messaging adapters."
+            },
+            {
+              "key": "capabilities_3_description",
+              "label": "Capabilities / 3 / Description",
+              "value": "Use WebChat or configure supported adapters such as Telegram, Slack, Discord, Signal, and others."
+            },
+            {
+              "key": "capabilities_4_label",
+              "label": "Capabilities / 4 / Label",
+              "value": "Access."
+            },
+            {
+              "key": "capabilities_4_title",
+              "label": "Capabilities / 4 / Title",
+              "value": "Pair unknown direct-message senders."
+            },
+            {
+              "key": "capabilities_4_description",
+              "label": "Capabilities / 4 / Description",
+              "value": "Keep the default pairing policy for common messaging channels unless the operator explicitly changes it."
+            },
+            {
+              "key": "capabilities_5_label",
+              "label": "Capabilities / 5 / Label",
+              "value": "Skills."
+            },
+            {
+              "key": "capabilities_5_title",
+              "label": "Capabilities / 5 / Title",
+              "value": "Load focused workspace capabilities."
+            },
+            {
+              "key": "capabilities_5_description",
+              "label": "Capabilities / 5 / Description",
+              "value": "Use bundled, managed, or workspace skills with explicit instructions and supporting resources."
+            },
+            {
+              "key": "capabilities_6_label",
+              "label": "Capabilities / 6 / Label",
+              "value": "Apps."
+            },
+            {
+              "key": "capabilities_6_title",
+              "label": "Capabilities / 6 / Title",
+              "value": "Add optional companion surfaces."
+            },
+            {
+              "key": "capabilities_6_description",
+              "label": "Capabilities / 6 / Description",
+              "value": "Connect documented Windows, macOS, Linux, iOS, or Android surfaces when the setup requires them."
+            },
+            {
+              "key": "hero_workflow_title",
+              "label": "Hero / Workflow / Title",
+              "value": "Move from install to one deliberately configured assistant path."
+            },
+            {
+              "key": "hero_workflow_lead",
+              "label": "Hero / Workflow / Lead",
+              "value": "A reference setup confirms the local Gateway, one model, one channel, and the applicable access policy before expanding."
+            },
+            {
+              "key": "workflow_1_title",
+              "label": "Workflow / 1 / Title",
+              "value": "Run onboarding"
+            },
+            {
+              "key": "workflow_1_description",
+              "label": "Workflow / 1 / Description",
+              "value": "Install the CLI and configure the Gateway, workspace, model authentication, and daemon mode."
+            },
+            {
+              "key": "workflow_2_title",
+              "label": "Workflow / 2 / Title",
+              "value": "Connect one channel"
+            },
+            {
+              "key": "workflow_2_description",
+              "label": "Workflow / 2 / Description",
+              "value": "Start with WebChat or one supported adapter and keep its inbound access policy explicit."
+            },
+            {
+              "key": "workflow_3_title",
+              "label": "Workflow / 3 / Title",
+              "value": "Add a focused skill"
+            },
+            {
+              "key": "workflow_3_description",
+              "label": "Workflow / 3 / Description",
+              "value": "Introduce only the instructions and tools required for the first job."
+            },
+            {
+              "key": "workflow_4_title",
+              "label": "Workflow / 4 / Title",
+              "value": "Verify and operate"
+            },
+            {
+              "key": "workflow_4_description",
+              "label": "Workflow / 4 / Description",
+              "value": "Check Gateway status, exercise the channel, and use the security runbook before remote exposure."
+            },
+            {
+              "key": "principles_1_title",
+              "label": "Principles / 1 / Title",
+              "value": "Operator control."
+            },
+            {
+              "key": "principles_1_description",
+              "label": "Principles / 1 / Description",
+              "value": "The operator chooses the models, channels, tools, access policies, and exposure path."
+            },
+            {
+              "key": "principles_2_title",
+              "label": "Principles / 2 / Title",
+              "value": "Secure defaults."
+            },
+            {
+              "key": "principles_2_description",
+              "label": "Principles / 2 / Description",
+              "value": "Pairing, allowlists, sandbox settings, and exposure guidance should be reviewed before use."
+            },
+            {
+              "key": "principles_3_title",
+              "label": "Principles / 3 / Title",
+              "value": "Incremental setup."
+            },
+            {
+              "key": "principles_3_description",
+              "label": "Principles / 3 / Description",
+              "value": "Validate one model, channel, and skill path before adding more integrations."
+            },
+            {
+              "key": "shared_capabilities_eyebrow",
+              "label": "Shared / Capabilities / Eyebrow",
+              "value": "Capabilities."
+            },
+            {
+              "key": "shared_capabilities_heading",
+              "label": "Shared / Capabilities / Heading",
+              "value": "A focused layer for the work your team needs to finish."
+            },
+            {
+              "key": "shared_workflow_eyebrow",
+              "label": "Shared / Workflow / Eyebrow",
+              "value": "Workflow."
+            },
+            {
+              "key": "shared_technical_heading",
+              "label": "Shared / Technical / Heading",
+              "value": "Keep the implementation understandable."
+            },
+            {
+              "key": "shared_technical_paragraph",
+              "label": "Shared / Technical / Paragraph",
+              "value": "Use explicit inputs, review points, and outputs so the system is easier to operate and change."
+            },
+            {
+              "key": "shared_principles_eyebrow",
+              "label": "Shared / Principles / Eyebrow",
+              "value": "Operating principles."
+            },
+            {
+              "key": "shared_principles_heading",
+              "label": "Shared / Principles / Heading",
+              "value": "Built for practical adoption."
+            },
+            {
+              "key": "shared_product_cta_eyebrow",
+              "label": "Shared / Product / Cta / Eyebrow",
+              "value": "Next step."
+            },
+            {
+              "key": "shared_product_cta_heading",
+              "label": "Shared / Product / Cta / Heading",
+              "value": "Map this product to one real workflow."
+            },
+            {
+              "key": "shared_product_cta_paragraph",
+              "label": "Shared / Product / Cta / Paragraph",
+              "value": "Tell us the work, systems, constraints, and review points your team already has. We will help identify a sensible starting scope."
+            },
+            {
+              "key": "shared_product_cta_link_label",
+              "label": "Shared / Product / Cta / Link / Label",
+              "value": "Plan a workflow"
+            },
+            {
+              "key": "shared_product_cta_link_label_2",
+              "label": "Shared / Product / Cta / Link / Label / 2",
+              "value": "View the product stack"
+            }
+          ]
+        }
+      },
+      {
+        "id": "english-page-cinatoken",
+        "slug": "cinatoken",
+        "locale": "en",
+        "status": "published",
+        "data": {
+          "title": "CinaToken — Open-source AI gateway",
+          "texts": [
+            {
+              "key": "metadata_description",
+              "label": "SEO / Page Description",
+              "value": "CinaToken is a self-hosted AI gateway with model routing, API keys, budgets, accounting, audit, and documented multimodal interfaces."
+            },
+            {
+              "key": "hero_eyebrow",
+              "label": "Hero / Eyebrow",
+              "value": "CinaToken / open-source, self-hosted AI gateway."
+            },
+            {
+              "key": "hero_title",
+              "label": "Hero / Title",
+              "value": "Route model access through one governed gateway."
+            },
+            {
+              "key": "hero_lead",
+              "label": "Hero / Lead",
+              "value": "CinaToken combines provider routing, API keys, model policy, budgets, accounting, and audit with local, Docker, database, and Cloudflare deployment paths. This page does not claim a managed-service SLA."
+            },
+            {
+              "key": "hero_primary_text",
+              "label": "Hero / Primary / Text",
+              "value": "Plan a gateway evaluation"
+            },
+            {
+              "key": "hero_secondary_text",
+              "label": "Hero / Secondary / Text",
+              "value": "View the full stack"
+            },
+            {
+              "key": "capabilities_1_label",
+              "label": "Capabilities / 1 / Label",
+              "value": "Route."
+            },
+            {
+              "key": "capabilities_1_title",
+              "label": "Capabilities / 1 / Title",
+              "value": "Expose unified model interfaces."
+            },
+            {
+              "key": "capabilities_1_description",
+              "label": "Capabilities / 1 / Description",
+              "value": "Connect applications through documented Chat Completions, Responses, image, audio, embedding, Realtime, Claude, and Gemini routes."
+            },
+            {
+              "key": "capabilities_2_label",
+              "label": "Capabilities / 2 / Label",
+              "value": "Keys."
+            },
+            {
+              "key": "capabilities_2_title",
+              "label": "Capabilities / 2 / Title",
+              "value": "Issue controlled downstream access."
+            },
+            {
+              "key": "capabilities_2_description",
+              "label": "Capabilities / 2 / Description",
+              "value": "Keep provider credentials behind the gateway and manage user-facing API keys from the administration layer."
+            },
+            {
+              "key": "capabilities_3_label",
+              "label": "Capabilities / 3 / Label",
+              "value": "Policy."
+            },
+            {
+              "key": "capabilities_3_title",
+              "label": "Capabilities / 3 / Title",
+              "value": "Select approved providers and models."
+            },
+            {
+              "key": "capabilities_3_description",
+              "label": "Capabilities / 3 / Description",
+              "value": "Route by explicit provider, model, task, availability, and policy configuration."
+            },
+            {
+              "key": "capabilities_4_label",
+              "label": "Capabilities / 4 / Label",
+              "value": "Budget."
+            },
+            {
+              "key": "capabilities_4_title",
+              "label": "Capabilities / 4 / Title",
+              "value": "Apply recurring usage boundaries."
+            },
+            {
+              "key": "capabilities_4_description",
+              "label": "Capabilities / 4 / Description",
+              "value": "Use the project’s budget, accounting, status, and model-access controls for governed consumption."
+            },
+            {
+              "key": "capabilities_5_label",
+              "label": "Capabilities / 5 / Label",
+              "value": "Audit."
+            },
+            {
+              "key": "capabilities_5_title",
+              "label": "Capabilities / 5 / Title",
+              "value": "Retain operational evidence."
+            },
+            {
+              "key": "capabilities_5_description",
+              "label": "Capabilities / 5 / Description",
+              "value": "Inspect routing, policy, usage, and accounting through the documented console and management APIs."
+            },
+            {
+              "key": "capabilities_6_label",
+              "label": "Capabilities / 6 / Label",
+              "value": "Deploy."
+            },
+            {
+              "key": "capabilities_6_title",
+              "label": "Capabilities / 6 / Title",
+              "value": "Choose a supported hosting path."
+            },
+            {
+              "key": "capabilities_6_description",
+              "label": "Capabilities / 6 / Description",
+              "value": "Run locally, in Docker, with supported databases, or through the documented Cloudflare deployment path."
+            },
+            {
+              "key": "hero_workflow_title",
+              "label": "Hero / Workflow / Title",
+              "value": "Move one application through a governed model route."
+            },
+            {
+              "key": "hero_workflow_lead",
+              "label": "Hero / Workflow / Lead",
+              "value": "A reference rollout starts with one protocol, provider route, downstream key, budget rule, and observable request."
+            },
+            {
+              "key": "workflow_1_title",
+              "label": "Workflow / 1 / Title",
+              "value": "Choose the interface"
+            },
+            {
+              "key": "workflow_1_description",
+              "label": "Workflow / 1 / Description",
+              "value": "Select the documented protocol and confirm the application request shape."
+            },
+            {
+              "key": "workflow_2_title",
+              "label": "Workflow / 2 / Title",
+              "value": "Configure a provider route"
+            },
+            {
+              "key": "workflow_2_description",
+              "label": "Workflow / 2 / Description",
+              "value": "Add the provider credential securely and restrict the route to the intended models."
+            },
+            {
+              "key": "workflow_3_title",
+              "label": "Workflow / 3 / Title",
+              "value": "Issue a downstream key"
+            },
+            {
+              "key": "workflow_3_description",
+              "label": "Workflow / 3 / Description",
+              "value": "Create the user or application identity with its applicable model and budget boundaries."
+            },
+            {
+              "key": "workflow_4_title",
+              "label": "Workflow / 4 / Title",
+              "value": "Verify usage and audit"
+            },
+            {
+              "key": "workflow_4_description",
+              "label": "Workflow / 4 / Description",
+              "value": "Send a test request, then confirm routing, response, accounting, and trace evidence."
+            },
+            {
+              "key": "principles_1_title",
+              "label": "Principles / 1 / Title",
+              "value": "Self-hosted control."
+            },
+            {
+              "key": "principles_1_description",
+              "label": "Principles / 1 / Description",
+              "value": "Operators choose the hosting path, providers, keys, and data stores."
+            },
+            {
+              "key": "principles_2_title",
+              "label": "Principles / 2 / Title",
+              "value": "Protocol clarity."
+            },
+            {
+              "key": "principles_2_description",
+              "label": "Principles / 2 / Description",
+              "value": "Applications should use only interfaces documented by the active release."
+            },
+            {
+              "key": "principles_3_title",
+              "label": "Principles / 3 / Title",
+              "value": "Observable spend."
+            },
+            {
+              "key": "principles_3_description",
+              "label": "Principles / 3 / Description",
+              "value": "Routing, usage, budgets, and accounting should remain visible to operators."
+            },
+            {
+              "key": "shared_capabilities_eyebrow",
+              "label": "Shared / Capabilities / Eyebrow",
+              "value": "Capabilities."
+            },
+            {
+              "key": "shared_capabilities_heading",
+              "label": "Shared / Capabilities / Heading",
+              "value": "A focused layer for the work your team needs to finish."
+            },
+            {
+              "key": "shared_workflow_eyebrow",
+              "label": "Shared / Workflow / Eyebrow",
+              "value": "Workflow."
+            },
+            {
+              "key": "shared_technical_heading",
+              "label": "Shared / Technical / Heading",
+              "value": "Keep the implementation understandable."
+            },
+            {
+              "key": "shared_technical_paragraph",
+              "label": "Shared / Technical / Paragraph",
+              "value": "Use explicit inputs, review points, and outputs so the system is easier to operate and change."
+            },
+            {
+              "key": "shared_principles_eyebrow",
+              "label": "Shared / Principles / Eyebrow",
+              "value": "Operating principles."
+            },
+            {
+              "key": "shared_principles_heading",
+              "label": "Shared / Principles / Heading",
+              "value": "Built for practical adoption."
+            },
+            {
+              "key": "shared_product_cta_eyebrow",
+              "label": "Shared / Product / Cta / Eyebrow",
+              "value": "Next step."
+            },
+            {
+              "key": "shared_product_cta_heading",
+              "label": "Shared / Product / Cta / Heading",
+              "value": "Map this product to one real workflow."
+            },
+            {
+              "key": "shared_product_cta_paragraph",
+              "label": "Shared / Product / Cta / Paragraph",
+              "value": "Tell us the work, systems, constraints, and review points your team already has. We will help identify a sensible starting scope."
+            },
+            {
+              "key": "shared_product_cta_link_label",
+              "label": "Shared / Product / Cta / Link / Label",
+              "value": "Plan a workflow"
+            },
+            {
+              "key": "shared_product_cta_link_label_2",
+              "label": "Shared / Product / Cta / Link / Label / 2",
+              "value": "View the product stack"
+            }
+          ]
+        }
+      },
+      {
+        "id": "english-page-cinaskill",
+        "slug": "cinaskill",
+        "locale": "en",
+        "status": "published",
+        "data": {
+          "title": "CinaSkill — Reusable capability format for CinaClaw",
+          "texts": [
+            {
+              "key": "metadata_description",
+              "label": "SEO / Page Description",
+              "value": "CinaSkill describes focused SKILL.md-based capabilities used with CinaClaw workspaces; it is not presented as a standalone hosted service."
+            },
+            {
+              "key": "hero_eyebrow",
+              "label": "Hero / Eyebrow",
+              "value": "CinaSkill / integrated capability format."
+            },
+            {
+              "key": "hero_title",
+              "label": "Hero / Title",
+              "value": "Package focused instructions and resources for reuse in CinaClaw."
+            },
+            {
+              "key": "hero_lead",
+              "label": "Hero / Lead",
+              "value": "CinaSkill is the SKILL.md-based capability format used by bundled, managed, and workspace skills in CinaClaw. It does not claim a separate hosted service or standalone release."
+            },
+            {
+              "key": "hero_primary_text",
+              "label": "Hero / Primary / Text",
+              "value": "Map a reusable capability"
+            },
+            {
+              "key": "hero_secondary_text",
+              "label": "Hero / Secondary / Text",
+              "value": "View the full stack"
+            },
+            {
+              "key": "capabilities_1_label",
+              "label": "Capabilities / 1 / Label",
+              "value": "Contract."
+            },
+            {
+              "key": "capabilities_1_title",
+              "label": "Capabilities / 1 / Title",
+              "value": "Keep the entry point explicit."
+            },
+            {
+              "key": "capabilities_1_description",
+              "label": "Capabilities / 1 / Description",
+              "value": "Use SKILL.md to describe when the capability applies, what it needs, and how it should operate."
+            },
+            {
+              "key": "capabilities_2_label",
+              "label": "Capabilities / 2 / Label",
+              "value": "Scope."
+            },
+            {
+              "key": "capabilities_2_title",
+              "label": "Capabilities / 2 / Title",
+              "value": "Focus on one repeatable job."
+            },
+            {
+              "key": "capabilities_2_description",
+              "label": "Capabilities / 2 / Description",
+              "value": "Separate a useful capability from unrelated workflows, permissions, and tools."
+            },
+            {
+              "key": "capabilities_3_label",
+              "label": "Capabilities / 3 / Label",
+              "value": "Resources."
+            },
+            {
+              "key": "capabilities_3_title",
+              "label": "Capabilities / 3 / Title",
+              "value": "Attach only required support files."
+            },
+            {
+              "key": "capabilities_3_description",
+              "label": "Capabilities / 3 / Description",
+              "value": "Reference runbooks, templates, scripts, or examples that the skill actually needs."
+            },
+            {
+              "key": "capabilities_4_label",
+              "label": "Capabilities / 4 / Label",
+              "value": "Location."
+            },
+            {
+              "key": "capabilities_4_title",
+              "label": "Capabilities / 4 / Title",
+              "value": "Load from documented skill sources."
+            },
+            {
+              "key": "capabilities_4_description",
+              "label": "Capabilities / 4 / Description",
+              "value": "Use bundled, managed, or workspace skill directories according to the CinaClaw setup."
+            },
+            {
+              "key": "capabilities_5_label",
+              "label": "Capabilities / 5 / Label",
+              "value": "Review."
+            },
+            {
+              "key": "capabilities_5_title",
+              "label": "Capabilities / 5 / Title",
+              "value": "Make permissions inspectable."
+            },
+            {
+              "key": "capabilities_5_description",
+              "label": "Capabilities / 5 / Description",
+              "value": "State the tools, external systems, and side effects the capability can require."
+            },
+            {
+              "key": "capabilities_6_label",
+              "label": "Capabilities / 6 / Label",
+              "value": "Maintain."
+            },
+            {
+              "key": "capabilities_6_title",
+              "label": "Capabilities / 6 / Title",
+              "value": "Keep loading order and version visible."
+            },
+            {
+              "key": "capabilities_6_description",
+              "label": "Capabilities / 6 / Description",
+              "value": "Document the workspace location, version, and runtime or resource assumptions the capability carries."
+            },
+            {
+              "key": "hero_workflow_title",
+              "label": "Hero / Workflow / Title",
+              "value": "Move one recurring job into a reviewable skill contract."
+            },
+            {
+              "key": "hero_workflow_lead",
+              "label": "Hero / Workflow / Lead",
+              "value": "A reference skill starts with a real task, narrows the required resources and permissions, and is tested inside its intended CinaClaw workspace."
+            },
+            {
+              "key": "workflow_1_title",
+              "label": "Workflow / 1 / Title",
+              "value": "Define the trigger"
+            },
+            {
+              "key": "workflow_1_description",
+              "label": "Workflow / 1 / Description",
+              "value": "Write the task and the conditions under which the skill should be selected."
+            },
+            {
+              "key": "workflow_2_title",
+              "label": "Workflow / 2 / Title",
+              "value": "Specify the contract"
+            },
+            {
+              "key": "workflow_2_description",
+              "label": "Workflow / 2 / Description",
+              "value": "Describe required inputs, instructions, tools, resources, and expected output in SKILL.md."
+            },
+            {
+              "key": "workflow_3_title",
+              "label": "Workflow / 3 / Title",
+              "value": "Test in one workspace"
+            },
+            {
+              "key": "workflow_3_description",
+              "label": "Workflow / 3 / Description",
+              "value": "Exercise the skill with representative inputs and review any tool or permission boundary."
+            },
+            {
+              "key": "workflow_4_title",
+              "label": "Workflow / 4 / Title",
+              "value": "Version and maintain"
+            },
+            {
+              "key": "workflow_4_description",
+              "label": "Workflow / 4 / Description",
+              "value": "Keep compatibility, supporting resources, and workspace loading behavior clear as the workflow changes."
+            },
+            {
+              "key": "principles_1_title",
+              "label": "Principles / 1 / Title",
+              "value": "One clear job."
+            },
+            {
+              "key": "principles_1_description",
+              "label": "Principles / 1 / Description",
+              "value": "A skill should remain small enough for its behavior and permissions to be reviewed."
+            },
+            {
+              "key": "principles_2_title",
+              "label": "Principles / 2 / Title",
+              "value": "Explicit resources."
+            },
+            {
+              "key": "principles_2_description",
+              "label": "Principles / 2 / Description",
+              "value": "Supporting files and tools should be present because the task requires them."
+            },
+            {
+              "key": "principles_3_title",
+              "label": "Principles / 3 / Title",
+              "value": "No standalone claim."
+            },
+            {
+              "key": "principles_3_description",
+              "label": "Principles / 3 / Description",
+              "value": "CinaSkill is described as a format integrated with CinaClaw, not an independent hosted product."
+            },
+            {
+              "key": "shared_capabilities_eyebrow",
+              "label": "Shared / Capabilities / Eyebrow",
+              "value": "Capabilities."
+            },
+            {
+              "key": "shared_capabilities_heading",
+              "label": "Shared / Capabilities / Heading",
+              "value": "A focused layer for the work your team needs to finish."
+            },
+            {
+              "key": "shared_workflow_eyebrow",
+              "label": "Shared / Workflow / Eyebrow",
+              "value": "Workflow."
+            },
+            {
+              "key": "shared_technical_heading",
+              "label": "Shared / Technical / Heading",
+              "value": "Keep the implementation understandable."
+            },
+            {
+              "key": "shared_technical_paragraph",
+              "label": "Shared / Technical / Paragraph",
+              "value": "Use explicit inputs, review points, and outputs so the system is easier to operate and change."
+            },
+            {
+              "key": "shared_principles_eyebrow",
+              "label": "Shared / Principles / Eyebrow",
+              "value": "Operating principles."
+            },
+            {
+              "key": "shared_principles_heading",
+              "label": "Shared / Principles / Heading",
+              "value": "Built for practical adoption."
+            },
+            {
+              "key": "shared_product_cta_eyebrow",
+              "label": "Shared / Product / Cta / Eyebrow",
+              "value": "Next step."
+            },
+            {
+              "key": "shared_product_cta_heading",
+              "label": "Shared / Product / Cta / Heading",
+              "value": "Map this product to one real workflow."
+            },
+            {
+              "key": "shared_product_cta_paragraph",
+              "label": "Shared / Product / Cta / Paragraph",
+              "value": "Tell us the work, systems, constraints, and review points your team already has. We will help identify a sensible starting scope."
+            },
+            {
+              "key": "shared_product_cta_link_label",
+              "label": "Shared / Product / Cta / Link / Label",
+              "value": "Plan a workflow"
+            },
+            {
+              "key": "shared_product_cta_link_label_2",
+              "label": "Shared / Product / Cta / Link / Label / 2",
+              "value": "View the product stack"
+            }
+          ]
+        }
+      },
+      {
+        "id": "english-page-cinachain",
+        "slug": "cinachain",
+        "locale": "en",
+        "status": "published",
+        "data": {
+          "title": "CinaChain — Base Sepolia Web3 collection beta",
+          "texts": [
+            {
+              "key": "metadata_description",
+              "label": "SEO / Page Description",
+              "value": "CinaChain is a beta Web3 collection project configured for Base Sepolia testnet, with NFT gallery, minting, wallet, and Cloudflare edge surfaces."
+            },
+            {
+              "key": "hero_eyebrow",
+              "label": "Hero / Eyebrow",
+              "value": "CinaChain / Base Sepolia beta."
+            },
+            {
+              "key": "hero_title",
+              "label": "Hero / Title",
+              "value": "Evaluate a Web3 collection flow with testnet assets."
+            },
+            {
+              "key": "hero_lead",
+              "label": "Hero / Lead",
+              "value": "CinaChain’s repository includes an NFT DApp, portal, documentation, smart contracts, and Cloudflare edge services. The current release scope is Base Sepolia testnet; documented domains are not proof of a live production deployment."
+            },
+            {
+              "key": "hero_primary_text",
+              "label": "Hero / Primary / Text",
+              "value": "Discuss a testnet evaluation"
+            },
+            {
+              "key": "hero_secondary_text",
+              "label": "Hero / Secondary / Text",
+              "value": "View the full stack"
+            },
+            {
+              "key": "capabilities_1_label",
+              "label": "Capabilities / 1 / Label",
+              "value": "Browse."
+            },
+            {
+              "key": "capabilities_1_title",
+              "label": "Capabilities / 1 / Title",
+              "value": "Render an NFT collection gallery."
+            },
+            {
+              "key": "capabilities_1_description",
+              "label": "Capabilities / 1 / Description",
+              "value": "Display collection assets with documented multi-gateway IPFS image fallback."
+            },
+            {
+              "key": "capabilities_2_label",
+              "label": "Capabilities / 2 / Label",
+              "value": "Wallet."
+            },
+            {
+              "key": "capabilities_2_title",
+              "label": "Capabilities / 2 / Title",
+              "value": "Connect a Base Sepolia wallet."
+            },
+            {
+              "key": "capabilities_2_description",
+              "label": "Capabilities / 2 / Description",
+              "value": "Use Reown AppKit with wagmi and viem against one explicit test network."
+            },
+            {
+              "key": "capabilities_3_label",
+              "label": "Capabilities / 3 / Label",
+              "value": "Mint."
+            },
+            {
+              "key": "capabilities_3_title",
+              "label": "Capabilities / 3 / Title",
+              "value": "Exercise whitelist or public mint phases."
+            },
+            {
+              "key": "capabilities_3_description",
+              "label": "Capabilities / 3 / Description",
+              "value": "Run the repository’s Merkle-tree whitelist and public-phase paths with testnet assets."
+            },
+            {
+              "key": "capabilities_4_label",
+              "label": "Capabilities / 4 / Label",
+              "value": "Admin."
+            },
+            {
+              "key": "capabilities_4_title",
+              "label": "Capabilities / 4 / Title",
+              "value": "Operate documented collection controls."
+            },
+            {
+              "key": "capabilities_4_description",
+              "label": "Capabilities / 4 / Description",
+              "value": "Use the included admin surfaces for whitelist management and contract operations."
+            },
+            {
+              "key": "capabilities_5_label",
+              "label": "Capabilities / 5 / Label",
+              "value": "Edge."
+            },
+            {
+              "key": "capabilities_5_title",
+              "label": "Capabilities / 5 / Title",
+              "value": "Separate Pages and Worker surfaces."
+            },
+            {
+              "key": "capabilities_5_description",
+              "label": "Capabilities / 5 / Description",
+              "value": "Keep portal, DApp, docs, billing, and whitelist units explicit in the Cloudflare release topology."
+            },
+            {
+              "key": "capabilities_6_label",
+              "label": "Capabilities / 6 / Label",
+              "value": "Verify."
+            },
+            {
+              "key": "capabilities_6_title",
+              "label": "Capabilities / 6 / Title",
+              "value": "Treat deployment claims as evidence-based."
+            },
+            {
+              "key": "capabilities_6_description",
+              "label": "Capabilities / 6 / Description",
+              "value": "Run quality gates and verify custom domains and live revisions after each release."
+            },
+            {
+              "key": "hero_workflow_title",
+              "label": "Hero / Workflow / Title",
+              "value": "Move a testnet mint through explicit checks."
+            },
+            {
+              "key": "hero_workflow_lead",
+              "label": "Hero / Workflow / Lead",
+              "value": "A reference evaluation keeps the selected network, wallet, phase, contract state, and explorer result visible."
+            },
+            {
+              "key": "workflow_1_title",
+              "label": "Workflow / 1 / Title",
+              "value": "Select Base Sepolia"
+            },
+            {
+              "key": "workflow_1_description",
+              "label": "Workflow / 1 / Description",
+              "value": "Confirm the configured test network and testnet-only asset scope before connecting a wallet."
+            },
+            {
+              "key": "workflow_2_title",
+              "label": "Workflow / 2 / Title",
+              "value": "Connect the wallet"
+            },
+            {
+              "key": "workflow_2_description",
+              "label": "Workflow / 2 / Description",
+              "value": "Establish the Reown AppKit connection and display the expected account and network."
+            },
+            {
+              "key": "workflow_3_title",
+              "label": "Workflow / 3 / Title",
+              "value": "Validate the mint phase"
+            },
+            {
+              "key": "workflow_3_description",
+              "label": "Workflow / 3 / Description",
+              "value": "Check whitelist eligibility or public-phase state before submitting the test transaction."
+            },
+            {
+              "key": "workflow_4_title",
+              "label": "Workflow / 4 / Title",
+              "value": "Review the transaction"
+            },
+            {
+              "key": "workflow_4_description",
+              "label": "Workflow / 4 / Description",
+              "value": "Inspect the Base Sepolia result and confirm gallery metadata through the configured storage paths."
+            },
+            {
+              "key": "principles_1_title",
+              "label": "Principles / 1 / Title",
+              "value": "Testnet honesty."
+            },
+            {
+              "key": "principles_1_description",
+              "label": "Principles / 1 / Description",
+              "value": "Beta and Base Sepolia scope should stay visible wherever the product is described."
+            },
+            {
+              "key": "principles_2_title",
+              "label": "Principles / 2 / Title",
+              "value": "Visible contracts."
+            },
+            {
+              "key": "principles_2_description",
+              "label": "Principles / 2 / Description",
+              "value": "Network, mint phase, contract, and explorer links should remain inspectable."
+            },
+            {
+              "key": "principles_3_title",
+              "label": "Principles / 3 / Title",
+              "value": "Verified releases."
+            },
+            {
+              "key": "principles_3_description",
+              "label": "Principles / 3 / Description",
+              "value": "Repository configuration must be paired with post-deploy domain and revision checks."
+            },
+            {
+              "key": "shared_capabilities_eyebrow",
+              "label": "Shared / Capabilities / Eyebrow",
+              "value": "Capabilities."
+            },
+            {
+              "key": "shared_capabilities_heading",
+              "label": "Shared / Capabilities / Heading",
+              "value": "A focused layer for the work your team needs to finish."
+            },
+            {
+              "key": "shared_workflow_eyebrow",
+              "label": "Shared / Workflow / Eyebrow",
+              "value": "Workflow."
+            },
+            {
+              "key": "shared_technical_heading",
+              "label": "Shared / Technical / Heading",
+              "value": "Keep the implementation understandable."
+            },
+            {
+              "key": "shared_technical_paragraph",
+              "label": "Shared / Technical / Paragraph",
+              "value": "Use explicit inputs, review points, and outputs so the system is easier to operate and change."
+            },
+            {
+              "key": "shared_principles_eyebrow",
+              "label": "Shared / Principles / Eyebrow",
+              "value": "Operating principles."
+            },
+            {
+              "key": "shared_principles_heading",
+              "label": "Shared / Principles / Heading",
+              "value": "Built for practical adoption."
+            },
+            {
+              "key": "shared_product_cta_eyebrow",
+              "label": "Shared / Product / Cta / Eyebrow",
+              "value": "Next step."
+            },
+            {
+              "key": "shared_product_cta_heading",
+              "label": "Shared / Product / Cta / Heading",
+              "value": "Map this product to one real workflow."
+            },
+            {
+              "key": "shared_product_cta_paragraph",
+              "label": "Shared / Product / Cta / Paragraph",
+              "value": "Tell us the work, systems, constraints, and review points your team already has. We will help identify a sensible starting scope."
+            },
+            {
+              "key": "shared_product_cta_link_label",
+              "label": "Shared / Product / Cta / Link / Label",
+              "value": "Plan a workflow"
+            },
+            {
+              "key": "shared_product_cta_link_label_2",
+              "label": "Shared / Product / Cta / Link / Label / 2",
+              "value": "View the product stack"
+            }
+          ]
+        }
+      },
+      {
+        "id": "english-page-work",
+        "slug": "work",
+        "locale": "en",
+        "status": "published",
+        "data": {
+          "title": "Work and evidence — What CinaGroup can substantiate",
+          "texts": [
+            {
+              "key": "metadata_description",
+              "label": "SEO / Page Description",
+              "value": "How CinaGroup separates repository, test, deployment, and customer-approved evidence—and the publication standard for future public case studies."
+            },
+            {
+              "key": "hero_eyebrow",
+              "label": "Hero / Eyebrow",
+              "value": "Work / evidence before claims."
+            },
+            {
+              "key": "hero_title",
+              "label": "Hero / Title",
+              "value": "Show what can be verified. State what cannot."
+            },
+            {
+              "key": "hero_lead",
+              "label": "Hero / Lead",
+              "value": "This page explains the evidence behind product and delivery claims. CinaGroup currently has no customer case study approved for public use."
+            },
+            {
+              "key": "hero_primary_text",
+              "label": "Hero / Primary / Text",
+              "value": "Inspect product evidence"
+            },
+            {
+              "key": "hero_secondary_text",
+              "label": "Hero / Secondary / Text",
+              "value": "Discuss a workflow"
+            },
+            {
+              "key": "work_cta_eyebrow",
+              "label": "Work / Cta / Eyebrow",
+              "value": "Need a verifiable scope?"
+            },
+            {
+              "key": "work_cta_heading",
+              "label": "Work / Cta / Heading",
+              "value": "Define the acceptance evidence before implementation."
+            },
+            {
+              "key": "work_cta_paragraph",
+              "label": "Work / Cta / Paragraph",
+              "value": "Bring the workflow, constraints, and environment. We will help define what should be observable at review, release, and production handoff."
+            },
+            {
+              "key": "work_cta_link_label",
+              "label": "Work / Cta / Link / Label",
+              "value": "Contact CinaGroup"
+            },
+            {
+              "key": "work_cta_link_label_2",
+              "label": "Work / Cta / Link / Label / 2",
+              "value": "Review services"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,1941 @@
+{
+  "version": "1",
+  "defaultLocale": "en",
+  "meta": {
+    "name": "CinaGroup existing site presentation",
+    "description": "Approved existing public values. Initialize missing records only.",
+    "author": "CinaGroup"
+  },
+  "settings": {
+    "title": "CinaGroup",
+    "url": "https://cinagroup.com",
+    "tagline": "CinaGroup builds practical tools for search, workflow automation, model access, reusable skills, and connected infrastructure.",
+    "postsPerPage": 6,
+    "dateFormat": "MMMM d, yyyy",
+    "timezone": "Asia/Singapore",
+    "social": {
+      "github": "https://github.com/cinagroup",
+      "twitter": "https://x.com/cinagroup",
+      "instagram": "https://www.instagram.com/cinaseek/"
+    },
+    "seo": {
+      "titleSeparator": " — "
+    }
+  },
+  "collections": [
+    {
+      "slug": "site_profile",
+      "label": "Site Presentation",
+      "labelSingular": "Site Presentation",
+      "description": "Public contact, footer and brand presentation. Global site identity and social/SEO settings are in Settings; navigation is in Menus.",
+      "supports": ["drafts", "revisions"],
+      "routable": false,
+      "titleField": "title",
+      "group": "Website",
+      "sortOrder": 0,
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Entry name",
+          "type": "string"
+        },
+        {
+          "slug": "site_name",
+          "label": "Localized default site name",
+          "type": "string"
+        },
+        {
+          "slug": "tagline",
+          "label": "Localized site description",
+          "type": "text"
+        },
+        {
+          "slug": "contact_email",
+          "label": "Public contact email",
+          "type": "string"
+        },
+        {
+          "slug": "footer_description",
+          "label": "Footer introduction",
+          "type": "text"
+        },
+        {
+          "slug": "header_cta_label",
+          "label": "Header contact button label",
+          "type": "string"
+        },
+        {
+          "slug": "header_cta_href",
+          "label": "Header contact button URL",
+          "type": "string"
+        },
+        {
+          "slug": "logo_dark",
+          "label": "Logo for dark backgrounds",
+          "type": "image"
+        },
+        {
+          "slug": "extra_social_links",
+          "label": "Additional social links",
+          "type": "repeater",
+          "validation": {
+            "subFields": [
+              {
+                "slug": "label",
+                "label": "Label",
+                "type": "string"
+              },
+              {
+                "slug": "url",
+                "label": "URL",
+                "type": "string"
+              },
+              {
+                "slug": "icon",
+                "label": "Icon",
+                "type": "select",
+                "validation": {
+                  "options": ["tiktok", "rss"]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "menus": [
+    {
+      "id": "primary-en",
+      "name": "primary",
+      "label": "Primary navigation",
+      "locale": "en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Products",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek — Agent Workspace",
+              "url": "/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw — Local-first Agent Gateway",
+              "url": "/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken — Open-source Model Gateway",
+              "url": "/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill — CinaClaw SKILL.md Format",
+              "url": "/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain — Base Sepolia NFT DApp Beta",
+              "url": "/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Solutions",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Enterprise",
+              "url": "/services/"
+            },
+            {
+              "type": "custom",
+              "label": "Developers",
+              "url": "/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "Startups",
+              "url": "/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Resources",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Blog",
+              "url": "/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "Evidence",
+              "url": "/work/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Company",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "About",
+              "url": "/about/"
+            },
+            {
+              "type": "custom",
+              "label": "Contact",
+              "url": "/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Pricing",
+          "url": "/pricing/"
+        }
+      ]
+    },
+    {
+      "id": "footer-en",
+      "name": "footer",
+      "label": "Footer navigation",
+      "locale": "en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Products",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek",
+              "url": "/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw",
+              "url": "/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken",
+              "url": "/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill",
+              "url": "/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain",
+              "url": "/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Resources",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Blog",
+              "url": "/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "RSS",
+              "url": "/rss.xml"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Company",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "About Us",
+              "url": "/about/"
+            },
+            {
+              "type": "custom",
+              "label": "Evidence",
+              "url": "/work/"
+            },
+            {
+              "type": "custom",
+              "label": "Contact Support",
+              "url": "/contact/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "footer-legal-en",
+      "name": "footer-legal",
+      "label": "Legal links",
+      "locale": "en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Terms of Service",
+          "url": "/terms/"
+        },
+        {
+          "type": "custom",
+          "label": "Privacy Policy",
+          "url": "/privacy/"
+        }
+      ]
+    },
+    {
+      "id": "primary-zh",
+      "name": "primary",
+      "label": "Primary navigation",
+      "locale": "zh",
+      "translationOf": "primary-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "产品",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek — 智能体工作空间",
+              "url": "/zh/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw — 本地优先智能体网关",
+              "url": "/zh/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken — 开源模型网关",
+              "url": "/zh/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill — CinaClaw SKILL.md 格式",
+              "url": "/zh/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain — Base Sepolia NFT DApp 测试版",
+              "url": "/zh/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "解决方案",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "企业服务",
+              "url": "/zh/services/"
+            },
+            {
+              "type": "custom",
+              "label": "开发者",
+              "url": "/zh/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "初创企业",
+              "url": "/zh/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "资源",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "博客",
+              "url": "/zh/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "可验证依据",
+              "url": "/work/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "集团",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "关于我们",
+              "url": "/zh/about/"
+            },
+            {
+              "type": "custom",
+              "label": "联系我们",
+              "url": "/zh/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "价格",
+          "url": "/zh/pricing/"
+        }
+      ]
+    },
+    {
+      "id": "footer-zh",
+      "name": "footer",
+      "label": "Footer navigation",
+      "locale": "zh",
+      "translationOf": "footer-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "产品",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek",
+              "url": "/zh/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw",
+              "url": "/zh/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken",
+              "url": "/zh/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill",
+              "url": "/zh/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain",
+              "url": "/zh/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "资源",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "博客",
+              "url": "/zh/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "RSS",
+              "url": "/rss.xml"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "集团",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "关于我们",
+              "url": "/zh/about/"
+            },
+            {
+              "type": "custom",
+              "label": "可验证依据",
+              "url": "/work/"
+            },
+            {
+              "type": "custom",
+              "label": "联系支持",
+              "url": "/zh/contact/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "footer-legal-zh",
+      "name": "footer-legal",
+      "label": "Legal links",
+      "locale": "zh",
+      "translationOf": "footer-legal-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "服务条款",
+          "url": "/zh/terms/"
+        },
+        {
+          "type": "custom",
+          "label": "隐私政策",
+          "url": "/zh/privacy/"
+        }
+      ]
+    },
+    {
+      "id": "primary-ja",
+      "name": "primary",
+      "label": "Primary navigation",
+      "locale": "ja",
+      "translationOf": "primary-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "製品",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek — エージェントワークスペース",
+              "url": "/ja/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw — ローカルファースト・エージェントゲートウェイ",
+              "url": "/ja/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken — オープンソース・モデルゲートウェイ",
+              "url": "/ja/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill — CinaClaw SKILL.md 形式",
+              "url": "/ja/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain — Base Sepolia NFT DApp ベータ",
+              "url": "/ja/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "ソリューション",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "エンタープライズ",
+              "url": "/ja/services/"
+            },
+            {
+              "type": "custom",
+              "label": "開発者",
+              "url": "/ja/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "スタートアップ",
+              "url": "/ja/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "リソース",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "ブログ",
+              "url": "/ja/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "検証可能な証拠",
+              "url": "/work/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "会社情報",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "会社概要",
+              "url": "/ja/about/"
+            },
+            {
+              "type": "custom",
+              "label": "お問い合わせ",
+              "url": "/ja/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "料金",
+          "url": "/ja/pricing/"
+        }
+      ]
+    },
+    {
+      "id": "footer-ja",
+      "name": "footer",
+      "label": "Footer navigation",
+      "locale": "ja",
+      "translationOf": "footer-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "製品",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek",
+              "url": "/ja/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw",
+              "url": "/ja/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken",
+              "url": "/ja/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill",
+              "url": "/ja/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain",
+              "url": "/ja/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "リソース",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "ブログ",
+              "url": "/ja/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "RSS",
+              "url": "/rss.xml"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "会社情報",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "会社概要",
+              "url": "/ja/about/"
+            },
+            {
+              "type": "custom",
+              "label": "検証可能な証拠",
+              "url": "/work/"
+            },
+            {
+              "type": "custom",
+              "label": "サポートへ連絡",
+              "url": "/ja/contact/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "footer-legal-ja",
+      "name": "footer-legal",
+      "label": "Legal links",
+      "locale": "ja",
+      "translationOf": "footer-legal-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "利用規約",
+          "url": "/ja/terms/"
+        },
+        {
+          "type": "custom",
+          "label": "プライバシーポリシー",
+          "url": "/ja/privacy/"
+        }
+      ]
+    },
+    {
+      "id": "primary-ko",
+      "name": "primary",
+      "label": "Primary navigation",
+      "locale": "ko",
+      "translationOf": "primary-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "제품",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek — 에이전트 워크스페이스",
+              "url": "/ko/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw — 로컬 우선 에이전트 게이트웨이",
+              "url": "/ko/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken — 오픈 소스 모델 게이트웨이",
+              "url": "/ko/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill — CinaClaw SKILL.md 형식",
+              "url": "/ko/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain — Base Sepolia NFT DApp 베타",
+              "url": "/ko/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "솔루션",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "엔터프라이즈",
+              "url": "/ko/services/"
+            },
+            {
+              "type": "custom",
+              "label": "개발자",
+              "url": "/ko/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "스타트업",
+              "url": "/ko/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "리소스",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "블로그",
+              "url": "/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "검증 가능한 증거",
+              "url": "/work/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "회사",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "회사 소개",
+              "url": "/ko/about/"
+            },
+            {
+              "type": "custom",
+              "label": "문의",
+              "url": "/ko/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "가격",
+          "url": "/ko/pricing/"
+        }
+      ]
+    },
+    {
+      "id": "footer-ko",
+      "name": "footer",
+      "label": "Footer navigation",
+      "locale": "ko",
+      "translationOf": "footer-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "제품",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek",
+              "url": "/ko/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw",
+              "url": "/ko/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken",
+              "url": "/ko/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill",
+              "url": "/ko/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain",
+              "url": "/ko/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "리소스",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "블로그",
+              "url": "/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "RSS",
+              "url": "/rss.xml"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "회사",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "회사 소개",
+              "url": "/ko/about/"
+            },
+            {
+              "type": "custom",
+              "label": "검증 가능한 증거",
+              "url": "/work/"
+            },
+            {
+              "type": "custom",
+              "label": "지원 문의",
+              "url": "/ko/contact/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "footer-legal-ko",
+      "name": "footer-legal",
+      "label": "Legal links",
+      "locale": "ko",
+      "translationOf": "footer-legal-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "서비스 약관",
+          "url": "/ko/terms/"
+        },
+        {
+          "type": "custom",
+          "label": "개인정보 보호정책",
+          "url": "/ko/privacy/"
+        }
+      ]
+    },
+    {
+      "id": "primary-ru",
+      "name": "primary",
+      "label": "Primary navigation",
+      "locale": "ru",
+      "translationOf": "primary-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Продукты",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek — агентское workspace",
+              "url": "/ru/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw — local-first шлюз агентов",
+              "url": "/ru/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken — open-source шлюз моделей",
+              "url": "/ru/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill — формат CinaClaw SKILL.md",
+              "url": "/ru/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain — бета NFT DApp в Base Sepolia",
+              "url": "/ru/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Решения",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Для компаний",
+              "url": "/ru/services/"
+            },
+            {
+              "type": "custom",
+              "label": "Разработчикам",
+              "url": "/ru/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "Стартапам",
+              "url": "/ru/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Ресурсы",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Блог",
+              "url": "/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "Проверяемые доказательства",
+              "url": "/work/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Компания",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "О компании",
+              "url": "/ru/about/"
+            },
+            {
+              "type": "custom",
+              "label": "Контакты",
+              "url": "/ru/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Цены",
+          "url": "/ru/pricing/"
+        }
+      ]
+    },
+    {
+      "id": "footer-ru",
+      "name": "footer",
+      "label": "Footer navigation",
+      "locale": "ru",
+      "translationOf": "footer-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Продукты",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek",
+              "url": "/ru/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw",
+              "url": "/ru/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken",
+              "url": "/ru/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill",
+              "url": "/ru/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain",
+              "url": "/ru/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Ресурсы",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Блог",
+              "url": "/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "RSS",
+              "url": "/rss.xml"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Компания",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "О компании",
+              "url": "/ru/about/"
+            },
+            {
+              "type": "custom",
+              "label": "Проверяемые доказательства",
+              "url": "/work/"
+            },
+            {
+              "type": "custom",
+              "label": "Связаться с поддержкой",
+              "url": "/ru/contact/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "footer-legal-ru",
+      "name": "footer-legal",
+      "label": "Legal links",
+      "locale": "ru",
+      "translationOf": "footer-legal-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Условия использования",
+          "url": "/ru/terms/"
+        },
+        {
+          "type": "custom",
+          "label": "Политика конфиденциальности",
+          "url": "/ru/privacy/"
+        }
+      ]
+    },
+    {
+      "id": "primary-es",
+      "name": "primary",
+      "label": "Primary navigation",
+      "locale": "es",
+      "translationOf": "primary-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Productos",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek — workspace de agentes",
+              "url": "/es/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw — gateway de agentes local-first",
+              "url": "/es/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken — gateway de modelos abierto",
+              "url": "/es/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill — formato CinaClaw SKILL.md",
+              "url": "/es/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain — NFT DApp beta en Base Sepolia",
+              "url": "/es/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Soluciones",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Empresas",
+              "url": "/es/services/"
+            },
+            {
+              "type": "custom",
+              "label": "Desarrolladores",
+              "url": "/es/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "Startups",
+              "url": "/es/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Recursos",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Blog",
+              "url": "/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "Evidencia verificable",
+              "url": "/work/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Empresa",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Quiénes somos",
+              "url": "/es/about/"
+            },
+            {
+              "type": "custom",
+              "label": "Contacto",
+              "url": "/es/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Precios",
+          "url": "/es/pricing/"
+        }
+      ]
+    },
+    {
+      "id": "footer-es",
+      "name": "footer",
+      "label": "Footer navigation",
+      "locale": "es",
+      "translationOf": "footer-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Productos",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek",
+              "url": "/es/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw",
+              "url": "/es/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken",
+              "url": "/es/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill",
+              "url": "/es/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain",
+              "url": "/es/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Recursos",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Blog",
+              "url": "/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "RSS",
+              "url": "/rss.xml"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Empresa",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Quiénes somos",
+              "url": "/es/about/"
+            },
+            {
+              "type": "custom",
+              "label": "Evidencia verificable",
+              "url": "/work/"
+            },
+            {
+              "type": "custom",
+              "label": "Contactar con soporte",
+              "url": "/es/contact/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "footer-legal-es",
+      "name": "footer-legal",
+      "label": "Legal links",
+      "locale": "es",
+      "translationOf": "footer-legal-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Términos de servicio",
+          "url": "/es/terms/"
+        },
+        {
+          "type": "custom",
+          "label": "Política de privacidad",
+          "url": "/es/privacy/"
+        }
+      ]
+    },
+    {
+      "id": "primary-pt",
+      "name": "primary",
+      "label": "Primary navigation",
+      "locale": "pt",
+      "translationOf": "primary-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Produtos",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek — workspace de agentes",
+              "url": "/pt/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw — gateway de agentes local-first",
+              "url": "/pt/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken — gateway de modelos aberto",
+              "url": "/pt/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill — formato CinaClaw SKILL.md",
+              "url": "/pt/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain — NFT DApp beta na Base Sepolia",
+              "url": "/pt/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Soluções",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Empresas",
+              "url": "/pt/services/"
+            },
+            {
+              "type": "custom",
+              "label": "Desenvolvedores",
+              "url": "/pt/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "Startups",
+              "url": "/pt/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Recursos",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Blog",
+              "url": "/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "Evidência verificável",
+              "url": "/work/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Empresa",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Sobre",
+              "url": "/pt/about/"
+            },
+            {
+              "type": "custom",
+              "label": "Contato",
+              "url": "/pt/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Preços",
+          "url": "/pt/pricing/"
+        }
+      ]
+    },
+    {
+      "id": "footer-pt",
+      "name": "footer",
+      "label": "Footer navigation",
+      "locale": "pt",
+      "translationOf": "footer-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Produtos",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek",
+              "url": "/pt/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw",
+              "url": "/pt/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken",
+              "url": "/pt/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill",
+              "url": "/pt/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain",
+              "url": "/pt/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Recursos",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Blog",
+              "url": "/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "RSS",
+              "url": "/rss.xml"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Empresa",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Sobre",
+              "url": "/pt/about/"
+            },
+            {
+              "type": "custom",
+              "label": "Evidência verificável",
+              "url": "/work/"
+            },
+            {
+              "type": "custom",
+              "label": "Falar com o suporte",
+              "url": "/pt/contact/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "footer-legal-pt",
+      "name": "footer-legal",
+      "label": "Legal links",
+      "locale": "pt",
+      "translationOf": "footer-legal-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Termos de serviço",
+          "url": "/pt/terms/"
+        },
+        {
+          "type": "custom",
+          "label": "Política de privacidade",
+          "url": "/pt/privacy/"
+        }
+      ]
+    },
+    {
+      "id": "primary-fr",
+      "name": "primary",
+      "label": "Primary navigation",
+      "locale": "fr",
+      "translationOf": "primary-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Produits",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek — espace d’agents",
+              "url": "/fr/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw — passerelle d’agents local-first",
+              "url": "/fr/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken — passerelle de modèles open source",
+              "url": "/fr/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill — format CinaClaw SKILL.md",
+              "url": "/fr/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain — NFT DApp bêta sur Base Sepolia",
+              "url": "/fr/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Solutions",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Entreprises",
+              "url": "/fr/services/"
+            },
+            {
+              "type": "custom",
+              "label": "Développeurs",
+              "url": "/fr/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "Startups",
+              "url": "/fr/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Ressources",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Blog",
+              "url": "/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "Preuves vérifiables",
+              "url": "/work/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Entreprise",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "À propos",
+              "url": "/fr/about/"
+            },
+            {
+              "type": "custom",
+              "label": "Contact",
+              "url": "/fr/contact/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Tarifs",
+          "url": "/fr/pricing/"
+        }
+      ]
+    },
+    {
+      "id": "footer-fr",
+      "name": "footer",
+      "label": "Footer navigation",
+      "locale": "fr",
+      "translationOf": "footer-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Produits",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "CinaSeek",
+              "url": "/fr/cinaseek/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaClaw",
+              "url": "/fr/cinaclaw/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaToken",
+              "url": "/fr/cinatoken/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaSkill",
+              "url": "/fr/cinaskill/"
+            },
+            {
+              "type": "custom",
+              "label": "CinaChain",
+              "url": "/fr/cinachain/"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Ressources",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "Blog",
+              "url": "/blog/"
+            },
+            {
+              "type": "custom",
+              "label": "RSS",
+              "url": "/rss.xml"
+            }
+          ]
+        },
+        {
+          "type": "custom",
+          "label": "Entreprise",
+          "url": "#",
+          "children": [
+            {
+              "type": "custom",
+              "label": "À propos",
+              "url": "/fr/about/"
+            },
+            {
+              "type": "custom",
+              "label": "Preuves vérifiables",
+              "url": "/work/"
+            },
+            {
+              "type": "custom",
+              "label": "Contacter le support",
+              "url": "/fr/contact/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "footer-legal-fr",
+      "name": "footer-legal",
+      "label": "Legal links",
+      "locale": "fr",
+      "translationOf": "footer-legal-en",
+      "items": [
+        {
+          "type": "custom",
+          "label": "Conditions d’utilisation",
+          "url": "/fr/terms/"
+        },
+        {
+          "type": "custom",
+          "label": "Politique de confidentialité",
+          "url": "/fr/privacy/"
+        }
+      ]
+    }
+  ],
+  "content": {
+    "site_profile": [
+      {
+        "id": "site-profile-en",
+        "slug": "site",
+        "locale": "en",
+        "status": "published",
+        "data": {
+          "title": "Site presentation (en)",
+          "site_name": "CinaGroup",
+          "tagline": "CinaGroup builds practical tools for search, workflow automation, model access, reusable skills, and connected infrastructure.",
+          "contact_email": "info@cinagroup.com",
+          "footer_description": "Auditable agent workspaces, gateways, reusable skills, and testnet applications.",
+          "header_cta_label": "Contact",
+          "header_cta_href": "/contact/",
+          "extra_social_links": [
+            {
+              "label": "TikTok",
+              "url": "https://tiktok.com/@cinaseek",
+              "icon": "tiktok"
+            },
+            {
+              "label": "RSS",
+              "url": "/rss.xml",
+              "icon": "rss"
+            }
+          ]
+        }
+      },
+      {
+        "id": "site-profile-zh",
+        "slug": "site",
+        "locale": "zh",
+        "status": "published",
+        "translationOf": "site-profile-en",
+        "data": {
+          "title": "Site presentation (zh)",
+          "site_name": "海内集团",
+          "tagline": "CinaGroup builds practical tools for search, workflow automation, model access, reusable skills, and connected infrastructure.",
+          "contact_email": "info@cinagroup.com",
+          "footer_description": "可审计的智能体工作空间、网关、可复用技能与测试网应用。",
+          "header_cta_label": "联系我们",
+          "header_cta_href": "/zh/contact/",
+          "extra_social_links": [
+            {
+              "label": "TikTok",
+              "url": "https://tiktok.com/@cinaseek",
+              "icon": "tiktok"
+            },
+            {
+              "label": "RSS",
+              "url": "/rss.xml",
+              "icon": "rss"
+            }
+          ]
+        }
+      },
+      {
+        "id": "site-profile-ja",
+        "slug": "site",
+        "locale": "ja",
+        "status": "published",
+        "translationOf": "site-profile-en",
+        "data": {
+          "title": "Site presentation (ja)",
+          "site_name": "CinaGroup",
+          "tagline": "CinaGroup builds practical tools for search, workflow automation, model access, reusable skills, and connected infrastructure.",
+          "contact_email": "info@cinagroup.com",
+          "footer_description": "Auditable agent workspaces, gateways, reusable skills, and testnet applications.",
+          "header_cta_label": "お問い合わせ",
+          "header_cta_href": "/ja/contact/",
+          "extra_social_links": [
+            {
+              "label": "TikTok",
+              "url": "https://tiktok.com/@cinaseek",
+              "icon": "tiktok"
+            },
+            {
+              "label": "RSS",
+              "url": "/rss.xml",
+              "icon": "rss"
+            }
+          ]
+        }
+      },
+      {
+        "id": "site-profile-ko",
+        "slug": "site",
+        "locale": "ko",
+        "status": "published",
+        "translationOf": "site-profile-en",
+        "data": {
+          "title": "Site presentation (ko)",
+          "site_name": "CinaGroup",
+          "tagline": "CinaGroup builds practical tools for search, workflow automation, model access, reusable skills, and connected infrastructure.",
+          "contact_email": "info@cinagroup.com",
+          "footer_description": "Auditable agent workspaces, gateways, reusable skills, and testnet applications.",
+          "header_cta_label": "문의",
+          "header_cta_href": "/ko/contact/",
+          "extra_social_links": [
+            {
+              "label": "TikTok",
+              "url": "https://tiktok.com/@cinaseek",
+              "icon": "tiktok"
+            },
+            {
+              "label": "RSS",
+              "url": "/rss.xml",
+              "icon": "rss"
+            }
+          ]
+        }
+      },
+      {
+        "id": "site-profile-ru",
+        "slug": "site",
+        "locale": "ru",
+        "status": "published",
+        "translationOf": "site-profile-en",
+        "data": {
+          "title": "Site presentation (ru)",
+          "site_name": "CinaGroup",
+          "tagline": "CinaGroup builds practical tools for search, workflow automation, model access, reusable skills, and connected infrastructure.",
+          "contact_email": "info@cinagroup.com",
+          "footer_description": "Auditable agent workspaces, gateways, reusable skills, and testnet applications.",
+          "header_cta_label": "Контакты",
+          "header_cta_href": "/ru/contact/",
+          "extra_social_links": [
+            {
+              "label": "TikTok",
+              "url": "https://tiktok.com/@cinaseek",
+              "icon": "tiktok"
+            },
+            {
+              "label": "RSS",
+              "url": "/rss.xml",
+              "icon": "rss"
+            }
+          ]
+        }
+      },
+      {
+        "id": "site-profile-es",
+        "slug": "site",
+        "locale": "es",
+        "status": "published",
+        "translationOf": "site-profile-en",
+        "data": {
+          "title": "Site presentation (es)",
+          "site_name": "CinaGroup",
+          "tagline": "CinaGroup builds practical tools for search, workflow automation, model access, reusable skills, and connected infrastructure.",
+          "contact_email": "info@cinagroup.com",
+          "footer_description": "Auditable agent workspaces, gateways, reusable skills, and testnet applications.",
+          "header_cta_label": "Contacto",
+          "header_cta_href": "/es/contact/",
+          "extra_social_links": [
+            {
+              "label": "TikTok",
+              "url": "https://tiktok.com/@cinaseek",
+              "icon": "tiktok"
+            },
+            {
+              "label": "RSS",
+              "url": "/rss.xml",
+              "icon": "rss"
+            }
+          ]
+        }
+      },
+      {
+        "id": "site-profile-pt",
+        "slug": "site",
+        "locale": "pt",
+        "status": "published",
+        "translationOf": "site-profile-en",
+        "data": {
+          "title": "Site presentation (pt)",
+          "site_name": "CinaGroup",
+          "tagline": "CinaGroup builds practical tools for search, workflow automation, model access, reusable skills, and connected infrastructure.",
+          "contact_email": "info@cinagroup.com",
+          "footer_description": "Auditable agent workspaces, gateways, reusable skills, and testnet applications.",
+          "header_cta_label": "Contato",
+          "header_cta_href": "/pt/contact/",
+          "extra_social_links": [
+            {
+              "label": "TikTok",
+              "url": "https://tiktok.com/@cinaseek",
+              "icon": "tiktok"
+            },
+            {
+              "label": "RSS",
+              "url": "/rss.xml",
+              "icon": "rss"
+            }
+          ]
+        }
+      },
+      {
+        "id": "site-profile-fr",
+        "slug": "site",
+        "locale": "fr",
+        "status": "published",
+        "translationOf": "site-profile-en",
+        "data": {
+          "title": "Site presentation (fr)",
+          "site_name": "CinaGroup",
+          "tagline": "CinaGroup builds practical tools for search, workflow automation, model access, reusable skills, and connected infrastructure.",
+          "contact_email": "info@cinagroup.com",
+          "footer_description": "Auditable agent workspaces, gateways, reusable skills, and testnet applications.",
+          "header_cta_label": "Contact",
+          "header_cta_href": "/fr/contact/",
+          "extra_social_links": [
+            {
+              "label": "TikTok",
+              "url": "https://tiktok.com/@cinaseek",
+              "icon": "tiktok"
+            },
+            {
+              "label": "RSS",
+              "url": "/rss.xml",
+              "icon": "rss"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

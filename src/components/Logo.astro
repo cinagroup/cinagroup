@@ -1,28 +1,59 @@
 ---
 import { SITE } from 'astrowind:config';
 import { getLangFromUrl, getLocalizedLabel } from '~/i18n';
+import { loadSitePresentation } from '~/emdash/site-presentation';
+import type { PresentationMedia } from '~/emdash/site-presentation-model';
 
 export interface Props {
   imageAlt?: string;
+  variant?: 'light' | 'dark' | 'auto';
 }
 
-const localizedName = getLocalizedLabel(getLangFromUrl(Astro.url), SITE?.name) ?? SITE?.name;
-const { imageAlt = localizedName ?? 'CinaGroup' } = Astro.props;
+const presentation = await loadSitePresentation(Astro);
+const localizedName = getLocalizedLabel(getLangFromUrl(Astro.url), presentation.siteName ?? SITE?.name);
+const { imageAlt, variant = 'auto' } = Astro.props;
+const light: PresentationMedia = presentation.logo ?? {
+  url: '/brand/cinagroup-horizontal.png',
+  width: 832,
+  height: 288,
+};
+const dark: PresentationMedia = presentation.darkLogo ??
+  presentation.logo ?? {
+    url: '/brand/cinagroup-horizontal-white.png',
+    width: 832,
+    height: 288,
+  };
+const alt = imageAlt ?? light.alt ?? localizedName ?? 'CinaGroup';
 ---
 
-<div class="flex shrink-0 items-center">
-  <img
-    src="/brand/cinagroup-horizontal.png"
-    alt={imageAlt}
-    class="block h-14 w-auto object-contain dark:hidden"
-    width="832"
-    height="288"
-  />
-  <img
-    src="/brand/cinagroup-horizontal-white.png"
-    alt={imageAlt}
-    class="hidden h-14 w-auto object-contain dark:block"
-    width="832"
-    height="288"
-  />
+<div class="site-brand flex min-w-0 shrink-0 items-center">
+  {
+    variant !== 'dark' && (
+      <img
+        src={light.url}
+        alt={alt}
+        class:list={['site-brand-image h-14 w-auto object-contain', variant === 'auto' ? 'block dark:hidden' : 'block']}
+        width={light.width}
+        height={light.height}
+      />
+    )
+  }
+  {
+    variant !== 'light' && (
+      <img
+        src={dark.url}
+        alt={imageAlt ?? dark.alt ?? localizedName ?? 'CinaGroup'}
+        class:list={['site-brand-image h-14 w-auto object-contain', variant === 'auto' ? 'hidden dark:block' : 'block']}
+        width={dark.width}
+        height={dark.height}
+      />
+    )
+  }
 </div>
+
+<style>
+  .site-brand,
+  .site-brand-image {
+    max-width: 100%;
+  }
+</style>

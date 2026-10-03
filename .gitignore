@@ -52,3 +52,7 @@ memory/*.json
 *.log
 *.tmp
 .DS_Store
+
+# generated production content initialization proof (retained privately in CI)
+site-content-initialization-report.json
+site-content-backup.enc.json

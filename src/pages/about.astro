@@ -1,49 +1,52 @@
 ---
+import { ENGLISH_PAGE_DEFAULTS } from '~/data/site/english-page-defaults';
+import { loadEnglishPageText } from '~/emdash/english-page-text';
+import { getPageCopyMetadata } from '~/emdash/published-page-copy';
+
+const copy = await loadEnglishPageText(Astro, 'about', ENGLISH_PAGE_DEFAULTS.about);
+
 import CinaPageHero from '~/components/CinaPageHero.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
-const metadata = {
-  title: 'About CinaGroup — Practical systems for real work',
-  description:
-    'CinaGroup builds practical tools for search, workflow automation, model access, reusable skills, and connected infrastructure.',
-};
+const metadata = await getPageCopyMetadata(Astro, {
+  title: copy.metadata_title,
+  description: copy.metadata_description,
+});
 ---
 
 <Layout metadata={metadata}>
   <div class="cg-page">
     <CinaPageHero
-      eyebrow="About CinaGroup."
-      title="Build useful systems without hiding how they work."
-      lead="CinaGroup brings search, workflow automation, model access, reusable skills, and connected infrastructure into one practical product stack."
-      primary={{ text: 'Explore the products', href: '/#scenarios' }}
-      secondary={{ text: 'Talk to us', href: '/contact' }}
+      eyebrow={copy.hero_eyebrow}
+      title={copy.hero_title}
+      lead={copy.hero_lead}
+      primary={{ text: copy.hero_primary_text, href: '/#scenarios' }}
+      secondary={{ text: copy.hero_secondary_text, href: '/contact' }}
     />
 
     <section class="cg-page-section" aria-labelledby="mission-title">
       <div class="cg-page-shell">
         <div class="cg-section-heading">
-          <p class="cg-eyebrow">Mission.</p>
-          <h2 id="mission-title">Make advanced infrastructure understandable enough to adopt responsibly.</h2>
+          <p class="cg-eyebrow">{copy.mission_eyebrow}</p>
+          <h2 id="mission-title">{copy.mission_heading}</h2>
           <p>
-            Technology becomes useful when teams can see its boundaries, connect it to a real workflow, and verify the
-            outcome.
+            {copy.mission_paragraph}
           </p>
         </div>
         <div class="cg-card-grid">
           <article class="cg-card">
-            <p class="cg-card-meta">Clarity.</p><h3>Explain the system.</h3><p>
-              Keep inputs, sources, policies, review points, and delivery states visible to the people operating the
-              product.
+            <p class="cg-card-meta">{copy.mission_card_label}</p><h3>{copy.mission_heading_2}</h3><p>
+              {copy.mission_paragraph_2}
             </p>
           </article>
           <article class="cg-card">
-            <p class="cg-card-meta">Practicality.</p><h3>Start with real work.</h3><p>
-              Choose one valuable workflow and improve it before expanding into a broader platform story.
+            <p class="cg-card-meta">{copy.mission_card_label_2}</p><h3>{copy.mission_heading_3}</h3><p>
+              {copy.mission_paragraph_3}
             </p>
           </article>
           <article class="cg-card">
-            <p class="cg-card-meta">Responsibility.</p><h3>Design for control.</h3><p>
-              Match human review, access boundaries, auditability, and recovery paths to the impact of the action.
+            <p class="cg-card-meta">{copy.mission_card_label_3}</p><h3>{copy.mission_heading_4}</h3><p>
+              {copy.mission_paragraph_4}
             </p>
           </article>
         </div>
@@ -53,38 +56,27 @@ const metadata = {
     <section class="cg-page-section cg-page-section-soft" aria-labelledby="stack-map-title">
       <div class="cg-page-shell">
         <div class="cg-section-heading">
-          <p class="cg-eyebrow">Product map.</p>
-          <h2 id="stack-map-title">Five focused routes into production.</h2>
+          <p class="cg-eyebrow">{copy.stack_map_eyebrow}</p>
+          <h2 id="stack-map-title">{copy.stack_map_heading}</h2>
           <p>
-            Each product can stand alone. Together they support workflows that need knowledge, action, access, reusable
-            capability, and connected state.
+            {copy.stack_map_paragraph}
           </p>
         </div>
         <div class="cg-list-panel">
           <a class="cg-list-row" href="/cinaseek/"
-            ><strong>CinaSeek</strong><span
-              >Search across documents, product context, support history, and operating knowledge.</span
-            ></a
+            ><strong>{copy.stack_map_item_label}</strong><span>{copy.stack_map_item_description}</span></a
           >
           <a class="cg-list-row" href="/cinaclaw/"
-            ><strong>CinaClaw</strong><span
-              >Move repeated operational work through visible context gathering and review.</span
-            ></a
+            ><strong>{copy.stack_map_item_label_2}</strong><span>{copy.stack_map_item_description_2}</span></a
           >
           <a class="cg-list-row" href="/cinatoken/"
-            ><strong>CinaToken</strong><span
-              >Centralize model access, routing policy, usage boundaries, and request traces.</span
-            ></a
+            ><strong>{copy.stack_map_item_label_3}</strong><span>{copy.stack_map_item_description_3}</span></a
           >
           <a class="cg-list-row" href="/cinaskill/"
-            ><strong>CinaSkill</strong><span
-              >Package small, reviewable, versioned capabilities for reuse across workflows.</span
-            ></a
+            ><strong>{copy.stack_map_item_label_4}</strong><span>{copy.stack_map_item_description_4}</span></a
           >
           <a class="cg-list-row" href="/cinachain/"
-            ><strong>CinaChain</strong><span
-              >Connect application state and services through explicit contracts and releases.</span
-            ></a
+            ><strong>{copy.stack_map_item_label_5}</strong><span>{copy.stack_map_item_description_5}</span></a
           >
         </div>
       </div>
@@ -93,11 +85,10 @@ const metadata = {
     <section class="cg-page-section cg-page-section-dark" aria-labelledby="working-model-title">
       <div class="cg-page-shell">
         <div class="cg-section-heading">
-          <p class="cg-eyebrow">Working model.</p>
-          <h2 id="working-model-title">Audit, shape, build, verify.</h2>
+          <p class="cg-eyebrow">{copy.working_model_eyebrow}</p>
+          <h2 id="working-model-title">{copy.working_model_heading}</h2>
           <p>
-            We prefer evidence-backed increments: inspect the live and source state, define a coherent change, implement
-            it, and prove the result in the environment that matters.
+            {copy.working_model_paragraph}
           </p>
         </div>
         <pre
@@ -113,12 +104,12 @@ const metadata = {
     <section class="cg-page-section" aria-labelledby="about-cta-title">
       <div class="cg-page-shell">
         <div class="cg-section-heading cg-section-heading-center">
-          <p class="cg-eyebrow">Work with us.</p><h2 id="about-cta-title">Bring a workflow that needs clarity.</h2><p>
-            We can help map the right product, service boundary, and first acceptance scope.
+          <p class="cg-eyebrow">{copy.about_cta_eyebrow}</p><h2 id="about-cta-title">{copy.about_cta_heading}</h2><p>
+            {copy.about_cta_paragraph}
           </p><div class="cg-page-actions">
-            <a class="cg-page-button cg-page-button-primary" href="/contact/">Contact CinaGroup</a><a
+            <a class="cg-page-button cg-page-button-primary" href="/contact/">{copy.about_cta_link_label}</a><a
               class="cg-page-button"
-              href="/services/">Review services</a
+              href="/services/">{copy.about_cta_link_label_2}</a
             >
           </div>
         </div>

@@ -1,7 +1,9 @@
 ---
-import { UI } from 'astrowind:config';
+import { SITE, UI } from 'astrowind:config';
 import { Icon } from 'astro-icon/components';
 import Logo from '~/components/Logo.astro';
+import { loadSitePresentation } from '~/emdash/site-presentation';
+import { flattenPresentationMenu } from '~/emdash/site-presentation-model';
 import { footerData } from '~/navigation';
 import { getLangFromUrl, getLocalizedLabel, localizeInternalHref } from '~/i18n';
 
@@ -82,11 +84,30 @@ const copy = {
 }[lang];
 const label = (text?: string) => getLocalizedLabel(lang, text);
 const href = (url?: string) => localizeInternalHref(url, lang);
-const groups = [
+const presentation = await loadSitePresentation(Astro);
+const siteName = label(presentation.siteName ?? SITE?.name) ?? 'CinaGroup';
+const homeLabel = copy.home.replace(lang === 'zh' ? '海内集团' : 'CinaGroup', siteName);
+const contactEmail = presentation.contactEmail ?? 'info@cinagroup.com';
+const socialLinks = presentation.socialLinks ?? footerData.socialLinks;
+const footerDescription = presentation.footerDescription ?? label(footerData.description);
+const fallbackGroups = [
   footerData.links[0],
   footerData.links[2],
   { title: footerData.links[1].title, links: [...footerData.links[1].links, ...footerData.links[3].links] },
-];
+].map((group) => ({
+  label: label(group.title),
+  url: '#',
+  links: group.links.map((item) => ({ label: label(item.text), url: href(item.href), target: undefined })),
+}));
+const groups =
+  presentation.menus.footer?.map((group) => ({
+    label: group.children.length ? group.label : undefined,
+    url: group.url,
+    links: flattenPresentationMenu(group.children.length ? group.children : [group]).filter((item) => item.url !== '#'),
+  })) ?? fallbackGroups;
+const legalLinks = presentation.menus['footer-legal']
+  ? flattenPresentationMenu(presentation.menus['footer-legal']).filter((item) => item.url !== '#')
+  : footerData.secondaryLinks.map((item) => ({ label: label(item.text), url: href(item.href), target: undefined }));
 ---
 
 <footer class="site-footer fx-footer">
@@ -95,17 +116,17 @@ const groups = [
   </svg>
   <div class="footer-content">
     <div class="footer-brand">
-      <a href={href('/')} class="footer-logo" aria-label={copy.home}>
-        <Logo />
+      <a href={href('/')} class="footer-logo" aria-label={homeLabel}>
+        <Logo variant="dark" />
       </a>
-      <p class="footer-tagline">{label(footerData.description)}</p>
-      <a class="fx-footer-email" href="mailto:info@cinagroup.com">
+      <p class="footer-tagline">{footerDescription}</p>
+      <a class="fx-footer-email" href={`mailto:${contactEmail}`}>
         <Icon name="tabler:mail" width={18} height={18} />
-        info@cinagroup.com
+        {contactEmail}
       </a>
       <div class="footer-social">
         {
-          footerData.socialLinks.map((item) => (
+          socialLinks.map((item) => (
             <a href={item.href} aria-label={item.ariaLabel}>
               <Icon name={item.icon} width={17} height={17} />
             </a>
@@ -117,11 +138,15 @@ const groups = [
       {
         groups.map((group) => (
           <div class="footer-col">
-            <h3>{label(group.title)}</h3>
+            {group.label && <h3>{group.url !== '#' ? <a href={group.url}>{group.label}</a> : group.label}</h3>}
             {group.links.map((item) => (
-              <a href={href(item.href)}>
+              <a
+                href={item.url}
+                target={item.target}
+                rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
+              >
                 <Icon name="tabler:chevron-right" width={13} height={13} />
-                {label(item.text)}
+                {item.label}
               </a>
             ))}
           </div>
@@ -130,7 +155,7 @@ const groups = [
     </nav>
   </div>
   <div class="footer-bottom">
-    <p>© {new Date().getFullYear()} CinaGroup</p>
+    <p>© {new Date().getFullYear()} {siteName}</p>
     <div class="theme-switcher" data-default-theme={UI.theme || 'system'} aria-label={copy.theme}>
       {
         (['light', 'dark', 'system'] as const).map((theme) => (
@@ -141,7 +166,13 @@ const groups = [
       }
     </div>
     <div class="fx-footer-legal">
-      {footerData.secondaryLinks.map((item) => <a href={href(item.href)}>{label(item.text)}</a>)}
+      {
+        legalLinks.map((item) => (
+          <a href={item.url} target={item.target} rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
     </div>
   </div>
 </footer>

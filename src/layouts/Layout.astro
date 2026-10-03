@@ -20,12 +20,15 @@ import { ClientRouter } from 'astro:transitions';
 
 import type { MetaData as MetaDataType } from '~/types';
 import { getLangFromUrl } from '~/i18n';
+import { loadSitePresentation } from '~/emdash/site-presentation';
 
 export interface Props {
   metadata?: MetaDataType;
 }
 
 const { metadata = {} } = Astro.props;
+// Prime the request-owned read shared by the head, navigation and page content.
+await loadSitePresentation(Astro);
 const language = metadata.language || getLangFromUrl(Astro.url);
 const { textDirection } = I18N;
 const structuredDataJson = metadata.structuredData

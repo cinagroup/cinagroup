@@ -48,7 +48,7 @@ export async function listDiscoverableCmsPosts(
     for (const entry of page.entries) {
       const slug = typeof entry.data.slug === 'string' ? entry.data.slug : '';
       const post = publicPostFromEntry(entry, locale, slug, { isPreview: false });
-      if (!post) continue;
+      if (!post || post.seo?.noIndex) continue;
 
       const path = publicPostPath(post.locale, post.slug);
       if (seenPaths.has(path)) continue;
