@@ -203,7 +203,10 @@ export async function loadLegacyArticleShell(
     await response.body?.cancel();
   }
   // Unsupported assets retain priority and original conditional/range semantics.
-  return { kind: 'asset', response: withoutHeadBody(request, await assets.fetch(request)) };
+  // ASSETS returns immutable headers. Astro adds route/cache headers to a page
+  // response, so a clone must use the Response-copy constructor (not .clone()).
+  const originalAsset = await assets.fetch(request);
+  return { kind: 'asset', response: withoutHeadBody(request, new Response(originalAsset.body, originalAsset)) };
 }
 export function setLegacyArticleShellHeaders(headers: Headers, article: LegacyArticleShell): void {
   for (const name of ['ETag', 'Last-Modified', 'Content-Length', 'Content-Encoding', 'Accept-Ranges'])

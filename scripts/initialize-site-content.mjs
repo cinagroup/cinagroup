@@ -7,6 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { Kysely, SqliteAdapter } from 'kysely';
 import { D1Dialect } from 'kysely-d1';
 import { MediaRepository } from 'emdash';
+import { sealSiteContentBackup } from './site-content-backup.mjs';
 import { validateSeed } from 'emdash/seed';
 import { initializeSiteContent } from '../src/emdash/initialize-site-content.ts';
 import { ACCOUNT, DATABASE, productionApi, verifyProductionConfig } from './emdash-production.mjs';
@@ -238,7 +239,13 @@ async function main(command = process.argv[2] ?? 'validate') {
     const { bytes: backupBytes, proof: backupProof } = await downloadPresentationBackup();
     const privateDirectory = mkdtempSync(join(tmpdir(), 'cinagroup-presentation-backup-'));
     writeFileSync(join(privateDirectory, 'before.sql'), backupBytes, { mode: 0o600 });
-    console.log(JSON.stringify({ backup: backupProof }));
+    const encryptedBackup = sealSiteContentBackup(
+      backupBytes,
+      readFileSync(new URL('./keys/site-content-backup-public.pem', import.meta.url), 'utf8'),
+      backupProof
+    );
+    writeFileSync('site-content-backup.enc.json', JSON.stringify(encryptedBackup) + '\n', { mode: 0o600 });
+    console.log(JSON.stringify({ backup: backupProof, keyFingerprint: encryptedBackup.keyFingerprint }));
     for (const asset of assets) {
       if (references[asset.name]) continue;
       execFileSync(

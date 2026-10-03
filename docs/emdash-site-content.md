@@ -32,14 +32,16 @@ The reviewed public seed consists of `seed/site-shell.json`, `seed/site-presenta
 
 The existing production workflow accepts two explicit manual operations in addition to ordinary `deploy`:
 
-- `deploy-and-initialize`: after all build, governance and target checks, fully downloads a nonempty private D1 SQL export, records its Time Travel bookmark and hash, uploads missing approved media to the pinned production R2 bucket, creates missing native models/content/settings/menus, then deploys the validated Worker. Existing editor data is preserved.
+- `deploy-and-initialize`: after all build, governance and target checks, fully downloads a nonempty private D1 SQL export, records its export bookmark and hash, uploads missing approved media to the pinned production R2 bucket, creates missing native models/content/settings/menus, then deploys the validated Worker. Existing editor data is preserved.
 - `deploy-and-resume-initialization`: resumes only an identical failed initialization. A running lock is never taken over. A partial or edited menu causes an explicit stop for review instead of deleting or rebuilding its items.
 
 Neither operation runs on a push or PR. The initializer checks the fixed account and exact production database name/ID. The SHA256-derived R2 keys and content hashes let a repeated run reuse media. A compare-and-set versioned marker makes a completed run a no-op; changing the seed afterward requires a separate reviewed migration.
 
 Native `applySeed` replaces menu items even in skip mode. The initialization wrapper therefore passes only absent menus to the SDK, verifies any menu created by an interrupted run, and refuses ambiguous translation anchors. It does not reset EmDash setup or migrations. Redeploying after the initialization refreshes the Worker and its schema caches.
 
-The private SQL export stays in a restrictive runner temporary file and is never uploaded as an artifact. Only `site-content-initialization-report.json`, containing public media references, the initialization plan and backup bookmark/hash/length, is retained as an operational proof. Routing rollback does not undo database or media writes; preserve the backup and use the pinned database's Time Travel bookmark for an explicitly reviewed data recovery.
+The plaintext SQL export stays in a restrictive runner temporary file. Before writes, it is also sealed with AES-256-GCM; its random encryption key is wrapped using the committed RSA public key (OAEP-SHA256). The encrypted envelope and the public initialization report are retained as GitHub artifacts for 30 days. Download the envelope to the ignored local backup directory for longer retention. The RSA private recovery key stays only in `.backups/cinagroup-site-content-backup-private.dpapi`, protected by the current Windows account; it is never sent to GitHub or Cloudflare. The matching public key was verified against the protected private key before release.
+
+`scripts/recover-site-content-backup.ps1` authenticates the envelope, checks the exact production database and SHA256 proof, and reconstructs a DPAPI-protected SQL recovery file without printing SQL or changing any database. It requires the downloaded encrypted envelope and the local protected private key. Actual data restoration requires a separate reviewed action. Routing rollback does not undo database or media writes. D1 Time Travel is a separate recovery option with a plan-dependent retention window; the export bookmark in the report is not treated as proof that restoration has been tested. See [Cloudflare Time Travel](https://developers.cloudflare.com/d1/reference/time-travel/).
 
 ## Acceptance
 

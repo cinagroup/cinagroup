@@ -151,7 +151,12 @@ test('unknown asset retains original response and conditional priority; only mis
     },
   });
   assert.equal(result.kind, 'asset');
-  assert.equal(result.response, original);
+  assert.notEqual(result.response, original);
+  assert.equal(result.response.status, 304);
+  assert.equal(result.response.headers.get('ETag'), '"same"');
+  assert.equal(await result.response.text(), '');
+  assert.doesNotThrow(() => result.response.headers.set('X-Astro-Route-Type', 'page'));
+  assert.equal(original.headers.has('X-Astro-Route-Type'), false);
   assert.equal(calls, 2);
   assert.equal(
     await loadLegacyArticleShell(request, {
@@ -180,5 +185,83 @@ test('Worker no longer short-circuits governed archives, and both routes use the
     assert.ok(route.includes('await loadLegacyArticleShell('));
     assert.ok(route.includes('<LegacyArticleLayout article={legacy.article} />'));
     assert.ok(route.indexOf("legacy?.kind === 'asset'") < route.indexOf('await getEmDashEntry('));
+  }
+});
+
+test('numeric pagination keeps immutable static GET/HEAD responses while exposing mutable page headers', async () => {
+  const pagination =
+    '<!doctype html><html lang="en"><head><title>Blog page 10</title></head><body><main id="main-content"><section class="cg-blog-index"><article class="cg-blog-card" data-content-status="published">Original page 10</article></section></main></body></html>';
+  for (const method of ['GET', 'HEAD']) {
+    const request = new Request('https://cinagroup.com/blog/10/', { method });
+    let calls = 0;
+    const original = await fetch('data:text/html,' + encodeURIComponent(pagination));
+    assert.throws(() => original.headers.set('X-Astro-Route-Type', 'page'), TypeError);
+    const result = await loadLegacyArticleShell(request, {
+      async fetch(req) {
+        calls++;
+        if (calls === 1) {
+          assert.equal(req.method, 'GET');
+          return fetch('data:text/html,' + encodeURIComponent(pagination));
+        }
+        assert.equal(req, request);
+        return original;
+      },
+    });
+    assert.equal(result.kind, 'asset');
+    assert.equal(result.response.status, 200);
+    assert.equal(result.response.statusText, original.statusText);
+    assert.equal(result.response.headers.get('Content-Type'), original.headers.get('Content-Type'));
+    assert.notEqual(result.response, original);
+    assert.doesNotThrow(() => result.response.headers.set('X-Astro-Route-Type', 'page'));
+    assert.equal(result.response.headers.get('X-Astro-Route-Type'), 'page');
+    assert.equal(original.headers.has('X-Astro-Route-Type'), false);
+    assert.equal(await result.response.text(), method === 'HEAD' ? '' : pagination);
+    assert.equal(calls, 2);
+  }
+});
+
+test('unsupported conditional 304 and range 206 assets keep their status, caching and original body', async () => {
+  for (const status of [304, 206]) {
+    const request = new Request('https://cinagroup.com/blog/10/', {
+      headers: status === 304 ? { 'If-None-Match': '"page10"' } : { Range: 'bytes=0-3' },
+    });
+    const original = new Response(status === 304 ? null : 'part', {
+      status,
+      statusText: status === 304 ? 'Not Modified' : 'Partial Content',
+      headers: {
+        ETag: '"page10"',
+        'Cache-Control': 'public, max-age=120',
+        ...(status === 206 ? { 'Content-Range': 'bytes 0-3/100' } : {}),
+      },
+    });
+    // Model the immutable guard on a binding/fetch Response, including statuses
+    // not obtainable from a data URL. Header iteration remains native.
+    for (const method of ['set', 'append', 'delete'])
+      Object.defineProperty(original.headers, method, {
+        value() {
+          throw new TypeError("Can't modify immutable headers");
+        },
+      });
+    assert.throws(() => original.headers.set('X-Astro-Route-Type', 'page'), TypeError);
+    let calls = 0;
+    const result = await loadLegacyArticleShell(request, {
+      async fetch(req) {
+        calls++;
+        if (calls === 1) {
+          assert.equal(req.headers.has('If-None-Match'), false);
+          assert.equal(req.headers.has('Range'), false);
+          return new Response('unsupported page shape', { headers: { 'Content-Type': 'text/html' } });
+        }
+        assert.equal(req, request);
+        return original;
+      },
+    });
+    assert.equal(result.kind, 'asset');
+    assert.equal(result.response.status, original.status);
+    assert.equal(result.response.statusText, original.statusText);
+    assert.deepEqual([...result.response.headers], [...original.headers]);
+    assert.doesNotThrow(() => result.response.headers.set('X-Astro-Route-Type', 'page'));
+    assert.equal(await result.response.text(), status === 304 ? '' : 'part');
+    assert.equal(calls, 2);
   }
 });

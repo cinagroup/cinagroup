@@ -88,12 +88,14 @@ jobs:
           else
             node --experimental-strip-types scripts/initialize-site-content.mjs apply
           fi
-      - name: Retain public initialization proof
+      - name: Retain encrypted backup and public initialization proof
         if: always() && (inputs.operation == 'deploy-and-initialize' || inputs.operation == 'deploy-and-resume-initialization')
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: site-content-initialization-proof
-          path: site-content-initialization-report.json
+          path: |
+            site-content-initialization-report.json
+            site-content-backup.enc.json
           if-no-files-found: ignore
           retention-days: 30
       - name: Deploy validated production Worker
