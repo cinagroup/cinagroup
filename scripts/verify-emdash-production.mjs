@@ -1,20 +1,24 @@
 import { appendFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { STAGING_HOST, ADMIN_AUD } from './emdash-production.mjs';
+import { STAGING_HOST, ADMIN_AUD, ROUTES } from './emdash-production.mjs';
 
 const staging = process.argv.includes('--staging');
 const host = staging ? STAGING_HOST : 'cinagroup.com';
 const origin = 'https://' + host;
-async function get(path, method = 'GET') {
+async function get(path, method = 'GET', requireWorker = false) {
   for (let n = 0; n < 4; n++) {
     const r = await fetch(origin + path, { method, redirect: 'manual', signal: AbortSignal.timeout(20000) });
-    if (r.status < 500 || n === 3) return r;
+    if (
+      n === 3 ||
+      (r.status < 500 && (!requireWorker || r.headers.get('X-CinaGroup-Deployment') === 'emdash-production'))
+    )
+      return r;
     await r.body?.cancel();
     await new Promise((resolve) => setTimeout(resolve, 2000));
   }
 }
 async function publicPath(path, { status = 200, html = false, indexable = false, method = 'GET' } = {}) {
-  const r = await get(path, method);
+  const r = await get(path, method, true);
   if (r.status !== status || r.headers.get('X-CinaGroup-Deployment') !== 'emdash-production')
     throw new Error(`Production ${method} ${path}: unexpected status or Worker marker (${r.status})`);
   if (staging && !r.headers.get('X-Robots-Tag')?.includes('noindex'))
@@ -125,6 +129,17 @@ if (
   !privateMedia.headers.get('Cache-Control')?.includes('no-store')
 )
   throw new Error('Private media bypassed the Worker identity guard');
+if (!staging) {
+  for (const path of ['/', '/zh/contact/?migration-check=20261003']) {
+    const r = await fetch('https://' + ROUTES[1].host + path, {
+      redirect: 'manual',
+      signal: AbortSignal.timeout(20000),
+    });
+    await r.body?.cancel();
+    if (r.status !== 308 || r.headers.get('Location') !== 'https://cinagroup.com' + path)
+      throw new Error('Production Chinese alias lost its fixed canonical redirect');
+  }
+}
 const summary = `Verified ${staging ? 'staging' : 'production'} Worker: public GET/HEAD, eight locale indexes, archives, discovery, indexing/security headers, redirects, canonical media and anonymous Access boundaries. RSS items: ${(rss.match(/<item>/g) ?? []).length}; sitemap URLs: ${(sitemap.match(/<loc>/g) ?? []).length}.`;
 console.log(summary);
 if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, '\n' + summary + '\n');
