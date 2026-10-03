@@ -1,0 +1,24 @@
+{
+  "assets": [
+    {
+      "file": "public/images/flexina/city-workspace.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 245964,
+      "sha256": "9412d27c1f0e67053d9dad6c0c618c3b277a6877a215abfefbe127324c60f65d",
+      "source": "Original generated photograph; OpenAI ImageGen, 2026-10-03",
+      "use": "Illustrative environment, not actual company property or employees",
+      "processing": "WebP encoding only, no content edit"
+    },
+    {
+      "file": "public/images/flexina/office-workspace.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 146292,
+      "sha256": "723ab1ab24ba5e98640d23cdf313a9d83fb17fdce521027634cc72b4fb16bfa5",
+      "source": "Original generated photograph; OpenAI ImageGen, 2026-10-03",
+      "use": "Illustrative environment, not actual company property or employees",
+      "processing": "WebP encoding only, no content edit"
+    }
+  ]
+}
