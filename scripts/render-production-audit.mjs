@@ -50,6 +50,7 @@ for (const file of await walk(path.resolve('src/pages'))) {
   if (publicPath(route)) routes.add(route);
 }
 for (const locale of ['', 'zh/', 'ja/', 'ko/', 'ru/', 'es/', 'pt/', 'fr/']) routes.add('/' + locale + 'blog/');
+routes.add('/404.html');
 for (const route of ['/rss.xml', '/robots.txt', '/sitemap-index.xml', '/sitemap-0.xml', '/sitemap-emdash.xml'])
   routes.add(route);
 
@@ -60,28 +61,30 @@ const originalEntry = path.resolve(path.dirname(configPath), config.main);
 const bundleEntry = config.no_bundle ? path.basename(originalEntry) : path.parse(originalEntry).name + '.js';
 const server = createTestHarness({
   root,
-  workers: [{
-    config: {
-      name: config.name,
-      main: path.join(bundleDir, bundleEntry),
-      compatibility_date: config.compatibility_date,
-      compatibility_flags: config.compatibility_flags,
-      no_bundle: true,
-      find_additional_modules: true,
-      rules: config.rules,
-      assets: { ...config.assets, directory: client },
-      vars: { EMDASH_DEPLOYMENT_TARGET: 'production' },
-      d1_databases: [
-        { binding: 'DB', database_name: 'offline-cms', database_id: 'offline-cms', remote: false },
-        { binding: 'CONTACT_DB', database_name: 'offline-contact', database_id: 'offline-contact', remote: false },
-      ],
-      r2_buckets: [{ binding: 'MEDIA', bucket_name: 'offline-media', remote: false }],
-      kv_namespaces: [{ binding: 'SESSION', id: 'offline-session', remote: false }],
-      images: { binding: 'IMAGES', remote: false },
-      durable_objects: config.durable_objects,
-      migrations: config.migrations,
+  workers: [
+    {
+      config: {
+        name: config.name,
+        main: path.join(bundleDir, bundleEntry),
+        compatibility_date: config.compatibility_date,
+        compatibility_flags: config.compatibility_flags,
+        no_bundle: true,
+        find_additional_modules: true,
+        rules: config.rules,
+        assets: { ...config.assets, directory: client },
+        vars: { EMDASH_DEPLOYMENT_TARGET: 'production' },
+        d1_databases: [
+          { binding: 'DB', database_name: 'offline-cms', database_id: 'offline-cms', remote: false },
+          { binding: 'CONTACT_DB', database_name: 'offline-contact', database_id: 'offline-contact', remote: false },
+        ],
+        r2_buckets: [{ binding: 'MEDIA', bucket_name: 'offline-media', remote: false }],
+        kv_namespaces: [{ binding: 'SESSION', id: 'offline-session', remote: false }],
+        images: { binding: 'IMAGES', remote: false },
+        durable_objects: config.durable_objects,
+        migrations: config.migrations,
+      },
     },
-  }],
+  ],
 });
 let rendered = 0;
 try {
@@ -94,7 +97,7 @@ try {
   for (const route of [...routes].sort()) {
     if (!publicPath(route)) throw new Error('Private route reached offline audit');
     const response = await server.fetch('https://cinagroup.com' + route, { redirect: 'manual' });
-    const expected = /\/(?:404)\/$/.test(route) ? [200, 404] : [200];
+    const expected = /\/404(?:\/|\.html)$/.test(route) ? [200, 404] : [200];
     if (!expected.includes(response.status)) throw new Error('Offline production ' + route + ': ' + response.status);
     if (response.headers.get('X-CinaGroup-Deployment') !== 'emdash-production')
       throw new Error('Offline snapshot bypassed production Worker: ' + route);

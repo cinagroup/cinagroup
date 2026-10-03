@@ -94,7 +94,30 @@ const targetExists = async (pathname) => {
 
 const distFiles = await walk(distDir);
 const htmlFiles = distFiles.filter((file) => file.endsWith('.html'));
-const cssFiles = distFiles.filter((file) => file.endsWith('.css'));
+const allCssFiles = distFiles.filter((file) => file.endsWith('.css'));
+// EmDash's native admin has its own stylesheet. Apply the public CSS budget
+// to stylesheets actually reachable from rendered public HTML, including imports.
+const publicCss = new Set();
+if (process.env.EMDASH_BUILD_TARGET === 'production') {
+  const addCss = (href, baseRoute) => {
+    const url = new URL(href, origin + baseRoute);
+    if (url.origin === origin && url.pathname.endsWith('.css'))
+      publicCss.add(path.join(distDir, decodeURIComponent(url.pathname).replace(/^\/+/, '')));
+  };
+  for (const file of htmlFiles) {
+    const html = await readFile(file, 'utf8');
+    for (const match of html.matchAll(/<link\b[^>]*>/gi)) {
+      const href = attributeValue(match[0], 'href');
+      if (href) addCss(href, routeFor(file));
+    }
+  }
+  for (const file of publicCss) {
+    const css = await readFile(file, 'utf8');
+    for (const match of css.matchAll(/@import\s+(?:url\(\s*)?["']([^"']+)["']/gi))
+      addCss(match[1], '/' + path.relative(distDir, file).split(path.sep).join('/'));
+  }
+}
+const cssFiles = process.env.EMDASH_BUILD_TARGET === 'production' ? [...publicCss] : allCssFiles;
 const blogSourceFiles = (
   await Promise.all(
     [automatedSourceDir, curatedSourceDir].map(async (directory) =>
@@ -167,7 +190,8 @@ for (const file of htmlFiles) {
   }
 
   const isArchivedArticle = /data-content-kind=(?:["']historical-archive["']|historical-archive(?:\s|>))/i.test(html);
-  const hasArchivedSummaries = /data-content-kind=(?:["']historical-archive-summary["']|historical-archive-summary(?:\s|>))/i.test(html);
+  const hasArchivedSummaries =
+    /data-content-kind=(?:["']historical-archive-summary["']|historical-archive-summary(?:\s|>))/i.test(html);
 
   if (isArchivedArticle) {
     archivedPages += 1;
@@ -222,9 +246,13 @@ for (const sitemapFile of sitemapFiles) {
 
 let blogStructuredDataSummary = '';
 try {
-  const { stdout } = await execFileAsync(process.execPath, [path.join(root, 'scripts', 'audit-blog-structured-data.mjs')], {
-    cwd: root,
-  });
+  const { stdout } = await execFileAsync(
+    process.execPath,
+    [path.join(root, 'scripts', 'audit-blog-structured-data.mjs')],
+    {
+      cwd: root,
+    }
+  );
   blogStructuredDataSummary = stdout.trim();
 } catch (error) {
   const detail = error && typeof error === 'object' && 'stderr' in error ? String(error.stderr).trim() : String(error);
