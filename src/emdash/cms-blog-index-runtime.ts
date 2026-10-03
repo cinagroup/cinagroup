@@ -1,5 +1,6 @@
 import { env } from 'cloudflare:workers';
-import { getEmDashCollection, getSiteSettingsWithCacheHint } from 'emdash';
+import { getEmDashCollection } from 'emdash';
+import { getFreshSiteSettingsWithCacheHint } from './fresh-site-settings.ts';
 
 import { loadCmsBlogIndex } from './cms-blog-index.ts';
 import type { AssetFetcher, PublicPostLocale } from './public-post.ts';
@@ -18,7 +19,7 @@ export async function loadCmsBlogIndexFromRuntime(locale: PublicPostLocale, requ
         limit: 100,
         cursor,
       }),
-    getSiteSettingsWithCacheHint()
+    getFreshSiteSettingsWithCacheHint()
       .then(({ data }) => data)
       .catch(() => undefined)
   );

@@ -1,7 +1,7 @@
 ---
 import HeroSlider from '~/components/flexina/HeroSlider.astro';
 import { Icon } from 'astro-icon/components';
-import { Image } from 'emdash/ui';
+import CMSImage from '~/components/CMSImage.astro';
 import { getLocalizedLabel } from '~/i18n';
 import Layout from '~/layouts/PageLayout.astro';
 import { homeOrganizationStructuredData, loadHomeContent } from '~/emdash/home-content';
@@ -87,40 +87,26 @@ const productHref = (href: string) => {
     <section class="fx-about fx-section">
       <div class="container fx-about-grid">
         <div class="fx-about-art" aria-hidden="true">
-          {
-            typeof content.aboutImage === 'string' ? (
-              <img class="fx-about-photo" src={content.aboutImage} width="1536" height="1024" alt="" loading="lazy" />
-            ) : (
-              <Image
-                image={content.aboutImage}
-                class="fx-about-photo"
-                width={1536}
-                height={1024}
-                alt=""
-                aria-hidden="true"
-                placeholder={false}
-              />
-            )
-          }
+          <CMSImage
+            image={content.aboutImage}
+            fallback="/images/flexina/office-workspace.webp"
+            class="fx-about-photo"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+          />
           <div class="fx-about-note">
             <Icon name="tabler:circles-relation" width={48} height={48} /><strong>{content.productsEyebrow}</strong
             ><span>{content.products.map((product) => product.name).join(' · ')}</span>
           </div>
-          {
-            typeof content.heroImage === 'string' ? (
-              <img class="fx-about-detail" src={content.heroImage} width="1536" height="1024" alt="" loading="lazy" />
-            ) : (
-              <Image
-                image={content.heroImage}
-                class="fx-about-detail"
-                width={1536}
-                height={1024}
-                alt=""
-                aria-hidden="true"
-                placeholder={false}
-              />
-            )
-          }
+          <CMSImage
+            image={content.heroImage}
+            fallback="/images/flexina/city-workspace.webp"
+            class="fx-about-detail"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+          />
         </div>
         <div class="fx-about-copy">
           <p class="fx-eyebrow">{label('About')}</p>

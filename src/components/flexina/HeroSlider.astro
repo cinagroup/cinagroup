@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { sanitizeHref, type ImageValue } from 'emdash';
-import { Image } from 'emdash/ui';
+import CMSImage from '~/components/CMSImage.astro';
 import { getLangFromUrl } from '~/i18n';
 
 interface Slide {
@@ -121,30 +121,16 @@ const labels = {
           aria-hidden={index !== 0 ? 'true' : undefined}
           inert={index !== 0}
         >
-          {typeof slide.image === 'string' ? (
-            <img
-              class="fx-hero-image"
-              src={slide.image}
-              width="1920"
-              height="1080"
-              alt=""
-              aria-hidden="true"
-              loading={index === 0 ? 'eager' : 'lazy'}
-              fetchpriority={index === 0 ? 'high' : 'low'}
-              decoding="async"
-            />
-          ) : (
-            <Image
-              image={slide.image}
-              class="fx-hero-image"
-              width={1920}
-              height={1080}
-              alt=""
-              aria-hidden="true"
-              priority={index === 0}
-              placeholder={false}
-            />
-          )}
+          <CMSImage
+            image={slide.image}
+            fallback={index === 0 ? '/images/flexina/city-workspace.webp' : '/images/flexina/office-workspace.webp'}
+            class="fx-hero-image"
+            alt=""
+            aria-hidden="true"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            fetchpriority={index === 0 ? 'high' : 'low'}
+            decoding="async"
+          />
           <div class="fx-hero-container">
             <div class="fx-hero-content">
               {slide.eyebrow && <p class="fx-hero-eyebrow">{slide.eyebrow}</p>}

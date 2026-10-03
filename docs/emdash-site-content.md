@@ -22,6 +22,8 @@ Page title, description, canonical URL, sharing image and noindex are available 
 
 Prices, legal terms, product evidence, explicit illustrative disclaimers, contact form validation and examples remain controlled source content. The page editor exposes presentation copy rather than a mechanism for bypassing those rules.
 
+Public settings are queried once per request instead of reusing the native isolate-lifetime settings cache, so a save handled by another Worker isolate reaches subsequent public requests. Native media selections remain ImageValue references; homepage images resolve their current ready media records and use the actual public file URL, including nested R2 keys. This avoids the installed image-transform endpoint's flat-key limitation while preserving intrinsic dimensions, focal points and loading priority.
+
 Native posts-per-page, date-format and timezone settings apply to the five dynamic CMS journal indexes (ko/ru/es/pt/fr). The existing historical listing pagination and archived dates retain their governed source behavior.
 
 ## Initialization and deployment

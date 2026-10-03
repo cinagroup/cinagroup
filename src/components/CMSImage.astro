@@ -1,0 +1,25 @@
+---
+import type { ImageValue } from 'emdash';
+import type { HTMLAttributes } from 'astro/types';
+import { resolveSiteImage } from '~/emdash/site-image';
+
+interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'width' | 'height'> {
+  image: ImageValue | string;
+  fallback: string;
+}
+
+const { image, fallback, style, ...attributes } = Astro.props;
+const resolved = await resolveSiteImage(image, fallback, Astro.locals);
+const imageStyle = [style, resolved.objectPosition ? `object-position:${resolved.objectPosition}` : undefined]
+  .filter(Boolean)
+  .join(';');
+---
+
+<!-- The original public R2 file supports nested storage keys without a transform endpoint. -->
+<img
+  {...attributes}
+  src={resolved.src}
+  width={resolved.width}
+  height={resolved.height}
+  style={imageStyle || undefined}
+/>
