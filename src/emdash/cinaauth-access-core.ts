@@ -29,14 +29,31 @@ export type AccessDenialStage =
   | 'identity_json'
   | 'identity_email'
   | 'identity_idp'
+  | 'signed_custom_fields'
+  | 'signed_email_verified'
   | 'identity_oidc_fields'
   | 'identity_email_verified'
   | 'identity_service'
   | 'identity_expired'
   | 'authorization_unexpected';
 
+type DiagnosticFieldKind = 'missing' | 'null' | 'object' | 'other';
+type DiagnosticBooleanKind = 'true' | 'false' | 'missing' | 'other';
+
+interface IdentityClaimShapeDiagnostic {
+  identityOidcFieldsPresent: boolean;
+  signedCustomEmailVerifiedPresent: boolean;
+  identityOidcFieldsKind: DiagnosticFieldKind;
+  identityCustomFieldsKind: DiagnosticFieldKind;
+  signedCustomFieldsKind: DiagnosticFieldKind;
+  identityOidcEmailVerified: DiagnosticBooleanKind;
+  identityCustomEmailVerified: DiagnosticBooleanKind;
+  identityRootEmailVerified: DiagnosticBooleanKind;
+  signedCustomEmailVerified: DiagnosticBooleanKind;
+}
+
 /** Fixed categories only: never attach claims, credentials, upstream bodies or causes. */
-export interface AccessDenialDiagnostic {
+export interface AccessDenialDiagnostic extends Partial<IdentityClaimShapeDiagnostic> {
   stage: AccessDenialStage;
   identityHttpStatus?: number;
 }
@@ -62,14 +79,51 @@ export class CinaAuthAccessError extends Error {
 class AccessDiagnosticError extends Error {
   readonly diagnostic: AccessDenialDiagnostic;
 
-  constructor(stage: AccessDenialStage, identityHttpStatus?: number) {
+  constructor(stage: AccessDenialStage, identityHttpStatus?: number, claimShape?: IdentityClaimShapeDiagnostic) {
     super(DENIED_MESSAGE);
-    this.diagnostic = identityHttpStatus === undefined ? { stage } : { stage, identityHttpStatus };
+    this.diagnostic = {
+      stage,
+      ...(identityHttpStatus === undefined ? {} : { identityHttpStatus }),
+      ...claimShape,
+    };
   }
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function diagnosticFieldKind(value: unknown): DiagnosticFieldKind {
+  if (value === undefined) return 'missing';
+  if (value === null) return 'null';
+  return isRecord(value) ? 'object' : 'other';
+}
+
+function diagnosticBooleanKind(value: unknown): DiagnosticBooleanKind {
+  if (value === true) return 'true';
+  if (value === false) return 'false';
+  return value === undefined ? 'missing' : 'other';
+}
+
+/** Inspect only these known fields, after JWT, email and IdP verification. Shapes cannot authorize. */
+function projectIdentityClaimShape(
+  identity: Record<string, unknown>,
+  verified: JWTPayload
+): IdentityClaimShapeDiagnostic {
+  const oidc = identity.oidc_fields;
+  const custom = identity.custom;
+  const signedCustom = verified.custom;
+  return {
+    identityOidcFieldsPresent: Object.hasOwn(identity, 'oidc_fields'),
+    signedCustomEmailVerifiedPresent: isRecord(signedCustom) && Object.hasOwn(signedCustom, 'email_verified'),
+    identityOidcFieldsKind: diagnosticFieldKind(oidc),
+    identityCustomFieldsKind: diagnosticFieldKind(custom),
+    signedCustomFieldsKind: diagnosticFieldKind(signedCustom),
+    identityOidcEmailVerified: diagnosticBooleanKind(isRecord(oidc) ? oidc.email_verified : undefined),
+    identityCustomEmailVerified: diagnosticBooleanKind(isRecord(custom) ? custom.email_verified : undefined),
+    identityRootEmailVerified: diagnosticBooleanKind(identity.email_verified),
+    signedCustomEmailVerified: diagnosticBooleanKind(isRecord(signedCustom) ? signedCustom.email_verified : undefined),
+  };
 }
 
 function requiredString(bindings: Record<string, unknown>, key: string, pattern: RegExp): string {
@@ -150,8 +204,9 @@ async function readIdentity(response: Response): Promise<unknown> {
 }
 
 /**
- * JOSE validates the Access JWT before any identity claim is trusted. Full OIDC
- * fields come from one fixed-origin identity read using that exact token.
+ * JOSE validates the Access JWT before any identity claim is trusted. Full identity
+ * comes from one fixed-origin read using that exact token; only an entirely absent
+ * OIDC field permits the documented, strictly boolean signed-custom claim.
  * Public JWKS caching belongs to the verifier; identities are request-scoped.
  */
 export function createCinaAuthAccessAuthorizer(dependencies: AccessDependencies) {
@@ -213,8 +268,47 @@ export function createCinaAuthAccessAuthorizer(dependencies: AccessDependencies)
         const identity = await readIdentity(response);
         if (!isRecord(identity) || identity.email !== verified.email) throw new AccessDiagnosticError('identity_email');
         if (!matchesIdp(identity.idp, config)) throw new AccessDiagnosticError('identity_idp');
-        if (!isRecord(identity.oidc_fields)) throw new AccessDiagnosticError('identity_oidc_fields');
-        if (identity.oidc_fields.email_verified !== true) throw new AccessDiagnosticError('identity_email_verified');
+        const signedCustom = verified.custom;
+        if (Object.hasOwn(verified, 'custom') && !isRecord(signedCustom)) {
+          throw new AccessDiagnosticError(
+            'signed_custom_fields',
+            undefined,
+            projectIdentityClaimShape(identity, verified)
+          );
+        }
+        const signedVerifiedPresent = isRecord(signedCustom) && Object.hasOwn(signedCustom, 'email_verified');
+        if (signedVerifiedPresent && signedCustom.email_verified !== true) {
+          throw new AccessDiagnosticError(
+            'signed_email_verified',
+            undefined,
+            projectIdentityClaimShape(identity, verified)
+          );
+        }
+        // Cloudflare documents configured OIDC claims in the JOSE-verified JWT's custom object.
+        // Use that strict boolean only when full identity omits oidc_fields entirely.
+        // A present malformed field or conflicting claim must never fall back.
+        if (Object.hasOwn(identity, 'oidc_fields')) {
+          if (!isRecord(identity.oidc_fields)) {
+            throw new AccessDiagnosticError(
+              'identity_oidc_fields',
+              undefined,
+              projectIdentityClaimShape(identity, verified)
+            );
+          }
+          if (!Object.hasOwn(identity.oidc_fields, 'email_verified') || identity.oidc_fields.email_verified !== true) {
+            throw new AccessDiagnosticError(
+              'identity_email_verified',
+              undefined,
+              projectIdentityClaimShape(identity, verified)
+            );
+          }
+        } else if (!signedVerifiedPresent || signedCustom.email_verified !== true) {
+          throw new AccessDiagnosticError(
+            'identity_oidc_fields',
+            undefined,
+            projectIdentityClaimShape(identity, verified)
+          );
+        }
         if (identity.service_token_status === true) throw new AccessDiagnosticError('identity_service');
         if (expiresAt <= Date.now()) throw new AccessDiagnosticError('identity_expired');
         const name =

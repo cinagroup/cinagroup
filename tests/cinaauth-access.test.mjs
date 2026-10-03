@@ -35,6 +35,17 @@ const identity = () => ({
   oidc_fields: { email_verified: true },
   groups: [{ name: 'Ignored admin group' }],
 });
+const emptyClaimShape = {
+  identityOidcFieldsPresent: false,
+  signedCustomEmailVerifiedPresent: false,
+  identityOidcFieldsKind: 'missing',
+  identityCustomFieldsKind: 'missing',
+  signedCustomFieldsKind: 'missing',
+  identityOidcEmailVerified: 'missing',
+  identityCustomEmailVerified: 'missing',
+  identityRootEmailVerified: 'missing',
+  signedCustomEmailVerified: 'missing',
+};
 let privateKey;
 let publicJwk;
 before(async () => {
@@ -377,7 +388,20 @@ for (const [stage, options, buildRequest] of [
   test(`denial diagnostic projects only fixed stage ${stage} and optional HTTP status`, async () => {
     const f = fixture(options);
     await assert.rejects(f.authorize(await buildRequest()), stage === 'runtime_configuration' ? unavailable : denied);
-    assert.deepEqual(f.denials, [{ stage, ...(stage === 'identity_http' ? { identityHttpStatus: 502 } : {}) }]);
+    const claimShape =
+      stage === 'identity_oidc_fields'
+        ? emptyClaimShape
+        : stage === 'identity_email_verified'
+          ? {
+              ...emptyClaimShape,
+              identityOidcFieldsPresent: true,
+              identityOidcFieldsKind: 'object',
+              identityOidcEmailVerified: 'other',
+            }
+          : {};
+    assert.deepEqual(f.denials, [
+      { stage, ...(stage === 'identity_http' ? { identityHttpStatus: 502 } : {}), ...claimShape },
+    ]);
     const serialized = JSON.stringify(f.denials);
     for (const sensitive of [ADMIN_EMAIL, 'other@example.test', 'sensitive', 'CF_Authorization', 'https://']) {
       assert.equal(serialized.includes(sensitive), false);
@@ -422,7 +446,14 @@ test('concurrent request cache retains the actual sanitized denial stage', async
     assert.rejects(f.authenticate(r, { autoProvision: true, syncRoles: true }), denied),
   ]);
   assert.equal(f.calls.identity, 1);
-  assert.deepEqual(f.denials, [{ stage: 'identity_email_verified' }, { stage: 'identity_email_verified' }]);
+  const expected = {
+    stage: 'identity_email_verified',
+    ...emptyClaimShape,
+    identityOidcFieldsPresent: true,
+    identityOidcFieldsKind: 'object',
+    identityOidcEmailVerified: 'false',
+  };
+  assert.deepEqual(f.denials, [expected, expected]);
 });
 
 for (const status of [301, 302, 303, 307, 308]) {
@@ -455,6 +486,7 @@ async function createWorkerdAuthorizerFixture() {
           runtimeBindings: () => (${JSON.stringify(testBindings)}),
           verifyAccessJwt: async () => ({
             type: 'app', email: ${JSON.stringify(ADMIN_EMAIL)}, sub: 'offline-runtime-subject',
+            custom: { email_verified: true },
             exp: Math.floor(Date.now() / 1000) + 300,
           }),
           fetchIdentity: (input, init) => fetch(input, init),
@@ -528,6 +560,9 @@ test(
     try {
       const allowed = await mf.dispatchFetch('http://runtime-fixture.example.test/');
       assert.deepEqual(await allowed.json(), { allowed: true, role: 50, denials: [] });
+      delete testIdentity.oidc_fields;
+      const customOnly = await mf.dispatchFetch('http://runtime-fixture.example.test/');
+      assert.deepEqual(await customOnly.json(), { allowed: true, role: 50, denials: [] });
       for (const status of [301, 302, 303, 307, 308]) {
         identityStatus = status;
         const redirected = await mf.dispatchFetch('http://runtime-fixture.example.test/');
@@ -537,9 +572,262 @@ test(
           denials: [{ stage: 'identity_http', identityHttpStatus: status }],
         });
       }
-      assert.deepEqual(calls, { identity: 6, redirectTarget: 0, unexpected: 0 });
+      assert.deepEqual(calls, { identity: 7, redirectTarget: 0, unexpected: 0 });
     } finally {
       await mf.dispose();
     }
   }
 );
+
+for (const [label, changedIdentity, claims, expected] of [
+  [
+    'missing OIDC fields with conflicting other locations',
+    {
+      oidc_fields: undefined,
+      custom: { email_verified: true, private_key: 'sensitive-custom-value' },
+      email_verified: true,
+    },
+    { custom: { email_verified: false, private_key: 'sensitive-signed-value' } },
+    {
+      ...emptyClaimShape,
+      identityCustomFieldsKind: 'object',
+      signedCustomFieldsKind: 'object',
+      identityCustomEmailVerified: 'true',
+      signedCustomEmailVerifiedPresent: true,
+      signedCustomEmailVerified: 'false',
+      identityRootEmailVerified: 'true',
+    },
+  ],
+  [
+    'null OIDC fields and signed true',
+    {
+      oidc_fields: null,
+      custom: null,
+      email_verified: false,
+    },
+    { custom: { email_verified: true, private_key: 'sensitive-signed-value' } },
+    {
+      ...emptyClaimShape,
+      identityOidcFieldsPresent: true,
+      identityOidcFieldsKind: 'null',
+      identityCustomFieldsKind: 'null',
+      signedCustomFieldsKind: 'object',
+      signedCustomEmailVerifiedPresent: true,
+      signedCustomEmailVerified: 'true',
+      identityRootEmailVerified: 'false',
+    },
+  ],
+  [
+    'array OIDC and signed fields',
+    {
+      oidc_fields: ['sensitive-oidc-value'],
+      custom: { email_verified: true },
+      email_verified: 1,
+    },
+    { custom: ['sensitive-signed-value'] },
+    {
+      ...emptyClaimShape,
+      identityOidcFieldsPresent: true,
+      identityOidcFieldsKind: 'other',
+      identityCustomFieldsKind: 'object',
+      signedCustomFieldsKind: 'other',
+      identityCustomEmailVerified: 'true',
+      identityRootEmailVerified: 'other',
+    },
+  ],
+  [
+    'string locations are never emitted',
+    {
+      oidc_fields: 'sensitive-oidc-value',
+      custom: 'sensitive-custom-value',
+      email_verified: 'sensitive-root-value',
+    },
+    { custom: { email_verified: 'sensitive-signed-value' } },
+    {
+      ...emptyClaimShape,
+      identityOidcFieldsPresent: true,
+      identityOidcFieldsKind: 'other',
+      identityCustomFieldsKind: 'other',
+      signedCustomFieldsKind: 'object',
+      signedCustomEmailVerifiedPresent: true,
+      signedCustomEmailVerified: 'other',
+      identityRootEmailVerified: 'other',
+    },
+  ],
+  [
+    'explicit OIDC false with true elsewhere',
+    {
+      oidc_fields: { email_verified: false, private_key: 'sensitive-oidc-value' },
+      custom: { email_verified: true },
+      email_verified: true,
+    },
+    { custom: { email_verified: true } },
+    {
+      ...emptyClaimShape,
+      identityOidcFieldsPresent: true,
+      identityOidcFieldsKind: 'object',
+      identityCustomFieldsKind: 'object',
+      signedCustomFieldsKind: 'object',
+      identityOidcEmailVerified: 'false',
+      identityCustomEmailVerified: 'true',
+      signedCustomEmailVerifiedPresent: true,
+      signedCustomEmailVerified: 'true',
+      identityRootEmailVerified: 'true',
+    },
+  ],
+  [
+    'OIDC object without verified field',
+    {
+      oidc_fields: { private_key: 'sensitive-oidc-value' },
+      email_verified: false,
+    },
+    { custom: null },
+    {
+      ...emptyClaimShape,
+      identityOidcFieldsPresent: true,
+      identityOidcFieldsKind: 'object',
+      signedCustomFieldsKind: 'null',
+      identityRootEmailVerified: 'false',
+    },
+  ],
+]) {
+  test(`claim shape diagnostic remains fixed and denied: ${label}`, async () => {
+    const f = fixture({
+      identity: { ...identity(), ...changedIdentity, unrelated_private_key: 'sensitive-unrelated-value' },
+    });
+    const r = await request(claims);
+    const jwt = r.headers.get('Cf-Access-Jwt-Assertion');
+    await assert.rejects(f.authorize(r), denied);
+    const stage =
+      expected.signedCustomFieldsKind === 'null' || expected.signedCustomFieldsKind === 'other'
+        ? 'signed_custom_fields'
+        : expected.signedCustomEmailVerifiedPresent && expected.signedCustomEmailVerified !== 'true'
+          ? 'signed_email_verified'
+          : expected.identityOidcFieldsKind === 'object'
+            ? 'identity_email_verified'
+            : 'identity_oidc_fields';
+    assert.deepEqual(f.denials, [{ stage, ...expected }]);
+    const serialized = JSON.stringify(f.denials);
+    for (const sensitive of [jwt, ADMIN_EMAIL, 'sensitive-', 'private_key', 'CF_Authorization', 'https://']) {
+      assert.equal(serialized.includes(sensitive), false);
+    }
+  });
+}
+
+test('claim shape is not inspected or logged for an unverified JWT', async () => {
+  const f = fixture({ identity: { ...identity(), oidc_fields: undefined, custom: { email_verified: true } } });
+  await assert.rejects(f.authorize(await request({ aud: ['b'.repeat(64)], custom: { email_verified: true } })), denied);
+  assert.deepEqual(f.denials, [{ stage: 'jwt_verification' }]);
+  assert.equal(f.calls.identity, 0);
+});
+
+test('real signed custom strict true authorizes only with absent OIDC fields and verified full identity', async () => {
+  const f = fixture({ identity: { ...identity(), oidc_fields: undefined } });
+  const result = await f.authorize(await request({ custom: { email_verified: true } }));
+  assert.equal(result.role, 50);
+  assert.equal(result.email, ADMIN_EMAIL);
+  assert.deepEqual(f.calls, { jwks: 1, identity: 1 });
+  assert.deepEqual(f.denials, []);
+});
+
+for (const custom of [undefined, {}, { unrelated_claim: 'trimmed-verified-claim' }, { email_verified: true }]) {
+  test(`full OIDC strict true retains authorization with compatible signed custom ${JSON.stringify(custom)}`, async () => {
+    const f = fixture();
+    assert.equal((await f.authorize(await request({ custom }))).role, 50);
+  });
+}
+
+for (const oidcFields of [null, 'true', [], {}, { email_verified: false }, { email_verified: 'true' }]) {
+  test(`signed true never overrides present malformed or unverified OIDC ${JSON.stringify(oidcFields)}`, async () => {
+    const f = fixture({ identity: { ...identity(), oidc_fields: oidcFields } });
+    await assert.rejects(f.authorize(await request({ custom: { email_verified: true } })), denied);
+    assert.equal(f.calls.identity, 1);
+  });
+}
+
+for (const custom of [
+  null,
+  'true',
+  [],
+  { email_verified: false },
+  { email_verified: 'true' },
+  { email_verified: 1 },
+  { email_verified: null },
+]) {
+  for (const fullIdentityTrue of [false, true]) {
+    test(`invalid signed custom ${JSON.stringify(custom)} cannot be overridden by OIDC ${fullIdentityTrue}`, async () => {
+      const f = fixture({
+        identity: { ...identity(), oidc_fields: fullIdentityTrue ? { email_verified: true } : undefined },
+      });
+      await assert.rejects(f.authorize(await request({ custom })), denied);
+      assert.equal(f.calls.identity, 1);
+    });
+  }
+}
+
+for (const custom of [undefined, {}, { unrelated_claim: true }]) {
+  test(`missing or trimmed signed verified claim cannot authenticate missing OIDC: ${JSON.stringify(custom)}`, async () => {
+    const f = fixture({
+      identity: { ...identity(), oidc_fields: undefined, custom: { email_verified: true }, email_verified: true },
+    });
+    await assert.rejects(f.authorize(await request({ custom })), denied);
+  });
+}
+
+for (const [label, claims] of [
+  ['wrong audience', { aud: ['b'.repeat(64)] }],
+  ['wrong issuer', { iss: 'https://untrusted.example.test' }],
+  ['expired token', { exp: 1 }],
+  ['wrong signed email', { email: 'other@example.test' }],
+  ['non-application token', { type: 'org' }],
+  ['empty subject', { sub: '' }],
+]) {
+  test(`signed custom true does not bypass ${label}`, async () => {
+    const f = fixture({ identity: { ...identity(), oidc_fields: undefined } });
+    await assert.rejects(f.authorize(await request({ ...claims, custom: { email_verified: true } })), denied);
+    assert.equal(f.calls.identity, 0);
+  });
+}
+
+for (const [label, change] of [
+  ['wrong full identity email', { email: 'other@example.test' }],
+  ['wrong IdP', { idp: { id: 'other-idp', type: 'oidc' } }],
+  ['wrong IdP type', { idp: { id: IDP_ID, type: 'onetimepin' } }],
+  ['service identity', { service_token_status: true }],
+]) {
+  test(`signed custom true does not bypass ${label}`, async () => {
+    const f = fixture({ identity: { ...identity(), oidc_fields: undefined, ...change } });
+    await assert.rejects(f.authorize(await request({ custom: { email_verified: true } })), denied);
+    assert.equal(f.calls.identity, 1);
+  });
+}
+
+test('tampered custom verified claim is rejected by real RSA verification before identity access', async () => {
+  const signed = await token({ custom: { email_verified: false } });
+  const [header, encodedPayload, signature] = signed.split('.');
+  const payload = JSON.parse(Buffer.from(encodedPayload, 'base64url').toString('utf8'));
+  payload.custom.email_verified = true;
+  const tampered = [header, Buffer.from(JSON.stringify(payload)).toString('base64url'), signature].join('.');
+  const f = fixture({ identity: { ...identity(), oidc_fields: undefined } });
+  await assert.rejects(
+    f.authorize(
+      new Request('https://preview.example.test/_emdash/admin/', {
+        headers: { 'Cf-Access-Jwt-Assertion': tampered },
+      })
+    ),
+    denied
+  );
+  assert.equal(f.calls.identity, 0);
+  assert.deepEqual(f.denials, [{ stage: 'jwt_verification' }]);
+});
+
+test('large optional custom data cannot replace a trimmed verified-email claim', async () => {
+  const f = fixture({ identity: { ...identity(), oidc_fields: undefined } });
+  const r = await request({ custom: { groups: 'x'.repeat(1500) } });
+  assert.equal(r.headers.get('Cf-Access-Jwt-Assertion').length < 16384, true);
+  await assert.rejects(f.authorize(r), denied);
+  assert.deepEqual(f.calls, { jwks: 1, identity: 1 });
+  assert.deepEqual(f.denials, [
+    { stage: 'identity_oidc_fields', ...emptyClaimShape, signedCustomFieldsKind: 'object' },
+  ]);
+});
