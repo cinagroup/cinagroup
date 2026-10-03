@@ -686,3 +686,11 @@ body.marketing-template .container {
     padding: 22px;
   }
 }
+.marketing-template
+  :is(.cg-blog-headline, .cg-blog-post-header)
+  :where(h1, .cg-blog-headline-lead, .cg-blog-post-lead, .cg-blog-meta) {
+  color: #fff;
+}
+.marketing-template :is(.cg-blog-headline, .cg-blog-post-header) :where(.cg-eyebrow, a) {
+  color: #42d7ff;
+}
