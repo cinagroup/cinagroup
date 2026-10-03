@@ -1,6 +1,7 @@
 ---
 import { UI } from 'astrowind:config';
 import { Icon } from 'astro-icon/components';
+import Logo from '~/components/Logo.astro';
 import { footerData } from '~/navigation';
 import { getLangFromUrl, getLocalizedLabel, localizeInternalHref } from '~/i18n';
 const lang = getLangFromUrl(Astro.url);
@@ -11,7 +12,9 @@ const href = (url?: string) => localizeInternalHref(url, lang);
 <footer class="site-footer">
   <div class="footer-content">
     <div class="footer-brand">
-      <span class="footer-logo">CinaGroup</span>
+      <a href={href('/')} class="footer-logo" aria-label={lang === 'zh' ? '海内集团首页' : 'CinaGroup home'}>
+        <Logo />
+      </a>
       <p class="footer-tagline">{label(footerData.description)}</p>
       <div class="footer-social">
         {
