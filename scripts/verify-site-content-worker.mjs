@@ -71,7 +71,7 @@ export async function verifySiteContentWorker(server) {
     await content.publish('page_english', english.id);
     const services = await content.findBySlug('page_services', 'services', 'zh');
     await content.updateDraftAware('page_services', services.id, {
-      data: { hero_title: 'CMS published inner page proof' },
+      data: { title: 'CMS published inner page proof' },
     });
     await content.publish('page_services', services.id);
     await setSiteSettings({ title: 'CMS site identity proof' }, db);
