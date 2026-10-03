@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import { basename } from 'node:path';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { basename, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { ContentRepository, MediaRepository, setSiteSettings } from 'emdash';
 import { parse } from 'parse5';
@@ -12,6 +12,7 @@ import {
   readPresentationAssets,
 } from './initialize-site-content.mjs';
 import { initializeSiteContent } from '../src/emdash/initialize-site-content.ts';
+import { extractLegacyArticleShell } from '../src/emdash/legacy-article-shell.ts';
 
 /** Exercise the already compiled Worker with local, ephemeral native CMS/R2 data. */
 export async function verifySiteContentWorker(server) {
@@ -158,7 +159,19 @@ export async function verifySiteContentWorker(server) {
     // A different isolate's setting write must be visible without another deployment.
     await setSiteSettings({ title: 'CMS updated identity without redeploy' }, db);
     assert.ok((await html('/zh/')).includes('CMS updated identity without redeploy'));
-    assert.ok((await html('/blog/10/')).includes('CMS updated identity without redeploy'));
+    // Legacy numeric listing pages intentionally retain their governed static shell.
+    await html('/blog/10/');
+    const articleSlug = readdirSync('dist/client/blog', { withFileTypes: true })
+      .filter((entry) => entry.isDirectory() && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(entry.name))
+      .map((entry) => entry.name)
+      .find((slug) => {
+        const file = join('dist/client/blog', slug, 'index.html');
+        return existsSync(file) && extractLegacyArticleShell(readFileSync(file, 'utf8'), 'https://cinagroup.com/blog/' + slug + '/');
+      });
+    assert.ok(articleSlug, 'compiled governed article available for current-shell acceptance');
+    const currentArticle = await html('/blog/' + articleSlug + '/');
+    assert.ok(currentArticle.includes('data-legacy-article-shell'));
+    assert.ok(currentArticle.includes('CMS updated identity without redeploy'));
     assert.ok((await html('/fr/blog/')).includes('CMS updated identity without redeploy'));
     for (const asset of assets) {
       const response = await server.fetch('https://cinagroup.com/_emdash/api/media/file/' + asset.key);
