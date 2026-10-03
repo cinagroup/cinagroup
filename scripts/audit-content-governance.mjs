@@ -17,7 +17,7 @@ import {
 } from '../src/utils/blog-content.js';
 
 const root = process.cwd();
-const distDirectory = path.join(root, 'dist');
+const distDirectory = path.join(root, 'dist', ...(process.env.EMDASH_BUILD_TARGET === 'production' ? ['client'] : []));
 const sourceDirectories = [path.join(root, 'src', 'data', 'post'), path.join(root, 'src', 'content', 'blog')];
 const archiveManifestPath = path.join(root, 'docs', 'briefing-archive-manifest.json');
 const sourceOnly = process.argv.includes('--source-only');

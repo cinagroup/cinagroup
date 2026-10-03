@@ -14,7 +14,7 @@ import {
 const root = process.cwd();
 const translationDirectory = path.join(root, 'src', 'content', 'blog');
 const archiveDirectory = path.join(root, 'src', 'data', 'post');
-const distDirectory = path.join(root, 'dist');
+const distDirectory = path.join(root, 'dist', ...(process.env.EMDASH_BUILD_TARGET === 'production' ? ['client'] : []));
 const sourceOnly = process.argv.includes('--source-only');
 const failures = [];
 

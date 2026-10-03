@@ -25,6 +25,9 @@ import {
 } from './src/utils/frontmatter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const buildTarget = process.env.EMDASH_BUILD_TARGET ?? 'preview';
+if (!['preview', 'production'].includes(buildTarget)) throw new Error('Unknown EmDash build target');
+const productionBuild = buildTarget === 'production';
 
 const archivedBlogPaths = new Set(
   ['src/data/post', 'src/content/blog'].flatMap((relativeDirectory) => {
@@ -90,7 +93,7 @@ const shouldIncludeInSitemap = (page: string) => {
 
 export default defineConfig({
   output: 'server',
-  adapter: cloudflare(),
+  adapter: cloudflare({ configPath: productionBuild ? './wrangler.production.jsonc' : './wrangler.jsonc' }),
   trailingSlash: 'ignore',
   build: { format: 'directory' },
 
@@ -106,7 +109,7 @@ export default defineConfig({
   integrations: [
     react(),
     emdash({
-      siteUrl: 'https://cinagroup-emdash-preview.cinagroup.workers.dev',
+      siteUrl: productionBuild ? 'https://cinagroup.com' : 'https://cinagroup-emdash-preview.cinagroup.workers.dev',
       database: d1({ binding: 'DB' }),
       storage: r2({ binding: 'MEDIA' }),
       auth: {
