@@ -7,6 +7,16 @@ interface Props {
 }
 const { languageAlternates = [] } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
+const pricingLabel = {
+  en: 'Pricing',
+  zh: '价格',
+  ja: '料金',
+  ko: '가격',
+  ru: 'Стоимость',
+  es: 'Precios',
+  pt: 'Preços',
+  fr: 'Tarifs',
+}[lang];
 const label = (text: string) => getLocalizedLabel(lang, text);
 const href = (url?: string) => localizeInternalHref(url, lang);
 const alternates = new Map(languageAlternates.map((item) => [item.hreflang, item.href]));
@@ -70,7 +80,7 @@ const alternates = new Map(languageAlternates.map((item) => [item.hreflang, item
               </div>
             ))
           }
-          <a href={href('/pricing/')}>{lang === 'zh' ? '价格' : 'Pricing'}</a>
+          <a href={href('/pricing/')}>{pricingLabel}</a>
         </nav>
       </details>
     </div>

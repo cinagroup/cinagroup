@@ -301,3 +301,15 @@ body.marketing-template .nav-cta {
     padding: 8px;
   }
 }
+
+body.marketing-template .section-headline {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-display);
+  line-height: var(--leading-snug);
+}
+body.marketing-template .section-subheadline {
+  margin-top: var(--spacing-md);
+  font-size: var(--font-size-lg);
+  color: var(--color-muted);
+  line-height: var(--leading-normal);
+}
