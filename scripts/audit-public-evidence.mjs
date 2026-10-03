@@ -164,7 +164,7 @@ if (/\bcases?Studies\b/.test(workPage.replace(/publicCaseStudies/g, ''))) {
 
 let builtHtmlCount = 0;
 if (!sourceOnly) {
-  const distDir = path.join(root, 'dist', ...(process.env.EMDASH_BUILD_TARGET === 'production' ? ['client'] : []));
+  const distDir = path.join(root, 'dist', ...(process.env.EMDASH_BUILD_TARGET === 'production' ? ['audit'] : []));
   const distFiles = await walk(distDir);
   const htmlFiles = distFiles.filter((file) => file.endsWith('.html'));
   const builtTextFiles = distFiles.filter((file) =>

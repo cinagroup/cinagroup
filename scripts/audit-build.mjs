@@ -7,7 +7,7 @@ import { hasTopLevelMarkdownHeading } from './normalize-markdown-headings.mjs';
 
 const root = process.cwd();
 const execFileAsync = promisify(execFile);
-const distDir = path.join(root, 'dist', ...(process.env.EMDASH_BUILD_TARGET === 'production' ? ['client'] : []));
+const distDir = path.join(root, 'dist', ...(process.env.EMDASH_BUILD_TARGET === 'production' ? ['audit'] : []));
 const automatedSourceDir = path.join(root, 'src', 'data', 'post');
 const curatedSourceDir = path.join(root, 'src', 'content', 'blog');
 const origin = 'https://cinagroup.com';

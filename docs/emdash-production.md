@@ -15,6 +15,8 @@ The manual operations are:
 
 Live operations may run only from `main` or the reviewed migration branch. Validation of a pull request never receives Cloudflare credentials. The account, resource IDs, Access application audience and route ownership are pinned and checked before mutation.
 
+Built-content audits inspect the actual compiled Worker responses rendered with ephemeral local D1/R2/KV bindings and no Cloudflare credentials. The resulting `dist/audit` mirror is separate from uploaded assets, includes SSR marketing pages and discovery endpoints, and retains the existing evidence, archive, structured-data and internal-link checks.
+
 ## Production resources
 
 | Binding      | Resource                                                                                                                              |
