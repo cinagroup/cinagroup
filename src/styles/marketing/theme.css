@@ -649,3 +649,40 @@ body.marketing-template .container {
   color: #062432;
   border-color: transparent;
 }
+.marketing-template :where(.cg-blog-headline, .cg-blog-post-header) {
+  padding: 70px 24px;
+  background:
+    linear-gradient(rgb(10 18 29 / 82%), rgb(10 18 29 / 88%)),
+    url(/images/flexina/city-workspace.webp) center/cover;
+  color: white;
+  border-radius: 12px;
+}
+.marketing-template
+  :where(.cg-blog-headline, .cg-blog-post-header)
+  :where(h1, .cg-blog-headline-lead, .cg-blog-post-lead, .cg-blog-meta) {
+  color: white;
+}
+.marketing-template :where(.cg-blog-headline, .cg-blog-post-header) :where(.cg-eyebrow, a) {
+  color: #42d7ff;
+}
+.marketing-template .cg-blog-headline {
+  text-align: center;
+}
+.marketing-template .cg-blog-item {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 28px;
+  background: var(--color-bg);
+}
+.marketing-template .cg-blog-post-header .cg-briefing-notice {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+@media (max-width: 575px) {
+  .marketing-template :where(.cg-blog-headline, .cg-blog-post-header) {
+    padding: 45px 21px;
+  }
+  .marketing-template .cg-blog-item {
+    padding: 22px;
+  }
+}

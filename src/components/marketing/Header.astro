@@ -189,6 +189,12 @@ const isCurrent = (url?: string) => (href(url)?.replace(/\/+$/, '') || '/') === 
     background: none;
     isolation: isolate;
   }
+  .fx-header .fx-header-logo :global(img[src='/brand/cinagroup-horizontal.png']) {
+    display: block;
+  }
+  .fx-header .fx-header-logo :global(img[src='/brand/cinagroup-horizontal-white.png']) {
+    display: none;
+  }
   .fx-header-logo::before {
     position: absolute;
     inset: 0;
@@ -346,6 +352,53 @@ const isCurrent = (url?: string) => (href(url)?.replace(/\/+$/, '') || '/') === 
     outline: 2px solid currentColor;
     outline-offset: 4px;
   }
+  @media (min-width: 1200px) {
+    .fx-header.site-header {
+      min-height: 133px;
+    }
+    .fx-header .fx-header-logo {
+      width: 16.666666vw;
+      min-width: 224px;
+    }
+    .fx-topbar {
+      height: 52px;
+      font-size: 14px;
+    }
+    .fx-header .fx-header-main,
+    .fx-header .nav-actions > .fx-header-cta {
+      height: 81px;
+      min-height: 81px;
+    }
+    .fx-header .nav-links > a,
+    .fx-header .nav-group summary {
+      font-size: 16px;
+    }
+  }
+  @media (min-width: 992px) {
+    .fx-header.site-header.fx-header-scrolled {
+      min-height: 80px;
+      /* Preserve document flow so collapsing the sticky bar does not move the scroll threshold. */
+      margin-bottom: 40px;
+    }
+    .fx-header.fx-header-scrolled .fx-topbar {
+      display: none;
+    }
+    .fx-header.fx-header-scrolled .fx-header-logo {
+      height: 80px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+    .fx-header.fx-header-scrolled .fx-header-main,
+    .fx-header.fx-header-scrolled .nav-actions > .fx-header-cta {
+      height: 80px;
+      min-height: 80px;
+    }
+  }
+  @media (min-width: 1200px) {
+    .fx-header.site-header.fx-header-scrolled {
+      margin-bottom: 53px;
+    }
+  }
   @media (min-width: 992px) and (max-width: 1199px) {
     .fx-header .fx-header-logo {
       width: 204px;
@@ -468,7 +521,20 @@ const isCurrent = (url?: string) => (href(url)?.replace(/\/+$/, '') || '/') === 
 </style>
 
 <script>
+  const desktopHeaderQuery = matchMedia('(min-width: 992px)');
+  function updateMarketingHeaderScroll() {
+    document
+      .getElementById('marketing-header')
+      ?.classList.toggle('fx-header-scrolled', desktopHeaderQuery.matches && window.scrollY > 52);
+  }
+  const headerScrollWindow = window as Window & { cinaFlexinaHeaderScrollBound?: boolean };
+  if (!headerScrollWindow.cinaFlexinaHeaderScrollBound) {
+    window.addEventListener('scroll', updateMarketingHeaderScroll, { passive: true });
+    desktopHeaderQuery.addEventListener('change', updateMarketingHeaderScroll);
+    headerScrollWindow.cinaFlexinaHeaderScrollBound = true;
+  }
   function setupMarketingNavigation() {
+    updateMarketingHeaderScroll();
     const header = document.getElementById('marketing-header');
     if (!header || header.dataset.bound) return;
     header.dataset.bound = 'true';
