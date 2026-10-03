@@ -166,7 +166,14 @@ for (const file of htmlFiles) {
   if (titleCount !== 1) failures.push(`${route}: expected one title, found ${titleCount}`);
   if (!metaContent(html, 'description')) failures.push(`${route}: missing description`);
   if (!/<html\b[^>]*\blang="[^"]+"/i.test(html)) failures.push(`${route}: missing html lang`);
-  if (themeToggleCount !== 1) failures.push(`${route}: expected one theme toggle, found ${themeToggleCount}`);
+  const templateThemeButtons = [...html.matchAll(/<button\b[^>]*data-marketing-theme="(light|dark|system)"[^>]*>/gi)];
+  if (templateThemeButtons.length) {
+    const modes = new Set(templateThemeButtons.map(match => match[1]));
+    if (templateThemeButtons.length !== 3 || modes.size !== 3 || templateThemeButtons.some(match => !/type="button"/.test(match[0]) || !/aria-pressed="(?:true|false)"/.test(match[0]))) {
+      failures.push(`${route}: expected accessible Light/Dark/System template theme choices`);
+    }
+    if (themeToggleCount !== 0) failures.push(`${route}: mixed legacy and template theme controls`);
+  } else if (themeToggleCount !== 1) failures.push(`${route}: expected one theme toggle, found ${themeToggleCount}`);
   if (/[�]|â€”|â€™|â€œ|â€|Ã./.test(html)) failures.push(`${route}: possible mojibake`);
 
   if (/googletagmanager\.com|G-QYXR6DT2F0|type="text\/partytown"/i.test(html)) {

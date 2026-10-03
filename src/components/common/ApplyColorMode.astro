@@ -6,6 +6,7 @@ import { UI } from 'astrowind:config';
 
 <script is:inline define:vars={{ defaultTheme: UI.theme || 'system' }}>
   function applyTheme(theme) {
+    document.documentElement.classList.toggle('light', theme === 'light');
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
@@ -20,7 +21,9 @@ import { UI } from 'astrowind:config';
     }
   }
 
-  if ((defaultTheme && defaultTheme.endsWith(':only')) || (!localStorage.theme && defaultTheme !== 'system')) {
+  if (localStorage.theme === 'system') {
+    applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  } else if ((defaultTheme && defaultTheme.endsWith(':only')) || (!localStorage.theme && defaultTheme !== 'system')) {
     applyTheme(defaultTheme.replace(':only', ''));
   } else if (
     localStorage.theme === 'dark' ||

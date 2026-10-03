@@ -1,4 +1,5 @@
 ---
+import { UI } from 'astrowind:config';
 import { Icon } from 'astro-icon/components';
 import { footerData } from '~/navigation';
 import { getLangFromUrl, getLocalizedLabel, localizeInternalHref } from '~/i18n';
@@ -37,7 +38,11 @@ const href = (url?: string) => localizeInternalHref(url, lang);
   </div>
   <div class="footer-bottom">
     <p>© {new Date().getFullYear()} CinaGroup</p>
-    <div class="theme-switcher" aria-label={lang === 'zh' ? '显示模式' : 'Theme'}>
+    <div
+      class="theme-switcher"
+      data-default-theme={UI.theme || 'system'}
+      aria-label={lang === 'zh' ? '显示模式' : 'Theme'}
+    >
       {
         (['light', 'dark', 'system'] as const).map((theme) => (
           <button type="button" class="theme-btn" data-marketing-theme={theme} aria-pressed="false">
@@ -70,15 +75,17 @@ const href = (url?: string) => localizeInternalHref(url, lang);
         button.setAttribute('aria-pressed', String(active));
       });
     };
-    const stored = localStorage.getItem('theme') || 'system';
+    const stored =
+      localStorage.getItem('theme') ||
+      document.querySelector<HTMLElement>('.theme-switcher')?.dataset.defaultTheme ||
+      'system';
     update(stored);
     buttons.forEach((button) => {
       if (button.dataset.bound) return;
       button.dataset.bound = 'true';
       button.addEventListener('click', () => {
         const theme = button.dataset.marketingTheme || 'system';
-        if (theme === 'system') localStorage.removeItem('theme');
-        else localStorage.setItem('theme', theme);
+        localStorage.setItem('theme', theme);
         const dark = theme === 'dark' || (theme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
         document.documentElement.classList.toggle('dark', dark);
         document.documentElement.classList.toggle('light', !dark);
@@ -86,6 +93,11 @@ const href = (url?: string) => localizeInternalHref(url, lang);
       });
     });
   }
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+    if (localStorage.getItem('theme') !== 'system') return;
+    document.documentElement.classList.toggle('dark', event.matches);
+    document.documentElement.classList.toggle('light', !event.matches);
+  });
   setupMarketingTheme();
   document.addEventListener('astro:page-load', setupMarketingTheme);
 </script>
