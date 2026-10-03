@@ -1,28 +1,29 @@
 ---
 import { getEmDashEntry } from 'emdash';
 import { env } from 'cloudflare:workers';
-
 import EmDashPost from '~/components/blog/EmDashPost.astro';
-import { findLegacyArticle, isPublicPostSlug, publicPostFromEntry, type AssetFetcher } from '~/emdash/public-post';
+import LegacyArticleLayout from '~/layouts/LegacyArticleLayout.astro';
+import { loadLegacyArticleShell, setLegacyArticleShellHeaders } from '~/emdash/legacy-article-shell';
+import { isPublicPostSlug, publicPostFromEntry, type AssetFetcher } from '~/emdash/public-post';
 
 export const prerender = false;
-
 const slug = Astro.params.slug;
 if (!slug || !isPublicPostSlug(slug)) return new Response('Not found', { status: 404 });
 
-// `run_worker_first` and a dynamic route must not replace a legacy prerendered article.
-// The assets binding applies the existing trailing-slash and redirect behavior.
-const legacyAsset = await findLegacyArticle(Astro.request, (env as unknown as { ASSETS: AssetFetcher }).ASSETS);
-if (legacyAsset) return legacyAsset;
-
-const { entry, error, isPreview, fallbackLocale } = await getEmDashEntry('posts', slug, { locale: 'en' });
-if (error) {
-  console.error('Unable to read published EmDash post', error);
-  return new Response('Content unavailable', { status: 500 });
+const legacy = await loadLegacyArticleShell(Astro.request, (env as unknown as { ASSETS: AssetFetcher }).ASSETS);
+if (legacy?.kind === 'asset') return legacy.response;
+let post;
+if (legacy?.kind === 'shell') {
+  setLegacyArticleShellHeaders(Astro.response.headers, legacy.article);
+} else {
+  const { entry, error, isPreview, fallbackLocale } = await getEmDashEntry('posts', slug, { locale: 'en' });
+  if (error) {
+    console.error('Unable to read published EmDash post', error);
+    return new Response('Content unavailable', { status: 500 });
+  }
+  post = publicPostFromEntry(entry, 'en', slug, { isPreview, fallbackLocale });
+  if (!post) return new Response('Not found', { status: 404 });
 }
-
-const post = publicPostFromEntry(entry, 'en', slug, { isPreview, fallbackLocale });
-if (!post) return new Response('Not found', { status: 404 });
 ---
 
-<EmDashPost post={post} />
+{legacy?.kind === 'shell' ? <LegacyArticleLayout article={legacy.article} /> : post && <EmDashPost post={post} />}

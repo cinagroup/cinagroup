@@ -2,6 +2,7 @@
 import { PortableText, type PortableTextProps } from 'emdash/ui';
 
 import Layout from '~/layouts/PageLayout.astro';
+import { resolvePostSeoImage } from '~/emdash/post-seo-runtime';
 import ToBlogLink from '~/components/blog/ToBlogLink.astro';
 import { getBlogStrings } from '~/i18n/blog';
 import type { Lang } from '~/i18n';
@@ -16,14 +17,15 @@ export interface Props {
 const { post } = Astro.props;
 const lang = post.locale as Lang;
 const strings = getBlogStrings(lang);
-const canonical = String(getCanonical(publicPostPath(post.locale, post.slug)));
+const canonical = post.seo?.canonical ?? String(getCanonical(publicPostPath(post.locale, post.slug)));
+const seoImage = await resolvePostSeoImage(post.seo);
 const metadata: MetaData = {
-  title: post.title,
-  description: post.excerpt,
+  title: post.seo?.title ?? post.title,
+  description: post.seo?.description ?? post.excerpt,
   canonical,
   language: post.locale,
-  robots: { index: true, follow: true },
-  openGraph: { type: 'article', url: canonical },
+  robots: { index: !post.seo?.noIndex, follow: true },
+  openGraph: { type: 'article', url: canonical, ...(seoImage ? { images: [{ url: seoImage }] } : {}) },
   // Locale variants must be linked only after their own publication is verified.
   alternates: [],
 };

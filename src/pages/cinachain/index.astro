@@ -1,11 +1,16 @@
 ---
+import { ENGLISH_PAGE_DEFAULTS } from '~/data/site/english-page-defaults';
+import { loadEnglishPageText } from '~/emdash/english-page-text';
+import { getPageCopyMetadata } from '~/emdash/published-page-copy';
+
+const copy = await loadEnglishPageText(Astro, 'cinachain', ENGLISH_PAGE_DEFAULTS.cinachain);
+
 import CinaProductPage from '~/components/CinaProductPage.astro';
 
-const metadata = {
-  title: 'CinaChain — Base Sepolia Web3 collection beta',
-  description:
-    'CinaChain is a beta Web3 collection project configured for Base Sepolia testnet, with NFT gallery, minting, wallet, and Cloudflare edge surfaces.',
-};
+const metadata = await getPageCopyMetadata(Astro, {
+  title: copy.metadata_title,
+  description: copy.metadata_description,
+});
 
 const code = `mint "testnet-collection" {
   network   = "base-sepolia"
@@ -15,79 +20,80 @@ const code = `mint "testnet-collection" {
 ---
 
 <CinaProductPage
+  pageText={copy}
   product="cinachain"
   {metadata}
-  eyebrow="CinaChain / Base Sepolia beta."
-  title="Evaluate a Web3 collection flow with testnet assets."
-  lead="CinaChain’s repository includes an NFT DApp, portal, documentation, smart contracts, and Cloudflare edge services. The current release scope is Base Sepolia testnet; documented domains are not proof of a live production deployment."
-  primary={{ text: 'Discuss a testnet evaluation', href: '/contact/' }}
-  secondary={{ text: 'View the full stack', href: '/' }}
+  eyebrow={copy.hero_eyebrow}
+  title={copy.hero_title}
+  lead={copy.hero_lead}
+  primary={{ text: copy.hero_primary_text, href: '/contact/' }}
+  secondary={{ text: copy.hero_secondary_text, href: '/' }}
   capabilities={[
     {
-      label: 'Browse.',
-      title: 'Render an NFT collection gallery.',
-      description: 'Display collection assets with documented multi-gateway IPFS image fallback.',
+      label: copy.capabilities_1_label,
+      title: copy.capabilities_1_title,
+      description: copy.capabilities_1_description,
     },
     {
-      label: 'Wallet.',
-      title: 'Connect a Base Sepolia wallet.',
-      description: 'Use Reown AppKit with wagmi and viem against one explicit test network.',
+      label: copy.capabilities_2_label,
+      title: copy.capabilities_2_title,
+      description: copy.capabilities_2_description,
     },
     {
-      label: 'Mint.',
-      title: 'Exercise whitelist or public mint phases.',
-      description: 'Run the repository’s Merkle-tree whitelist and public-phase paths with testnet assets.',
+      label: copy.capabilities_3_label,
+      title: copy.capabilities_3_title,
+      description: copy.capabilities_3_description,
     },
     {
-      label: 'Admin.',
-      title: 'Operate documented collection controls.',
-      description: 'Use the included admin surfaces for whitelist management and contract operations.',
+      label: copy.capabilities_4_label,
+      title: copy.capabilities_4_title,
+      description: copy.capabilities_4_description,
     },
     {
-      label: 'Edge.',
-      title: 'Separate Pages and Worker surfaces.',
-      description: 'Keep portal, DApp, docs, billing, and whitelist units explicit in the Cloudflare release topology.',
+      label: copy.capabilities_5_label,
+      title: copy.capabilities_5_title,
+      description: copy.capabilities_5_description,
     },
     {
-      label: 'Verify.',
-      title: 'Treat deployment claims as evidence-based.',
-      description: 'Run quality gates and verify custom domains and live revisions after each release.',
+      label: copy.capabilities_6_label,
+      title: copy.capabilities_6_title,
+      description: copy.capabilities_6_description,
     },
   ]}
-  workflowTitle="Move a testnet mint through explicit checks."
-  workflowLead="A reference evaluation keeps the selected network, wallet, phase, contract state, and explorer result visible."
+  workflowTitle={copy.hero_workflow_title}
+  workflowLead={copy.hero_workflow_lead}
   workflow={[
     {
-      title: 'Select Base Sepolia',
-      description: 'Confirm the configured test network and testnet-only asset scope before connecting a wallet.',
+      title: copy.workflow_1_title,
+      description: copy.workflow_1_description,
     },
     {
-      title: 'Connect the wallet',
-      description: 'Establish the Reown AppKit connection and display the expected account and network.',
+      title: copy.workflow_2_title,
+      description: copy.workflow_2_description,
     },
     {
-      title: 'Validate the mint phase',
-      description: 'Check whitelist eligibility or public-phase state before submitting the test transaction.',
+      title: copy.workflow_3_title,
+      description: copy.workflow_3_description,
     },
     {
-      title: 'Review the transaction',
-      description: 'Inspect the Base Sepolia result and confirm gallery metadata through the configured storage paths.',
+      title: copy.workflow_4_title,
+      description: copy.workflow_4_description,
     },
   ]}
   codeLabel="Illustrative testnet contract."
   {code}
   principles={[
     {
-      title: 'Testnet honesty.',
-      description: 'Beta and Base Sepolia scope should stay visible wherever the product is described.',
+      title: copy.principles_1_title,
+      description: copy.principles_1_description,
     },
     {
-      title: 'Visible contracts.',
-      description: 'Network, mint phase, contract, and explorer links should remain inspectable.',
+      title: copy.principles_2_title,
+      description: copy.principles_2_description,
     },
     {
-      title: 'Verified releases.',
-      description: 'Repository configuration must be paired with post-deploy domain and revision checks.',
+      title: copy.principles_3_title,
+      description: copy.principles_3_description,
     },
   ]}
 />

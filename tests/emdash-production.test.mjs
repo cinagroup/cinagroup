@@ -47,22 +47,42 @@ test('production admin policy requires the selected email and dedicated CinaAuth
   assert.throws(() => verifyAdminPolicy([policy, policy], 'admin@example.test'));
 });
 
-test('pushes and pull requests cannot deploy or change production routes', async () => {
+test('pushes and pull requests cannot mutate production, including content initialization', async () => {
   const { load } = await import('js-yaml');
   const workflow = load(readFileSync('.github/workflows/deploy.yml', 'utf8'));
   const steps = workflow.jobs.production.steps;
-  for (const name of [
-    'Apply tracked contact migrations with exact production target',
-    'Deploy validated production Worker',
-    'Attach production routes and verify live domains',
-    'Restore retained Pages routing',
-  ]) {
-    const step = steps.find((s) => s.name === name);
-    assert.ok(step);
-    assert.match(
-      step.if,
-      /^github.event_name == 'workflow_dispatch' && inputs.operation == '(deploy|cutover|rollback)'$/
-    );
+  const deployOperations = ['deploy', 'deploy-and-initialize', 'deploy-and-resume-initialization'];
+  const expected = new Map([
+    ['Apply tracked contact migrations with exact production target', deployOperations],
+    ['Initialize missing public site content and menus', deployOperations.slice(1)],
+    ['Deploy validated production Worker', deployOperations],
+    ['Attach production routes and verify live domains', ['cutover']],
+    ['Restore retained Pages routing', ['rollback']],
+  ]);
+  for (const [name, operations] of expected) {
+    const step = steps.find((item) => item.name === name);
+    assert.ok(step, name);
+    const prefix = "github.event_name == 'workflow_dispatch' && ";
+    assert.ok(step.if.startsWith(prefix), name + ': only an explicit manual event');
+    const condition = step.if.slice(prefix.length).replace(/^\((.*)\)$/, '$1');
+    const clauses = condition.split(' || ');
+    const actual = clauses.map((clause) => {
+      const match = /^inputs.operation == '([a-z-]+)'$/.exec(clause);
+      assert.ok(match, name + ': no broader or implicit operation');
+      return match[1];
+    });
+    assert.deepEqual(actual, operations, name);
+    for (const event of ['push', 'pull_request', 'workflow_dispatch']) {
+      for (const operation of ['validate', ...deployOperations, 'cutover', 'rollback', 'unknown']) {
+        const enabled = event === 'workflow_dispatch' && actual.includes(operation);
+        assert.equal(enabled, event === 'workflow_dispatch' && operations.includes(operation), name);
+      }
+    }
+  }
+  const mutationCommands =
+    /d1 migrations apply|wrangler deploy --name|scripts\/emdash-production\.mjs (?:cutover|rollback)|scripts\/initialize-site-content\.mjs (?:apply|resume)/;
+  for (const step of steps) {
+    if (mutationCommands.test(step.run ?? '')) assert.ok(expected.has(step.name), 'Unaccounted mutation step');
   }
   assert.ok(workflow.on.push);
   assert.ok(workflow.on.pull_request);

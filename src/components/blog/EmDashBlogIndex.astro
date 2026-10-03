@@ -1,5 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import Pagination from '~/components/blog/Pagination.astro';
+import { cmsBlogDisplaySettings, formatCmsBlogDate } from '~/emdash/cms-blog-display';
 import { getBlogStrings } from '~/i18n/blog';
 import { getCanonical } from '~/utils/permalinks';
 import type { CmsBlogIndex } from '~/emdash/cms-blog-index';
@@ -13,6 +15,8 @@ export interface Props {
 
 const { locale, result } = Astro.props;
 const strings = getBlogStrings(locale);
+const page = result.pagination?.page ?? 1;
+const dateSettings = result.displaySettings ?? cmsBlogDisplaySettings(undefined);
 const copy = {
   en: {
     empty: 'No articles have been published in English yet.',
@@ -36,9 +40,11 @@ const copy = {
   },
 }[locale];
 const metadata: MetaData = {
-  title: strings.listTitle,
+  title: `${strings.listTitle}${page > 1 ? strings.pageSuffix(page) : ''}`,
   description: strings.listDescription,
-  canonical: String(getCanonical(`/${locale}/blog/`)),
+  canonical: String(
+    getCanonical(result.pagination?.canonicalHref ?? (locale === 'en' ? '/blog/' : `/${locale}/blog/`))
+  ),
   language: locale,
   robots: { index: result.indexable, follow: true },
   openGraph: { type: 'blog' },
@@ -58,7 +64,7 @@ const metadata: MetaData = {
             ? copy.unavailable
             : result.posts.length === 0
               ? copy.empty
-              : strings.listSubtitle(result.posts.length)
+              : strings.listSubtitle(result.pagination?.total ?? result.posts.length)
         }
       </div>
     </header>
@@ -78,7 +84,7 @@ const metadata: MetaData = {
                     {post.publishDate && (
                       <div class="cg-blog-meta">
                         <time datetime={post.publishDate.toISOString()}>
-                          {post.publishDate.toLocaleDateString(locale)}
+                          {formatCmsBlogDate(post.publishDate, locale, dateSettings)}
                         </time>
                       </div>
                     )}
@@ -94,6 +100,21 @@ const metadata: MetaData = {
             </li>
           ))}
         </ul>
+      )
+    }
+    {
+      result.pagination && result.pagination.totalPages > 1 && (
+        <nav aria-label={strings.listTitle}>
+          <p class="cg-blog-meta">
+            {strings.pageSuffix(page).replace(/^ — /, '')} / {result.pagination.totalPages}
+          </p>
+          <Pagination
+            prevUrl={result.pagination.previousHref}
+            nextUrl={result.pagination.nextHref}
+            prevText={strings.newerPosts}
+            nextText={strings.olderPosts}
+          />
+        </nav>
       )
     }
   </section>

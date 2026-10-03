@@ -1,49 +1,52 @@
 ---
+import { ENGLISH_PAGE_DEFAULTS } from '~/data/site/english-page-defaults';
+import { loadEnglishPageText } from '~/emdash/english-page-text';
+import { getPageCopyMetadata } from '~/emdash/published-page-copy';
+
+const copy = await loadEnglishPageText(Astro, 'contact', ENGLISH_PAGE_DEFAULTS.contact);
+
 import CinaPageHero from '~/components/CinaPageHero.astro';
 import ContactSubmissionForm from '~/components/ContactSubmissionForm.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
-const metadata = {
-  title: 'Contact CinaGroup — Start with one workflow',
-  description: 'Tell CinaGroup about the user, workflow, systems, constraints, and outcome you want to improve.',
-};
+const metadata = await getPageCopyMetadata(Astro, {
+  title: copy.metadata_title,
+  description: copy.metadata_description,
+});
 ---
 
 <Layout metadata={metadata}>
   <div class="cg-page">
     <CinaPageHero
-      eyebrow="Contact / start with the work."
-      title="Tell us what your team is trying to move."
-      lead="Share the user, workflow, current systems, constraints, and outcome. We will use that context to identify a sensible first scope."
-      primary={{ text: 'Start an inquiry', href: '#contact-form' }}
-      secondary={{ text: 'Review services', href: '/services/' }}
+      eyebrow={copy.hero_eyebrow}
+      title={copy.hero_title}
+      lead={copy.hero_lead}
+      primary={{ text: copy.hero_primary_text, href: '#contact-form' }}
+      secondary={{ text: copy.hero_secondary_text, href: '/services/' }}
     />
 
     <section class="cg-page-section" aria-labelledby="contact-form-title">
       <div class="cg-page-shell cg-contact-grid">
         <div>
           <div class="cg-section-heading">
-            <p class="cg-eyebrow">A useful first message.</p>
-            <h2 id="contact-form-title">Give us enough context to respond usefully.</h2>
+            <p class="cg-eyebrow">{copy.contact_form_eyebrow}</p>
+            <h2 id="contact-form-title">{copy.contact_form_heading}</h2>
             <p>
-              A submission is confirmed only after it has been securely recorded. Keep the returned reference for
-              follow-up.
+              {copy.contact_form_paragraph}
             </p>
           </div>
           <div class="cg-list-panel">
             <div class="cg-list-row">
-              <strong>User</strong><span>Who needs the outcome, and what are they trying to finish?</span>
+              <strong>{copy.contact_form_item_label}</strong><span>{copy.contact_form_item_description}</span>
             </div>
             <div class="cg-list-row">
-              <strong>Current state</strong><span>What product, page, workflow, or system exists today?</span>
+              <strong>{copy.contact_form_item_label_2}</strong><span>{copy.contact_form_item_description_2}</span>
             </div>
             <div class="cg-list-row">
-              <strong>Constraints</strong><span
-                >What access, timing, integration, risk, or deployment boundaries matter?</span
-              >
+              <strong>{copy.contact_form_item_label_3}</strong><span>{copy.contact_form_item_description_3}</span>
             </div>
             <div class="cg-list-row">
-              <strong>Acceptance</strong><span>What observable evidence would show that the change worked?</span>
+              <strong>{copy.contact_form_item_label_4}</strong><span>{copy.contact_form_item_description_4}</span>
             </div>
           </div>
         </div>
@@ -55,19 +58,21 @@ const metadata = {
     <section class="cg-page-section cg-page-section-soft" aria-labelledby="other-routes-title">
       <div class="cg-page-shell">
         <div class="cg-section-heading">
-          <p class="cg-eyebrow">Other routes.</p><h2 id="other-routes-title">Follow the work in public.</h2>
+          <p class="cg-eyebrow">{copy.other_routes_eyebrow}</p><h2 id="other-routes-title">
+            {copy.other_routes_heading}
+          </h2>
         </div><div class="cg-card-grid">
           <article class="cg-card">
-            <p class="cg-card-meta">Email.</p><h3>info@cinagroup.com</h3><p>
-              Use email for product, service, partnership, and support conversations.
+            <p class="cg-card-meta">{copy.other_routes_card_label}</p><h3>{copy.other_routes_heading_2}</h3><p>
+              {copy.other_routes_paragraph}
             </p>
           </article><article class="cg-card">
-            <p class="cg-card-meta">GitHub.</p><h3>github.com/cinagroup</h3><p>
-              Review public repositories, releases, and technical work.
+            <p class="cg-card-meta">{copy.other_routes_card_label_2}</p><h3>{copy.other_routes_heading_3}</h3><p>
+              {copy.other_routes_paragraph_2}
             </p>
           </article><article class="cg-card">
-            <p class="cg-card-meta">Updates.</p><h3>CinaGroup blog.</h3><p>
-              Read product notes, engineering updates, and operating guidance.
+            <p class="cg-card-meta">{copy.other_routes_card_label_3}</p><h3>{copy.other_routes_heading_4}</h3><p>
+              {copy.other_routes_paragraph_3}
             </p>
           </article>
         </div>

@@ -1,11 +1,17 @@
 ---
+import { ENGLISH_PAGE_DEFAULTS } from '~/data/site/english-page-defaults';
+import { loadEnglishPageText } from '~/emdash/english-page-text';
+import { getPageCopyMetadata } from '~/emdash/published-page-copy';
+
+const copy = await loadEnglishPageText(Astro, 'cinaskill', ENGLISH_PAGE_DEFAULTS.cinaskill);
+
 import CinaProductPage from '~/components/CinaProductPage.astro';
 
-const metadata = {
-  title: 'CinaSkill — Reusable capability format for CinaClaw',
+const metadata = await getPageCopyMetadata(Astro, {
+  title: copy.metadata_title,
   description:
-    'CinaSkill describes focused SKILL.md-based capabilities used with CinaClaw workspaces; it is not presented as a standalone hosted service.',
-};
+    copy.metadata_description,
+});
 
 const code = `skill "release-check" {
   contract    = "SKILL.md"
@@ -16,70 +22,71 @@ const code = `skill "release-check" {
 ---
 
 <CinaProductPage
+  pageText={copy}
   product="cinaskill"
   {metadata}
-  eyebrow="CinaSkill / integrated capability format."
-  title="Package focused instructions and resources for reuse in CinaClaw."
-  lead="CinaSkill is the SKILL.md-based capability format used by bundled, managed, and workspace skills in CinaClaw. It does not claim a separate hosted service or standalone release."
-  primary={{ text: 'Map a reusable capability', href: '/contact/' }}
-  secondary={{ text: 'View the full stack', href: '/' }}
+  eyebrow={copy.hero_eyebrow}
+  title={copy.hero_title}
+  lead={copy.hero_lead}
+  primary={{ text: copy.hero_primary_text, href: '/contact/' }}
+  secondary={{ text: copy.hero_secondary_text, href: '/' }}
   capabilities={[
     {
-      label: 'Contract.',
-      title: 'Keep the entry point explicit.',
-      description: 'Use SKILL.md to describe when the capability applies, what it needs, and how it should operate.',
+      label: copy.capabilities_1_label,
+      title: copy.capabilities_1_title,
+      description: copy.capabilities_1_description,
     },
     {
-      label: 'Scope.',
-      title: 'Focus on one repeatable job.',
-      description: 'Separate a useful capability from unrelated workflows, permissions, and tools.',
+      label: copy.capabilities_2_label,
+      title: copy.capabilities_2_title,
+      description: copy.capabilities_2_description,
     },
     {
-      label: 'Resources.',
-      title: 'Attach only required support files.',
-      description: 'Reference runbooks, templates, scripts, or examples that the skill actually needs.',
+      label: copy.capabilities_3_label,
+      title: copy.capabilities_3_title,
+      description: copy.capabilities_3_description,
     },
     {
-      label: 'Location.',
-      title: 'Load from documented skill sources.',
-      description: 'Use bundled, managed, or workspace skill directories according to the CinaClaw setup.',
+      label: copy.capabilities_4_label,
+      title: copy.capabilities_4_title,
+      description: copy.capabilities_4_description,
     },
     {
-      label: 'Review.',
-      title: 'Make permissions inspectable.',
-      description: 'State the tools, external systems, and side effects the capability can require.',
+      label: copy.capabilities_5_label,
+      title: copy.capabilities_5_title,
+      description: copy.capabilities_5_description,
     },
     {
-      label: 'Maintain.',
-      title: 'Keep loading order and version visible.',
-      description: 'Document the workspace location, version, and runtime or resource assumptions the capability carries.',
+      label: copy.capabilities_6_label,
+      title: copy.capabilities_6_title,
+      description: copy.capabilities_6_description,
     },
   ]}
-  workflowTitle="Move one recurring job into a reviewable skill contract."
-  workflowLead="A reference skill starts with a real task, narrows the required resources and permissions, and is tested inside its intended CinaClaw workspace."
+  workflowTitle={copy.hero_workflow_title}
+  workflowLead={copy.hero_workflow_lead}
   workflow={[
     {
-      title: 'Define the trigger',
-      description: 'Write the task and the conditions under which the skill should be selected.',
+      title: copy.workflow_1_title,
+      description: copy.workflow_1_description,
     },
     {
-      title: 'Specify the contract',
-      description: 'Describe required inputs, instructions, tools, resources, and expected output in SKILL.md.',
+      title: copy.workflow_2_title,
+      description: copy.workflow_2_description,
     },
     {
-      title: 'Test in one workspace',
-      description: 'Exercise the skill with representative inputs and review any tool or permission boundary.',
+      title: copy.workflow_3_title,
+      description: copy.workflow_3_description,
     },
     {
-      title: 'Version and maintain',
-      description: 'Keep compatibility, supporting resources, and workspace loading behavior clear as the workflow changes.',
+      title: copy.workflow_4_title,
+      description: copy.workflow_4_description,
     },
   ]}
   codeLabel="Illustrative skill contract."
   {code}
   principles={[
-    { title: 'One clear job.', description: 'A skill should remain small enough for its behavior and permissions to be reviewed.' },
-    { title: 'Explicit resources.', description: 'Supporting files and tools should be present because the task requires them.' },
-    { title: 'No standalone claim.', description: 'CinaSkill is described as a format integrated with CinaClaw, not an independent hosted product.' },
+    { title: copy.principles_1_title, description: copy.principles_1_description },
+    { title: copy.principles_2_title, description: copy.principles_2_description },
+    { title: copy.principles_3_title, description: copy.principles_3_description },
   ]}
 />

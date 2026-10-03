@@ -1,11 +1,16 @@
 ---
+import { ENGLISH_PAGE_DEFAULTS } from '~/data/site/english-page-defaults';
+import { loadEnglishPageText } from '~/emdash/english-page-text';
+import { getPageCopyMetadata } from '~/emdash/published-page-copy';
+
+const copy = await loadEnglishPageText(Astro, 'cinaclaw', ENGLISH_PAGE_DEFAULTS.cinaclaw);
+
 import CinaProductPage from '~/components/CinaProductPage.astro';
 
-const metadata = {
-  title: 'CinaClaw — Local-first personal AI assistant',
-  description:
-    'CinaClaw is an open-source personal AI assistant with a local-first Gateway, channel adapters, skills, and companion apps.',
-};
+const metadata = await getPageCopyMetadata(Astro, {
+  title: copy.metadata_title,
+  description: copy.metadata_description,
+});
 
 const code = `assistant "local" {
   gateway  = "self-hosted"
@@ -15,80 +20,80 @@ const code = `assistant "local" {
 ---
 
 <CinaProductPage
+  pageText={copy}
   product="cinaclaw"
   {metadata}
-  eyebrow="CinaClaw / open-source personal AI assistant."
-  title="Run an assistant through your own local-first Gateway."
-  lead="CinaClaw provides an installable CLI, Gateway, Control UI, messaging adapters, skills, and optional companion apps. Channel access and model credentials remain configuration the operator controls."
-  primary={{ text: 'Plan a CinaClaw setup', href: '/contact/' }}
-  secondary={{ text: 'View the full stack', href: '/' }}
+  eyebrow={copy.hero_eyebrow}
+  title={copy.hero_title}
+  lead={copy.hero_lead}
+  primary={{ text: copy.hero_primary_text, href: '/contact/' }}
+  secondary={{ text: copy.hero_secondary_text, href: '/' }}
   capabilities={[
     {
-      label: 'Onboard.',
-      title: 'Install through the guided CLI.',
-      description: 'Configure the Gateway, workspace, models, channels, and skills from a documented onboarding path.',
+      label: copy.capabilities_1_label,
+      title: copy.capabilities_1_title,
+      description: copy.capabilities_1_description,
     },
     {
-      label: 'Gateway.',
-      title: 'Keep the control plane local-first.',
-      description: 'Run sessions, channels, tools, and events through a Gateway under the operator’s control.',
+      label: copy.capabilities_2_label,
+      title: copy.capabilities_2_title,
+      description: copy.capabilities_2_description,
     },
     {
-      label: 'Channels.',
-      title: 'Connect documented messaging adapters.',
-      description: 'Use WebChat or configure supported adapters such as Telegram, Slack, Discord, Signal, and others.',
+      label: copy.capabilities_3_label,
+      title: copy.capabilities_3_title,
+      description: copy.capabilities_3_description,
     },
     {
-      label: 'Access.',
-      title: 'Pair unknown direct-message senders.',
-      description:
-        'Keep the default pairing policy for common messaging channels unless the operator explicitly changes it.',
+      label: copy.capabilities_4_label,
+      title: copy.capabilities_4_title,
+      description: copy.capabilities_4_description,
     },
     {
-      label: 'Skills.',
-      title: 'Load focused workspace capabilities.',
-      description: 'Use bundled, managed, or workspace skills with explicit instructions and supporting resources.',
+      label: copy.capabilities_5_label,
+      title: copy.capabilities_5_title,
+      description: copy.capabilities_5_description,
     },
     {
-      label: 'Apps.',
-      title: 'Add optional companion surfaces.',
-      description: 'Connect documented Windows, macOS, Linux, iOS, or Android surfaces when the setup requires them.',
+      label: copy.capabilities_6_label,
+      title: copy.capabilities_6_title,
+      description: copy.capabilities_6_description,
     },
   ]}
-  workflowTitle="Move from install to one deliberately configured assistant path."
-  workflowLead="A reference setup confirms the local Gateway, one model, one channel, and the applicable access policy before expanding."
+  workflowTitle={copy.hero_workflow_title}
+  workflowLead={copy.hero_workflow_lead}
   workflow={[
     {
-      title: 'Run onboarding',
-      description: 'Install the CLI and configure the Gateway, workspace, model authentication, and daemon mode.',
+      title: copy.workflow_1_title,
+      description: copy.workflow_1_description,
     },
     {
-      title: 'Connect one channel',
-      description: 'Start with WebChat or one supported adapter and keep its inbound access policy explicit.',
+      title: copy.workflow_2_title,
+      description: copy.workflow_2_description,
     },
     {
-      title: 'Add a focused skill',
-      description: 'Introduce only the instructions and tools required for the first job.',
+      title: copy.workflow_3_title,
+      description: copy.workflow_3_description,
     },
     {
-      title: 'Verify and operate',
-      description: 'Check Gateway status, exercise the channel, and use the security runbook before remote exposure.',
+      title: copy.workflow_4_title,
+      description: copy.workflow_4_description,
     },
   ]}
   codeLabel="Illustrative local configuration."
   {code}
   principles={[
     {
-      title: 'Operator control.',
-      description: 'The operator chooses the models, channels, tools, access policies, and exposure path.',
+      title: copy.principles_1_title,
+      description: copy.principles_1_description,
     },
     {
-      title: 'Secure defaults.',
-      description: 'Pairing, allowlists, sandbox settings, and exposure guidance should be reviewed before use.',
+      title: copy.principles_2_title,
+      description: copy.principles_2_description,
     },
     {
-      title: 'Incremental setup.',
-      description: 'Validate one model, channel, and skill path before adding more integrations.',
+      title: copy.principles_3_title,
+      description: copy.principles_3_description,
     },
   ]}
 />

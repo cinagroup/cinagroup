@@ -1,11 +1,16 @@
 ---
+import { ENGLISH_PAGE_DEFAULTS } from '~/data/site/english-page-defaults';
+import { loadEnglishPageText } from '~/emdash/english-page-text';
+import { getPageCopyMetadata } from '~/emdash/published-page-copy';
+
+const copy = await loadEnglishPageText(Astro, 'cinaseek', ENGLISH_PAGE_DEFAULTS.cinaseek);
+
 import CinaProductPage from '~/components/CinaProductPage.astro';
 
-const metadata = {
-  title: 'CinaSeek — Secure AI productivity environment',
-  description:
-    'CinaSeek is an early-access environment for AI agents and sandboxed personal apps built on Cloudflare Workers and workerd.',
-};
+const metadata = await getPageCopyMetadata(Astro, {
+  title: copy.metadata_title,
+  description: copy.metadata_description,
+});
 
 const code = `gadget "planning-workspace" {
   sandbox = "isolated"
@@ -15,81 +20,80 @@ const code = `gadget "planning-workspace" {
 ---
 
 <CinaProductPage
+  pageText={copy}
   product="cinaseek"
   {metadata}
-  eyebrow="CinaSeek / early-access AI productivity environment."
-  title="Build and run private AI-assisted apps inside capability-based sandboxes."
-  lead="CinaSeek combines agent chat, personal applications called Gadgets, and scoped Gatekeepers. The project is early access; production readiness depends on the release and deployment configuration."
-  primary={{ text: 'Discuss an early-access evaluation', href: '/contact/' }}
-  secondary={{ text: 'View the full stack', href: '/' }}
+  eyebrow={copy.hero_eyebrow}
+  title={copy.hero_title}
+  lead={copy.hero_lead}
+  primary={{ text: copy.hero_primary_text, href: '/contact/' }}
+  secondary={{ text: copy.hero_secondary_text, href: '/' }}
   capabilities={[
     {
-      label: 'Agent.',
-      title: 'Work through an agent chat UI.',
-      description:
-        'Ask an agent to complete tasks or build a focused personal application for the work in front of you.',
+      label: copy.capabilities_1_label,
+      title: copy.capabilities_1_title,
+      description: copy.capabilities_1_description,
     },
     {
-      label: 'Build.',
-      title: 'Create private Gadgets.',
-      description: 'Generate small applications whose client and server run in isolated, per-user boundaries.',
+      label: copy.capabilities_2_label,
+      title: copy.capabilities_2_title,
+      description: copy.capabilities_2_description,
     },
     {
-      label: 'Share.',
-      title: 'Collaborate through explicit sharing.',
-      description:
-        'Keep each Gadget private by default, then grant access to named users or through a deliberate share link.',
+      label: copy.capabilities_3_label,
+      title: copy.capabilities_3_title,
+      description: copy.capabilities_3_description,
     },
     {
-      label: 'Scope.',
-      title: 'Introduce only approved resources.',
-      description: 'Use Gatekeepers to narrow authorization to the specific external resources a user intended.',
+      label: copy.capabilities_4_label,
+      title: copy.capabilities_4_title,
+      description: copy.capabilities_4_description,
     },
     {
-      label: 'Review.',
-      title: 'Inspect actions before release.',
-      description: 'Log external actions and preserve human approval for operations with side effects.',
+      label: copy.capabilities_5_label,
+      title: copy.capabilities_5_title,
+      description: copy.capabilities_5_description,
     },
     {
-      label: 'Deploy.',
-      title: 'Develop locally, deploy through the documented path.',
-      description: 'Use workerd for local development and the documented Cloudflare path for production deployment.',
+      label: copy.capabilities_6_label,
+      title: copy.capabilities_6_title,
+      description: copy.capabilities_6_description,
     },
   ]}
-  workflowTitle="Move from a request to a sandboxed personal app."
-  workflowLead="A reference evaluation keeps the requested job, generated Gadget, introduced resources, and review queue visible."
+  workflowTitle={copy.hero_workflow_title}
+  workflowLead={copy.hero_workflow_lead}
   workflow={[
     {
-      title: 'Define the job',
-      description: 'Describe the result, intended users, data sensitivity, and external resources required.',
+      title: copy.workflow_1_title,
+      description: copy.workflow_1_description,
     },
     {
-      title: 'Build the Gadget',
-      description: 'Let the agent generate the focused client/server application inside its isolated workspace.',
+      title: copy.workflow_2_title,
+      description: copy.workflow_2_description,
     },
     {
-      title: 'Introduce resources',
-      description: 'Connect only the approved external resources through Gatekeepers and explicit capabilities.',
+      title: copy.workflow_3_title,
+      description: copy.workflow_3_description,
     },
     {
-      title: 'Review and share',
-      description: 'Inspect queued side effects, test the result, and choose whether to keep it private or share it.',
+      title: copy.workflow_4_title,
+      description: copy.workflow_4_description,
     },
   ]}
   codeLabel="Illustrative Gadget contract."
   {code}
   principles={[
     {
-      title: 'Capability boundaries.',
-      description: 'Agents and Gadgets begin without ambient access to external resources.',
+      title: copy.principles_1_title,
+      description: copy.principles_1_description,
     },
     {
-      title: 'Private by default.',
-      description: 'Each Gadget runs in an isolated boundary and is shared only through an explicit user action.',
+      title: copy.principles_2_title,
+      description: copy.principles_2_description,
     },
     {
-      title: 'Visible review.',
-      description: 'Actions with side effects should remain logged and available for human approval.',
+      title: copy.principles_3_title,
+      description: copy.principles_3_description,
     },
   ]}
 />

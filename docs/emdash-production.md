@@ -10,6 +10,7 @@ The manual operations are:
 
 - `validate`: type/lint/format checks, contact and CMS/Access tests, source and built content audits, production build, fixed resource-target checks, dry upload and Linux Worker startup checks.
 - `deploy`: the same checks, read-only production boundary audit, tracked contact migration to the exact production contact database, Worker upload, and public/anonymous Access verification on the noindex workers.dev endpoint. This operation does not attach domain routes.
+- `deploy-and-initialize` / `deploy-and-resume-initialization`: the same checked deployment, with a backed-up, serialized initialization of missing native website models, content, menus and approved media. See [Website content](emdash-site-content.md) for ownership, repeat-run behavior and acceptance.
 - `cutover`: the same checks and staged online verification, followed by attaching only the two exact owned domain routes and verifying the primary live domain. Failed live verification removes those routes so retained Pages resumes serving public requests.
 - `rollback`: remove only the exact routes owned by this Worker. Do not delete data, media, keys, DNS, Pages domains or the Pages project.
 

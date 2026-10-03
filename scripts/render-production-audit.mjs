@@ -111,6 +111,8 @@ try {
     rendered++;
   }
   console.log('Compiled production public responses audited offline: ' + rendered + '; mirror: dist/audit');
+  const { verifySiteContentWorker } = await import('./verify-site-content-worker.mjs');
+  await verifySiteContentWorker(server);
 } catch (error) {
   server.debug();
   throw error;

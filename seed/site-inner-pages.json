@@ -1,0 +1,4241 @@
+{
+  "version": "1",
+  "defaultLocale": "en",
+  "meta": {
+    "name": "CinaGroup existing localized inner pages",
+    "description": "Existing audited public copy; initialize missing records without overriding edits.",
+    "author": "CinaGroup"
+  },
+  "collections": [
+    {
+      "slug": "page_about",
+      "label": "About Page",
+      "labelSingular": "About Page",
+      "description": "Existing localized public copy. Evidence, disclosures, form submission and illustrative qualifiers stay code controlled.",
+      "group": "Website",
+      "sortOrder": 2,
+      "titleField": "title",
+      "supports": ["drafts", "revisions", "preview", "seo"],
+      "routable": true,
+      "urlPattern": "/about/",
+      "fields": [
+        {
+          "slug": "title",
+          "label": "title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "description",
+          "label": "description",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "eyebrow",
+          "label": "eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "hero_title",
+          "label": "hero Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "lead",
+          "label": "lead",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "services",
+          "label": "services",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "contact",
+          "label": "contact",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "mission_eyebrow",
+          "label": "mission Eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "mission_title",
+          "label": "mission Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "mission_text",
+          "label": "mission Text",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "principles",
+          "label": "principles",
+          "type": "repeater",
+          "translatable": true,
+          "validation": {
+            "minItems": 1,
+            "maxItems": 40,
+            "subFields": [
+              {
+                "slug": "label",
+                "label": "label",
+                "type": "text",
+                "required": true
+              },
+              {
+                "slug": "title",
+                "label": "title",
+                "type": "text",
+                "required": true
+              },
+              {
+                "slug": "text",
+                "label": "text",
+                "type": "text",
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "slug": "products_eyebrow",
+          "label": "products Eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "products_title",
+          "label": "products Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "products_text",
+          "label": "products Text",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "product_descriptions_cinaseek",
+          "label": "product Descriptions / cinaseek",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "product_descriptions_cinaclaw",
+          "label": "product Descriptions / cinaclaw",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "product_descriptions_cinatoken",
+          "label": "product Descriptions / cinatoken",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "product_descriptions_cinaskill",
+          "label": "product Descriptions / cinaskill",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "product_descriptions_cinachain",
+          "label": "product Descriptions / cinachain",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "next_eyebrow",
+          "label": "next Eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "next_title",
+          "label": "next Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "next_text",
+          "label": "next Text",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        }
+      ]
+    },
+    {
+      "slug": "page_services",
+      "label": "Services Page",
+      "labelSingular": "Services Page",
+      "description": "Existing localized public copy. Evidence, disclosures, form submission and illustrative qualifiers stay code controlled.",
+      "group": "Website",
+      "sortOrder": 3,
+      "titleField": "title",
+      "supports": ["drafts", "revisions", "preview", "seo"],
+      "routable": true,
+      "urlPattern": "/services/",
+      "fields": [
+        {
+          "slug": "metadata_title",
+          "label": "metadata Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "eyebrow",
+          "label": "eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "title",
+          "label": "title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "lead",
+          "label": "lead",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "primary",
+          "label": "primary",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "secondary",
+          "label": "secondary",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "section_eyebrow",
+          "label": "section Eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "section_title",
+          "label": "section Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "section_lead",
+          "label": "section Lead",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "cards",
+          "label": "cards",
+          "type": "repeater",
+          "translatable": true,
+          "validation": {
+            "minItems": 1,
+            "maxItems": 40,
+            "subFields": [
+              {
+                "slug": "label",
+                "label": "label",
+                "type": "text",
+                "required": true
+              },
+              {
+                "slug": "title",
+                "label": "title",
+                "type": "text",
+                "required": true
+              },
+              {
+                "slug": "description",
+                "label": "description",
+                "type": "text",
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "slug": "process_eyebrow",
+          "label": "process Eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "process_title",
+          "label": "process Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "steps",
+          "label": "steps",
+          "type": "repeater",
+          "translatable": true,
+          "validation": {
+            "minItems": 1,
+            "maxItems": 40,
+            "subFields": [
+              {
+                "slug": "title",
+                "label": "title",
+                "type": "text",
+                "required": true
+              },
+              {
+                "slug": "description",
+                "label": "description",
+                "type": "text",
+                "required": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "page_contact",
+      "label": "Contact Page",
+      "labelSingular": "Contact Page",
+      "description": "Existing localized public copy. Evidence, disclosures, form submission and illustrative qualifiers stay code controlled.",
+      "group": "Website",
+      "sortOrder": 4,
+      "titleField": "title",
+      "supports": ["drafts", "revisions", "preview", "seo"],
+      "routable": true,
+      "urlPattern": "/contact/",
+      "fields": [
+        {
+          "slug": "title",
+          "label": "title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "description",
+          "label": "description",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "eyebrow",
+          "label": "eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "hero_title",
+          "label": "hero Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "hero_lead",
+          "label": "hero Lead",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "email",
+          "label": "email",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "services",
+          "label": "services",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "context_eyebrow",
+          "label": "context Eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "context_title",
+          "label": "context Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "context_lead",
+          "label": "context Lead",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "items",
+          "label": "items",
+          "type": "repeater",
+          "translatable": true,
+          "validation": {
+            "minItems": 1,
+            "maxItems": 40,
+            "subFields": [
+              {
+                "slug": "label",
+                "label": "0",
+                "type": "text",
+                "required": true
+              },
+              {
+                "slug": "description",
+                "label": "1",
+                "type": "text",
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "slug": "direct_eyebrow",
+          "label": "direct Eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "direct_title",
+          "label": "direct Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "direct_lead",
+          "label": "direct Lead",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "privacy",
+          "label": "privacy",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "terms_label",
+          "label": "terms",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        }
+      ]
+    },
+    {
+      "slug": "page_pricing",
+      "label": "Pricing Page",
+      "labelSingular": "Pricing Page",
+      "description": "Existing localized public copy. Evidence, disclosures, form submission and illustrative qualifiers stay code controlled.",
+      "group": "Website",
+      "sortOrder": 5,
+      "titleField": "title",
+      "supports": ["drafts", "revisions", "preview", "seo"],
+      "routable": true,
+      "urlPattern": "/pricing/",
+      "fields": [
+        {
+          "slug": "metadata_title",
+          "label": "metadata Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "eyebrow",
+          "label": "eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "title",
+          "label": "title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "lead",
+          "label": "lead",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "primary",
+          "label": "primary",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "secondary",
+          "label": "secondary",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "section_eyebrow",
+          "label": "section Eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "section_title",
+          "label": "section Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "section_lead",
+          "label": "section Lead",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "cards",
+          "label": "cards",
+          "type": "repeater",
+          "translatable": true,
+          "validation": {
+            "minItems": 3,
+            "maxItems": 3,
+            "subFields": [
+              {
+                "slug": "label",
+                "label": "label",
+                "type": "text",
+                "required": true
+              },
+              {
+                "slug": "title",
+                "label": "title",
+                "type": "text",
+                "required": true
+              },
+              {
+                "slug": "description",
+                "label": "description",
+                "type": "text",
+                "required": true
+              },
+              {
+                "slug": "items",
+                "label": "items (one item per line)",
+                "type": "text",
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "slug": "factors_eyebrow",
+          "label": "factors Eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "factors_title",
+          "label": "factors Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "factors",
+          "label": "factors",
+          "type": "repeater",
+          "translatable": true,
+          "validation": {
+            "minItems": 1,
+            "maxItems": 40,
+            "subFields": [
+              {
+                "slug": "title",
+                "label": "title",
+                "type": "text",
+                "required": true
+              },
+              {
+                "slug": "description",
+                "label": "description",
+                "type": "text",
+                "required": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "page_products",
+      "label": "Product Pages",
+      "labelSingular": "Product Pages",
+      "description": "Existing localized public copy. Evidence, disclosures, form submission and illustrative qualifiers stay code controlled.",
+      "group": "Website",
+      "sortOrder": 6,
+      "titleField": "title",
+      "supports": ["drafts", "revisions", "preview", "seo"],
+      "routable": true,
+      "urlPattern": "/{slug}/",
+      "fields": [
+        {
+          "slug": "contact",
+          "label": "contact",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "stack",
+          "label": "stack",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "capabilities_eyebrow",
+          "label": "capabilities Eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "capabilities_title",
+          "label": "capabilities Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "capabilities_lead",
+          "label": "capabilities Lead",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "workflow_eyebrow",
+          "label": "workflow Eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "workflow_title",
+          "label": "workflow Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "steps",
+          "label": "steps",
+          "type": "repeater",
+          "translatable": true,
+          "validation": {
+            "minItems": 1,
+            "maxItems": 40,
+            "subFields": [
+              {
+                "slug": "title",
+                "label": "title",
+                "type": "text",
+                "required": true
+              },
+              {
+                "slug": "description",
+                "label": "description",
+                "type": "text",
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "slug": "next_eyebrow",
+          "label": "next Eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "next_title",
+          "label": "next Title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "eyebrow",
+          "label": "eyebrow",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "title",
+          "label": "title",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "lead",
+          "label": "lead",
+          "type": "text",
+          "translatable": true,
+          "validation": {
+            "maxLength": 6000
+          },
+          "widget": "textarea"
+        },
+        {
+          "slug": "capabilities",
+          "label": "capabilities",
+          "type": "repeater",
+          "translatable": true,
+          "validation": {
+            "minItems": 1,
+            "maxItems": 40,
+            "subFields": [
+              {
+                "slug": "title",
+                "label": "title",
+                "type": "text",
+                "required": true
+              },
+              {
+                "slug": "description",
+                "label": "description",
+                "type": "text",
+                "required": true
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "content": {
+    "page_about": [
+      {
+        "id": "page_about:about:zh",
+        "slug": "about",
+        "locale": "zh",
+        "status": "published",
+        "data": {
+          "title": "关于海内集团 — 面向真实工作的实用产品与工作流",
+          "description": "海内集团围绕真实工作设计搜索、自动化、模型访问、可复用能力与互联基础设施。",
+          "eyebrow": "集团 / 以工作为中心。",
+          "hero_title": "把复杂技术变成团队能够使用的清晰工作流。",
+          "lead": "海内集团从用户要完成的工作、必要上下文、审核节点与验收条件出发，而不是从产品名称或宏大承诺出发。",
+          "services": "查看服务",
+          "contact": "联系我们",
+          "mission_eyebrow": "使命。",
+          "mission_title": "打造值得信赖、能推动关键工作向前的产品。",
+          "mission_text": "我们不把搜索、工作流、API 与基础设施割裂开来，而是将它们设计为一套完整的运营体验。",
+          "principles": [
+            {
+              "label": "用户。",
+              "title": "从待完成的工作出发。",
+              "text": "明确谁在什么情境下需要什么结果。"
+            },
+            {
+              "label": "边界。",
+              "title": "让权限与审核清晰可见。",
+              "text": "从一开始就把访问、批准、失败与恢复纳入设计。"
+            },
+            {
+              "label": "证据。",
+              "title": "用可观察结果作判断。",
+              "text": "先验证行为、质量、性能与运行状态，再扩大交付范围。"
+            }
+          ],
+          "products_eyebrow": "产品体系。",
+          "products_title": "围绕一条业务流程灵活组合。",
+          "products_text": "每款产品都有明确职责，既可独立使用，也可组合使用。",
+          "product_descriptions_cinaseek": "检索获准使用的知识，并连同依据一起给出答案。",
+          "product_descriptions_cinaclaw": "将重复工作转化为可审核的工作流。",
+          "product_descriptions_cinatoken": "管理模型访问、路由与使用边界。",
+          "product_descriptions_cinaskill": "定义、审核并版本化小型能力。",
+          "product_descriptions_cinachain": "支持可验证状态与清晰的发布管理。",
+          "next_eyebrow": "下一步。",
+          "next_title": "分享一条真实工作流。",
+          "next_text": "从用户、当前状态、约束与期望结果出发，一起界定最小而有用的范围。"
+        }
+      },
+      {
+        "id": "page_about:about:ja",
+        "slug": "about",
+        "locale": "ja",
+        "status": "published",
+        "translationOf": "page_about:about:zh",
+        "data": {
+          "title": "CinaGroup について — 実用的な製品とワークフロー",
+          "description": "CinaGroup は、検索、自動化、モデルアクセス、再利用可能な機能、接続インフラを実際の仕事に合わせて設計します。",
+          "eyebrow": "会社 / 仕事を中心に。",
+          "hero_title": "複雑な技術を、チームが使える明確なワークフローへ。",
+          "lead": "CinaGroup は、製品名や大きな約束ではなく、ユーザーが完了すべき仕事、必要な文脈、レビュー点、受け入れ条件から設計を始めます。",
+          "services": "サービスを見る",
+          "contact": "お問い合わせ",
+          "mission_eyebrow": "使命。",
+          "mission_title": "必要な仕事を前に進める、信頼できる製品をつくる。",
+          "mission_text": "検索、ワークフロー、API、インフラを別々の話として扱わず、一つの運用体験として設計します。",
+          "principles": [
+            {
+              "label": "ユーザー。",
+              "title": "完了すべき仕事から始める。",
+              "text": "誰が、どの文脈で、どの結果を必要としているかを明確にします。"
+            },
+            {
+              "label": "境界。",
+              "title": "権限とレビューを見える化。",
+              "text": "アクセス、承認、失敗、復旧を後付けにせず、最初の設計に含めます。"
+            },
+            {
+              "label": "証拠。",
+              "title": "観察可能な結果で判断。",
+              "text": "動作、品質、パフォーマンス、運用状態を確認してから提供範囲を広げます。"
+            }
+          ],
+          "products_eyebrow": "製品群。",
+          "products_title": "一つの業務フローに合わせて組み合わせます。",
+          "products_text": "各製品は明確な責任を持ち、単独でも組み合わせても利用できます。",
+          "product_descriptions_cinaseek": "承認された知識を検索し、根拠と一緒に回答します。",
+          "product_descriptions_cinaclaw": "繰り返し作業をレビュー可能なワークフローにします。",
+          "product_descriptions_cinatoken": "モデルアクセス、ルーティング、利用境界を管理します。",
+          "product_descriptions_cinaskill": "小さな機能を定義、レビュー、バージョン管理します。",
+          "product_descriptions_cinachain": "検証可能な状態と明確なリリース管理を支えます。",
+          "next_eyebrow": "次のステップ。",
+          "next_title": "実際のワークフローを一つ共有してください。",
+          "next_text": "ユーザー、現在の状態、制約、期待する結果から、最小限の有用な範囲を一緒に定義します。"
+        }
+      },
+      {
+        "id": "page_about:about:ko",
+        "slug": "about",
+        "locale": "ko",
+        "status": "published",
+        "translationOf": "page_about:about:zh",
+        "data": {
+          "title": "CinaGroup 소개 — 실무를 위한 제품과 워크플로",
+          "description": "CinaGroup은 검색, 자동화, 모델 접근, 재사용 가능한 기능, 연결 인프라를 실제 업무에 맞게 설계합니다.",
+          "eyebrow": "회사 / 업무 중심.",
+          "hero_title": "복잡한 기술을 팀이 사용할 수 있는 명확한 워크플로로 바꿉니다.",
+          "lead": "CinaGroup은 큰 약속보다 사용자가 완료해야 할 일, 필요한 맥락, 검토 지점, 수용 기준에서 설계를 시작합니다.",
+          "services": "서비스 보기",
+          "contact": "문의하기",
+          "mission_eyebrow": "미션.",
+          "mission_title": "필요한 업무를 안정적으로 전진시키는 제품을 만듭니다.",
+          "mission_text": "검색, 워크플로, API, 인프라를 따로 보지 않고 하나의 운영 경험으로 설계합니다.",
+          "principles": [
+            {
+              "label": "사용자.",
+              "title": "완료해야 할 일에서 시작합니다.",
+              "text": "누가 어떤 맥락에서 어떤 결과를 필요로 하는지 분명히 합니다."
+            },
+            {
+              "label": "경계.",
+              "title": "권한과 검토를 보이게 합니다.",
+              "text": "접근, 승인, 실패, 복구를 처음부터 설계에 포함합니다."
+            },
+            {
+              "label": "증거.",
+              "title": "관찰 가능한 결과로 판단합니다.",
+              "text": "동작, 품질, 성능, 운영 상태를 확인한 뒤 범위를 확장합니다."
+            }
+          ],
+          "products_eyebrow": "제품 구성.",
+          "products_title": "하나의 업무 흐름에 맞춰 조합합니다.",
+          "products_text": "각 제품은 명확한 책임을 가지며 단독 또는 함께 사용할 수 있습니다.",
+          "product_descriptions_cinaseek": "승인된 지식을 검색하고 근거와 함께 답변합니다.",
+          "product_descriptions_cinaclaw": "반복 업무를 검토 가능한 워크플로로 만듭니다.",
+          "product_descriptions_cinatoken": "모델 접근, 라우팅 정책, 사용 경계를 관리합니다.",
+          "product_descriptions_cinaskill": "작은 기능을 정의하고 검토하며 버전 관리합니다.",
+          "product_descriptions_cinachain": "검증 가능한 상태와 명확한 릴리스를 지원합니다.",
+          "next_eyebrow": "다음 단계.",
+          "next_title": "실제 워크플로 하나를 공유해 주세요.",
+          "next_text": "사용자, 현재 상태, 제약, 기대 결과를 바탕으로 가장 작고 유용한 범위를 함께 정합니다."
+        }
+      },
+      {
+        "id": "page_about:about:ru",
+        "slug": "about",
+        "locale": "ru",
+        "status": "published",
+        "translationOf": "page_about:about:zh",
+        "data": {
+          "title": "О CinaGroup — практичные продукты и рабочие процессы",
+          "description": "CinaGroup проектирует поиск, автоматизацию, доступ к моделям и инфраструктуру вокруг реальной работы.",
+          "eyebrow": "Компания / Сначала работа.",
+          "hero_title": "Превращаем сложные технологии в понятные рабочие процессы.",
+          "lead": "Мы начинаем с задачи пользователя, необходимого контекста, точек проверки и критериев приемки, а не с громких обещаний.",
+          "services": "Посмотреть услуги",
+          "contact": "Связаться с нами",
+          "mission_eyebrow": "Миссия.",
+          "mission_title": "Создавать надежные продукты, которые двигают работу вперед.",
+          "mission_text": "Мы рассматриваем поиск, процессы, API и инфраструктуру как единый операционный опыт.",
+          "principles": [
+            {
+              "label": "Пользователь.",
+              "title": "Начинаем с нужного результата.",
+              "text": "Определяем, кому, в каком контексте и какой результат нужен."
+            },
+            {
+              "label": "Границы.",
+              "title": "Делаем доступ и контроль видимыми.",
+              "text": "Закладываем права, согласование, ошибки и восстановление в исходный дизайн."
+            },
+            {
+              "label": "Доказательства.",
+              "title": "Судим по наблюдаемому результату.",
+              "text": "Проверяем работу, качество, производительность и эксплуатацию до расширения."
+            }
+          ],
+          "products_eyebrow": "Линейка продуктов.",
+          "products_title": "Комбинируем продукты под один рабочий процесс.",
+          "products_text": "У каждого продукта своя четкая зона ответственности; их можно использовать отдельно или вместе.",
+          "product_descriptions_cinaseek": "Ищет в одобренных знаниях и показывает основания ответа.",
+          "product_descriptions_cinaclaw": "Превращает повторяемую работу в проверяемый процесс.",
+          "product_descriptions_cinatoken": "Управляет доступом к моделям, маршрутизацией и лимитами.",
+          "product_descriptions_cinaskill": "Описывает, проверяет и версионирует небольшие возможности.",
+          "product_descriptions_cinachain": "Поддерживает проверяемое состояние и понятные релизы.",
+          "next_eyebrow": "Следующий шаг.",
+          "next_title": "Покажите нам один реальный рабочий процесс.",
+          "next_text": "Вместе определим минимальный полезный объем, исходя из пользователей, текущего состояния, ограничений и результата."
+        }
+      },
+      {
+        "id": "page_about:about:es",
+        "slug": "about",
+        "locale": "es",
+        "status": "published",
+        "translationOf": "page_about:about:zh",
+        "data": {
+          "title": "Acerca de CinaGroup — productos y flujos de trabajo prácticos",
+          "description": "CinaGroup diseña búsqueda, automatización, acceso a modelos e infraestructura alrededor del trabajo real.",
+          "eyebrow": "Empresa / Primero el trabajo.",
+          "hero_title": "Convertimos tecnología compleja en flujos de trabajo claros para los equipos.",
+          "lead": "Empezamos por el trabajo que debe completarse, el contexto necesario, los puntos de revisión y los criterios de aceptación.",
+          "services": "Ver servicios",
+          "contact": "Contactar",
+          "mission_eyebrow": "Misión.",
+          "mission_title": "Crear productos fiables que hagan avanzar el trabajo necesario.",
+          "mission_text": "Diseñamos búsqueda, flujos, API e infraestructura como una sola experiencia operativa.",
+          "principles": [
+            {
+              "label": "Usuario.",
+              "title": "Empezar por el resultado.",
+              "text": "Aclaramos quién necesita qué resultado y en qué contexto."
+            },
+            {
+              "label": "Límites.",
+              "title": "Hacer visibles el acceso y la revisión.",
+              "text": "Incluimos permisos, aprobaciones, fallos y recuperación desde el inicio."
+            },
+            {
+              "label": "Evidencia.",
+              "title": "Decidir con resultados observables.",
+              "text": "Verificamos funcionamiento, calidad, rendimiento y operación antes de ampliar."
+            }
+          ],
+          "products_eyebrow": "Mapa de productos.",
+          "products_title": "Combinamos productos alrededor de un flujo de trabajo.",
+          "products_text": "Cada producto tiene una responsabilidad clara y puede funcionar solo o como parte del conjunto.",
+          "product_descriptions_cinaseek": "Busca conocimiento aprobado y responde con sus fuentes.",
+          "product_descriptions_cinaclaw": "Convierte tareas repetidas en flujos revisables.",
+          "product_descriptions_cinatoken": "Gestiona acceso a modelos, enrutamiento y límites de uso.",
+          "product_descriptions_cinaskill": "Define, revisa y versiona capacidades pequeñas.",
+          "product_descriptions_cinachain": "Sustenta estados verificables y lanzamientos claros.",
+          "next_eyebrow": "Siguiente paso.",
+          "next_title": "Comparta un flujo de trabajo real.",
+          "next_text": "Definiremos juntos el alcance útil más pequeño a partir de usuarios, estado actual, límites y resultado esperado."
+        }
+      },
+      {
+        "id": "page_about:about:pt",
+        "slug": "about",
+        "locale": "pt",
+        "status": "published",
+        "translationOf": "page_about:about:zh",
+        "data": {
+          "title": "Sobre a CinaGroup — produtos e fluxos de trabalho práticos",
+          "description": "A CinaGroup projeta busca, automação, acesso a modelos e infraestrutura em torno do trabalho real.",
+          "eyebrow": "Empresa / Trabalho primeiro.",
+          "hero_title": "Transformamos tecnologia complexa em fluxos claros para as equipes.",
+          "lead": "Começamos pelo trabalho a concluir, pelo contexto necessário, pelos pontos de revisão e pelos critérios de aceitação.",
+          "services": "Ver serviços",
+          "contact": "Entrar em contato",
+          "mission_eyebrow": "Missão.",
+          "mission_title": "Criar produtos confiáveis que façam o trabalho necessário avançar.",
+          "mission_text": "Projetamos busca, fluxos, APIs e infraestrutura como uma única experiência operacional.",
+          "principles": [
+            {
+              "label": "Usuário.",
+              "title": "Começar pelo resultado.",
+              "text": "Esclarecemos quem precisa de qual resultado e em que contexto."
+            },
+            {
+              "label": "Limites.",
+              "title": "Tornar acesso e revisão visíveis.",
+              "text": "Incluímos permissões, aprovações, falhas e recuperação desde o início."
+            },
+            {
+              "label": "Evidência.",
+              "title": "Decidir com resultados observáveis.",
+              "text": "Verificamos funcionamento, qualidade, desempenho e operação antes de ampliar."
+            }
+          ],
+          "products_eyebrow": "Mapa de produtos.",
+          "products_title": "Combinamos produtos em torno de um fluxo de trabalho.",
+          "products_text": "Cada produto tem uma responsabilidade clara e pode ser usado sozinho ou em conjunto.",
+          "product_descriptions_cinaseek": "Pesquisa conhecimento aprovado e responde com as fontes.",
+          "product_descriptions_cinaclaw": "Transforma tarefas repetidas em fluxos revisáveis.",
+          "product_descriptions_cinatoken": "Gerencia acesso a modelos, roteamento e limites de uso.",
+          "product_descriptions_cinaskill": "Define, revisa e versiona pequenas capacidades.",
+          "product_descriptions_cinachain": "Sustenta estados verificáveis e lançamentos claros.",
+          "next_eyebrow": "Próximo passo.",
+          "next_title": "Compartilhe um fluxo de trabalho real.",
+          "next_text": "Definiremos juntos o menor escopo útil com base nos usuários, no estado atual, nos limites e no resultado esperado."
+        }
+      },
+      {
+        "id": "page_about:about:fr",
+        "slug": "about",
+        "locale": "fr",
+        "status": "published",
+        "translationOf": "page_about:about:zh",
+        "data": {
+          "title": "À propos de CinaGroup — produits et flux de travail concrets",
+          "description": "CinaGroup conçoit la recherche, l’automatisation, l’accès aux modèles et l’infrastructure autour du travail réel.",
+          "eyebrow": "Entreprise / Le travail d’abord.",
+          "hero_title": "Nous transformons les technologies complexes en flux de travail clairs.",
+          "lead": "Nous partons du travail à accomplir, du contexte nécessaire, des points de contrôle et des critères d’acceptation.",
+          "services": "Voir les services",
+          "contact": "Nous contacter",
+          "mission_eyebrow": "Mission.",
+          "mission_title": "Créer des produits fiables qui font avancer le travail utile.",
+          "mission_text": "Nous concevons recherche, flux, API et infrastructure comme une seule expérience opérationnelle.",
+          "principles": [
+            {
+              "label": "Utilisateur.",
+              "title": "Partir du résultat.",
+              "text": "Nous précisons qui a besoin de quel résultat et dans quel contexte."
+            },
+            {
+              "label": "Limites.",
+              "title": "Rendre l’accès et la revue visibles.",
+              "text": "Nous intégrons droits, approbations, échecs et reprise dès la conception."
+            },
+            {
+              "label": "Preuves.",
+              "title": "Décider à partir de résultats observables.",
+              "text": "Nous vérifions fonctionnement, qualité, performance et exploitation avant d’élargir."
+            }
+          ],
+          "products_eyebrow": "Gamme de produits.",
+          "products_title": "Nous combinons les produits autour d’un flux de travail.",
+          "products_text": "Chaque produit a une responsabilité claire et peut être utilisé seul ou avec les autres.",
+          "product_descriptions_cinaseek": "Recherche dans les connaissances approuvées et cite ses sources.",
+          "product_descriptions_cinaclaw": "Transforme les tâches répétées en flux contrôlables.",
+          "product_descriptions_cinatoken": "Gère l’accès aux modèles, le routage et les limites d’usage.",
+          "product_descriptions_cinaskill": "Définit, révise et versionne de petites capacités.",
+          "product_descriptions_cinachain": "Soutient des états vérifiables et des versions explicites.",
+          "next_eyebrow": "Étape suivante.",
+          "next_title": "Partagez un flux de travail réel.",
+          "next_text": "Nous définirons ensemble le plus petit périmètre utile à partir des utilisateurs, de l’existant, des contraintes et du résultat."
+        }
+      }
+    ],
+    "page_services": [
+      {
+        "id": "page_services:services:zh",
+        "slug": "services",
+        "locale": "zh",
+        "status": "published",
+        "data": {
+          "metadata_title": "服务 — 产品、工作流与平台交付",
+          "eyebrow": "服务 / 从当前状态到经过验证的发布。",
+          "title": "在下一次产品改动变得昂贵之前，把它讲清楚。",
+          "lead": "海内集团帮助团队审计、设计、实现并强化搜索、自动化、模型网关与互联基础设施工作流。",
+          "primary": "沟通需求",
+          "secondary": "查看产品体系",
+          "section_eyebrow": "服务领域。",
+          "section_title": "从真实工作出发，而不是套用通用方案。",
+          "section_lead": "范围会根据用户、现有系统、风险与验收证据来确定。",
+          "cards": [
+            {
+              "label": "01 / 审计",
+              "title": "产品与工作流审计。",
+              "description": "审查用户旅程、源码、内容、可访问性与技术风险。"
+            },
+            {
+              "label": "02 / 设计",
+              "title": "搜索与自动化设计。",
+              "description": "为小而清晰的流程明确数据源、权限、审核点与输出。"
+            },
+            {
+              "label": "03 / 实现",
+              "title": "实现与发布强化。",
+              "description": "构建共享模式、测试、部署检查与恢复路径。"
+            }
+          ],
+          "process_eyebrow": "交付方式。",
+          "process_title": "在每次交接中留下证据。",
+          "steps": [
+            {
+              "title": "审计",
+              "description": "记录当前体验、源码与约束。"
+            },
+            {
+              "title": "界定",
+              "description": "就优先级与验收条件达成一致。"
+            },
+            {
+              "title": "构建",
+              "description": "以可审核的增量交付改动。"
+            },
+            {
+              "title": "验证",
+              "description": "执行静态检查、响应式 QA、部署与生产抽查。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_services:services:ja",
+        "slug": "services",
+        "locale": "ja",
+        "status": "published",
+        "translationOf": "page_services:services:zh",
+        "data": {
+          "metadata_title": "サービス — 製品・ワークフロー・プラットフォーム支援",
+          "eyebrow": "サービス / 現状から検証済みリリースへ。",
+          "title": "高コストになる前に、次の製品変更を明確に。",
+          "lead": "CinaGroup は、検索、自動化、モデルゲートウェイ、接続インフラの監査・設計・実装・強化を支援します。",
+          "primary": "相談する",
+          "secondary": "製品一覧を見る",
+          "section_eyebrow": "支援領域。",
+          "section_title": "一般的なパッケージではなく、実際の仕事から始めます。",
+          "section_lead": "ユーザー、既存システム、リスク、検証条件に合わせて範囲を決めます。",
+          "cards": [
+            {
+              "label": "01 / 監査",
+              "title": "製品とワークフローの監査。",
+              "description": "ユーザージャーニー、ソース、コンテンツ、アクセシビリティ、技術的リスクを確認します。"
+            },
+            {
+              "label": "02 / 設計",
+              "title": "検索と自動化の設計。",
+              "description": "情報源、権限、レビュー点、出力を明確にした小さなフローを設計します。"
+            },
+            {
+              "label": "03 / 実装",
+              "title": "実装とリリースの強化。",
+              "description": "共有パターン、テスト、デプロイ確認、復旧手順まで一貫して整えます。"
+            }
+          ],
+          "process_eyebrow": "進め方。",
+          "process_title": "各引き継ぎに証拠を残します。",
+          "steps": [
+            {
+              "title": "監査",
+              "description": "現在の体験、ソース、制約を記録します。"
+            },
+            {
+              "title": "整理",
+              "description": "優先順位と受け入れ条件を合意します。"
+            },
+            {
+              "title": "実装",
+              "description": "レビュー可能な単位で変更を届けます。"
+            },
+            {
+              "title": "検証",
+              "description": "静的チェック、レスポンシブ QA、デプロイ、本番確認を行います。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_services:services:ko",
+        "slug": "services",
+        "locale": "ko",
+        "status": "published",
+        "translationOf": "page_services:services:zh",
+        "data": {
+          "metadata_title": "서비스 — 제품, 워크플로 및 플랫폼 제공",
+          "eyebrow": "서비스 / 현재 상태에서 검증된 릴리스까지.",
+          "title": "다음 제품 변경이 비싸지기 전에 명확하게 만드세요.",
+          "lead": "CinaGroup은 검색, 자동화, 모델 게이트웨이 및 연결형 인프라의 감사, 설계, 구현과 강화 작업을 지원합니다.",
+          "primary": "상담하기",
+          "secondary": "제품 스택 보기",
+          "section_eyebrow": "서비스 영역.",
+          "section_title": "일반 패키지가 아니라 실제 업무에서 시작합니다.",
+          "section_lead": "사용자, 기존 시스템, 위험 및 검증 기준에 맞춰 범위를 정합니다.",
+          "cards": [
+            {
+              "label": "01 / 감사",
+              "title": "제품 및 워크플로 감사.",
+              "description": "사용자 여정, 소스, 콘텐츠, 접근성 및 기술 위험을 확인합니다."
+            },
+            {
+              "label": "02 / 설계",
+              "title": "검색 및 자동화 설계.",
+              "description": "정보원, 권한, 검토 지점과 출력을 명확히 한 작은 흐름을 설계합니다."
+            },
+            {
+              "label": "03 / 구현",
+              "title": "구현 및 릴리스 강화.",
+              "description": "공유 패턴, 테스트, 배포 확인 및 복구 경로를 함께 제공합니다."
+            }
+          ],
+          "process_eyebrow": "제공 방식.",
+          "process_title": "모든 인계 단계에 증거를 남깁니다.",
+          "steps": [
+            {
+              "title": "감사",
+              "description": "현재 경험, 소스와 제약을 기록합니다."
+            },
+            {
+              "title": "구체화",
+              "description": "우선순위와 수용 기준을 합의합니다."
+            },
+            {
+              "title": "구현",
+              "description": "검토 가능한 단위로 변경을 제공합니다."
+            },
+            {
+              "title": "검증",
+              "description": "정적 검사, 반응형 QA, 배포 및 프로덕션 확인을 수행합니다."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_services:services:ru",
+        "slug": "services",
+        "locale": "ru",
+        "status": "published",
+        "translationOf": "page_services:services:zh",
+        "data": {
+          "metadata_title": "Услуги — продукт, процессы и платформенная доставка",
+          "eyebrow": "Услуги / от текущего состояния до проверенного релиза.",
+          "title": "Сделайте следующее изменение понятным до того, как оно станет дорогим.",
+          "lead": "CinaGroup помогает проводить аудит, проектировать, внедрять и укреплять поиск, автоматизацию, модельные шлюзы и связанную инфраструктуру.",
+          "primary": "Обсудить задачу",
+          "secondary": "Посмотреть продукты",
+          "section_eyebrow": "Направления.",
+          "section_title": "Начинаем с реальной работы, а не с типового пакета.",
+          "section_lead": "Объём определяется пользователями, существующими системами, рисками и критериями приёмки.",
+          "cards": [
+            {
+              "label": "01 / Аудит",
+              "title": "Аудит продукта и процесса.",
+              "description": "Проверяем путь пользователя, исходный код, контент, доступность и технические риски."
+            },
+            {
+              "label": "02 / Проектирование",
+              "title": "Проектирование поиска и автоматизации.",
+              "description": "Определяем источники, права, точки проверки и результаты небольшого процесса."
+            },
+            {
+              "label": "03 / Реализация",
+              "title": "Внедрение и укрепление релиза.",
+              "description": "Создаём общие шаблоны, тесты, проверки развёртывания и путь восстановления."
+            }
+          ],
+          "process_eyebrow": "Процесс.",
+          "process_title": "Доказательства на каждом этапе передачи.",
+          "steps": [
+            {
+              "title": "Аудит",
+              "description": "Фиксируем текущее состояние, код и ограничения."
+            },
+            {
+              "title": "Формирование",
+              "description": "Согласуем приоритеты и критерии приёмки."
+            },
+            {
+              "title": "Реализация",
+              "description": "Поставляем изменения проверяемыми частями."
+            },
+            {
+              "title": "Проверка",
+              "description": "Проводим статические проверки, адаптивный QA, развёртывание и контроль production."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_services:services:es",
+        "slug": "services",
+        "locale": "es",
+        "status": "published",
+        "translationOf": "page_services:services:zh",
+        "data": {
+          "metadata_title": "Servicios — producto, flujos y entrega de plataforma",
+          "eyebrow": "Servicios / del estado actual a una versión verificada.",
+          "title": "Haz comprensible el próximo cambio antes de que resulte costoso.",
+          "lead": "CinaGroup ayuda a auditar, diseñar, implementar y reforzar flujos de búsqueda, automatización, pasarelas de modelos e infraestructura conectada.",
+          "primary": "Hablar del trabajo",
+          "secondary": "Ver los productos",
+          "section_eyebrow": "Áreas de servicio.",
+          "section_title": "Empezamos por el trabajo real, no por un paquete genérico.",
+          "section_lead": "El alcance se ajusta al usuario, los sistemas existentes, el riesgo y la evidencia de aceptación.",
+          "cards": [
+            {
+              "label": "01 / Auditar",
+              "title": "Auditoría de producto y flujo.",
+              "description": "Revisamos el recorrido, el código, el contenido, la accesibilidad y los riesgos técnicos."
+            },
+            {
+              "label": "02 / Diseñar",
+              "title": "Diseño de búsqueda y automatización.",
+              "description": "Definimos fuentes, permisos, revisiones y resultados para flujos pequeños y claros."
+            },
+            {
+              "label": "03 / Implementar",
+              "title": "Implementación y entrega robusta.",
+              "description": "Construimos patrones compartidos, pruebas, comprobaciones de despliegue y una ruta de recuperación."
+            }
+          ],
+          "process_eyebrow": "Entrega.",
+          "process_title": "Evidencia en cada traspaso.",
+          "steps": [
+            {
+              "title": "Auditar",
+              "description": "Capturamos la experiencia, el código y las restricciones actuales."
+            },
+            {
+              "title": "Definir",
+              "description": "Acordamos prioridades y criterios de aceptación."
+            },
+            {
+              "title": "Construir",
+              "description": "Entregamos cambios en incrementos revisables."
+            },
+            {
+              "title": "Verificar",
+              "description": "Ejecutamos controles estáticos, QA responsive, despliegue y muestreo en producción."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_services:services:pt",
+        "slug": "services",
+        "locale": "pt",
+        "status": "published",
+        "translationOf": "page_services:services:zh",
+        "data": {
+          "metadata_title": "Serviços — produto, fluxos e entrega de plataforma",
+          "eyebrow": "Serviços / do estado atual a uma versão verificada.",
+          "title": "Torne a próxima mudança compreensível antes que ela fique cara.",
+          "lead": "A CinaGroup ajuda a auditar, projetar, implementar e fortalecer fluxos de busca, automação, gateway de modelos e infraestrutura conectada.",
+          "primary": "Conversar sobre o trabalho",
+          "secondary": "Ver os produtos",
+          "section_eyebrow": "Áreas de serviço.",
+          "section_title": "Começamos pelo trabalho real, não por um pacote genérico.",
+          "section_lead": "O escopo é ajustado ao usuário, aos sistemas existentes, aos riscos e às evidências de aceitação.",
+          "cards": [
+            {
+              "label": "01 / Auditar",
+              "title": "Auditoria de produto e fluxo.",
+              "description": "Revisamos a jornada, o código, o conteúdo, a acessibilidade e os riscos técnicos."
+            },
+            {
+              "label": "02 / Projetar",
+              "title": "Design de busca e automação.",
+              "description": "Definimos fontes, permissões, pontos de revisão e resultados para fluxos pequenos e claros."
+            },
+            {
+              "label": "03 / Implementar",
+              "title": "Implementação e entrega robusta.",
+              "description": "Criamos padrões compartilhados, testes, verificações de implantação e um caminho de recuperação."
+            }
+          ],
+          "process_eyebrow": "Entrega.",
+          "process_title": "Evidência em cada passagem.",
+          "steps": [
+            {
+              "title": "Auditar",
+              "description": "Registramos a experiência, o código e as restrições atuais."
+            },
+            {
+              "title": "Definir",
+              "description": "Alinhamos prioridades e critérios de aceitação."
+            },
+            {
+              "title": "Construir",
+              "description": "Entregamos mudanças em incrementos revisáveis."
+            },
+            {
+              "title": "Verificar",
+              "description": "Executamos verificações estáticas, QA responsivo, implantação e amostragem em produção."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_services:services:fr",
+        "slug": "services",
+        "locale": "fr",
+        "status": "published",
+        "translationOf": "page_services:services:zh",
+        "data": {
+          "metadata_title": "Services — produit, flux de travail et livraison de plateforme",
+          "eyebrow": "Services / de l’état actuel à une version vérifiée.",
+          "title": "Rendez le prochain changement compréhensible avant qu’il ne devienne coûteux.",
+          "lead": "CinaGroup aide à auditer, concevoir, mettre en œuvre et renforcer la recherche, l’automatisation, les passerelles de modèles et l’infrastructure connectée.",
+          "primary": "Parler du besoin",
+          "secondary": "Voir les produits",
+          "section_eyebrow": "Domaines de service.",
+          "section_title": "Nous partons du travail réel, pas d’un forfait générique.",
+          "section_lead": "Le périmètre est adapté à l’utilisateur, aux systèmes existants, aux risques et aux preuves de réception.",
+          "cards": [
+            {
+              "label": "01 / Auditer",
+              "title": "Audit du produit et du flux.",
+              "description": "Nous examinons le parcours, le code, le contenu, l’accessibilité et les risques techniques."
+            },
+            {
+              "label": "02 / Concevoir",
+              "title": "Conception de la recherche et de l’automatisation.",
+              "description": "Nous définissons les sources, droits, points de contrôle et résultats de flux petits et clairs."
+            },
+            {
+              "label": "03 / Mettre en œuvre",
+              "title": "Implémentation et livraison robuste.",
+              "description": "Nous créons des modèles partagés, des tests, des contrôles de déploiement et un chemin de reprise."
+            }
+          ],
+          "process_eyebrow": "Livraison.",
+          "process_title": "Des preuves à chaque passage de relais.",
+          "steps": [
+            {
+              "title": "Auditer",
+              "description": "Nous capturons l’expérience, le code et les contraintes actuelles."
+            },
+            {
+              "title": "Cadrer",
+              "description": "Nous convenons des priorités et des critères de réception."
+            },
+            {
+              "title": "Construire",
+              "description": "Nous livrons les changements par incréments vérifiables."
+            },
+            {
+              "title": "Vérifier",
+              "description": "Nous exécutons les contrôles statiques, le QA responsive, le déploiement et l’échantillonnage en production."
+            }
+          ]
+        }
+      }
+    ],
+    "page_contact": [
+      {
+        "id": "page_contact:contact:zh",
+        "slug": "contact",
+        "locale": "zh",
+        "status": "published",
+        "data": {
+          "title": "联系我们 — 海内集团",
+          "description": "请向海内集团介绍用户、当前工作流、约束与期望结果。",
+          "eyebrow": "联系我们 / 从工作出发。",
+          "hero_title": "告诉我们，您的团队需要推进什么工作。",
+          "hero_lead": "请分享用户、当前流程、相关系统、约束与期望结果。我们会一起确定合理的第一阶段范围。",
+          "email": "开始咨询",
+          "services": "查看服务",
+          "context_eyebrow": "第一条消息。",
+          "context_title": "为了给出有用答复，我们需要这些背景。",
+          "context_lead": "咨询只有在安全记录后才算提交成功。请保存返回的参考编号。",
+          "items": [
+            {
+              "label": "用户",
+              "description": "谁需要这一结果？他们要完成什么？"
+            },
+            {
+              "label": "当前状态",
+              "description": "目前使用的是哪款产品、页面、工作流或系统？"
+            },
+            {
+              "label": "约束",
+              "description": "需要考虑哪些访问、时间、集成、风险或部署边界？"
+            },
+            {
+              "label": "验收条件",
+              "description": "哪些可观察证据能够证明改动有效？"
+            }
+          ],
+          "direct_eyebrow": "直接联系。",
+          "direct_title": "info@cinagroup.com",
+          "direct_lead": "可通过此邮箱咨询产品、服务、合作与支持事项。",
+          "privacy": "隐私政策",
+          "terms_label": "服务条款"
+        }
+      },
+      {
+        "id": "page_contact:contact:ja",
+        "slug": "contact",
+        "locale": "ja",
+        "status": "published",
+        "translationOf": "page_contact:contact:zh",
+        "data": {
+          "title": "お問い合わせ — CinaGroup",
+          "description": "ユーザー、現在のワークフロー、制約、期待する結果を CinaGroup に共有してください。",
+          "eyebrow": "お問い合わせ / 仕事から始める。",
+          "hero_title": "チームが進めたい仕事を教えてください。",
+          "hero_lead": "ユーザー、現在の流れ、システム、制約、期待する結果を共有してください。最初の現実的な範囲を一緒に考えます。",
+          "email": "お問い合わせを始める",
+          "services": "サービスを見る",
+          "context_eyebrow": "最初のメッセージ。",
+          "context_title": "有用な返答に必要な文脈。",
+          "context_lead": "送信は安全に記録された後にのみ確定します。返される受付番号を保管してください。",
+          "items": [
+            {
+              "label": "ユーザー",
+              "description": "誰が、どの結果を完了する必要がありますか。"
+            },
+            {
+              "label": "現在の状態",
+              "description": "今使っている製品、ページ、ワークフロー、システムは何ですか。"
+            },
+            {
+              "label": "制約",
+              "description": "アクセス、期限、統合、リスク、デプロイの境界は何ですか。"
+            },
+            {
+              "label": "受け入れ条件",
+              "description": "変更が成功したことを示す観察可能な証拠は何ですか。"
+            }
+          ],
+          "direct_eyebrow": "連絡先。",
+          "direct_title": "info@cinagroup.com",
+          "direct_lead": "製品、サービス、パートナーシップ、サポートに関するお問い合わせにご利用ください。",
+          "privacy": "プライバシーポリシー",
+          "terms_label": "利用規約"
+        }
+      },
+      {
+        "id": "page_contact:contact:ko",
+        "slug": "contact",
+        "locale": "ko",
+        "status": "published",
+        "translationOf": "page_contact:contact:zh",
+        "data": {
+          "title": "문의 — CinaGroup",
+          "description": "사용자, 현재 워크플로, 제약 및 원하는 결과를 CinaGroup에 알려 주세요.",
+          "eyebrow": "문의 / 업무에서 시작합니다.",
+          "hero_title": "팀이 진행하려는 업무를 알려 주세요.",
+          "hero_lead": "사용자, 현재 흐름, 시스템, 제약 및 원하는 결과를 공유해 주세요. 현실적인 첫 범위를 함께 정하겠습니다.",
+          "email": "문의 시작",
+          "services": "서비스 보기",
+          "context_eyebrow": "첫 메시지.",
+          "context_title": "유용한 답변에 필요한 맥락.",
+          "context_lead": "문의는 안전하게 기록된 뒤에만 접수됩니다. 반환되는 참조 번호를 보관해 주세요.",
+          "items": [
+            {
+              "label": "사용자",
+              "description": "누가 어떤 결과를 완료해야 하나요?"
+            },
+            {
+              "label": "현재 상태",
+              "description": "현재 사용 중인 제품, 페이지, 워크플로 또는 시스템은 무엇인가요?"
+            },
+            {
+              "label": "제약",
+              "description": "접근, 일정, 통합, 위험 또는 배포 경계는 무엇인가요?"
+            },
+            {
+              "label": "수용 조건",
+              "description": "변경이 성공했음을 보여 줄 관찰 가능한 증거는 무엇인가요?"
+            }
+          ],
+          "direct_eyebrow": "직접 연락.",
+          "direct_title": "info@cinagroup.com",
+          "direct_lead": "제품, 서비스, 파트너십 및 지원 문의에 이용해 주세요.",
+          "privacy": "개인정보 보호정책",
+          "terms_label": "서비스 약관"
+        }
+      },
+      {
+        "id": "page_contact:contact:ru",
+        "slug": "contact",
+        "locale": "ru",
+        "status": "published",
+        "translationOf": "page_contact:contact:zh",
+        "data": {
+          "title": "Контакты — CinaGroup",
+          "description": "Расскажите CinaGroup о пользователе, текущем процессе, ограничениях и желаемом результате.",
+          "eyebrow": "Контакты / начнём с работы.",
+          "hero_title": "Расскажите, какую работу должна продвинуть команда.",
+          "hero_lead": "Опишите пользователя, текущий процесс, системы, ограничения и ожидаемый результат. Мы предложим разумный первый объём.",
+          "email": "Начать запрос",
+          "services": "Посмотреть услуги",
+          "context_eyebrow": "Первое сообщение.",
+          "context_title": "Контекст, необходимый для полезного ответа.",
+          "context_lead": "Запрос подтверждается только после надёжного сохранения. Сохраните полученный номер обращения.",
+          "items": [
+            {
+              "label": "Пользователь",
+              "description": "Кому и какой результат нужно получить?"
+            },
+            {
+              "label": "Текущее состояние",
+              "description": "Какой продукт, страница, процесс или система используется сейчас?"
+            },
+            {
+              "label": "Ограничения",
+              "description": "Какие границы доступа, сроков, интеграций, рисков или развёртывания важны?"
+            },
+            {
+              "label": "Приёмка",
+              "description": "Какие наблюдаемые данные покажут, что изменение сработало?"
+            }
+          ],
+          "direct_eyebrow": "Прямой контакт.",
+          "direct_title": "info@cinagroup.com",
+          "direct_lead": "Для вопросов о продуктах, услугах, партнёрствах и поддержке.",
+          "privacy": "Политика конфиденциальности",
+          "terms_label": "Условия использования"
+        }
+      },
+      {
+        "id": "page_contact:contact:es",
+        "slug": "contact",
+        "locale": "es",
+        "status": "published",
+        "translationOf": "page_contact:contact:zh",
+        "data": {
+          "title": "Contacto — CinaGroup",
+          "description": "Cuente a CinaGroup quién es el usuario, cuál es el flujo actual, las restricciones y el resultado deseado.",
+          "eyebrow": "Contacto / empezar por el trabajo.",
+          "hero_title": "Cuéntenos qué trabajo necesita mover su equipo.",
+          "hero_lead": "Comparta el usuario, el flujo actual, los sistemas, las restricciones y el resultado esperado. Buscaremos un primer alcance sensato.",
+          "email": "Iniciar consulta",
+          "services": "Ver servicios",
+          "context_eyebrow": "Primer mensaje.",
+          "context_title": "El contexto necesario para responder con utilidad.",
+          "context_lead": "La consulta solo se confirma después de registrarse de forma segura. Guarde la referencia recibida.",
+          "items": [
+            {
+              "label": "Usuario",
+              "description": "¿Quién necesita el resultado y qué intenta terminar?"
+            },
+            {
+              "label": "Estado actual",
+              "description": "¿Qué producto, página, flujo o sistema existe hoy?"
+            },
+            {
+              "label": "Restricciones",
+              "description": "¿Qué límites de acceso, tiempo, integración, riesgo o despliegue importan?"
+            },
+            {
+              "label": "Aceptación",
+              "description": "¿Qué evidencia observable demostraría que el cambio funcionó?"
+            }
+          ],
+          "direct_eyebrow": "Contacto directo.",
+          "direct_title": "info@cinagroup.com",
+          "direct_lead": "Utilice este correo para conversaciones de producto, servicios, colaboración y soporte.",
+          "privacy": "Política de privacidad",
+          "terms_label": "Términos de servicio"
+        }
+      },
+      {
+        "id": "page_contact:contact:pt",
+        "slug": "contact",
+        "locale": "pt",
+        "status": "published",
+        "translationOf": "page_contact:contact:zh",
+        "data": {
+          "title": "Contato — CinaGroup",
+          "description": "Conte à CinaGroup quem é o usuário, qual é o fluxo atual, as restrições e o resultado desejado.",
+          "eyebrow": "Contato / começar pelo trabalho.",
+          "hero_title": "Conte qual trabalho sua equipe precisa mover.",
+          "hero_lead": "Compartilhe o usuário, o fluxo atual, os sistemas, as restrições e o resultado esperado. Vamos encontrar um primeiro escopo sensato.",
+          "email": "Iniciar contato",
+          "services": "Ver serviços",
+          "context_eyebrow": "Primeira mensagem.",
+          "context_title": "O contexto necessário para uma resposta útil.",
+          "context_lead": "A solicitação só é confirmada após ser registrada com segurança. Guarde a referência recebida.",
+          "items": [
+            {
+              "label": "Usuário",
+              "description": "Quem precisa do resultado e o que está tentando concluir?"
+            },
+            {
+              "label": "Estado atual",
+              "description": "Qual produto, página, fluxo ou sistema existe hoje?"
+            },
+            {
+              "label": "Restrições",
+              "description": "Quais limites de acesso, prazo, integração, risco ou implantação importam?"
+            },
+            {
+              "label": "Aceitação",
+              "description": "Que evidência observável mostraria que a mudança funcionou?"
+            }
+          ],
+          "direct_eyebrow": "Contato direto.",
+          "direct_title": "info@cinagroup.com",
+          "direct_lead": "Use este e-mail para conversas sobre produtos, serviços, parcerias e suporte.",
+          "privacy": "Política de privacidade",
+          "terms_label": "Termos de serviço"
+        }
+      },
+      {
+        "id": "page_contact:contact:fr",
+        "slug": "contact",
+        "locale": "fr",
+        "status": "published",
+        "translationOf": "page_contact:contact:zh",
+        "data": {
+          "title": "Contact — CinaGroup",
+          "description": "Présentez à CinaGroup l’utilisateur, le flux actuel, les contraintes et le résultat souhaité.",
+          "eyebrow": "Contact / commencer par le travail.",
+          "hero_title": "Dites-nous quel travail votre équipe doit faire avancer.",
+          "hero_lead": "Partagez l’utilisateur, le flux actuel, les systèmes, les contraintes et le résultat attendu. Nous chercherons un premier périmètre raisonnable.",
+          "email": "Commencer une demande",
+          "services": "Voir les services",
+          "context_eyebrow": "Premier message.",
+          "context_title": "Le contexte nécessaire pour une réponse utile.",
+          "context_lead": "La demande n’est confirmée qu’après son enregistrement sécurisé. Conservez la référence reçue.",
+          "items": [
+            {
+              "label": "Utilisateur",
+              "description": "Qui a besoin du résultat et que cherche-t-il à terminer ?"
+            },
+            {
+              "label": "État actuel",
+              "description": "Quel produit, page, flux ou système existe aujourd’hui ?"
+            },
+            {
+              "label": "Contraintes",
+              "description": "Quelles limites d’accès, de délai, d’intégration, de risque ou de déploiement comptent ?"
+            },
+            {
+              "label": "Acceptation",
+              "description": "Quelle preuve observable montrerait que le changement fonctionne ?"
+            }
+          ],
+          "direct_eyebrow": "Contact direct.",
+          "direct_title": "info@cinagroup.com",
+          "direct_lead": "Utilisez cet e-mail pour les échanges sur les produits, services, partenariats et le support.",
+          "privacy": "Politique de confidentialité",
+          "terms_label": "Conditions d’utilisation"
+        }
+      }
+    ],
+    "page_pricing": [
+      {
+        "id": "page_pricing:pricing:zh",
+        "slug": "pricing",
+        "locale": "zh",
+        "status": "published",
+        "data": {
+          "metadata_title": "价格 — 报价前先明确范围",
+          "eyebrow": "价格 / 承诺前先明确范围。",
+          "title": "依据成果评估工作，而不是套用模板。",
+          "lead": "价格取决于工作流、现有系统、风险、集成深度以及验收所需的证据。",
+          "primary": "沟通范围",
+          "secondary": "查看服务",
+          "section_eyebrow": "合作起点。",
+          "section_title": "三种开始方式。",
+          "section_lead": "这些不是固定套餐；我们会根据真实产品与交付环境确认范围。",
+          "cards": [
+            {
+              "label": "专项审计",
+              "title": "了解当前状态。",
+              "description": "适合需要以证据为依据确定优先级的产品、页面组或工作流。",
+              "items": "审查源码与生产状态\nUX、内容与技术发现\n按优先级排序的建议"
+            },
+            {
+              "label": "实施冲刺",
+              "title": "交付一项完整改动。",
+              "description": "适合目标与约束足够明确，可以完成设计、实现与验证的工作。",
+              "items": "设计与实现范围\n共享模式与内容\n响应式 QA 与部署验证"
+            },
+            {
+              "label": "持续工程",
+              "title": "持续改进系统。",
+              "description": "适合需要迭代交付、集成与持续运营跟进的产品。",
+              "items": "按优先级管理的交付队列\n迭代设计与实现\n持续验证与优化"
+            }
+          ],
+          "factors_eyebrow": "报价因素。",
+          "factors_title": "明确影响成本的因素。",
+          "factors": [
+            {
+              "title": "工作流范围",
+              "description": "纳入验收范围的用户旅程、页面类型、角色、语言与状态数量。"
+            },
+            {
+              "title": "系统深度",
+              "description": "现有架构、数据、API、身份验证与迁移要求。"
+            },
+            {
+              "title": "风险与证据",
+              "description": "所需的审核、测试、部署与生产验证。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_pricing:pricing:ja",
+        "slug": "pricing",
+        "locale": "ja",
+        "status": "published",
+        "translationOf": "page_pricing:pricing:zh",
+        "data": {
+          "metadata_title": "料金 — 見積もり前に範囲を明確に",
+          "eyebrow": "料金 / 契約前に明確な範囲を。",
+          "title": "テンプレートではなく、成果に合わせて仕事を見積もります。",
+          "lead": "料金は、ワークフロー、既存システム、リスク、統合の深さ、受け入れに必要な証拠によって決まります。",
+          "primary": "範囲を相談する",
+          "secondary": "サービスを見る",
+          "section_eyebrow": "開始方法。",
+          "section_title": "3 つの進め方。",
+          "section_lead": "固定パッケージではなく、実際の製品と提供環境に合わせて確認します。",
+          "cards": [
+            {
+              "label": "集中監査",
+              "title": "現状を理解する。",
+              "description": "優先順位を証拠に基づいて整理したい製品、ページ群、またはワークフロー向け。",
+              "items": "ソースと本番状態の確認\nUX・コンテンツ・技術上の指摘\n優先順位付き提案"
+            },
+            {
+              "label": "実装スプリント",
+              "title": "一つのまとまった変更を届ける。",
+              "description": "目標と制約が明確で、設計・実装・検証まで進められる場合に適しています。",
+              "items": "設計と実装範囲\n共有パターンとコンテンツ\nレスポンシブ QA とデプロイ確認"
+            },
+            {
+              "label": "継続エンジニアリング",
+              "title": "時間をかけて改善する。",
+              "description": "反復的な提供、統合、運用フォローが必要な製品向け。",
+              "items": "優先順位付きキュー\n反復的な設計と実装\n継続的な検証と最適化"
+            }
+          ],
+          "factors_eyebrow": "見積もり要因。",
+          "factors_title": "コスト要因を明確にします。",
+          "factors": [
+            {
+              "title": "ワークフロー範囲",
+              "description": "ユーザージャーニー、ページ種類、役割、言語、状態の数。"
+            },
+            {
+              "title": "システムの深さ",
+              "description": "既存アーキテクチャ、データ、API、認証、移行要件。"
+            },
+            {
+              "title": "リスクと証拠",
+              "description": "必要なレビュー、テスト、デプロイ、本番検証。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_pricing:pricing:ko",
+        "slug": "pricing",
+        "locale": "ko",
+        "status": "published",
+        "translationOf": "page_pricing:pricing:zh",
+        "data": {
+          "metadata_title": "가격 — 견적 전에 범위 확인",
+          "eyebrow": "가격 / 약정 전에 명확한 범위.",
+          "title": "템플릿이 아니라 결과를 기준으로 업무를 산정합니다.",
+          "lead": "가격은 워크플로, 기존 시스템, 위험, 통합 깊이 및 수용 증거에 따라 달라집니다.",
+          "primary": "범위 상담하기",
+          "secondary": "서비스 보기",
+          "section_eyebrow": "시작 방식.",
+          "section_title": "세 가지 시작점.",
+          "section_lead": "고정 패키지가 아니라 실제 제품과 제공 환경에 맞춰 범위를 확인합니다.",
+          "cards": [
+            {
+              "label": "집중 감사",
+              "title": "현재 상태 이해.",
+              "description": "제품, 페이지 그룹 또는 워크플로에 근거 기반 우선순위가 필요할 때 적합합니다.",
+              "items": "소스 및 프로덕션 상태 검토\nUX, 콘텐츠 및 기술 발견 사항\n우선순위 권고안"
+            },
+            {
+              "label": "구현 스프린트",
+              "title": "하나의 일관된 변경 제공.",
+              "description": "목표와 제약이 충분히 명확하여 설계, 구현 및 검증이 가능할 때 적합합니다.",
+              "items": "설계 및 구현 범위\n공유 패턴과 콘텐츠\n반응형 QA 및 배포 확인"
+            },
+            {
+              "label": "지속 엔지니어링",
+              "title": "시간에 따라 시스템 개선.",
+              "description": "반복 제공, 통합 및 운영 후속 작업이 필요한 제품에 적합합니다.",
+              "items": "우선순위 제공 큐\n반복 설계 및 구현\n지속 검증 및 최적화"
+            }
+          ],
+          "factors_eyebrow": "견적 요소.",
+          "factors_title": "비용 요인을 명확히 합니다.",
+          "factors": [
+            {
+              "title": "워크플로 범위",
+              "description": "사용자 여정, 페이지 유형, 역할, 언어 및 상태의 수."
+            },
+            {
+              "title": "시스템 깊이",
+              "description": "기존 아키텍처, 데이터, API, 인증 및 마이그레이션 요구 사항."
+            },
+            {
+              "title": "위험과 증거",
+              "description": "필요한 검토, 테스트, 배포 및 프로덕션 검증."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_pricing:pricing:ru",
+        "slug": "pricing",
+        "locale": "ru",
+        "status": "published",
+        "translationOf": "page_pricing:pricing:zh",
+        "data": {
+          "metadata_title": "Стоимость — определить объём до предложения",
+          "eyebrow": "Стоимость / ясный объём до обязательств.",
+          "title": "Оцениваем работу по результату, а не по шаблону.",
+          "lead": "Стоимость зависит от процесса, существующих систем, рисков, глубины интеграции и доказательств приёмки.",
+          "primary": "Обсудить объём",
+          "secondary": "Посмотреть услуги",
+          "section_eyebrow": "Форматы работы.",
+          "section_title": "Три способа начать.",
+          "section_lead": "Это не фиксированные пакеты: объём подтверждается по реальному продукту и среде доставки.",
+          "cards": [
+            {
+              "label": "Точечный аудит",
+              "title": "Понять текущее состояние.",
+              "description": "Для продукта, группы страниц или процесса, которому нужны приоритеты, основанные на фактах.",
+              "items": "Проверка кода и production\nUX, контент и технические выводы\nПриоритетные рекомендации"
+            },
+            {
+              "label": "Спринт реализации",
+              "title": "Поставить одно цельное изменение.",
+              "description": "Когда цель и ограничения достаточно ясны для проектирования, реализации и проверки.",
+              "items": "План дизайна и реализации\nОбщие шаблоны и контент\nАдаптивный QA и проверка развёртывания"
+            },
+            {
+              "label": "Постоянная инженерия",
+              "title": "Улучшать систему со временем.",
+              "description": "Для итерационной доставки, интеграций и операционного сопровождения.",
+              "items": "Приоритетная очередь\nИтерационный дизайн и разработка\nРегулярная проверка и оптимизация"
+            }
+          ],
+          "factors_eyebrow": "Факторы оценки.",
+          "factors_title": "Делаем факторы стоимости явными.",
+          "factors": [
+            {
+              "title": "Ширина процесса",
+              "description": "Количество пользовательских путей, типов страниц, ролей, языков и состояний."
+            },
+            {
+              "title": "Глубина системы",
+              "description": "Архитектура, данные, API, аутентификация и требования миграции."
+            },
+            {
+              "title": "Риск и доказательства",
+              "description": "Необходимые проверки, тесты, развёртывание и контроль production."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_pricing:pricing:es",
+        "slug": "pricing",
+        "locale": "es",
+        "status": "published",
+        "translationOf": "page_pricing:pricing:zh",
+        "data": {
+          "metadata_title": "Precios — definir el alcance antes de cotizar",
+          "eyebrow": "Precios / alcance claro antes del compromiso.",
+          "title": "Valoramos el trabajo según el resultado, no según una plantilla.",
+          "lead": "El precio depende del flujo, los sistemas existentes, el riesgo, la profundidad de integración y la evidencia de aceptación.",
+          "primary": "Hablar del alcance",
+          "secondary": "Ver servicios",
+          "section_eyebrow": "Formas de empezar.",
+          "section_title": "Tres puntos de partida.",
+          "section_lead": "No son paquetes fijos: el alcance se confirma con el producto y el entorno de entrega reales.",
+          "cards": [
+            {
+              "label": "Auditoría enfocada",
+              "title": "Entender el estado actual.",
+              "description": "Para un producto, grupo de páginas o flujo que necesita prioridades respaldadas por evidencia.",
+              "items": "Revisión del código y producción\nHallazgos de UX, contenido y tecnología\nRecomendaciones priorizadas"
+            },
+            {
+              "label": "Sprint de implementación",
+              "title": "Entregar un cambio coherente.",
+              "description": "Cuando el objetivo y las restricciones permiten diseñar, construir y verificar.",
+              "items": "Alcance de diseño e implementación\nPatrones y contenido compartidos\nQA responsive y comprobación del despliegue"
+            },
+            {
+              "label": "Ingeniería continua",
+              "title": "Mejorar el sistema con el tiempo.",
+              "description": "Para entrega iterativa, integraciones y seguimiento operativo.",
+              "items": "Cola priorizada\nDiseño e ingeniería iterativos\nRevisión y optimización recurrentes"
+            }
+          ],
+          "factors_eyebrow": "Factores de alcance.",
+          "factors_title": "Hacemos explícitos los factores de coste.",
+          "factors": [
+            {
+              "title": "Amplitud del flujo",
+              "description": "Número de recorridos, tipos de página, roles, idiomas y estados."
+            },
+            {
+              "title": "Profundidad del sistema",
+              "description": "Arquitectura, datos, API, autenticación y requisitos de migración."
+            },
+            {
+              "title": "Riesgo y evidencia",
+              "description": "Revisiones, pruebas, despliegues y verificación en producción requeridos."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_pricing:pricing:pt",
+        "slug": "pricing",
+        "locale": "pt",
+        "status": "published",
+        "translationOf": "page_pricing:pricing:zh",
+        "data": {
+          "metadata_title": "Preços — definir o escopo antes da proposta",
+          "eyebrow": "Preços / escopo claro antes do compromisso.",
+          "title": "Precificamos o trabalho pelo resultado, não por um modelo.",
+          "lead": "O preço depende do fluxo, dos sistemas existentes, dos riscos, da profundidade da integração e das evidências de aceitação.",
+          "primary": "Conversar sobre o escopo",
+          "secondary": "Ver serviços",
+          "section_eyebrow": "Formas de começar.",
+          "section_title": "Três pontos de partida.",
+          "section_lead": "Não são pacotes fixos: o escopo é confirmado com o produto e o ambiente de entrega reais.",
+          "cards": [
+            {
+              "label": "Auditoria focada",
+              "title": "Entender o estado atual.",
+              "description": "Para um produto, grupo de páginas ou fluxo que precisa de prioridades baseadas em evidências.",
+              "items": "Revisão do código e produção\nAchados de UX, conteúdo e tecnologia\nRecomendações priorizadas"
+            },
+            {
+              "label": "Sprint de implementação",
+              "title": "Entregar uma mudança coerente.",
+              "description": "Quando o objetivo e as restrições permitem projetar, construir e verificar.",
+              "items": "Escopo de design e implementação\nPadrões e conteúdo compartilhados\nQA responsivo e verificação da implantação"
+            },
+            {
+              "label": "Engenharia contínua",
+              "title": "Melhorar o sistema ao longo do tempo.",
+              "description": "Para entrega iterativa, integrações e acompanhamento operacional.",
+              "items": "Fila priorizada\nDesign e engenharia iterativos\nRevisão e otimização recorrentes"
+            }
+          ],
+          "factors_eyebrow": "Fatores de escopo.",
+          "factors_title": "Deixamos os fatores de custo explícitos.",
+          "factors": [
+            {
+              "title": "Amplitude do fluxo",
+              "description": "Número de jornadas, tipos de página, funções, idiomas e estados."
+            },
+            {
+              "title": "Profundidade do sistema",
+              "description": "Arquitetura, dados, APIs, autenticação e requisitos de migração."
+            },
+            {
+              "title": "Risco e evidência",
+              "description": "Revisões, testes, implantações e verificação em produção necessárias."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_pricing:pricing:fr",
+        "slug": "pricing",
+        "locale": "fr",
+        "status": "published",
+        "translationOf": "page_pricing:pricing:zh",
+        "data": {
+          "metadata_title": "Tarification — cadrer le travail avant le devis",
+          "eyebrow": "Tarification / un périmètre clair avant l’engagement.",
+          "title": "Nous chiffrons le travail selon le résultat, pas selon un modèle.",
+          "lead": "Le prix dépend du flux, des systèmes existants, du risque, de la profondeur d’intégration et des preuves de réception.",
+          "primary": "Parler du périmètre",
+          "secondary": "Voir les services",
+          "section_eyebrow": "Formats de départ.",
+          "section_title": "Trois façons de commencer.",
+          "section_lead": "Ce ne sont pas des forfaits fixes : le périmètre est confirmé avec le produit et l’environnement de livraison réels.",
+          "cards": [
+            {
+              "label": "Audit ciblé",
+              "title": "Comprendre l’état actuel.",
+              "description": "Pour un produit, un groupe de pages ou un flux qui a besoin de priorités fondées sur des preuves.",
+              "items": "Revue du code et de la production\nConstats UX, contenu et techniques\nRecommandations priorisées"
+            },
+            {
+              "label": "Sprint de mise en œuvre",
+              "title": "Livrer un changement cohérent.",
+              "description": "Quand la cible et les contraintes permettent de concevoir, construire et vérifier.",
+              "items": "Périmètre design et implémentation\nModèles et contenu partagés\nQA responsive et contrôle du déploiement"
+            },
+            {
+              "label": "Ingénierie continue",
+              "title": "Améliorer le système dans le temps.",
+              "description": "Pour la livraison itérative, les intégrations et le suivi opérationnel.",
+              "items": "File de livraison priorisée\nDesign et ingénierie itératifs\nRevue et optimisation récurrentes"
+            }
+          ],
+          "factors_eyebrow": "Facteurs de cadrage.",
+          "factors_title": "Nous rendons les facteurs de coût explicites.",
+          "factors": [
+            {
+              "title": "Étendue du flux",
+              "description": "Nombre de parcours, types de pages, rôles, langues et états."
+            },
+            {
+              "title": "Profondeur du système",
+              "description": "Architecture, données, API, authentification et besoins de migration."
+            },
+            {
+              "title": "Risque et preuves",
+              "description": "Revues, tests, déploiements et vérification de production requis."
+            }
+          ]
+        }
+      }
+    ],
+    "page_products": [
+      {
+        "id": "page_products:cinaseek:zh",
+        "slug": "cinaseek",
+        "locale": "zh",
+        "status": "published",
+        "data": {
+          "contact": "沟通工作流",
+          "stack": "查看产品体系",
+          "capabilities_eyebrow": "能力。",
+          "capabilities_title": "聚焦团队真正需要完成的工作。",
+          "capabilities_lead": "从最小而有用的工作流开始，让边界与审核节点始终清晰可见。",
+          "workflow_eyebrow": "工作流。",
+          "workflow_title": "让从输入到验证结果的路径清晰可见。",
+          "steps": [
+            {
+              "title": "定义任务",
+              "description": "明确用户、目标、输入与约束。"
+            },
+            {
+              "title": "连接必要上下文",
+              "description": "只使用获准访问的数据源与系统。"
+            },
+            {
+              "title": "审核结果",
+              "description": "在重要判断或外部操作前保留人工审核。"
+            },
+            {
+              "title": "依据证据改进",
+              "description": "将失败、缺口与反馈用于下一轮改进。"
+            }
+          ],
+          "next_eyebrow": "下一步。",
+          "next_title": "围绕一条真实工作流确定范围。",
+          "eyebrow": "CinaSeek / 抢先体验智能体工作空间。",
+          "title": "在隔离的工作空间中评估智能体与个人 Gadget。",
+          "lead": "CinaSeek 是一个抢先体验环境，结合智能体对话、个人应用 Gadget，以及用于限制外部资源的 Gatekeeper。",
+          "capabilities": [
+            {
+              "title": "创建个人 Gadget。",
+              "description": "在隔离的用户边界内生成小型个人应用。"
+            },
+            {
+              "title": "限定 Gatekeeper 范围。",
+              "description": "只连接明确获准使用的外部资源。"
+            },
+            {
+              "title": "保留人工审核。",
+              "description": "记录具有外部影响的操作，并保持其可审核。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaseek:ja",
+        "slug": "cinaseek",
+        "locale": "ja",
+        "status": "published",
+        "translationOf": "page_products:cinaseek:zh",
+        "data": {
+          "contact": "ワークフローを相談する",
+          "stack": "製品一覧を見る",
+          "capabilities_eyebrow": "機能。",
+          "capabilities_title": "チームが完了すべき仕事に集中します。",
+          "capabilities_lead": "最小限の有用なワークフローから始め、境界とレビュー点を明確にします。",
+          "workflow_eyebrow": "ワークフロー。",
+          "workflow_title": "入力から検証済み結果までを見える化します。",
+          "steps": [
+            {
+              "title": "仕事を定義",
+              "description": "ユーザー、目的、入力、制約を明確にします。"
+            },
+            {
+              "title": "必要な文脈を接続",
+              "description": "承認された情報源とシステムだけを使用します。"
+            },
+            {
+              "title": "結果をレビュー",
+              "description": "重要な判断や外部アクションの前に人が確認します。"
+            },
+            {
+              "title": "証拠から改善",
+              "description": "失敗、欠落、フィードバックを次の改善に反映します。"
+            }
+          ],
+          "next_eyebrow": "次のステップ。",
+          "next_title": "実際のワークフローに合わせて範囲を決めます。",
+          "eyebrow": "CinaSeek / アーリーアクセスのエージェントワークスペース。",
+          "title": "分離されたワークスペースでエージェントとプライベート Gadget を試す。",
+          "lead": "CinaSeek は、エージェントチャット、個人用アプリの Gadget、外部リソースを限定する Gatekeeper を組み合わせたアーリーアクセス環境です。",
+          "capabilities": [
+            {
+              "title": "プライベート Gadget を作成。",
+              "description": "必要な仕事に合わせ、分離された個人用アプリを生成します。"
+            },
+            {
+              "title": "Gatekeeper で範囲を限定。",
+              "description": "承認された外部リソースだけを明示的に接続します。"
+            },
+            {
+              "title": "人の確認を保持。",
+              "description": "副作用のある操作を記録し、レビューできる状態にします。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaseek:ko",
+        "slug": "cinaseek",
+        "locale": "ko",
+        "status": "published",
+        "translationOf": "page_products:cinaseek:zh",
+        "data": {
+          "contact": "워크플로 상담하기",
+          "stack": "제품 스택 보기",
+          "capabilities_eyebrow": "기능.",
+          "capabilities_title": "팀이 완료해야 하는 업무에 집중합니다.",
+          "capabilities_lead": "가장 작은 유용한 워크플로에서 시작하고 경계와 검토 지점을 명확히 합니다.",
+          "workflow_eyebrow": "워크플로.",
+          "workflow_title": "입력에서 검증된 결과까지의 경로를 보이게 합니다.",
+          "steps": [
+            {
+              "title": "업무 정의",
+              "description": "사용자, 목표, 입력 및 제약을 명확히 합니다."
+            },
+            {
+              "title": "필요한 맥락 연결",
+              "description": "승인된 정보원과 시스템만 사용합니다."
+            },
+            {
+              "title": "결과 검토",
+              "description": "중요한 판단이나 외부 작업 전에 사람이 확인합니다."
+            },
+            {
+              "title": "증거로 개선",
+              "description": "실패, 누락 및 피드백을 다음 개선에 반영합니다."
+            }
+          ],
+          "next_eyebrow": "다음 단계.",
+          "next_title": "실제 워크플로에 맞춰 범위를 정합니다.",
+          "eyebrow": "CinaSeek / 얼리 액세스 에이전트 워크스페이스.",
+          "title": "격리된 워크스페이스에서 에이전트와 개인용 Gadget을 평가하세요.",
+          "lead": "CinaSeek은 에이전트 채팅, Gadget 개인 앱, 외부 리소스를 제한하는 Gatekeeper를 결합한 얼리 액세스 환경입니다.",
+          "capabilities": [
+            {
+              "title": "개인 Gadget.",
+              "description": "격리된 사용자 경계에서 작은 개인용 애플리케이션을 생성합니다."
+            },
+            {
+              "title": "범위 제한 Gatekeeper.",
+              "description": "명시적으로 승인된 외부 리소스만 연결합니다."
+            },
+            {
+              "title": "사람의 검토.",
+              "description": "부수 효과가 있는 작업을 로그로 남기고 검토 가능하게 유지합니다."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaseek:ru",
+        "slug": "cinaseek",
+        "locale": "ru",
+        "status": "published",
+        "translationOf": "page_products:cinaseek:zh",
+        "data": {
+          "contact": "Обсудить процесс",
+          "stack": "Посмотреть продукты",
+          "capabilities_eyebrow": "Возможности.",
+          "capabilities_title": "Фокус на работе, которую команда должна завершить.",
+          "capabilities_lead": "Начинаем с минимального полезного процесса и сохраняем видимыми его границы и точки проверки.",
+          "workflow_eyebrow": "Процесс.",
+          "workflow_title": "Делаем путь от входных данных до проверенного результата видимым.",
+          "steps": [
+            {
+              "title": "Определить работу",
+              "description": "Уточнить пользователя, цель, входные данные и ограничения."
+            },
+            {
+              "title": "Подключить контекст",
+              "description": "Использовать только разрешённые источники и системы."
+            },
+            {
+              "title": "Проверить результат",
+              "description": "Сохранить человеческую проверку перед важным решением или внешним действием."
+            },
+            {
+              "title": "Улучшать по данным",
+              "description": "Использовать ошибки, пробелы и обратную связь для следующего улучшения."
+            }
+          ],
+          "next_eyebrow": "Следующий шаг.",
+          "next_title": "Определим объём по реальному рабочему процессу.",
+          "eyebrow": "CinaSeek / агентское рабочее пространство раннего доступа.",
+          "title": "Тестируйте агентов и личные Gadgets в изолированном рабочем пространстве.",
+          "lead": "CinaSeek — среда раннего доступа с чатом агентов, личными приложениями Gadgets и Gatekeepers для ограничения внешних ресурсов.",
+          "capabilities": [
+            {
+              "title": "Создавать личные Gadgets.",
+              "description": "Генерировать небольшие приложения в изолированной пользовательской границе."
+            },
+            {
+              "title": "Ограничивать Gatekeepers.",
+              "description": "Подключать только явно разрешённые внешние ресурсы."
+            },
+            {
+              "title": "Сохранять проверку человеком.",
+              "description": "Журналировать действия с побочными эффектами и оставлять их доступными для проверки."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaseek:es",
+        "slug": "cinaseek",
+        "locale": "es",
+        "status": "published",
+        "translationOf": "page_products:cinaseek:zh",
+        "data": {
+          "contact": "Hablar del flujo",
+          "stack": "Ver los productos",
+          "capabilities_eyebrow": "Capacidades.",
+          "capabilities_title": "Una capa enfocada en el trabajo que el equipo debe terminar.",
+          "capabilities_lead": "Empezamos por el flujo útil más pequeño y mantenemos visibles sus límites y revisiones.",
+          "workflow_eyebrow": "Flujo.",
+          "workflow_title": "Hacemos visible el camino desde la entrada hasta un resultado revisado.",
+          "steps": [
+            {
+              "title": "Definir el trabajo",
+              "description": "Aclarar el usuario, el objetivo, las entradas y las restricciones."
+            },
+            {
+              "title": "Conectar el contexto",
+              "description": "Usar solo fuentes y sistemas aprobados."
+            },
+            {
+              "title": "Revisar el resultado",
+              "description": "Mantener la revisión humana antes de decisiones o acciones importantes."
+            },
+            {
+              "title": "Mejorar con evidencia",
+              "description": "Convertir fallos, vacíos y comentarios en la siguiente mejora."
+            }
+          ],
+          "next_eyebrow": "Siguiente paso.",
+          "next_title": "Definamos el alcance con un flujo real.",
+          "eyebrow": "CinaSeek / espacio de agentes en acceso anticipado.",
+          "title": "Evalúa agentes y Gadgets personales en espacios aislados.",
+          "lead": "CinaSeek combina chat de agentes, aplicaciones personales llamadas Gadgets y Gatekeepers que limitan el acceso a recursos externos.",
+          "capabilities": [
+            {
+              "title": "Crea Gadgets personales.",
+              "description": "Genera aplicaciones pequeñas dentro de un límite aislado por usuario."
+            },
+            {
+              "title": "Limita los Gatekeepers.",
+              "description": "Conecta solo los recursos externos que el usuario ha aprobado explícitamente."
+            },
+            {
+              "title": "Conserva la revisión humana.",
+              "description": "Registra las acciones con efectos externos y las mantiene disponibles para revisar."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaseek:pt",
+        "slug": "cinaseek",
+        "locale": "pt",
+        "status": "published",
+        "translationOf": "page_products:cinaseek:zh",
+        "data": {
+          "contact": "Conversar sobre o fluxo",
+          "stack": "Ver os produtos",
+          "capabilities_eyebrow": "Capacidades.",
+          "capabilities_title": "Uma camada focada no trabalho que a equipe precisa concluir.",
+          "capabilities_lead": "Começamos pelo menor fluxo útil e mantemos seus limites e revisões visíveis.",
+          "workflow_eyebrow": "Fluxo.",
+          "workflow_title": "Tornamos visível o caminho da entrada até um resultado revisado.",
+          "steps": [
+            {
+              "title": "Definir o trabalho",
+              "description": "Esclarecer o usuário, o objetivo, as entradas e as restrições."
+            },
+            {
+              "title": "Conectar o contexto",
+              "description": "Usar somente fontes e sistemas aprovados."
+            },
+            {
+              "title": "Revisar o resultado",
+              "description": "Manter a revisão humana antes de decisões ou ações importantes."
+            },
+            {
+              "title": "Melhorar com evidências",
+              "description": "Transformar falhas, lacunas e feedback na próxima melhoria."
+            }
+          ],
+          "next_eyebrow": "Próximo passo.",
+          "next_title": "Vamos definir o escopo com um fluxo real.",
+          "eyebrow": "CinaSeek / workspace de agentes em acesso antecipado.",
+          "title": "Avalie agentes e Gadgets pessoais em workspaces isolados.",
+          "lead": "O CinaSeek combina chat de agentes, aplicações pessoais chamadas Gadgets e Gatekeepers que limitam o acesso a recursos externos.",
+          "capabilities": [
+            {
+              "title": "Crie Gadgets pessoais.",
+              "description": "Gere pequenas aplicações dentro de um limite isolado por usuário."
+            },
+            {
+              "title": "Limite os Gatekeepers.",
+              "description": "Conecte somente recursos externos aprovados explicitamente pelo usuário."
+            },
+            {
+              "title": "Mantenha a revisão humana.",
+              "description": "Registre ações com efeitos externos e as mantenha disponíveis para revisão."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaseek:fr",
+        "slug": "cinaseek",
+        "locale": "fr",
+        "status": "published",
+        "translationOf": "page_products:cinaseek:zh",
+        "data": {
+          "contact": "Parler du flux",
+          "stack": "Voir les produits",
+          "capabilities_eyebrow": "Capacités.",
+          "capabilities_title": "Une couche concentrée sur le travail que l’équipe doit terminer.",
+          "capabilities_lead": "Nous commençons par le plus petit flux utile et gardons ses limites et contrôles visibles.",
+          "workflow_eyebrow": "Flux.",
+          "workflow_title": "Nous rendons visible le chemin de l’entrée au résultat vérifié.",
+          "steps": [
+            {
+              "title": "Définir le travail",
+              "description": "Clarifier l’utilisateur, l’objectif, les entrées et les contraintes."
+            },
+            {
+              "title": "Connecter le contexte",
+              "description": "Utiliser uniquement les sources et systèmes approuvés."
+            },
+            {
+              "title": "Vérifier le résultat",
+              "description": "Conserver une revue humaine avant les décisions ou actions importantes."
+            },
+            {
+              "title": "Améliorer par les preuves",
+              "description": "Transformer les erreurs, lacunes et retours en prochaine amélioration."
+            }
+          ],
+          "next_eyebrow": "Étape suivante.",
+          "next_title": "Définissons le périmètre avec un flux réel.",
+          "eyebrow": "CinaSeek / espace d’agents en accès anticipé.",
+          "title": "Évaluez agents et Gadgets personnels dans des espaces isolés.",
+          "lead": "CinaSeek associe chat d’agents, applications personnelles appelées Gadgets et Gatekeepers qui limitent les ressources externes.",
+          "capabilities": [
+            {
+              "title": "Créer des Gadgets personnels.",
+              "description": "Générer de petites applications dans une limite isolée par utilisateur."
+            },
+            {
+              "title": "Limiter les Gatekeepers.",
+              "description": "Connecter uniquement les ressources externes explicitement approuvées."
+            },
+            {
+              "title": "Conserver la revue humaine.",
+              "description": "Journaliser les actions à effets externes et les garder disponibles pour revue."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaclaw:zh",
+        "slug": "cinaclaw",
+        "locale": "zh",
+        "status": "published",
+        "data": {
+          "contact": "沟通工作流",
+          "stack": "查看产品体系",
+          "capabilities_eyebrow": "能力。",
+          "capabilities_title": "聚焦团队真正需要完成的工作。",
+          "capabilities_lead": "从最小而有用的工作流开始，让边界与审核节点始终清晰可见。",
+          "workflow_eyebrow": "工作流。",
+          "workflow_title": "让从输入到验证结果的路径清晰可见。",
+          "steps": [
+            {
+              "title": "定义任务",
+              "description": "明确用户、目标、输入与约束。"
+            },
+            {
+              "title": "连接必要上下文",
+              "description": "只使用获准访问的数据源与系统。"
+            },
+            {
+              "title": "审核结果",
+              "description": "在重要判断或外部操作前保留人工审核。"
+            },
+            {
+              "title": "依据证据改进",
+              "description": "将失败、缺口与反馈用于下一轮改进。"
+            }
+          ],
+          "next_eyebrow": "下一步。",
+          "next_title": "围绕一条真实工作流确定范围。",
+          "eyebrow": "CinaClaw / 本地优先智能体网关。",
+          "title": "通过由操作者控制的本地优先 Gateway 运行智能体。",
+          "lead": "CinaClaw 提供本地优先 Gateway、CLI、消息适配器、技能与可选配套应用。",
+          "capabilities": [
+            {
+              "title": "本地优先 Gateway。",
+              "description": "通过由操作者控制的 Gateway 运行会话、渠道与工具。"
+            },
+            {
+              "title": "文档化渠道。",
+              "description": "连接 WebChat 或已配置的消息适配器。"
+            },
+            {
+              "title": "工作空间技能。",
+              "description": "加载具有明确指令与支持资源的技能。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaclaw:ja",
+        "slug": "cinaclaw",
+        "locale": "ja",
+        "status": "published",
+        "translationOf": "page_products:cinaclaw:zh",
+        "data": {
+          "contact": "ワークフローを相談する",
+          "stack": "製品一覧を見る",
+          "capabilities_eyebrow": "機能。",
+          "capabilities_title": "チームが完了すべき仕事に集中します。",
+          "capabilities_lead": "最小限の有用なワークフローから始め、境界とレビュー点を明確にします。",
+          "workflow_eyebrow": "ワークフロー。",
+          "workflow_title": "入力から検証済み結果までを見える化します。",
+          "steps": [
+            {
+              "title": "仕事を定義",
+              "description": "ユーザー、目的、入力、制約を明確にします。"
+            },
+            {
+              "title": "必要な文脈を接続",
+              "description": "承認された情報源とシステムだけを使用します。"
+            },
+            {
+              "title": "結果をレビュー",
+              "description": "重要な判断や外部アクションの前に人が確認します。"
+            },
+            {
+              "title": "証拠から改善",
+              "description": "失敗、欠落、フィードバックを次の改善に反映します。"
+            }
+          ],
+          "next_eyebrow": "次のステップ。",
+          "next_title": "実際のワークフローに合わせて範囲を決めます。",
+          "eyebrow": "CinaClaw / ローカルファーストのエージェントゲートウェイ。",
+          "title": "自分で管理する Gateway 経由でエージェントを実行。",
+          "lead": "CinaClaw は、ローカルファースト Gateway、CLI、メッセージングアダプター、スキル、オプションのコンパニオンアプリを提供します。",
+          "capabilities": [
+            {
+              "title": "ローカルファースト Gateway。",
+              "description": "セッション、チャネル、ツールを運用者管理の Gateway 経由で実行します。"
+            },
+            {
+              "title": "文書化されたチャネル。",
+              "description": "WebChat または設定済みのメッセージングアダプターを接続します。"
+            },
+            {
+              "title": "ワークスペーススキル。",
+              "description": "明示的な指示とリソースを持つスキルを読み込みます。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaclaw:ko",
+        "slug": "cinaclaw",
+        "locale": "ko",
+        "status": "published",
+        "translationOf": "page_products:cinaclaw:zh",
+        "data": {
+          "contact": "워크플로 상담하기",
+          "stack": "제품 스택 보기",
+          "capabilities_eyebrow": "기능.",
+          "capabilities_title": "팀이 완료해야 하는 업무에 집중합니다.",
+          "capabilities_lead": "가장 작은 유용한 워크플로에서 시작하고 경계와 검토 지점을 명확히 합니다.",
+          "workflow_eyebrow": "워크플로.",
+          "workflow_title": "입력에서 검증된 결과까지의 경로를 보이게 합니다.",
+          "steps": [
+            {
+              "title": "업무 정의",
+              "description": "사용자, 목표, 입력 및 제약을 명확히 합니다."
+            },
+            {
+              "title": "필요한 맥락 연결",
+              "description": "승인된 정보원과 시스템만 사용합니다."
+            },
+            {
+              "title": "결과 검토",
+              "description": "중요한 판단이나 외부 작업 전에 사람이 확인합니다."
+            },
+            {
+              "title": "증거로 개선",
+              "description": "실패, 누락 및 피드백을 다음 개선에 반영합니다."
+            }
+          ],
+          "next_eyebrow": "다음 단계.",
+          "next_title": "실제 워크플로에 맞춰 범위를 정합니다.",
+          "eyebrow": "CinaClaw / 로컬 우선 에이전트 게이트웨이.",
+          "title": "운영자가 제어하는 로컬 우선 Gateway로 에이전트를 실행하세요.",
+          "lead": "CinaClaw은 로컬 우선 Gateway, CLI, 메시징 어댑터, 스킬, 선택적 컴패니언 앱을 제공합니다.",
+          "capabilities": [
+            {
+              "title": "로컬 우선 Gateway.",
+              "description": "세션, 채널, 도구를 운영자가 제어하는 Gateway로 실행합니다."
+            },
+            {
+              "title": "문서화된 채널.",
+              "description": "WebChat 또는 설정된 메시징 어댑터를 연결합니다."
+            },
+            {
+              "title": "워크스페이스 스킬.",
+              "description": "명시적 지침과 지원 리소스가 있는 스킬을 불러옵니다."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaclaw:ru",
+        "slug": "cinaclaw",
+        "locale": "ru",
+        "status": "published",
+        "translationOf": "page_products:cinaclaw:zh",
+        "data": {
+          "contact": "Обсудить процесс",
+          "stack": "Посмотреть продукты",
+          "capabilities_eyebrow": "Возможности.",
+          "capabilities_title": "Фокус на работе, которую команда должна завершить.",
+          "capabilities_lead": "Начинаем с минимального полезного процесса и сохраняем видимыми его границы и точки проверки.",
+          "workflow_eyebrow": "Процесс.",
+          "workflow_title": "Делаем путь от входных данных до проверенного результата видимым.",
+          "steps": [
+            {
+              "title": "Определить работу",
+              "description": "Уточнить пользователя, цель, входные данные и ограничения."
+            },
+            {
+              "title": "Подключить контекст",
+              "description": "Использовать только разрешённые источники и системы."
+            },
+            {
+              "title": "Проверить результат",
+              "description": "Сохранить человеческую проверку перед важным решением или внешним действием."
+            },
+            {
+              "title": "Улучшать по данным",
+              "description": "Использовать ошибки, пробелы и обратную связь для следующего улучшения."
+            }
+          ],
+          "next_eyebrow": "Следующий шаг.",
+          "next_title": "Определим объём по реальному рабочему процессу.",
+          "eyebrow": "CinaClaw / local-first шлюз агентов.",
+          "title": "Запускайте агента через Gateway под контролем оператора.",
+          "lead": "CinaClaw включает local-first Gateway, CLI, адаптеры сообщений, навыки и дополнительные приложения.",
+          "capabilities": [
+            {
+              "title": "Local-first Gateway.",
+              "description": "Проводить сессии, каналы и инструменты через Gateway под контролем оператора."
+            },
+            {
+              "title": "Документированные каналы.",
+              "description": "Подключать WebChat или настроенные адаптеры сообщений."
+            },
+            {
+              "title": "Workspace-навыки.",
+              "description": "Загружать навыки с явными инструкциями и ресурсами."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaclaw:es",
+        "slug": "cinaclaw",
+        "locale": "es",
+        "status": "published",
+        "translationOf": "page_products:cinaclaw:zh",
+        "data": {
+          "contact": "Hablar del flujo",
+          "stack": "Ver los productos",
+          "capabilities_eyebrow": "Capacidades.",
+          "capabilities_title": "Una capa enfocada en el trabajo que el equipo debe terminar.",
+          "capabilities_lead": "Empezamos por el flujo útil más pequeño y mantenemos visibles sus límites y revisiones.",
+          "workflow_eyebrow": "Flujo.",
+          "workflow_title": "Hacemos visible el camino desde la entrada hasta un resultado revisado.",
+          "steps": [
+            {
+              "title": "Definir el trabajo",
+              "description": "Aclarar el usuario, el objetivo, las entradas y las restricciones."
+            },
+            {
+              "title": "Conectar el contexto",
+              "description": "Usar solo fuentes y sistemas aprobados."
+            },
+            {
+              "title": "Revisar el resultado",
+              "description": "Mantener la revisión humana antes de decisiones o acciones importantes."
+            },
+            {
+              "title": "Mejorar con evidencia",
+              "description": "Convertir fallos, vacíos y comentarios en la siguiente mejora."
+            }
+          ],
+          "next_eyebrow": "Siguiente paso.",
+          "next_title": "Definamos el alcance con un flujo real.",
+          "eyebrow": "CinaClaw / gateway de agentes local-first.",
+          "title": "Ejecuta un agente mediante un Gateway controlado por el operador.",
+          "lead": "CinaClaw incluye Gateway local-first, CLI, adaptadores de mensajería, skills y aplicaciones complementarias opcionales.",
+          "capabilities": [
+            {
+              "title": "Gateway local-first.",
+              "description": "Ejecuta sesiones, canales y herramientas mediante un Gateway controlado por el operador."
+            },
+            {
+              "title": "Canales documentados.",
+              "description": "Conecta WebChat o adaptadores de mensajería configurados."
+            },
+            {
+              "title": "Skills de workspace.",
+              "description": "Carga skills con instrucciones y recursos de apoyo explícitos."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaclaw:pt",
+        "slug": "cinaclaw",
+        "locale": "pt",
+        "status": "published",
+        "translationOf": "page_products:cinaclaw:zh",
+        "data": {
+          "contact": "Conversar sobre o fluxo",
+          "stack": "Ver os produtos",
+          "capabilities_eyebrow": "Capacidades.",
+          "capabilities_title": "Uma camada focada no trabalho que a equipe precisa concluir.",
+          "capabilities_lead": "Começamos pelo menor fluxo útil e mantemos seus limites e revisões visíveis.",
+          "workflow_eyebrow": "Fluxo.",
+          "workflow_title": "Tornamos visível o caminho da entrada até um resultado revisado.",
+          "steps": [
+            {
+              "title": "Definir o trabalho",
+              "description": "Esclarecer o usuário, o objetivo, as entradas e as restrições."
+            },
+            {
+              "title": "Conectar o contexto",
+              "description": "Usar somente fontes e sistemas aprovados."
+            },
+            {
+              "title": "Revisar o resultado",
+              "description": "Manter a revisão humana antes de decisões ou ações importantes."
+            },
+            {
+              "title": "Melhorar com evidências",
+              "description": "Transformar falhas, lacunas e feedback na próxima melhoria."
+            }
+          ],
+          "next_eyebrow": "Próximo passo.",
+          "next_title": "Vamos definir o escopo com um fluxo real.",
+          "eyebrow": "CinaClaw / gateway de agentes local-first.",
+          "title": "Execute um agente por um Gateway controlado pelo operador.",
+          "lead": "O CinaClaw inclui Gateway local-first, CLI, adaptadores de mensagens, skills e aplicativos complementares opcionais.",
+          "capabilities": [
+            {
+              "title": "Gateway local-first.",
+              "description": "Execute sessões, canais e ferramentas por um Gateway controlado pelo operador."
+            },
+            {
+              "title": "Canais documentados.",
+              "description": "Conecte WebChat ou adaptadores de mensagens configurados."
+            },
+            {
+              "title": "Skills de workspace.",
+              "description": "Carregue skills com instruções e recursos de apoio explícitos."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaclaw:fr",
+        "slug": "cinaclaw",
+        "locale": "fr",
+        "status": "published",
+        "translationOf": "page_products:cinaclaw:zh",
+        "data": {
+          "contact": "Parler du flux",
+          "stack": "Voir les produits",
+          "capabilities_eyebrow": "Capacités.",
+          "capabilities_title": "Une couche concentrée sur le travail que l’équipe doit terminer.",
+          "capabilities_lead": "Nous commençons par le plus petit flux utile et gardons ses limites et contrôles visibles.",
+          "workflow_eyebrow": "Flux.",
+          "workflow_title": "Nous rendons visible le chemin de l’entrée au résultat vérifié.",
+          "steps": [
+            {
+              "title": "Définir le travail",
+              "description": "Clarifier l’utilisateur, l’objectif, les entrées et les contraintes."
+            },
+            {
+              "title": "Connecter le contexte",
+              "description": "Utiliser uniquement les sources et systèmes approuvés."
+            },
+            {
+              "title": "Vérifier le résultat",
+              "description": "Conserver une revue humaine avant les décisions ou actions importantes."
+            },
+            {
+              "title": "Améliorer par les preuves",
+              "description": "Transformer les erreurs, lacunes et retours en prochaine amélioration."
+            }
+          ],
+          "next_eyebrow": "Étape suivante.",
+          "next_title": "Définissons le périmètre avec un flux réel.",
+          "eyebrow": "CinaClaw / passerelle d’agents local-first.",
+          "title": "Exécutez un agent via un Gateway contrôlé par l’opérateur.",
+          "lead": "CinaClaw comprend un Gateway local-first, un CLI, des adaptateurs de messagerie, des skills et des applications compagnons optionnelles.",
+          "capabilities": [
+            {
+              "title": "Gateway local-first.",
+              "description": "Exécuter sessions, canaux et outils via un Gateway contrôlé par l’opérateur."
+            },
+            {
+              "title": "Canaux documentés.",
+              "description": "Connecter WebChat ou des adaptateurs de messagerie configurés."
+            },
+            {
+              "title": "Skills de workspace.",
+              "description": "Charger des skills avec instructions et ressources de support explicites."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinatoken:zh",
+        "slug": "cinatoken",
+        "locale": "zh",
+        "status": "published",
+        "data": {
+          "contact": "沟通工作流",
+          "stack": "查看产品体系",
+          "capabilities_eyebrow": "能力。",
+          "capabilities_title": "聚焦团队真正需要完成的工作。",
+          "capabilities_lead": "从最小而有用的工作流开始，让边界与审核节点始终清晰可见。",
+          "workflow_eyebrow": "工作流。",
+          "workflow_title": "让从输入到验证结果的路径清晰可见。",
+          "steps": [
+            {
+              "title": "定义任务",
+              "description": "明确用户、目标、输入与约束。"
+            },
+            {
+              "title": "连接必要上下文",
+              "description": "只使用获准访问的数据源与系统。"
+            },
+            {
+              "title": "审核结果",
+              "description": "在重要判断或外部操作前保留人工审核。"
+            },
+            {
+              "title": "依据证据改进",
+              "description": "将失败、缺口与反馈用于下一轮改进。"
+            }
+          ],
+          "next_eyebrow": "下一步。",
+          "next_title": "围绕一条真实工作流确定范围。",
+          "eyebrow": "CinaToken / 开源自托管模型网关。",
+          "title": "在一个自托管网关中管理模型访问、用量与成本。",
+          "lead": "CinaToken 把凭据、模型路由、使用策略、追踪与成本边界整合到由您托管的一层中。",
+          "capabilities": [
+            {
+              "title": "集中管理凭据。",
+              "description": "将供应商密钥保留在受控边界中，无需分发到每个应用。"
+            },
+            {
+              "title": "路由到获准模型。",
+              "description": "依据任务、策略与可用性选择路径。"
+            },
+            {
+              "title": "追踪决策。",
+              "description": "保留路由、策略与用量信息，供运营审核。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinatoken:ja",
+        "slug": "cinatoken",
+        "locale": "ja",
+        "status": "published",
+        "translationOf": "page_products:cinatoken:zh",
+        "data": {
+          "contact": "ワークフローを相談する",
+          "stack": "製品一覧を見る",
+          "capabilities_eyebrow": "機能。",
+          "capabilities_title": "チームが完了すべき仕事に集中します。",
+          "capabilities_lead": "最小限の有用なワークフローから始め、境界とレビュー点を明確にします。",
+          "workflow_eyebrow": "ワークフロー。",
+          "workflow_title": "入力から検証済み結果までを見える化します。",
+          "steps": [
+            {
+              "title": "仕事を定義",
+              "description": "ユーザー、目的、入力、制約を明確にします。"
+            },
+            {
+              "title": "必要な文脈を接続",
+              "description": "承認された情報源とシステムだけを使用します。"
+            },
+            {
+              "title": "結果をレビュー",
+              "description": "重要な判断や外部アクションの前に人が確認します。"
+            },
+            {
+              "title": "証拠から改善",
+              "description": "失敗、欠落、フィードバックを次の改善に反映します。"
+            }
+          ],
+          "next_eyebrow": "次のステップ。",
+          "next_title": "実際のワークフローに合わせて範囲を決めます。",
+          "eyebrow": "CinaToken / オープンソース・セルフホスト型モデルゲートウェイ。",
+          "title": "モデルアクセス、利用量、コストを一つのゲートウェイで制御。",
+          "lead": "CinaToken は、認証情報、モデルルーティング、利用ポリシー、トレース、コスト境界を、利用者がホストする一つの層にまとめます。",
+          "capabilities": [
+            {
+              "title": "認証情報を集約。",
+              "description": "各アプリにプロバイダーキーを配布せず、管理された境界に保持します。"
+            },
+            {
+              "title": "承認済みモデルへルーティング。",
+              "description": "タスク、ポリシー、可用性に応じて経路を選択します。"
+            },
+            {
+              "title": "判断を追跡。",
+              "description": "ルーティング、ポリシー、利用情報を運用レビューに残します。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinatoken:ko",
+        "slug": "cinatoken",
+        "locale": "ko",
+        "status": "published",
+        "translationOf": "page_products:cinatoken:zh",
+        "data": {
+          "contact": "워크플로 상담하기",
+          "stack": "제품 스택 보기",
+          "capabilities_eyebrow": "기능.",
+          "capabilities_title": "팀이 완료해야 하는 업무에 집중합니다.",
+          "capabilities_lead": "가장 작은 유용한 워크플로에서 시작하고 경계와 검토 지점을 명확히 합니다.",
+          "workflow_eyebrow": "워크플로.",
+          "workflow_title": "입력에서 검증된 결과까지의 경로를 보이게 합니다.",
+          "steps": [
+            {
+              "title": "업무 정의",
+              "description": "사용자, 목표, 입력 및 제약을 명확히 합니다."
+            },
+            {
+              "title": "필요한 맥락 연결",
+              "description": "승인된 정보원과 시스템만 사용합니다."
+            },
+            {
+              "title": "결과 검토",
+              "description": "중요한 판단이나 외부 작업 전에 사람이 확인합니다."
+            },
+            {
+              "title": "증거로 개선",
+              "description": "실패, 누락 및 피드백을 다음 개선에 반영합니다."
+            }
+          ],
+          "next_eyebrow": "다음 단계.",
+          "next_title": "실제 워크플로에 맞춰 범위를 정합니다.",
+          "eyebrow": "CinaToken / 오픈 소스 자체 호스팅 모델 게이트웨이.",
+          "title": "모델 접근, 사용량 및 비용을 자체 호스팅 게이트웨이에서 관리하세요.",
+          "lead": "CinaToken은 자격 증명, 모델 라우팅, 사용 정책, 추적 및 비용 경계를 하나의 계층으로 모읍니다.",
+          "capabilities": [
+            {
+              "title": "자체 호스팅 제어.",
+              "description": "운영자가 호스팅 경로, 공급자, 키, 데이터 저장소를 선택합니다."
+            },
+            {
+              "title": "문서화된 모델 라우팅.",
+              "description": "지원되는 인터페이스, 정책, 공급자 경로를 통해 요청을 라우팅합니다."
+            },
+            {
+              "title": "예산과 감사.",
+              "description": "사용량, 예산, 라우팅, 계산 정보를 운영자가 확인합니다."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinatoken:ru",
+        "slug": "cinatoken",
+        "locale": "ru",
+        "status": "published",
+        "translationOf": "page_products:cinatoken:zh",
+        "data": {
+          "contact": "Обсудить процесс",
+          "stack": "Посмотреть продукты",
+          "capabilities_eyebrow": "Возможности.",
+          "capabilities_title": "Фокус на работе, которую команда должна завершить.",
+          "capabilities_lead": "Начинаем с минимального полезного процесса и сохраняем видимыми его границы и точки проверки.",
+          "workflow_eyebrow": "Процесс.",
+          "workflow_title": "Делаем путь от входных данных до проверенного результата видимым.",
+          "steps": [
+            {
+              "title": "Определить работу",
+              "description": "Уточнить пользователя, цель, входные данные и ограничения."
+            },
+            {
+              "title": "Подключить контекст",
+              "description": "Использовать только разрешённые источники и системы."
+            },
+            {
+              "title": "Проверить результат",
+              "description": "Сохранить человеческую проверку перед важным решением или внешним действием."
+            },
+            {
+              "title": "Улучшать по данным",
+              "description": "Использовать ошибки, пробелы и обратную связь для следующего улучшения."
+            }
+          ],
+          "next_eyebrow": "Следующий шаг.",
+          "next_title": "Определим объём по реальному рабочему процессу.",
+          "eyebrow": "CinaToken / open-source самостоятельно развёртываемый шлюз моделей.",
+          "title": "Управляйте доступом к моделям, использованием и затратами в одном шлюзе.",
+          "lead": "CinaToken объединяет учётные данные, маршрутизацию моделей, политики, трассировки и границы затрат.",
+          "capabilities": [
+            {
+              "title": "Самостоятельно развёртывать.",
+              "description": "Оператор выбирает хостинг, провайдеров, ключи и хранилище данных."
+            },
+            {
+              "title": "Маршрутизировать через документированные API.",
+              "description": "Использовать поддерживаемые интерфейсы, политики и маршруты провайдеров."
+            },
+            {
+              "title": "Проверять бюджет и аудит.",
+              "description": "Оставлять оператору видимыми использование, бюджет, маршрутизацию и учёт."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinatoken:es",
+        "slug": "cinatoken",
+        "locale": "es",
+        "status": "published",
+        "translationOf": "page_products:cinatoken:zh",
+        "data": {
+          "contact": "Hablar del flujo",
+          "stack": "Ver los productos",
+          "capabilities_eyebrow": "Capacidades.",
+          "capabilities_title": "Una capa enfocada en el trabajo que el equipo debe terminar.",
+          "capabilities_lead": "Empezamos por el flujo útil más pequeño y mantenemos visibles sus límites y revisiones.",
+          "workflow_eyebrow": "Flujo.",
+          "workflow_title": "Hacemos visible el camino desde la entrada hasta un resultado revisado.",
+          "steps": [
+            {
+              "title": "Definir el trabajo",
+              "description": "Aclarar el usuario, el objetivo, las entradas y las restricciones."
+            },
+            {
+              "title": "Conectar el contexto",
+              "description": "Usar solo fuentes y sistemas aprobados."
+            },
+            {
+              "title": "Revisar el resultado",
+              "description": "Mantener la revisión humana antes de decisiones o acciones importantes."
+            },
+            {
+              "title": "Mejorar con evidencia",
+              "description": "Convertir fallos, vacíos y comentarios en la siguiente mejora."
+            }
+          ],
+          "next_eyebrow": "Siguiente paso.",
+          "next_title": "Definamos el alcance con un flujo real.",
+          "eyebrow": "CinaToken / gateway de modelos abierto y autohospedado.",
+          "title": "Controla el acceso, el uso y el gasto desde una sola pasarela.",
+          "lead": "CinaToken reúne credenciales, enrutamiento de modelos, políticas, trazas y límites de coste en una sola capa.",
+          "capabilities": [
+            {
+              "title": "Control autohospedado.",
+              "description": "El operador elige alojamiento, proveedores, claves y almacenes de datos."
+            },
+            {
+              "title": "Rutas de modelo documentadas.",
+              "description": "Usa interfaces compatibles, políticas y rutas de proveedor documentadas."
+            },
+            {
+              "title": "Presupuestos y auditoría.",
+              "description": "Mantiene visibles uso, presupuesto, enrutamiento y contabilidad para el operador."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinatoken:pt",
+        "slug": "cinatoken",
+        "locale": "pt",
+        "status": "published",
+        "translationOf": "page_products:cinatoken:zh",
+        "data": {
+          "contact": "Conversar sobre o fluxo",
+          "stack": "Ver os produtos",
+          "capabilities_eyebrow": "Capacidades.",
+          "capabilities_title": "Uma camada focada no trabalho que a equipe precisa concluir.",
+          "capabilities_lead": "Começamos pelo menor fluxo útil e mantemos seus limites e revisões visíveis.",
+          "workflow_eyebrow": "Fluxo.",
+          "workflow_title": "Tornamos visível o caminho da entrada até um resultado revisado.",
+          "steps": [
+            {
+              "title": "Definir o trabalho",
+              "description": "Esclarecer o usuário, o objetivo, as entradas e as restrições."
+            },
+            {
+              "title": "Conectar o contexto",
+              "description": "Usar somente fontes e sistemas aprovados."
+            },
+            {
+              "title": "Revisar o resultado",
+              "description": "Manter a revisão humana antes de decisões ou ações importantes."
+            },
+            {
+              "title": "Melhorar com evidências",
+              "description": "Transformar falhas, lacunas e feedback na próxima melhoria."
+            }
+          ],
+          "next_eyebrow": "Próximo passo.",
+          "next_title": "Vamos definir o escopo com um fluxo real.",
+          "eyebrow": "CinaToken / gateway de modelos aberto e auto-hospedado.",
+          "title": "Controle acesso, uso e gastos em um único gateway.",
+          "lead": "O CinaToken reúne credenciais, roteamento de modelos, políticas, rastros e limites de custo em uma camada.",
+          "capabilities": [
+            {
+              "title": "Controle auto-hospedado.",
+              "description": "O operador escolhe hospedagem, provedores, chaves e armazenamentos de dados."
+            },
+            {
+              "title": "Rotas de modelo documentadas.",
+              "description": "Use interfaces compatíveis, políticas e rotas de provedor documentadas."
+            },
+            {
+              "title": "Orçamentos e auditoria.",
+              "description": "Mantenha uso, orçamento, roteamento e contabilidade visíveis ao operador."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinatoken:fr",
+        "slug": "cinatoken",
+        "locale": "fr",
+        "status": "published",
+        "translationOf": "page_products:cinatoken:zh",
+        "data": {
+          "contact": "Parler du flux",
+          "stack": "Voir les produits",
+          "capabilities_eyebrow": "Capacités.",
+          "capabilities_title": "Une couche concentrée sur le travail que l’équipe doit terminer.",
+          "capabilities_lead": "Nous commençons par le plus petit flux utile et gardons ses limites et contrôles visibles.",
+          "workflow_eyebrow": "Flux.",
+          "workflow_title": "Nous rendons visible le chemin de l’entrée au résultat vérifié.",
+          "steps": [
+            {
+              "title": "Définir le travail",
+              "description": "Clarifier l’utilisateur, l’objectif, les entrées et les contraintes."
+            },
+            {
+              "title": "Connecter le contexte",
+              "description": "Utiliser uniquement les sources et systèmes approuvés."
+            },
+            {
+              "title": "Vérifier le résultat",
+              "description": "Conserver une revue humaine avant les décisions ou actions importantes."
+            },
+            {
+              "title": "Améliorer par les preuves",
+              "description": "Transformer les erreurs, lacunes et retours en prochaine amélioration."
+            }
+          ],
+          "next_eyebrow": "Étape suivante.",
+          "next_title": "Définissons le périmètre avec un flux réel.",
+          "eyebrow": "CinaToken / passerelle de modèles open source et auto-hébergée.",
+          "title": "Contrôlez l’accès, l’usage et les coûts depuis une seule passerelle.",
+          "lead": "CinaToken réunit identifiants, routage des modèles, politiques, traces et limites de coût dans une couche.",
+          "capabilities": [
+            {
+              "title": "Contrôle auto-hébergé.",
+              "description": "L’opérateur choisit l’hébergement, les fournisseurs, les clés et les magasins de données."
+            },
+            {
+              "title": "Routes de modèles documentées.",
+              "description": "Utiliser les interfaces compatibles, politiques et routes fournisseur documentées."
+            },
+            {
+              "title": "Budgets et audit.",
+              "description": "Garder usage, budget, routage et comptabilité visibles pour l’opérateur."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaskill:zh",
+        "slug": "cinaskill",
+        "locale": "zh",
+        "status": "published",
+        "data": {
+          "contact": "沟通工作流",
+          "stack": "查看产品体系",
+          "capabilities_eyebrow": "能力。",
+          "capabilities_title": "聚焦团队真正需要完成的工作。",
+          "capabilities_lead": "从最小而有用的工作流开始，让边界与审核节点始终清晰可见。",
+          "workflow_eyebrow": "工作流。",
+          "workflow_title": "让从输入到验证结果的路径清晰可见。",
+          "steps": [
+            {
+              "title": "定义任务",
+              "description": "明确用户、目标、输入与约束。"
+            },
+            {
+              "title": "连接必要上下文",
+              "description": "只使用获准访问的数据源与系统。"
+            },
+            {
+              "title": "审核结果",
+              "description": "在重要判断或外部操作前保留人工审核。"
+            },
+            {
+              "title": "依据证据改进",
+              "description": "将失败、缺口与反馈用于下一轮改进。"
+            }
+          ],
+          "next_eyebrow": "下一步。",
+          "next_title": "围绕一条真实工作流确定范围。",
+          "eyebrow": "CinaSkill / CinaClaw 的 SKILL.md 能力格式。",
+          "title": "将 CinaClaw 可复用的指令与资源打包为 SKILL.md。",
+          "lead": "CinaSkill 不是独立平台，而是 CinaClaw 内置、托管与工作空间技能所使用的 SKILL.md 能力格式。",
+          "capabilities": [
+            {
+              "title": "SKILL.md 约定。",
+              "description": "用 Markdown 描述适用条件、指令与所需支持资源。"
+            },
+            {
+              "title": "文档化加载来源。",
+              "description": "从内置、托管与工作空间技能目录加载。"
+            },
+            {
+              "title": "明确工作空间优先级。",
+              "description": "遵循已记录的加载顺序，让工作空间技能优先于托管与内置技能。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaskill:ja",
+        "slug": "cinaskill",
+        "locale": "ja",
+        "status": "published",
+        "translationOf": "page_products:cinaskill:zh",
+        "data": {
+          "contact": "ワークフローを相談する",
+          "stack": "製品一覧を見る",
+          "capabilities_eyebrow": "機能。",
+          "capabilities_title": "チームが完了すべき仕事に集中します。",
+          "capabilities_lead": "最小限の有用なワークフローから始め、境界とレビュー点を明確にします。",
+          "workflow_eyebrow": "ワークフロー。",
+          "workflow_title": "入力から検証済み結果までを見える化します。",
+          "steps": [
+            {
+              "title": "仕事を定義",
+              "description": "ユーザー、目的、入力、制約を明確にします。"
+            },
+            {
+              "title": "必要な文脈を接続",
+              "description": "承認された情報源とシステムだけを使用します。"
+            },
+            {
+              "title": "結果をレビュー",
+              "description": "重要な判断や外部アクションの前に人が確認します。"
+            },
+            {
+              "title": "証拠から改善",
+              "description": "失敗、欠落、フィードバックを次の改善に反映します。"
+            }
+          ],
+          "next_eyebrow": "次のステップ。",
+          "next_title": "実際のワークフローに合わせて範囲を決めます。",
+          "eyebrow": "CinaSkill / CinaClaw の SKILL.md 機能形式。",
+          "title": "CinaClaw 用の指示とリソースを SKILL.md にまとめる。",
+          "lead": "CinaSkill は独立プラットフォームではなく、CinaClaw のバンドル、管理対象、ワークスペーススキルで使われる SKILL.md ベースの機能形式です。",
+          "capabilities": [
+            {
+              "title": "SKILL.md 契約。",
+              "description": "適用条件、指示、必要なサポートリソースを Markdown で記述します。"
+            },
+            {
+              "title": "文書化された読み込み元。",
+              "description": "バンドル、管理対象、ワークスペースのスキルディレクトリから読み込みます。"
+            },
+            {
+              "title": "ワークスペース優先順位を明確に。",
+              "description": "ワークスペーススキルが管理対象・バンドル版より優先される読み込み順を文書化します。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaskill:ko",
+        "slug": "cinaskill",
+        "locale": "ko",
+        "status": "published",
+        "translationOf": "page_products:cinaskill:zh",
+        "data": {
+          "contact": "워크플로 상담하기",
+          "stack": "제품 스택 보기",
+          "capabilities_eyebrow": "기능.",
+          "capabilities_title": "팀이 완료해야 하는 업무에 집중합니다.",
+          "capabilities_lead": "가장 작은 유용한 워크플로에서 시작하고 경계와 검토 지점을 명확히 합니다.",
+          "workflow_eyebrow": "워크플로.",
+          "workflow_title": "입력에서 검증된 결과까지의 경로를 보이게 합니다.",
+          "steps": [
+            {
+              "title": "업무 정의",
+              "description": "사용자, 목표, 입력 및 제약을 명확히 합니다."
+            },
+            {
+              "title": "필요한 맥락 연결",
+              "description": "승인된 정보원과 시스템만 사용합니다."
+            },
+            {
+              "title": "결과 검토",
+              "description": "중요한 판단이나 외부 작업 전에 사람이 확인합니다."
+            },
+            {
+              "title": "증거로 개선",
+              "description": "실패, 누락 및 피드백을 다음 개선에 반영합니다."
+            }
+          ],
+          "next_eyebrow": "다음 단계.",
+          "next_title": "실제 워크플로에 맞춰 범위를 정합니다.",
+          "eyebrow": "CinaSkill / CinaClaw의 SKILL.md 기능 형식.",
+          "title": "CinaClaw에서 재사용할 지침과 리소스를 SKILL.md로 패키징하세요.",
+          "lead": "CinaSkill은 독립 플랫폼이 아니라 CinaClaw의 번들, 관리형, 워크스페이스 스킬에서 사용하는 SKILL.md 기반 기능 형식입니다.",
+          "capabilities": [
+            {
+              "title": "SKILL.md 계약.",
+              "description": "적용 조건, 지침, 필요한 지원 리소스를 Markdown로 기술합니다."
+            },
+            {
+              "title": "문서화된 로딩 소스.",
+              "description": "번들, 관리형, 워크스페이스 스킬 디렉토리에서 불러옵니다."
+            },
+            {
+              "title": "워크스페이스 우선순위 명확화.",
+              "description": "워크스페이스 스킬이 관리형과 번들 스킬보다 우선하는 문서화된 로딩 순서를 따릅니다."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaskill:ru",
+        "slug": "cinaskill",
+        "locale": "ru",
+        "status": "published",
+        "translationOf": "page_products:cinaskill:zh",
+        "data": {
+          "contact": "Обсудить процесс",
+          "stack": "Посмотреть продукты",
+          "capabilities_eyebrow": "Возможности.",
+          "capabilities_title": "Фокус на работе, которую команда должна завершить.",
+          "capabilities_lead": "Начинаем с минимального полезного процесса и сохраняем видимыми его границы и точки проверки.",
+          "workflow_eyebrow": "Процесс.",
+          "workflow_title": "Делаем путь от входных данных до проверенного результата видимым.",
+          "steps": [
+            {
+              "title": "Определить работу",
+              "description": "Уточнить пользователя, цель, входные данные и ограничения."
+            },
+            {
+              "title": "Подключить контекст",
+              "description": "Использовать только разрешённые источники и системы."
+            },
+            {
+              "title": "Проверить результат",
+              "description": "Сохранить человеческую проверку перед важным решением или внешним действием."
+            },
+            {
+              "title": "Улучшать по данным",
+              "description": "Использовать ошибки, пробелы и обратную связь для следующего улучшения."
+            }
+          ],
+          "next_eyebrow": "Следующий шаг.",
+          "next_title": "Определим объём по реальному рабочему процессу.",
+          "eyebrow": "CinaSkill / формат возможностей SKILL.md для CinaClaw.",
+          "title": "Упаковывайте инструкции и ресурсы для CinaClaw в SKILL.md.",
+          "lead": "CinaSkill — не отдельная платформа, а формат SKILL.md для встроенных, управляемых и workspace-навыков CinaClaw.",
+          "capabilities": [
+            {
+              "title": "Контракт SKILL.md.",
+              "description": "Описать условия применения, инструкции и нужные вспомогательные ресурсы в Markdown."
+            },
+            {
+              "title": "Документированные источники.",
+              "description": "Загружать навыки из bundled, managed и workspace-каталогов CinaClaw."
+            },
+            {
+              "title": "Учитывать приоритет workspace.",
+              "description": "Следовать документированному порядку загрузки, где workspace-навыки имеют приорит."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaskill:es",
+        "slug": "cinaskill",
+        "locale": "es",
+        "status": "published",
+        "translationOf": "page_products:cinaskill:zh",
+        "data": {
+          "contact": "Hablar del flujo",
+          "stack": "Ver los productos",
+          "capabilities_eyebrow": "Capacidades.",
+          "capabilities_title": "Una capa enfocada en el trabajo que el equipo debe terminar.",
+          "capabilities_lead": "Empezamos por el flujo útil más pequeño y mantenemos visibles sus límites y revisiones.",
+          "workflow_eyebrow": "Flujo.",
+          "workflow_title": "Hacemos visible el camino desde la entrada hasta un resultado revisado.",
+          "steps": [
+            {
+              "title": "Definir el trabajo",
+              "description": "Aclarar el usuario, el objetivo, las entradas y las restricciones."
+            },
+            {
+              "title": "Conectar el contexto",
+              "description": "Usar solo fuentes y sistemas aprobados."
+            },
+            {
+              "title": "Revisar el resultado",
+              "description": "Mantener la revisión humana antes de decisiones o acciones importantes."
+            },
+            {
+              "title": "Mejorar con evidencia",
+              "description": "Convertir fallos, vacíos y comentarios en la siguiente mejora."
+            }
+          ],
+          "next_eyebrow": "Siguiente paso.",
+          "next_title": "Definamos el alcance con un flujo real.",
+          "eyebrow": "CinaSkill / formato de capacidad SKILL.md para CinaClaw.",
+          "title": "Empaqueta instrucciones y recursos reutilizables para CinaClaw en SKILL.md.",
+          "lead": "CinaSkill no es una plataforma independiente: es el formato SKILL.md usado por las skills integradas, gestionadas y de workspace de CinaClaw.",
+          "capabilities": [
+            {
+              "title": "Contrato SKILL.md.",
+              "description": "Describe en Markdown cuándo se aplica, sus instrucciones y recursos necesarios."
+            },
+            {
+              "title": "Fuentes de carga documentadas.",
+              "description": "Carga desde directorios de skills integradas, gestionadas o de workspace de CinaClaw."
+            },
+            {
+              "title": "Mantén visible la precedencia del workspace.",
+              "description": "Sigue el orden documentado donde las skills del workspace tienen prioridad al cargarse."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaskill:pt",
+        "slug": "cinaskill",
+        "locale": "pt",
+        "status": "published",
+        "translationOf": "page_products:cinaskill:zh",
+        "data": {
+          "contact": "Conversar sobre o fluxo",
+          "stack": "Ver os produtos",
+          "capabilities_eyebrow": "Capacidades.",
+          "capabilities_title": "Uma camada focada no trabalho que a equipe precisa concluir.",
+          "capabilities_lead": "Começamos pelo menor fluxo útil e mantemos seus limites e revisões visíveis.",
+          "workflow_eyebrow": "Fluxo.",
+          "workflow_title": "Tornamos visível o caminho da entrada até um resultado revisado.",
+          "steps": [
+            {
+              "title": "Definir o trabalho",
+              "description": "Esclarecer o usuário, o objetivo, as entradas e as restrições."
+            },
+            {
+              "title": "Conectar o contexto",
+              "description": "Usar somente fontes e sistemas aprovados."
+            },
+            {
+              "title": "Revisar o resultado",
+              "description": "Manter a revisão humana antes de decisões ou ações importantes."
+            },
+            {
+              "title": "Melhorar com evidências",
+              "description": "Transformar falhas, lacunas e feedback na próxima melhoria."
+            }
+          ],
+          "next_eyebrow": "Próximo passo.",
+          "next_title": "Vamos definir o escopo com um fluxo real.",
+          "eyebrow": "CinaSkill / formato de capacidade SKILL.md para CinaClaw.",
+          "title": "Empacote instruções e recursos reutilizáveis para CinaClaw em SKILL.md.",
+          "lead": "O CinaSkill não é uma plataforma independente: é o formato SKILL.md usado pelas skills integradas, gerenciadas e de workspace do CinaClaw.",
+          "capabilities": [
+            {
+              "title": "Contrato SKILL.md.",
+              "description": "Descreva em Markdown quando se aplica, suas instruções e recursos necessários."
+            },
+            {
+              "title": "Fontes de carregamento documentadas.",
+              "description": "Carregue diretórios de skills integradas, gerenciadas ou de workspace do CinaClaw."
+            },
+            {
+              "title": "Mantenha visível a precedência do workspace.",
+              "description": "Siga a ordem documentada em que skills do workspace têm prioridade no carregamento."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinaskill:fr",
+        "slug": "cinaskill",
+        "locale": "fr",
+        "status": "published",
+        "translationOf": "page_products:cinaskill:zh",
+        "data": {
+          "contact": "Parler du flux",
+          "stack": "Voir les produits",
+          "capabilities_eyebrow": "Capacités.",
+          "capabilities_title": "Une couche concentrée sur le travail que l’équipe doit terminer.",
+          "capabilities_lead": "Nous commençons par le plus petit flux utile et gardons ses limites et contrôles visibles.",
+          "workflow_eyebrow": "Flux.",
+          "workflow_title": "Nous rendons visible le chemin de l’entrée au résultat vérifié.",
+          "steps": [
+            {
+              "title": "Définir le travail",
+              "description": "Clarifier l’utilisateur, l’objectif, les entrées et les contraintes."
+            },
+            {
+              "title": "Connecter le contexte",
+              "description": "Utiliser uniquement les sources et systèmes approuvés."
+            },
+            {
+              "title": "Vérifier le résultat",
+              "description": "Conserver une revue humaine avant les décisions ou actions importantes."
+            },
+            {
+              "title": "Améliorer par les preuves",
+              "description": "Transformer les erreurs, lacunes et retours en prochaine amélioration."
+            }
+          ],
+          "next_eyebrow": "Étape suivante.",
+          "next_title": "Définissons le périmètre avec un flux réel.",
+          "eyebrow": "CinaSkill / format de capacité SKILL.md pour CinaClaw.",
+          "title": "Regroupez instructions et ressources réutilisables pour CinaClaw dans SKILL.md.",
+          "lead": "CinaSkill n’est pas une plateforme autonome : c’est le format SKILL.md des skills intégrées, gérées et de workspace de CinaClaw.",
+          "capabilities": [
+            {
+              "title": "Contrat SKILL.md.",
+              "description": "Décrire en Markdown les conditions d’application, instructions et ressources requises."
+            },
+            {
+              "title": "Sources de chargement documentées.",
+              "description": "Charger les répertoires de skills intégrées, gérées ou de workspace de CinaClaw."
+            },
+            {
+              "title": "Garder visible la priorité du workspace.",
+              "description": "Suivre l’ordre documenté où les skills du workspace sont chargées en priorité."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinachain:zh",
+        "slug": "cinachain",
+        "locale": "zh",
+        "status": "published",
+        "data": {
+          "contact": "沟通工作流",
+          "stack": "查看产品体系",
+          "capabilities_eyebrow": "能力。",
+          "capabilities_title": "聚焦团队真正需要完成的工作。",
+          "capabilities_lead": "从最小而有用的工作流开始，让边界与审核节点始终清晰可见。",
+          "workflow_eyebrow": "工作流。",
+          "workflow_title": "让从输入到验证结果的路径清晰可见。",
+          "steps": [
+            {
+              "title": "定义任务",
+              "description": "明确用户、目标、输入与约束。"
+            },
+            {
+              "title": "连接必要上下文",
+              "description": "只使用获准访问的数据源与系统。"
+            },
+            {
+              "title": "审核结果",
+              "description": "在重要判断或外部操作前保留人工审核。"
+            },
+            {
+              "title": "依据证据改进",
+              "description": "将失败、缺口与反馈用于下一轮改进。"
+            }
+          ],
+          "next_eyebrow": "下一步。",
+          "next_title": "围绕一条真实工作流确定范围。",
+          "eyebrow": "CinaChain / Base Sepolia NFT DApp 测试版。",
+          "title": "在 Base Sepolia 上评估 NFT 展示与铸造流程。",
+          "lead": "CinaChain 是面向 Base Sepolia 测试网的 NFT DApp 测试版，并非生产区块链网络。",
+          "capabilities": [
+            {
+              "title": "测试网 NFT 展示。",
+              "description": "通过带 IPFS 网关回退的画廊展示 NFT 资产。"
+            },
+            {
+              "title": "连接 Base Sepolia 钱包。",
+              "description": "在明确标示的测试网上执行白名单或公开铸造。"
+            },
+            {
+              "title": "验证测试交易。",
+              "description": "在 Base Sepolia 区块浏览器中检查测试结果。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinachain:ja",
+        "slug": "cinachain",
+        "locale": "ja",
+        "status": "published",
+        "translationOf": "page_products:cinachain:zh",
+        "data": {
+          "contact": "ワークフローを相談する",
+          "stack": "製品一覧を見る",
+          "capabilities_eyebrow": "機能。",
+          "capabilities_title": "チームが完了すべき仕事に集中します。",
+          "capabilities_lead": "最小限の有用なワークフローから始め、境界とレビュー点を明確にします。",
+          "workflow_eyebrow": "ワークフロー。",
+          "workflow_title": "入力から検証済み結果までを見える化します。",
+          "steps": [
+            {
+              "title": "仕事を定義",
+              "description": "ユーザー、目的、入力、制約を明確にします。"
+            },
+            {
+              "title": "必要な文脈を接続",
+              "description": "承認された情報源とシステムだけを使用します。"
+            },
+            {
+              "title": "結果をレビュー",
+              "description": "重要な判断や外部アクションの前に人が確認します。"
+            },
+            {
+              "title": "証拠から改善",
+              "description": "失敗、欠落、フィードバックを次の改善に反映します。"
+            }
+          ],
+          "next_eyebrow": "次のステップ。",
+          "next_title": "実際のワークフローに合わせて範囲を決めます。",
+          "eyebrow": "CinaChain / Base Sepolia NFT DApp ベータ。",
+          "title": "Base Sepolia で NFT ギャラリーとミントを評価する。",
+          "lead": "CinaChain は Base Sepolia テストネット向けの NFT DApp ベータです。本番ブロックチェーンネットワークではありません。",
+          "capabilities": [
+            {
+              "title": "テストネット NFT を閲覧。",
+              "description": "IPFS フォールバックを備えたギャラリーを表示します。"
+            },
+            {
+              "title": "Base Sepolia ウォレットに接続。",
+              "description": "明示されたテストネットでホワイトリストまたは公開ミントを試します。"
+            },
+            {
+              "title": "トランザクションを検証。",
+              "description": "Base Sepolia エクスプローラーでテスト結果を確認します。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinachain:ko",
+        "slug": "cinachain",
+        "locale": "ko",
+        "status": "published",
+        "translationOf": "page_products:cinachain:zh",
+        "data": {
+          "contact": "워크플로 상담하기",
+          "stack": "제품 스택 보기",
+          "capabilities_eyebrow": "기능.",
+          "capabilities_title": "팀이 완료해야 하는 업무에 집중합니다.",
+          "capabilities_lead": "가장 작은 유용한 워크플로에서 시작하고 경계와 검토 지점을 명확히 합니다.",
+          "workflow_eyebrow": "워크플로.",
+          "workflow_title": "입력에서 검증된 결과까지의 경로를 보이게 합니다.",
+          "steps": [
+            {
+              "title": "업무 정의",
+              "description": "사용자, 목표, 입력 및 제약을 명확히 합니다."
+            },
+            {
+              "title": "필요한 맥락 연결",
+              "description": "승인된 정보원과 시스템만 사용합니다."
+            },
+            {
+              "title": "결과 검토",
+              "description": "중요한 판단이나 외부 작업 전에 사람이 확인합니다."
+            },
+            {
+              "title": "증거로 개선",
+              "description": "실패, 누락 및 피드백을 다음 개선에 반영합니다."
+            }
+          ],
+          "next_eyebrow": "다음 단계.",
+          "next_title": "실제 워크플로에 맞춰 범위를 정합니다.",
+          "eyebrow": "CinaChain / Base Sepolia NFT DApp 베타.",
+          "title": "Base Sepolia에서 NFT 갤러리와 민팅 흐름을 평가하세요.",
+          "lead": "CinaChain은 Base Sepolia 테스트넷용 NFT DApp 베타이며 프로덕션 블록체인 네트워크가 아닙니다.",
+          "capabilities": [
+            {
+              "title": "테스트넷 NFT 갤러리.",
+              "description": "IPFS 게이트웨이 폴백으로 NFT 컬렉션 자산을 표시합니다."
+            },
+            {
+              "title": "Base Sepolia 지갑.",
+              "description": "명시된 테스트넷에서 화이트리스트 또는 공개 민팅을 실행합니다."
+            },
+            {
+              "title": "테스트 거래 검증.",
+              "description": "Base Sepolia 탐색기에서 테스트 결과를 확인합니다."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinachain:ru",
+        "slug": "cinachain",
+        "locale": "ru",
+        "status": "published",
+        "translationOf": "page_products:cinachain:zh",
+        "data": {
+          "contact": "Обсудить процесс",
+          "stack": "Посмотреть продукты",
+          "capabilities_eyebrow": "Возможности.",
+          "capabilities_title": "Фокус на работе, которую команда должна завершить.",
+          "capabilities_lead": "Начинаем с минимального полезного процесса и сохраняем видимыми его границы и точки проверки.",
+          "workflow_eyebrow": "Процесс.",
+          "workflow_title": "Делаем путь от входных данных до проверенного результата видимым.",
+          "steps": [
+            {
+              "title": "Определить работу",
+              "description": "Уточнить пользователя, цель, входные данные и ограничения."
+            },
+            {
+              "title": "Подключить контекст",
+              "description": "Использовать только разрешённые источники и системы."
+            },
+            {
+              "title": "Проверить результат",
+              "description": "Сохранить человеческую проверку перед важным решением или внешним действием."
+            },
+            {
+              "title": "Улучшать по данным",
+              "description": "Использовать ошибки, пробелы и обратную связь для следующего улучшения."
+            }
+          ],
+          "next_eyebrow": "Следующий шаг.",
+          "next_title": "Определим объём по реальному рабочему процессу.",
+          "eyebrow": "CinaChain / бета NFT DApp в Base Sepolia.",
+          "title": "Тестируйте NFT-галерею и минт в Base Sepolia.",
+          "lead": "CinaChain — бета NFT DApp для тестовой сети Base Sepolia, а не production-блокчейн-сеть.",
+          "capabilities": [
+            {
+              "title": "NFT-галерея тестовой сети.",
+              "description": "Показывать активы коллекции с резервными IPFS-шлюзами."
+            },
+            {
+              "title": "Кошелёк Base Sepolia.",
+              "description": "Выполнять whitelist- или public-mint в явно указанной тестовой сети."
+            },
+            {
+              "title": "Проверка тестовой транзакции.",
+              "description": "Проверять результат в обозревателе Base Sepolia."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinachain:es",
+        "slug": "cinachain",
+        "locale": "es",
+        "status": "published",
+        "translationOf": "page_products:cinachain:zh",
+        "data": {
+          "contact": "Hablar del flujo",
+          "stack": "Ver los productos",
+          "capabilities_eyebrow": "Capacidades.",
+          "capabilities_title": "Una capa enfocada en el trabajo que el equipo debe terminar.",
+          "capabilities_lead": "Empezamos por el flujo útil más pequeño y mantenemos visibles sus límites y revisiones.",
+          "workflow_eyebrow": "Flujo.",
+          "workflow_title": "Hacemos visible el camino desde la entrada hasta un resultado revisado.",
+          "steps": [
+            {
+              "title": "Definir el trabajo",
+              "description": "Aclarar el usuario, el objetivo, las entradas y las restricciones."
+            },
+            {
+              "title": "Conectar el contexto",
+              "description": "Usar solo fuentes y sistemas aprobados."
+            },
+            {
+              "title": "Revisar el resultado",
+              "description": "Mantener la revisión humana antes de decisiones o acciones importantes."
+            },
+            {
+              "title": "Mejorar con evidencia",
+              "description": "Convertir fallos, vacíos y comentarios en la siguiente mejora."
+            }
+          ],
+          "next_eyebrow": "Siguiente paso.",
+          "next_title": "Definamos el alcance con un flujo real.",
+          "eyebrow": "CinaChain / NFT DApp beta en Base Sepolia.",
+          "title": "Evalúa una galería NFT y su mint en Base Sepolia.",
+          "lead": "CinaChain es una NFT DApp beta para la testnet Base Sepolia, no una red blockchain de producción.",
+          "capabilities": [
+            {
+              "title": "Galería NFT de testnet.",
+              "description": "Muestra activos de la colección con rutas alternativas de gateway IPFS."
+            },
+            {
+              "title": "Wallet de Base Sepolia.",
+              "description": "Ejecuta mint de whitelist o público en una testnet explícita."
+            },
+            {
+              "title": "Verifica la transacción de prueba.",
+              "description": "Comprueba el resultado en el explorador de Base Sepolia."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinachain:pt",
+        "slug": "cinachain",
+        "locale": "pt",
+        "status": "published",
+        "translationOf": "page_products:cinachain:zh",
+        "data": {
+          "contact": "Conversar sobre o fluxo",
+          "stack": "Ver os produtos",
+          "capabilities_eyebrow": "Capacidades.",
+          "capabilities_title": "Uma camada focada no trabalho que a equipe precisa concluir.",
+          "capabilities_lead": "Começamos pelo menor fluxo útil e mantemos seus limites e revisões visíveis.",
+          "workflow_eyebrow": "Fluxo.",
+          "workflow_title": "Tornamos visível o caminho da entrada até um resultado revisado.",
+          "steps": [
+            {
+              "title": "Definir o trabalho",
+              "description": "Esclarecer o usuário, o objetivo, as entradas e as restrições."
+            },
+            {
+              "title": "Conectar o contexto",
+              "description": "Usar somente fontes e sistemas aprovados."
+            },
+            {
+              "title": "Revisar o resultado",
+              "description": "Manter a revisão humana antes de decisões ou ações importantes."
+            },
+            {
+              "title": "Melhorar com evidências",
+              "description": "Transformar falhas, lacunas e feedback na próxima melhoria."
+            }
+          ],
+          "next_eyebrow": "Próximo passo.",
+          "next_title": "Vamos definir o escopo com um fluxo real.",
+          "eyebrow": "CinaChain / NFT DApp beta na Base Sepolia.",
+          "title": "Avalie uma galeria NFT e mint na Base Sepolia.",
+          "lead": "O CinaChain é uma NFT DApp beta para a testnet Base Sepolia, não uma rede blockchain de produção.",
+          "capabilities": [
+            {
+              "title": "Galeria NFT de testnet.",
+              "description": "Mostre ativos da coleção com caminhos alternativos de gateway IPFS."
+            },
+            {
+              "title": "Wallet Base Sepolia.",
+              "description": "Execute mint por whitelist ou público em uma testnet explícita."
+            },
+            {
+              "title": "Verifique a transação de teste.",
+              "description": "Confira o resultado no explorador da Base Sepolia."
+            }
+          ]
+        }
+      },
+      {
+        "id": "page_products:cinachain:fr",
+        "slug": "cinachain",
+        "locale": "fr",
+        "status": "published",
+        "translationOf": "page_products:cinachain:zh",
+        "data": {
+          "contact": "Parler du flux",
+          "stack": "Voir les produits",
+          "capabilities_eyebrow": "Capacités.",
+          "capabilities_title": "Une couche concentrée sur le travail que l’équipe doit terminer.",
+          "capabilities_lead": "Nous commençons par le plus petit flux utile et gardons ses limites et contrôles visibles.",
+          "workflow_eyebrow": "Flux.",
+          "workflow_title": "Nous rendons visible le chemin de l’entrée au résultat vérifié.",
+          "steps": [
+            {
+              "title": "Définir le travail",
+              "description": "Clarifier l’utilisateur, l’objectif, les entrées et les contraintes."
+            },
+            {
+              "title": "Connecter le contexte",
+              "description": "Utiliser uniquement les sources et systèmes approuvés."
+            },
+            {
+              "title": "Vérifier le résultat",
+              "description": "Conserver une revue humaine avant les décisions ou actions importantes."
+            },
+            {
+              "title": "Améliorer par les preuves",
+              "description": "Transformer les erreurs, lacunes et retours en prochaine amélioration."
+            }
+          ],
+          "next_eyebrow": "Étape suivante.",
+          "next_title": "Définissons le périmètre avec un flux réel.",
+          "eyebrow": "CinaChain / NFT DApp bêta sur Base Sepolia.",
+          "title": "Évaluez une galerie NFT et son mint sur Base Sepolia.",
+          "lead": "CinaChain est une NFT DApp bêta pour le testnet Base Sepolia, pas un réseau blockchain de production.",
+          "capabilities": [
+            {
+              "title": "Galerie NFT de testnet.",
+              "description": "Afficher les actifs de collection avec des chemins de repli de gateway IPFS."
+            },
+            {
+              "title": "Wallet Base Sepolia.",
+              "description": "Exécuter un mint whitelist ou public sur un testnet explicite."
+            },
+            {
+              "title": "Vérifier la transaction de test.",
+              "description": "Contrôler le résultat dans l’explorateur Base Sepolia."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,4 +1,10 @@
 import { listDiscoverableCmsPosts } from './public-discovery.ts';
+import {
+  cmsBlogDisplaySettings,
+  paginateCmsBlogPosts,
+  type CmsBlogDisplaySettings,
+  type CmsBlogPagination,
+} from './cms-blog-display.ts';
 import type { AssetFetcher, PublicPost, PublicPostLocale } from './public-post.ts';
 
 type CmsPage = { entries: { data: Record<string, unknown> }[]; nextCursor?: string; error?: Error };
@@ -9,6 +15,8 @@ export interface CmsBlogIndex {
   posts: PublicPost[];
   indexable: boolean;
   error?: unknown;
+  displaySettings?: CmsBlogDisplaySettings;
+  pagination?: CmsBlogPagination;
 }
 
 /** Native indexes share the exact publication, locale and legacy-path rules of RSS and sitemap. */
@@ -16,11 +24,21 @@ export async function loadCmsBlogIndex(
   locale: PublicPostLocale,
   requestUrl: string,
   assets: AssetFetcher,
-  loadPage: LoadPage
+  loadPage: LoadPage,
+  nativeSettings?: unknown | Promise<unknown>
 ): Promise<CmsBlogIndex> {
   try {
-    const posts = await listDiscoverableCmsPosts(locale, requestUrl, assets, loadPage);
-    return { status: 200, posts, indexable: posts.length > 0 };
+    const [posts, rawSettings] = await Promise.all([
+      listDiscoverableCmsPosts(locale, requestUrl, assets, loadPage),
+      Promise.resolve(nativeSettings).catch(() => undefined),
+    ]);
+    const displaySettings = cmsBlogDisplaySettings(rawSettings);
+    return {
+      status: 200,
+      ...paginateCmsBlogPosts(posts, locale, requestUrl, displaySettings),
+      displaySettings,
+      indexable: posts.length > 0,
+    };
   } catch (error) {
     // A partial list could conceal an unavailable or invalid cursor page.
     return { status: 503, posts: [], indexable: false, error };

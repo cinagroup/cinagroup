@@ -1,5 +1,5 @@
 import { env } from 'cloudflare:workers';
-import { getEmDashCollection } from 'emdash';
+import { getEmDashCollection, getSiteSettingsWithCacheHint } from 'emdash';
 
 import { loadCmsBlogIndex } from './cms-blog-index.ts';
 import type { AssetFetcher, PublicPostLocale } from './public-post.ts';
@@ -17,7 +17,10 @@ export async function loadCmsBlogIndexFromRuntime(locale: PublicPostLocale, requ
         orderBy: { published_at: 'desc' },
         limit: 100,
         cursor,
-      })
+      }),
+    getSiteSettingsWithCacheHint()
+      .then(({ data }) => data)
+      .catch(() => undefined)
   );
   if (result.error) console.error('Unable to load the published EmDash blog index', result.error);
   return result;
