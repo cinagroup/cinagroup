@@ -7,7 +7,7 @@ export interface HeroValue {
   primary_cta_url?: string;
   secondary_cta_label?: string;
   secondary_cta_url?: string;
-  image?: { src: string; alt?: string; width?: number; height?: number } | null;
+  image?: { id: string; src: string; alt?: string; width?: number; height?: number } | null;
   centered?: boolean;
 }
 export interface FeaturesValue {
