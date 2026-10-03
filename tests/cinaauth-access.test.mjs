@@ -440,38 +440,19 @@ for (const status of [301, 302, 303, 307, 308]) {
   });
 }
 
-test(
-  'workerd authorizer accepts fixed-origin identity and never follows credential redirects',
-  {
-    skip:
-      process.platform === 'win32'
-        ? 'Windows workerd has a startup access violation; Linux CI runs this runtime regression'
-        : false,
-    timeout: 40000,
-  },
-  async () => {
-    const { readFile } = await import('node:fs/promises');
-    const esbuild = await import(pathToFileURL(requireFromProject.resolve('esbuild')).href);
-    const runtime = await import(pathToFileURL(requireFromProject.resolve('miniflare')).href);
-    const productionCore = await readFile(new URL('../src/emdash/cinaauth-access-core.ts', import.meta.url), 'utf8');
-    const { code } = await esbuild.transform(productionCore, { loader: 'ts', format: 'esm', target: 'es2022' });
-    const testBindings = bindings();
-    const testIdentity = identity();
-    let identityStatus = 200;
-    const calls = { identity: 0, redirectTarget: 0, unexpected: 0 };
-    const options = {
-      modules: true,
-      compatibilityDate: '2026-03-18',
-      compatibilityFlags: ['nodejs_compat'],
-      cf: false,
-      log: new runtime.Log(runtime.LogLevel.NONE),
-      script:
-        code +
-        `
+async function createWorkerdAuthorizerFixture() {
+  const { readFile } = await import('node:fs/promises');
+  const esbuild = await import(pathToFileURL(requireFromProject.resolve('esbuild')).href);
+  const productionCore = await readFile(new URL('../src/emdash/cinaauth-access-core.ts', import.meta.url), 'utf8');
+  const { code } = await esbuild.transform(productionCore, { loader: 'ts', format: 'esm', target: 'es2022' });
+  const testBindings = bindings();
+  const script =
+    code +
+    `
       export default { async fetch() {
         const denials = [];
         const authorize = createCinaAuthAccessAuthorizer({
-          runtimeBindings: () => ${JSON.stringify(testBindings)},
+          runtimeBindings: () => (${JSON.stringify(testBindings)}),
           verifyAccessJwt: async () => ({
             type: 'app', email: ${JSON.stringify(ADMIN_EMAIL)}, sub: 'offline-runtime-subject',
             exp: Math.floor(Date.now() / 1000) + 300,
@@ -488,7 +469,37 @@ test(
           return Response.json({ allowed: false, status: error.status, denials });
         }
       } };
-    `,
+    `;
+  // Parse the full generated handler even on Windows, where workerd cannot start.
+  const { code: fixture } = await esbuild.transform(script, { loader: 'js', format: 'esm', target: 'es2022' });
+  return fixture;
+}
+
+test('complete workerd authorizer fixture parses on every platform', async () => {
+  await assert.doesNotReject(createWorkerdAuthorizerFixture);
+});
+
+test(
+  'workerd authorizer accepts fixed-origin identity and never follows credential redirects',
+  {
+    skip:
+      process.platform === 'win32'
+        ? 'Windows workerd has a startup access violation; Linux CI runs this runtime regression'
+        : false,
+    timeout: 40000,
+  },
+  async () => {
+    const runtime = await import(pathToFileURL(requireFromProject.resolve('miniflare')).href);
+    const testIdentity = identity();
+    let identityStatus = 200;
+    const calls = { identity: 0, redirectTarget: 0, unexpected: 0 };
+    const options = {
+      modules: true,
+      compatibilityDate: '2026-03-18',
+      compatibilityFlags: ['nodejs_compat'],
+      cf: false,
+      log: new runtime.Log(runtime.LogLevel.NONE),
+      script: await createWorkerdAuthorizerFixture(),
       outboundService: (upstreamRequest) => {
         const url = new URL(upstreamRequest.url);
         if (url.origin === `https://${TEAM_DOMAIN}` && url.pathname === '/cdn-cgi/access/get-identity') {
