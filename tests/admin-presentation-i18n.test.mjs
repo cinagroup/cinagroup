@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { resolveLocale, SUPPORTED_LOCALES } from '@emdash-cms/admin/locales/config';
+import { SITE_APPEARANCE_FIELDS } from '../src/emdash/site-appearance.ts';
 import {
   localizeAdminPresentationManifest,
   localizeAdminPresentationResponse,
@@ -11,7 +12,13 @@ const seedPaths = ['site-shell', 'site-presentation', 'site-inner-pages', 'site-
 const seeds = await Promise.all(
   seedPaths.map(async (name) => JSON.parse(await readFile(new URL(`../seed/${name}.json`, import.meta.url), 'utf8')))
 );
-const collections = seeds.flatMap((seed) => seed.collections);
+const collections = seeds
+  .flatMap((seed) => seed.collections)
+  .map((collection) =>
+    collection.slug === 'site_profile'
+      ? { ...collection, fields: [...collection.fields, ...SITE_APPEARANCE_FIELDS] }
+      : collection
+  );
 const localeRequest = (locale, path = '/_emdash/api/manifest', method = 'GET', extraHeaders = {}) =>
   new Request(`https://cinagroup.com${path}`, {
     method,
@@ -66,7 +73,12 @@ function manifest() {
                       label: field.label,
                       required: field.required ?? false,
                       translatable: field.translatable ?? true,
-                      options: field.options,
+                      options: field.validation?.options
+                        ? field.validation.options.map((value) => ({
+                            value,
+                            label: value.charAt(0).toUpperCase() + value.slice(1),
+                          }))
+                        : field.options,
                       validation: structuredClone(field.validation),
                     },
                   ])
@@ -87,6 +99,8 @@ function removeKnownDisplayStrings(value) {
     for (const key of ['label', 'labelSingular', 'description', 'group']) delete item[key];
     for (const field of collection.fields) {
       delete item.fields[field.slug].label;
+      if (collection.slug === 'site_profile' && SITE_APPEARANCE_FIELDS.some((input) => input.slug === field.slug))
+        for (const option of item.fields[field.slug].options ?? []) delete option.label;
       for (const sub of item.fields[field.slug].validation?.subFields ?? []) delete sub.label;
     }
   }
@@ -116,6 +130,28 @@ test('native admin language is independent from the eight content locales and re
     ),
     english
   );
+});
+
+test('appearance selector labels localize while stable values, validations and authored choices remain intact', () => {
+  const value = manifest();
+  const fields = value.data.collections.site_profile.fields;
+  fields.design_width.options[0].label = 'Editor selected custom label';
+  fields.design_width.options.push({ value: 'unowned', label: 'Standard' });
+  fields.design_radius.label = 'Editor selected custom field';
+  const original = structuredClone(fields);
+  localizeAdminPresentationManifest(value, 'zh-CN');
+  assert.equal(fields.design_hero_autoplay.options[0].label, '默认');
+  assert.equal(fields.design_hero_autoplay.options[1].label, '启用');
+  assert.equal(fields.design_width.options[0].label, 'Editor selected custom label');
+  assert.equal(fields.design_width.options.at(-1).label, 'Standard');
+  assert.deepEqual(fields.design_radius, original.design_radius);
+  for (const input of SITE_APPEARANCE_FIELDS) {
+    assert.deepEqual(fields[input.slug].validation, original[input.slug].validation);
+    assert.deepEqual(
+      fields[input.slug].options?.map(({ value }) => value),
+      original[input.slug].options?.map(({ value }) => value)
+    );
+  }
 });
 
 test('every reviewed collection, field and repeater label is translated in each supported project admin language', () => {

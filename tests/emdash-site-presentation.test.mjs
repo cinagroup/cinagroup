@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { DEFAULT_SITE_APPEARANCE } from '../src/emdash/site-appearance.ts';
 import {
   safePresentationHref,
   presentationMedia,
@@ -214,7 +215,10 @@ test('prerender needs no database and failed CMS reads retain independent valid 
       return profileResult(locale, { footer_description: 'Published footer' });
     },
   });
-  assert.deepEqual(await load({ ...request(), isPrerendered: true }, 'zh'), { menus: {} });
+  assert.deepEqual(await load({ ...request(), isPrerendered: true }, 'zh'), {
+    appearance: DEFAULT_SITE_APPEARANCE,
+    menus: {},
+  });
   assert.equal(reads, 0);
   const presentation = await load(request(), 'zh');
   assert.equal(presentation.siteName, undefined);

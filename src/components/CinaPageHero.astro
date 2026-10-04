@@ -33,10 +33,22 @@ const secondaryHref = secondary ? sanitizeHref(getPermalink(secondary.href)) : u
 
 <section class="flexina-page-title" id="page-title" aria-labelledby="page-headline">
   <div class="page-title-content">
-    {eyebrow && <p class="page-title-eyebrow">{eyebrow}</p>}
-    <h1 id="page-headline">{headline}</h1>
-    {lead && <p class="page-title-lead">{lead}</p>}
-    <nav class="page-breadcrumb" aria-label={breadcrumbLabels.navigation}>
+    {
+      eyebrow && (
+        <p class="page-title-eyebrow" data-fx-reveal data-fx-reveal-order="0">
+          {eyebrow}
+        </p>
+      )
+    }
+    <h1 id="page-headline" data-fx-title data-fx-reveal data-fx-reveal-order="1">{headline}</h1>
+    {
+      lead && (
+        <p class="page-title-lead" data-fx-reveal data-fx-reveal-order="2">
+          {lead}
+        </p>
+      )
+    }
+    <nav class="page-breadcrumb" aria-label={breadcrumbLabels.navigation} data-fx-reveal data-fx-reveal-order="3">
       <ol>
         <li><a href={homeHref}>{breadcrumbLabels.home}</a></li>
         <li class="breadcrumb-divider" aria-hidden="true">/</li>
@@ -45,15 +57,15 @@ const secondaryHref = secondary ? sanitizeHref(getPermalink(secondary.href)) : u
     </nav>
     {
       (primary || secondary) && (
-        <div class="page-title-actions">
+        <div class="page-title-actions" data-fx-reveal data-fx-reveal-order="4">
           {primary && (
             <a href={primaryHref} class="btn btn-primary btn-lg">
-              {primary.text}
+              <span data-fx-button-label>{primary.text}</span>
             </a>
           )}
           {secondary && (
             <a href={secondaryHref} class="btn btn-secondary btn-lg">
-              {secondary.text}
+              <span data-fx-button-label>{secondary.text}</span>
             </a>
           )}
         </div>

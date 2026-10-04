@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components';
 import Logo from '~/components/Logo.astro';
 import { SITE } from 'astrowind:config';
 import { loadSitePresentation } from '~/emdash/site-presentation';
+import { siteAppearanceCss } from '~/emdash/site-appearance-css';
 import { flattenPresentationMenu, type PresentationMenuItem } from '~/emdash/site-presentation-model';
 import { footerData, headerData } from '~/navigation';
 import { changeLangPath, getLangFromUrl, getLocalizedLabel, languages, localizeInternalHref, type Lang } from '~/i18n';
@@ -71,6 +72,7 @@ const alternates = new Map(languageAlternates.map((item) => [item.hreflang, item
 const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isCurrent = (url: string) => (url.replace(/\/+$/, '') || '/') === currentPath;
 const presentation = await loadSitePresentation(Astro);
+const headerLogoVariant = siteAppearanceCss(presentation.appearance).headerContrast === 'light' ? 'dark' : 'light';
 const siteName = getLocalizedLabel(lang, presentation.siteName ?? SITE?.name) ?? 'CinaGroup';
 const homeLabel = copy.home.replace(lang === 'zh' ? '海内集团' : 'CinaGroup', siteName);
 const contactEmail = presentation.contactEmail ?? 'info@cinagroup.com';
@@ -97,7 +99,7 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
 
 <header class="site-header fx-header" id="marketing-header">
   <a href={href('/')} class="site-logo fx-header-logo" aria-label={homeLabel}>
-    <Logo variant="light" />
+    <Logo variant={headerLogoVariant} />
   </a>
   <div class="fx-header-body">
     <div class="fx-topbar">
@@ -229,7 +231,7 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
     background: var(--color-bg, #fff);
     color: var(--color-text, #131313);
     border: 0;
-    box-shadow: 0 2px 12px #00000009;
+    box-shadow: var(--fx-shadow-small, 0 2px 12px #00000009);
   }
   .fx-header .fx-header-logo {
     position: relative;
@@ -245,7 +247,7 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
     display: block;
   }
   .fx-header .fx-header-logo :global(img[src='/brand/cinagroup-horizontal-white.png']) {
-    display: none;
+    display: block;
   }
   .fx-header-logo::before {
     position: absolute;
@@ -291,7 +293,7 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
   }
   .fx-topbar-social a:hover,
   .fx-topbar-contact:hover {
-    color: var(--fx-primary, #03c2f6);
+    color: var(--cg-link, #007d9e);
   }
   .fx-header .fx-header-main {
     position: static;
@@ -326,7 +328,7 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
   .fx-header .nav-links > a:hover,
   .fx-header .nav-group summary:hover,
   .fx-header a[aria-current='page'] {
-    color: var(--fx-primary, #03c2f6);
+    color: var(--cg-link, #007d9e);
   }
   .fx-header .nav-actions {
     display: flex;
@@ -356,7 +358,7 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
     border-top: 3px solid var(--fx-primary, #03c2f6);
     border-radius: 0;
     background: var(--color-bg, #fff);
-    box-shadow: 0 12px 26px #00000018;
+    box-shadow: var(--fx-shadow-card, 0 12px 26px #00000018);
   }
   .fx-header .nav-dropdown a {
     display: block;
@@ -370,7 +372,7 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
   }
   .fx-header .nav-dropdown a:hover,
   .fx-header .nav-dropdown a[aria-current] {
-    color: var(--fx-primary, #03c2f6);
+    color: var(--cg-link, #007d9e);
     background: transparent;
   }
   .fx-header .language-menu .nav-dropdown {
@@ -388,7 +390,7 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
     padding: 0 28px 0 42px;
     border-radius: 0;
     background: var(--fx-primary, #03c2f6);
-    color: #131313;
+    color: var(--color-on-brand, #062432);
     font-size: 14px;
     font-weight: 600;
     clip-path: polygon(13% 0, 100% 0, 100% 100%, 0 100%);
@@ -427,13 +429,54 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
     }
   }
   @media (min-width: 992px) {
+    .fx-header .fx-header-logo {
+      height: 120px;
+    }
+    .fx-header .fx-topbar {
+      overflow: hidden;
+      opacity: 1;
+      visibility: visible;
+    }
+    :global(html[data-fx-motion-enabled='true']) .fx-header.site-header {
+      transition:
+        min-height 280ms ease,
+        margin-bottom 280ms ease;
+    }
+    :global(html[data-fx-motion-enabled='true']) .fx-header .fx-header-logo {
+      transition:
+        height 280ms ease,
+        padding 280ms ease;
+    }
+    :global(html[data-fx-motion-enabled='true']) .fx-header .fx-header-main,
+    :global(html[data-fx-motion-enabled='true']) .fx-header .nav-actions > .fx-header-cta {
+      transition:
+        height 280ms ease,
+        min-height 280ms ease,
+        background 160ms ease;
+    }
+    :global(html[data-fx-motion-enabled='true']) .fx-header .fx-topbar {
+      transition:
+        height 280ms ease,
+        opacity 180ms ease,
+        visibility 0s;
+    }
     .fx-header.site-header.fx-header-scrolled {
       min-height: 80px;
       /* Preserve document flow so collapsing the sticky bar does not move the scroll threshold. */
       margin-bottom: 40px;
     }
     .fx-header.fx-header-scrolled .fx-topbar {
-      display: none;
+      height: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      border-bottom-color: transparent;
+    }
+    :global(html[data-fx-motion-enabled='true']) .fx-header.fx-header-scrolled .fx-topbar {
+      transition:
+        height 280ms ease,
+        opacity 180ms ease,
+        visibility 0s 280ms;
     }
     .fx-header.fx-header-scrolled .fx-header-logo {
       height: 80px;
@@ -447,6 +490,9 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
     }
   }
   @media (min-width: 1200px) {
+    .fx-header:not(.fx-header-scrolled) .fx-header-logo {
+      height: 133px;
+    }
     .fx-header.site-header.fx-header-scrolled {
       margin-bottom: 53px;
     }
@@ -532,7 +578,7 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
       padding: 16px 24px 24px;
       border-bottom: 3px solid var(--fx-primary, #03c2f6);
       background: var(--color-bg, #fff);
-      box-shadow: 0 14px 24px #00000015;
+      box-shadow: var(--fx-shadow-card, 0 14px 24px #00000015);
     }
     .fx-mobile-group {
       padding: 14px 0;
@@ -554,7 +600,7 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
     }
     .fx-header .mobile-links a:hover,
     .fx-header .mobile-links a[aria-current='page'] {
-      color: var(--fx-primary, #03c2f6);
+      color: var(--cg-link, #007d9e);
     }
     .fx-header .mobile-links .fx-mobile-pricing {
       padding-top: 18px;
@@ -566,23 +612,36 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .fx-header .fx-header-cta {
+    :global(html:not([data-fx-motion-enabled='true'])) .fx-header .fx-header-cta {
       transition: none;
     }
+  }
+  :global(html[data-fx-sticky-header='false']) .fx-header.site-header {
+    position: relative;
+    top: auto;
   }
 </style>
 
 <script>
+  import { MOTION_CHANGE_EVENT, readMotionState } from '../flexina/motion-preference';
+
   const desktopHeaderQuery = matchMedia('(min-width: 992px)');
   function updateMarketingHeaderScroll() {
-    document
-      .getElementById('marketing-header')
-      ?.classList.toggle('fx-header-scrolled', desktopHeaderQuery.matches && window.scrollY > 52);
+    const header = document.getElementById('marketing-header');
+    const topbar = header?.querySelector<HTMLElement>('.fx-topbar');
+    const collapsed =
+      readMotionState().stickyHeader &&
+      desktopHeaderQuery.matches &&
+      window.scrollY > 52 &&
+      !topbar?.contains(document.activeElement);
+    header?.classList.toggle('fx-header-scrolled', collapsed);
+    if (topbar) topbar.inert = collapsed;
   }
   const headerScrollWindow = window as Window & { cinaFlexinaHeaderScrollBound?: boolean };
   if (!headerScrollWindow.cinaFlexinaHeaderScrollBound) {
     window.addEventListener('scroll', updateMarketingHeaderScroll, { passive: true });
     desktopHeaderQuery.addEventListener('change', updateMarketingHeaderScroll);
+    document.addEventListener(MOTION_CHANGE_EVENT, updateMarketingHeaderScroll);
     headerScrollWindow.cinaFlexinaHeaderScrollBound = true;
   }
   function setupMarketingNavigation() {
@@ -590,6 +649,8 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
     const header = document.getElementById('marketing-header');
     if (!header || header.dataset.bound) return;
     header.dataset.bound = 'true';
+    header.addEventListener('focusin', updateMarketingHeaderScroll);
+    header.addEventListener('focusout', () => queueMicrotask(updateMarketingHeaderScroll));
     const menus = header.querySelectorAll<HTMLDetailsElement>('details');
     menus.forEach((menu) =>
       menu.addEventListener('toggle', () => {

@@ -1,4 +1,5 @@
 import { resolveLocale } from '@emdash-cms/admin/locales/config';
+import { SITE_APPEARANCE_FIELDS, SITE_APPEARANCE_FIELD_LABELS } from './site-appearance.ts';
 
 type JsonRecord = Record<string, unknown>;
 type Translations = readonly [string, string, string, string, string, string];
@@ -33,6 +34,7 @@ const KNOWN_COLLECTIONS: Record<string, KnownCollection> = {
       header_cta_href: 'Header contact button URL',
       logo_dark: 'Logo for dark backgrounds',
       extra_social_links: 'Additional social links',
+      ...SITE_APPEARANCE_FIELD_LABELS,
     },
     subFields: { extra_social_links: { label: 'Label', url: 'URL', icon: 'Icon' } },
   },
@@ -218,7 +220,190 @@ const KNOWN_COLLECTIONS: Record<string, KnownCollection> = {
 
 // Ordered zh-CN, zh-TW, ja, es-ES/es-419, pt-BR, fr. English and
 // unsupported native admin locales retain their original metadata.
+const APPEARANCE_TEXT: Record<string, Translations> = {
+  design_primary_color: [
+    '设计 — 主色（#RRGGBB；留空：#03c2f6）',
+    '設計 — 主色（#RRGGBB；留空：#03c2f6）',
+    'デザイン — メインカラー（#RRGGBB；空欄：#03c2f6）',
+    'Diseño — Color principal (#RRGGBB; vacío: #03c2f6)',
+    'Design — Cor principal (#RRGGBB; vazio: #03c2f6)',
+    'Design — Couleur principale (#RRGGBB ; vide : #03c2f6)',
+  ],
+  design_secondary_color: [
+    '设计 — 辅助色（#RRGGBB；留空：#42d7ff）',
+    '設計 — 輔助色（#RRGGBB；留空：#42d7ff）',
+    'デザイン — サブカラー（#RRGGBB；空欄：#42d7ff）',
+    'Diseño — Color secundario (#RRGGBB; vacío: #42d7ff)',
+    'Design — Cor secundária (#RRGGBB; vazio: #42d7ff)',
+    'Design — Couleur secondaire (#RRGGBB ; vide : #42d7ff)',
+  ],
+  design_fonts: [
+    '设计 — 字体（留空：flexina）',
+    '設計 — 字型（留空：flexina）',
+    'デザイン — フォント（空欄：flexina）',
+    'Diseño — Fuentes (vacío: flexina)',
+    'Design — Fontes (vazio: flexina)',
+    'Design — Polices (vide : flexina)',
+  ],
+  design_width: [
+    '设计 — 内容宽度（1120 / 1252 / 1440 px；留空：standard）',
+    '設計 — 內容寬度（1120 / 1252 / 1440 px；留空：standard）',
+    'デザイン — コンテンツ幅（1120 / 1252 / 1440 px；空欄：standard）',
+    'Diseño — Ancho del contenido (1120 / 1252 / 1440 px; vacío: standard)',
+    'Design — Largura do conteúdo (1120 / 1252 / 1440 px; vazio: standard)',
+    'Design — Largeur du contenu (1120 / 1252 / 1440 px ; vide : standard)',
+  ],
+  design_layout: [
+    '设计 — 页面布局（留空：wide）',
+    '設計 — 頁面版面（留空：wide）',
+    'デザイン — ページレイアウト（空欄：wide）',
+    'Diseño — Distribución de página (vacío: wide)',
+    'Design — Layout da página (vazio: wide)',
+    'Design — Mise en page (vide : wide)',
+  ],
+  design_background_pattern: [
+    '设计 — 背景纹理（留空：none）',
+    '設計 — 背景紋理（留空：none）',
+    'デザイン — 背景パターン（空欄：none）',
+    'Diseño — Patrón de fondo (vacío: none)',
+    'Design — Padrão de fundo (vazio: none)',
+    'Design — Motif de fond (vide : none)',
+  ],
+  design_radius: [
+    '设计 — 圆角（留空：reference）',
+    '設計 — 圓角（留空：reference）',
+    'デザイン — 角の形（空欄：reference）',
+    'Diseño — Esquinas (vacío: reference)',
+    'Design — Cantos (vazio: reference)',
+    'Design — Coins (vide : reference)',
+  ],
+  design_shadow: [
+    '设计 — 阴影（留空：soft）',
+    '設計 — 陰影（留空：soft）',
+    'デザイン — シャドウ（空欄：soft）',
+    'Diseño — Sombras (vacío: soft)',
+    'Design — Sombras (vazio: soft)',
+    'Design — Ombres (vide : soft)',
+  ],
+  design_spacing: [
+    '设计 — 区块间距（留空：standard）',
+    '設計 — 區塊間距（留空：standard）',
+    'デザイン — セクション間隔（空欄：standard）',
+    'Diseño — Espaciado de secciones (vacío: standard)',
+    'Design — Espaçamento das seções (vazio: standard)',
+    'Design — Espacement des sections (vide : standard)',
+  ],
+  design_color_mode: [
+    '设计 — 默认明暗模式（访客偏好优先；留空：system）',
+    '設計 — 預設明暗模式（訪客偏好優先；留空：system）',
+    'デザイン — 初期カラーモード（閲覧者の設定優先；空欄：system）',
+    'Diseño — Modo de color predeterminado (prima la preferencia del visitante; vacío: system)',
+    'Design — Modo de cor padrão (preferência do visitante prevalece; vazio: system)',
+    'Design — Mode de couleur par défaut (préférence du visiteur prioritaire ; vide : system)',
+  ],
+  design_motion: [
+    '动画 — 动画风格（自动遵守系统；站点关闭始终优先；默认：standard）',
+    '動畫 — 動畫風格（自動遵守系統；站點關閉始終優先；預設：standard）',
+    'モーション — アニメーション（自動はシステムに従う；サイトのオフ優先；初期設定：standard）',
+    'Movimiento — Estilo de animación (Auto sigue al sistema; Off del sitio siempre prevalece; predeterminado: standard)',
+    'Movimento — Estilo de animação (Auto segue o sistema; Off do site sempre prevalece; padrão: standard)',
+    'Animation — Style (Auto suit le système ; Off du site reste prioritaire ; par défaut : standard)',
+  ],
+  design_reveal_duration_ms: [
+    '动画 — 入场时长（400–1800 毫秒；默认/恢复值：1000）',
+    '動畫 — 入場時間（400–1800 毫秒；預設/還原值：1000）',
+    'モーション — 表示時間（400–1800 ms；初期/リセット値：1000）',
+    'Movimiento — Duración de entrada (400–1800 ms; predeterminado/restablecer: 1000)',
+    'Movimento — Duração da entrada (400–1800 ms; padrão/restaurar: 1000)',
+    'Animation — Durée d’apparition (400–1800 ms ; défaut/rétablissement : 1000)',
+  ],
+  design_hero_autoplay: [
+    '动画 — 首屏自动轮播（默认：启用）',
+    '動畫 — 首屏自動輪播（預設：啟用）',
+    'モーション — ヒーロー自動再生（初期設定：有効）',
+    'Movimiento — Reproducción automática del hero (predeterminado: activada)',
+    'Movimento — Reprodução automática do hero (padrão: ativada)',
+    'Animation — Lecture automatique du bandeau (par défaut : activée)',
+  ],
+  design_hero_interval_seconds: [
+    '动画 — 首屏轮播间隔（8–30 秒；默认/恢复值：12）',
+    '動畫 — 首屏輪播間隔（8–30 秒；預設/還原值：12）',
+    'モーション — ヒーロー切り替え間隔（8–30 秒；初期/リセット値：12）',
+    'Movimiento — Intervalo del hero (8–30 segundos; predeterminado/restablecer: 12)',
+    'Movimento — Intervalo do hero (8–30 segundos; padrão/restaurar: 12)',
+    'Animation — Intervalle du bandeau (8–30 secondes ; défaut/rétablissement : 12)',
+  ],
+  design_footer_style: [
+    '设计 — 页脚背景（留空：navy）',
+    '設計 — 頁尾背景（留空：navy）',
+    'デザイン — フッター背景（空欄：navy）',
+    'Diseño — Fondo del pie de página (vacío: navy)',
+    'Design — Fundo do rodapé (vazio: navy)',
+    'Design — Fond du pied de page (vide : navy)',
+  ],
+  design_footer_wave: [
+    '设计 — 页脚波浪（默认：启用）',
+    '設計 — 頁尾波浪（預設：啟用）',
+    'デザイン — フッターの波（初期設定：有効）',
+    'Diseño — Onda del pie de página (predeterminado: activada)',
+    'Design — Onda do rodapé (padrão: ativada)',
+    'Design — Vague du pied de page (par défaut : activée)',
+  ],
+  design_wave_duration_seconds: [
+    '动画 — 波浪周期（6–30 秒；默认/恢复值：10）',
+    '動畫 — 波浪週期（6–30 秒；預設/還原值：10）',
+    'モーション — 波の周期（6–30 秒；初期/リセット値：10）',
+    'Movimiento — Duración de la onda (6–30 segundos; predeterminado/restablecer: 10)',
+    'Movimento — Duração da onda (6–30 segundos; padrão/restaurar: 10)',
+    'Animation — Durée de la vague (6–30 secondes ; défaut/rétablissement : 10)',
+  ],
+  design_sticky_header: [
+    '设计 — 固定导航栏（默认：启用）',
+    '設計 — 固定導覽列（預設：啟用）',
+    'デザイン — 固定ヘッダー（初期設定：有効）',
+    'Diseño — Cabecera fija (predeterminado: activada)',
+    'Design — Cabeçalho fixo (padrão: ativado)',
+    'Design — En-tête fixe (par défaut : activé)',
+  ],
+  design_back_to_top: [
+    '设计 — 回到顶部按钮（默认：启用）',
+    '設計 — 回到頂端按鈕（預設：啟用）',
+    'デザイン — トップに戻るボタン（初期設定：有効）',
+    'Diseño — Botón para volver arriba (predeterminado: activado)',
+    'Design — Botão voltar ao topo (padrão: ativado)',
+    'Design — Bouton retour en haut (par défaut : activé)',
+  ],
+};
+const APPEARANCE_OPTIONS: Record<string, Translations> = {
+  System: ['系统', '系統', 'システム', 'Sistema', 'Sistema', 'Système'],
+  Compact: ['紧凑', '緊湊', 'コンパクト', 'Compacto', 'Compacto', 'Compact'],
+  Standard: ['标准', '標準', '標準', 'Estándar', 'Padrão', 'Standard'],
+  Wide: ['宽幅', '寬幅', 'ワイド', 'Amplio', 'Amplo', 'Large'],
+  Boxed: ['居中框式', '置中框式', 'ボックス', 'Enmarcado', 'Encaixotado', 'Encadré'],
+  None: ['无', '無', 'なし', 'Ninguno', 'Nenhum', 'Aucun'],
+  Dots: ['圆点', '圓點', 'ドット', 'Puntos', 'Pontos', 'Points'],
+  Grid: ['网格', '網格', 'グリッド', 'Cuadrícula', 'Grade', 'Grille'],
+  Diagonal: ['斜线', '斜線', '斜線', 'Diagonal', 'Diagonal', 'Diagonal'],
+  Reference: ['参考风格', '參考風格', '参考スタイル', 'Referencia', 'Referência', 'Référence'],
+  Soft: ['柔和', '柔和', 'ソフト', 'Suave', 'Suave', 'Doux'],
+  Square: ['直角', '直角', '四角', 'Rectas', 'Retos', 'Carrés'],
+  Strong: ['明显', '明顯', '強い', 'Intenso', 'Forte', 'Prononcé'],
+  Spacious: ['宽松', '寬鬆', 'ゆったり', 'Espacioso', 'Espaçoso', 'Aéré'],
+  Light: ['浅色', '淺色', 'ライト', 'Claro', 'Claro', 'Clair'],
+  Dark: ['深色', '深色', 'ダーク', 'Oscuro', 'Escuro', 'Sombre'],
+  Subtle: ['轻柔', '輕柔', '控えめ', 'Sutil', 'Sutil', 'Discret'],
+  Off: ['关闭', '關閉', 'オフ', 'Desactivado', 'Desativado', 'Désactivé'],
+  Default: ['默认', '預設', '初期設定', 'Predeterminado', 'Padrão', 'Par défaut'],
+  Enabled: ['启用', '啟用', '有効', 'Activado', 'Ativado', 'Activé'],
+  Disabled: ['禁用', '停用', '無効', 'Desactivado', 'Desativado', 'Désactivé'],
+  Navy: ['海军蓝', '海軍藍', 'ネイビー', 'Azul marino', 'Azul-marinho', 'Bleu marine'],
+  Charcoal: ['炭灰色', '炭灰色', 'チャコール', 'Gris carbón', 'Cinza-carvão', 'Anthracite'],
+};
+
 const TEXT: Record<string, Translations> = {
+  ...Object.fromEntries(
+    Object.entries(APPEARANCE_TEXT).map(([slug, text]) => [SITE_APPEARANCE_FIELD_LABELS[slug], text])
+  ),
   Website: ['网站', '網站', 'ウェブサイト', 'Sitio web', 'Site', 'Site web'],
   'Site Presentation': [
     '站点展示',
@@ -691,7 +876,20 @@ export function localizeAdminPresentationManifest(value: unknown, locale: string
     for (const [fieldSlug, original] of Object.entries(known.fields)) {
       const field = collection.fields[fieldSlug];
       if (!record(field)) continue;
+      const ownedAppearance =
+        slug === 'site_profile' && field.label === original && SITE_APPEARANCE_FIELD_LABELS[fieldSlug] === original;
       changed = translateProperty(field, 'label', original, localeIndex) || changed;
+      if (ownedAppearance && Array.isArray(field.options)) {
+        const values = SITE_APPEARANCE_FIELDS.find((input) => input.slug === fieldSlug)?.validation?.options ?? [];
+        for (const option of field.options) {
+          if (!record(option) || typeof option.value !== 'string' || !values.includes(option.value)) continue;
+          const nativeLabel = option.value.charAt(0).toUpperCase() + option.value.slice(1);
+          const translated = APPEARANCE_OPTIONS[nativeLabel]?.[localeIndex];
+          if (option.label !== nativeLabel || !translated || translated === nativeLabel) continue;
+          option.label = translated;
+          changed = true;
+        }
+      }
       const subFields = known.subFields?.[fieldSlug];
       if (!subFields || !record(field.validation) || !Array.isArray(field.validation.subFields)) continue;
       for (const subField of field.validation.subFields) {

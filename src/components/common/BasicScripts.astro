@@ -38,14 +38,18 @@ import { UI } from 'astrowind:config';
   }
 
   const initTheme = function () {
-    if (localStorage.theme === 'system') {
+    const pageTheme = document.documentElement.dataset.fxDefaultColorMode || defaultTheme;
+    let storedTheme;
+    try {
+      storedTheme = localStorage.getItem('theme');
+    } catch {
+      // The published default remains usable when the browser blocks preference storage.
+    }
+    if (storedTheme === 'system') {
       applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    } else if ((defaultTheme && defaultTheme.endsWith(':only')) || (!localStorage.theme && defaultTheme !== 'system')) {
-      applyTheme(defaultTheme.replace(':only', ''));
-    } else if (
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
+    } else if ((pageTheme && pageTheme.endsWith(':only')) || (!storedTheme && pageTheme !== 'system')) {
+      applyTheme(pageTheme.replace(':only', ''));
+    } else if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       applyTheme('dark');
     } else {
       applyTheme('light');

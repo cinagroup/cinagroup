@@ -1,0 +1,250 @@
+/* Bounded CMS appearance presets and original motion details for the selected reference. */
+html:root {
+  --cg-link: light-dark(var(--fx-link-light, #007d9e), var(--fx-link-dark, #42d7ff));
+}
+html:root.dark {
+  --cg-link: var(--fx-link-dark, #42d7ff);
+}
+html:root.light {
+  --cg-link: var(--fx-link-light, #007d9e);
+}
+html[data-fx-layout='boxed'] {
+  background-color: light-dark(#e9eef2, #080c12);
+  background-attachment: fixed;
+}
+html[data-fx-layout='boxed'][data-fx-background-pattern='dots'] {
+  background-image: radial-gradient(light-dark(#9eaab7, #3b4c60) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+html[data-fx-layout='boxed'][data-fx-background-pattern='grid'] {
+  background-image:
+    linear-gradient(light-dark(#c4cdd6, #253343) 1px, transparent 1px),
+    linear-gradient(90deg, light-dark(#c4cdd6, #253343) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+html[data-fx-layout='boxed'][data-fx-background-pattern='diagonal'] {
+  background-image: repeating-linear-gradient(135deg, transparent 0 10px, light-dark(#d1d9e0, #182330) 10px 11px);
+}
+html[data-fx-layout='boxed'] body.marketing-template {
+  width: 100%;
+  max-width: var(--fx-boxed-width, 1252px);
+  margin-inline: auto;
+  box-shadow: var(--fx-shadow-frame, 0 0 50px rgb(0 0 0 / 12%));
+}
+html .marketing-template :is(.cg-page-shell, .cg-blog-shell, .cg-pricing-terms) {
+  max-width: var(--wide-width, 1252px);
+}
+html .marketing-template :is(.cg-page-section, .flexina-pricing) {
+  padding-block: var(--fx-inner-section-space, 90px);
+}
+html .marketing-template .fx-section {
+  padding-block: var(--fx-section-space, 110px);
+}
+html .marketing-template :is(.cg-card, .cg-price-card, .cg-form-card, .fx-product-card, .pricing-card) {
+  border-radius: var(--fx-card-radius, 20px);
+}
+html .marketing-template :is(.cg-card, .cg-price-card, .cg-form-card, .fx-quick-card, .pricing-card) {
+  box-shadow: var(--fx-shadow-card, 0 12px 30px rgb(0 0 0 / 6%));
+}
+html .marketing-template :is(.cg-card, .cg-price-card, .pricing-card):is(:hover, :focus-within) {
+  box-shadow: var(--fx-shadow-hover, 0 15px 40px rgb(0 0 0 / 8%));
+}
+html
+  .marketing-template
+  :is(.btn, .cg-page-button, .fx-header-cta, .fx-hero-primary, .fx-hero-secondary, .fx-eyebrow, .pricing-badge) {
+  border-radius: var(--fx-button-radius, 100px);
+}
+html .marketing-template :is(.fx-about-photo, .fx-about-note, .fx-about-detail, .cg-blog-image, .cg-blog-post-image) {
+  border-radius: var(--fx-image-radius, 12px);
+}
+html .marketing-template :is(.fx-quick-card, .fx-quick-inner) {
+  border-radius: 0 0 var(--fx-image-radius, 12px) var(--fx-image-radius, 12px);
+}
+html .marketing-template :is(.fx-about-note, .fx-about-photo, .fx-about-detail, .fx-eyebrow) {
+  box-shadow: var(--fx-shadow-small, 0 8px 20px rgb(0 0 0 / 8%));
+}
+html .marketing-template :is(.fx-round-icon, .fx-final-cta) {
+  color: var(--color-on-brand);
+}
+html .marketing-template .cg-page-section-dark .cg-page-button {
+  color: var(--color-on-brand);
+}
+.marketing-template .fx-photo-cta .fx-eyebrow {
+  color: var(--fx-link-dark, #42d7ff);
+}
+html .marketing-template .page-title-eyebrow {
+  color: var(--fx-link-dark, #42d7ff);
+}
+/* The last localized content section may be gray; keep the static/animated boundary seamless. */
+.marketing-template:has(main > .cg-page > :is(.cg-page-section-soft, .cg-page-section-dark):last-child) .fx-footer {
+  --fx-wave-surface: var(--color-surface);
+}
+html .marketing-template :is(a, button, summary, select):focus-visible {
+  outline-color: var(--cg-link);
+}
+html[data-fx-header-contrast='light'] .fx-header .fx-header-logo img[src='/brand/cinagroup-horizontal.png'] {
+  display: none;
+}
+html[data-fx-header-contrast='light'] .fx-header .fx-header-logo img[src='/brand/cinagroup-horizontal-white.png'] {
+  display: block;
+}
+html .marketing-template .fx-header .nav-actions > .fx-header-cta {
+  color: var(--color-on-brand);
+}
+
+/* Keep each label intact. Photos are existing original site illustrations, never demo assets. */
+.fx-quick-inner::before,
+.fx-product-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgb(4 15 25 / 88%), rgb(4 15 25 / 88%)),
+    url('/images/flexina/office-workspace.webp') center / cover;
+  transform: translateY(-101%);
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fx-quick-inner > *,
+.fx-product-card > * {
+  position: relative;
+  z-index: 1;
+}
+.fx-quick-inner > .fx-outline-number {
+  position: absolute;
+}
+.fx-quick-card:is(:hover, :focus-visible) .fx-quick-inner::before {
+  transform: translateY(0);
+}
+.fx-quick-card:is(:hover, :focus-visible) :is(h2, p) {
+  color: #fff;
+}
+.fx-quick-card:is(:hover, :focus-visible) .fx-outline-number {
+  -webkit-text-stroke-color: #ffffff80;
+}
+.fx-round-icon::before {
+  position: absolute;
+  inset: -9px;
+  content: '';
+  border: 1px dashed var(--fx-primary);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: fx-detail-ring 10s linear infinite paused;
+}
+html[data-fx-motion-enabled='true'] .fx-quick-card:is(:hover, :focus-visible) .fx-round-icon::before {
+  animation-play-state: running;
+}
+.fx-product-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-shadow: var(--fx-shadow-card);
+}
+.fx-product-card::before {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition-duration: 300ms;
+  background:
+    linear-gradient(rgb(4 15 25 / 88%), rgb(4 15 25 / 88%)),
+    url('/images/flexina/city-workspace.webp') center / cover;
+}
+.fx-product-card:is(:hover, :focus-within)::before {
+  transform: scaleY(1);
+}
+.fx-product-card:is(:hover, :focus-within) {
+  box-shadow: var(--fx-shadow-hover);
+}
+.fx-product-card:is(:hover, :focus-within) :is(h3, p, .fx-product-role) {
+  color: #fff;
+}
+.fx-product-card:is(:hover, :focus-within) > svg {
+  color: var(--fx-link-dark);
+}
+.fx-quick-inner :is(h2, p),
+.fx-product-card :is(h3, p, svg) {
+  transition: color 200ms ease;
+}
+.fx-about-art::before,
+.fx-about-art::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  animation: fx-detail-float 5s ease-in-out infinite alternate paused;
+}
+.fx-about-art {
+  isolation: isolate;
+}
+.fx-about-media {
+  height: 100%;
+}
+.fx-about-art::before {
+  width: 190px;
+  height: 190px;
+  left: -60px;
+  top: 30px;
+  border-radius: 50%;
+  background: var(--color-surface);
+}
+.fx-about-art::after {
+  width: 180px;
+  height: 130px;
+  left: 10px;
+  bottom: 40px;
+  background: radial-gradient(var(--fx-primary) 1.5px, transparent 1.5px) 0 0 / 14px 14px;
+  opacity: 0.35;
+  animation-delay: -2s;
+}
+html[data-fx-motion-enabled='true'] [data-fx-ambient-active='true'] .fx-about-art::before,
+html[data-fx-motion-enabled='true'] [data-fx-ambient-active='true'] .fx-about-art::after {
+  animation-play-state: running;
+}
+.marketing-template .btn,
+.marketing-template .cg-page-button {
+  transition:
+    transform 200ms ease,
+    filter 200ms ease,
+    background-color 200ms ease;
+}
+html[data-fx-motion-enabled='false'] html .marketing-template :is(.btn, .cg-page-button):hover,
+html[data-fx-motion-enabled='false'] .fx-product-card:hover {
+  transform: none;
+}
+html[data-fx-motion-enabled='false'] :where(.fx-quick-inner, .fx-product-card)::before {
+  transition-duration: 0s;
+}
+@keyframes fx-detail-ring {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes fx-detail-float {
+  to {
+    transform: translate3d(10px, -16px, 0);
+  }
+}
+@media (max-width: 991px) {
+  html .marketing-template .fx-section {
+    padding-block: min(var(--fx-section-space), 75px);
+  }
+}
+@media (max-width: 575px) {
+  .fx-quick-grid {
+    overflow-y: hidden;
+  }
+  html .marketing-template :is(.fx-section, .cg-page-section, .flexina-pricing) {
+    padding-block: min(var(--fx-section-space), 60px);
+  }
+  .fx-about-art::before,
+  .fx-about-art::after {
+    display: none;
+  }
+}
+@supports not (color: light-dark(#000, #fff)) {
+  html[data-fx-layout='boxed'] {
+    background-color: #e9eef2;
+  }
+  html.dark[data-fx-layout='boxed'] {
+    background-color: #080c12;
+  }
+}
