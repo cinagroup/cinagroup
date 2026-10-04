@@ -66,6 +66,8 @@ export interface SiteContentInitializationOptions {
   dryRun?: boolean;
   /** Resume a failed run of the identical seed. Running locks are never taken over. */
   resume?: boolean;
+  /** Keep the running lock when remote transport cannot prove whether a write finished. */
+  retainLockOnError?: (error: unknown) => boolean;
 }
 
 export interface SiteContentInitializationResult {
@@ -299,6 +301,7 @@ export async function initializeSiteContent({
   seed,
   dryRun = true,
   resume = false,
+  retainLockOnError,
 }: SiteContentInitializationOptions): Promise<SiteContentInitializationResult> {
   const mediaIds = validateSiteContentInitializationSeed(seed);
   const digest = await fingerprint(seed);
@@ -353,7 +356,11 @@ export async function initializeSiteContent({
     if (!done.applied) fail('INITIALIZATION_LOCK_LOST');
     return { status: 'complete', plan: initialPlan, result };
   } catch (error) {
-    await options.compareAndSet(SITE_CONTENT_INITIALIZATION_MARKER, lock.revision, { ...marker, status: 'failed' });
+    // An unconfirmed remote write may still be active. Never mark it resumable
+    // until an operator has inspected its completion and installed schema.
+    if (!retainLockOnError?.(error)) {
+      await options.compareAndSet(SITE_CONTENT_INITIALIZATION_MARKER, lock.revision, { ...marker, status: 'failed' });
+    }
     throw error;
   }
 }
