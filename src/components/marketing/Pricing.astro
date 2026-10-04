@@ -242,7 +242,7 @@ const plans = rawPlans.map((plan) => ({
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .pricing-card {
+    :global(html:not([data-fx-motion-enabled='true'])) .pricing-card {
       transition: none;
     }
   }

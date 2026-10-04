@@ -494,7 +494,7 @@ const legalLinks = presentation.menus['footer-legal']
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .fx-footer .footer-social a {
+    :global(html:not([data-fx-motion-enabled='true'])) .fx-footer .footer-social a {
       transition: none;
     }
   }

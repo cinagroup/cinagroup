@@ -206,7 +206,16 @@ html[data-fx-motion-enabled='true'] [data-fx-ambient-active='true'] .fx-about-ar
     filter 200ms ease,
     background-color 200ms ease;
 }
-html[data-fx-motion-enabled='false'] html .marketing-template :is(.btn, .cg-page-button):hover,
+html[data-fx-motion-enabled='false'] {
+  scroll-behavior: auto !important;
+}
+html[data-fx-motion-enabled='false']::view-transition-group(*),
+html[data-fx-motion-enabled='false']::view-transition-old(*),
+html[data-fx-motion-enabled='false']::view-transition-new(*) {
+  animation: none !important;
+}
+html[data-fx-motion-enabled='false'] .marketing-template :is(.btn, .cg-page-button):hover,
+html[data-fx-motion-enabled='false'] .fx-quick-card:hover .fx-round-arrow,
 html[data-fx-motion-enabled='false'] .fx-product-card:hover {
   transform: none;
 }
