@@ -7,6 +7,7 @@ import {
   resolveDeploymentTarget,
 } from './emdash/deployment-target';
 import { fetchWithCinaAuthAccess } from './emdash/cinaauth-access';
+import { localizeAdminPresentationResponse } from './emdash/admin-presentation-i18n';
 import type { LegacyAssetFetcher } from './emdash/legacy-article-asset';
 import { withoutHeadBody } from './emdash/legacy-article-shell';
 import {
@@ -53,7 +54,8 @@ export default {
       if (staticSitemap) return staticSitemap;
       // Governed legacy articles get current CMS chrome in the dynamic slug routes.
       const rendered = await astroFetch(forwarded as typeof request, env, ctx);
-      return canonicalizeCmsBlogResponse(forwarded, rendered);
+      const localized = await localizeAdminPresentationResponse(forwarded, rendered);
+      return canonicalizeCmsBlogResponse(forwarded, localized);
     });
     const result = publicParity.applyHeaders(request, new Response(response.body, response));
     return withoutHeadBody(request, applyDeploymentHeaders(request, result, target));
