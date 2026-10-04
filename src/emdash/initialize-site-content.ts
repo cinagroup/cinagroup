@@ -1,8 +1,16 @@
-import { applySeed, ContentRepository, MediaRepository, OptionsRepository, SchemaRegistry, isSafeHref } from 'emdash';
-import type { Database } from 'emdash';
-import type { SeedFile, SeedMenu, SeedMenuItem, SeedApplyResult } from 'emdash/seed';
+import {
+  applySeed,
+  ContentRepository,
+  MediaRepository,
+  OptionsRepository,
+  SchemaRegistry,
+  isSafeHref,
+  FIELD_TYPE_TO_COLUMN,
+} from 'emdash';
+import type { Database, CreateCollectionInput, CreateFieldInput } from 'emdash';
+import type { SeedFile, SeedMenu, SeedMenuItem, SeedApplyResult, SeedCollection } from 'emdash/seed';
 import { validateSeed } from 'emdash/seed';
-import type { Kysely } from 'kysely';
+import { sql, type Kysely } from 'kysely';
 
 export const SITE_CONTENT_INITIALIZATION_MARKER = 'cinagroup:site-content-initialization:v1';
 const COLLECTION_SLUGS: Record<string, readonly string[]> = {
@@ -43,7 +51,7 @@ const SETTINGS = new Set([
 ]);
 
 export interface InitializationPlan {
-  collections: { create: string[]; preserve: string[] };
+  collections: { create: string[]; preserve: string[]; resume?: string[] };
   content: { create: string[]; preserve: string[] };
   menus: { create: string[]; preserve: string[] };
   settings: { create: string[]; preserve: string[] };
@@ -188,9 +196,188 @@ export function validateSiteContentInitializationSeed(seed: SeedFile): Set<strin
   return mediaIds;
 }
 
-async function makePlan(db: Kysely<Database>, seed: SeedFile): Promise<InitializationPlan> {
+/** Match the public SDK's applySeed input, including its explicit field defaults. */
+function nativeSeedCollectionInput(collection: SeedCollection): {
+  input: Omit<CreateCollectionInput, 'source'>;
+  fields: CreateFieldInput[];
+} {
+  // Relations and block normalization can allocate identities. This narrow
+  // recovery supports only the presentation schemas reviewed with this seed.
+  if (collection.fields.some((field) => field.type === 'reference' || field.type === 'blocks'))
+    fail('INITIALIZATION_SCHEMA_RESUME_UNSUPPORTED');
+  return {
+    input: {
+      slug: collection.slug,
+      label: collection.label,
+      labelSingular: collection.labelSingular,
+      description: collection.description,
+      icon: collection.icon,
+      admin: collection.admin,
+      supports: collection.supports || [],
+      urlPattern: collection.urlPattern,
+      routable: collection.routable,
+      hidden: collection.hidden,
+      sortOrder: collection.sortOrder,
+      group: collection.group,
+      commentsEnabled: collection.commentsEnabled,
+      editLocking: collection.editLocking,
+    },
+    fields: collection.fields.map((field) => ({
+      slug: field.slug,
+      label: field.label,
+      type: field.type,
+      required: field.required || false,
+      unique: field.unique || false,
+      searchable: field.searchable || false,
+      indexed: field.indexed || false,
+      translatable: field.translatable,
+      defaultValue: field.defaultValue,
+      validation: field.validation as CreateFieldInput['validation'],
+      widget: field.widget,
+      options: field.options,
+    })),
+  };
+}
+
+/** Pinned EmDash capture version 1 fingerprint, verified against SDK-created fixtures. */
+async function nativeSeedCollectionFingerprint(collection: SeedCollection): Promise<string> {
+  const { input, fields } = nativeSeedCollectionInput(collection);
+  const supports = input.supports ?? ['drafts', 'revisions'];
+  return (
+    'media-usage-seed:v1:sha256:' +
+    (await fingerprint({
+      version: 1,
+      collection: {
+        slug: input.slug,
+        label: input.label,
+        labelSingular: input.labelSingular ?? null,
+        description: input.description ?? null,
+        icon: input.icon ?? null,
+        admin: input.admin ?? null,
+        supports,
+        hasSeo: input.hasSeo ?? supports.includes('seo'),
+        hidden: input.hidden ?? false,
+        sortOrder: input.sortOrder ?? null,
+        ...(input.group ? { group: input.group } : {}),
+        commentsEnabled: input.commentsEnabled ?? false,
+        ...(input.editLocking === false ? { editLocking: false } : {}),
+        urlPattern: input.urlPattern ?? null,
+        routable: input.routable ?? true,
+      },
+      fields: fields.map((field, sortOrder) => ({
+        slug: field.slug,
+        label: field.label,
+        type: field.type,
+        required: field.required ?? false,
+        unique: field.unique ?? false,
+        defaultValue: field.defaultValue === undefined ? null : JSON.stringify(field.defaultValue),
+        validation: field.validation ? JSON.stringify(field.validation) : null,
+        widget: field.widget ?? null,
+        options: field.options ? JSON.stringify(field.options) : null,
+        sortOrder,
+        searchable: field.searchable ?? false,
+        translatable: field.translatable ?? true,
+      })),
+    }))
+  );
+}
+
+async function verifyRegisteredSchemaResume(
+  db: Kysely<Database>,
+  collection: SeedCollection,
+  previous: InitializationMarker | undefined,
+  collectionId: string
+): Promise<boolean> {
+  const lifecycle = await db
+    .selectFrom('_emdash_media_usage_index_status')
+    .select(['collection_id', 'capture_state', 'cursor'])
+    .where('adapter_id', '=', 'content-media')
+    .where('scope_type', '=', 'collection')
+    .where('scope_key', '=', collection.slug)
+    .executeTakeFirst();
+  if (!lifecycle || !['installing', 'ready'].includes(lifecycle.capture_state ?? '')) return false;
+  if (previous?.status !== 'failed' || !previous.initialPlan.collections.create.includes(collection.slug))
+    fail('INITIALIZATION_SCHEMA_RESUME_NOT_OWNED');
+  const activation = await db
+    .selectFrom('_emdash_media_usage_activation')
+    .select(['state', 'runtime_generation'])
+    .where('task_key', '=', 'incremental_capture')
+    .executeTakeFirst();
+  if (
+    activation?.state !== 'active' ||
+    activation.runtime_generation !== 1 ||
+    lifecycle.collection_id !== collectionId ||
+    lifecycle.cursor !== (await nativeSeedCollectionFingerprint(collection))
+  )
+    fail('INITIALIZATION_SCHEMA_RESUME_IDENTITY_MISMATCH');
+  const { input, fields } = nativeSeedCollectionInput(collection);
+  const row = await db
+    .selectFrom('_emdash_collections')
+    .selectAll()
+    .where('id', '=', collectionId)
+    .executeTakeFirstOrThrow();
+  const expected = {
+    slug: input.slug,
+    label: input.label,
+    label_singular: input.labelSingular ?? null,
+    description: input.description ?? null,
+    icon: input.icon ?? null,
+    admin_config: input.admin ? JSON.stringify(input.admin) : null,
+    supports: JSON.stringify(input.supports ?? ['drafts', 'revisions']),
+    source: 'seed',
+    has_seo: input.supports?.includes('seo') ? 1 : 0,
+    routable: input.routable === false ? 0 : 1,
+    hidden: input.hidden ? 1 : 0,
+    sort_order: input.sortOrder ?? null,
+    nav_group: input.group?.trim() || null,
+    comments_enabled: input.commentsEnabled ? 1 : 0,
+    edit_locking: input.editLocking === false ? 0 : 1,
+    url_pattern: input.urlPattern ?? null,
+    title_field: null,
+    date_field: null,
+  };
+  if (Object.entries(expected).some(([key, value]) => row[key as keyof typeof row] !== value))
+    fail('INITIALIZATION_SCHEMA_RESUME_EDITED');
+  const stored = await db.selectFrom('_emdash_fields').selectAll().where('collection_id', '=', collectionId).execute();
+  const seen = new Set<string>();
+  for (const actual of stored) {
+    const sortOrder = fields.findIndex((field) => field.slug === actual.slug);
+    const field = fields[sortOrder];
+    if (!field || seen.has(actual.slug)) fail('INITIALIZATION_SCHEMA_RESUME_EDITED');
+    seen.add(actual.slug);
+    const expectedField = {
+      slug: field.slug,
+      label: field.label,
+      type: field.type,
+      column_type: FIELD_TYPE_TO_COLUMN[field.type],
+      required: field.required ? 1 : 0,
+      unique: field.unique ? 1 : 0,
+      default_value: field.defaultValue === undefined ? null : JSON.stringify(field.defaultValue),
+      validation: field.validation ? JSON.stringify(field.validation) : null,
+      widget: field.widget ?? null,
+      options: field.options ? JSON.stringify(field.options) : null,
+      sort_order: sortOrder,
+      searchable: field.searchable ? 1 : 0,
+      indexed: field.indexed ? 1 : 0,
+      translatable: field.translatable === false ? 0 : 1,
+    };
+    if (Object.entries(expectedField).some(([key, value]) => actual[key as keyof typeof actual] !== value))
+      fail('INITIALIZATION_SCHEMA_RESUME_EDITED');
+  }
+  const content = await sql<{
+    count: number;
+  }>`SELECT COUNT(*) AS count FROM ${sql.ref('ec_' + collection.slug)}`.execute(db);
+  if (content.rows[0]?.count !== 0) fail('INITIALIZATION_SCHEMA_RESUME_CONTENT_PRESENT');
+  return true;
+}
+
+async function makePlan(
+  db: Kysely<Database>,
+  seed: SeedFile,
+  previous?: InitializationMarker
+): Promise<InitializationPlan> {
   const plan: InitializationPlan = {
-    collections: { create: [], preserve: [] },
+    collections: { create: [], preserve: [], resume: [] },
     content: { create: [], preserve: [] },
     menus: { create: [], preserve: [] },
     settings: { create: [], preserve: [] },
@@ -202,6 +389,10 @@ async function makePlan(db: Kysely<Database>, seed: SeedFile): Promise<Initializ
     const existing = await registry.getCollectionWithFields(collection.slug);
     if (!existing) {
       plan.collections.create.push(collection.slug);
+      continue;
+    }
+    if (await verifyRegisteredSchemaResume(db, collection, previous, existing.id)) {
+      plan.collections.resume!.push(collection.slug);
       continue;
     }
     // skip preserves whole existing collections, so missing or changed fields
@@ -312,7 +503,7 @@ export async function initializeSiteContent({
     if (previous.value.status === 'complete') return { status: 'already-complete', plan: previous.value.initialPlan };
     if (!dryRun && (previous.value.status !== 'failed' || !resume)) fail('INITIALIZATION_LOCKED');
   }
-  const plan = await makePlan(db, seed);
+  const plan = await makePlan(db, seed, previous?.value);
   if (dryRun) return { status: 'dry-run', plan };
   const media = new MediaRepository(db);
   for (const id of mediaIds) {
@@ -337,6 +528,24 @@ export async function initializeSiteContent({
   const lock = await options.compareAndSet(SITE_CONTENT_INITIALIZATION_MARKER, previous?.revision ?? null, marker);
   if (!lock.applied) fail('INITIALIZATION_LOCKED');
   try {
+    for (const collection of seed.collections ?? []) {
+      if (!plan.collections.resume?.includes(collection.slug)) continue;
+      // Re-read ownership and exact definitions under the initialization lock;
+      // the SDK resumes its fenced creation, fills missing fields, and validates
+      // the entire field set without replacing any registered row or table.
+      const registry = new SchemaRegistry(db);
+      const registered = await registry.getCollection(collection.slug);
+      if (!registered || !(await verifyRegisteredSchemaResume(db, collection, previous?.value, registered.id)))
+        fail('INITIALIZATION_SCHEMA_RESUME_IDENTITY_MISMATCH');
+      const { input, fields } = nativeSeedCollectionInput(collection);
+      await registry.createSeedCollection(input, fields);
+      if (collection.titleField || collection.dateField) {
+        await registry.updateCollection(collection.slug, {
+          titleField: collection.titleField,
+          dateField: collection.dateField,
+        });
+      }
+    }
     const missing = new Set(plan.menus.create);
     const filteredSeed: SeedFile = { ...seed, menus: (seed.menus ?? []).filter((menu) => missing.has(menuKey(menu))) };
     // Missing translation anchors are deliberately not passed back as menus:

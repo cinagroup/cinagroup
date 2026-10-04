@@ -34,6 +34,8 @@ import {
   readPresentationAssets,
 } from '../scripts/initialize-site-content.mjs';
 import { initializeSiteContent, SITE_CONTENT_INITIALIZATION_MARKER } from '../src/emdash/initialize-site-content.ts';
+import { inspectPresentationCaptureTrigger } from '../scripts/presentation-d1-capture-import.mjs';
+import { ensureNativeSiteContentIndexes } from '../scripts/ensure-native-site-content-indexes.mjs';
 import { DEFAULT_HOME_COPY, HOME_LOCALES } from '../src/data/site/home-defaults.ts';
 import { homeOrganizationStructuredData, loadHomeContent } from '../src/emdash/home-content.ts';
 import { createSitePresentationLoader, flattenPresentationMenu } from '../src/emdash/site-presentation-model.ts';
@@ -124,6 +126,144 @@ test('the production D1 REST adapter executes official seed queries without tran
     const home = await loadHomeContent('en', (lang) => nativeEntry(db, 'site_pages', 'home', lang));
     assert.equal(home.source, 'emdash');
     assert.equal(home.content.heroTitle, DEFAULT_HOME_COPY.en.heroTitle);
+  } finally {
+    await db.destroy();
+    sqlite.close();
+  }
+});
+
+test('full production seed resumes a ready registered schema after bootstrap index loss without restoring unrelated indexes', async () => {
+  const sqlite = new DatabaseSync(':memory:');
+  const captured = [];
+  const statements = [];
+  let triggerAttempt = 0;
+  const query = async (sql, params = []) => {
+    assert.ok(params.length <= 100, 'D1 bound parameter limit');
+    assert.ok(Buffer.byteLength(sql, 'utf8') <= 100000, 'D1 statement size limit');
+    statements.push(sql);
+    const statement = sqlite.prepare(sql);
+    const results = statement.columns().length ? statement.all(...params) : (statement.run(...params), []);
+    const meta = sqlite.prepare('SELECT changes() AS changes, last_insert_rowid() AS last_row_id').get();
+    return { success: true, results, meta };
+  };
+  const db = createPresentationD1Database(query, {
+    captureImport(sql, params) {
+      const identity = inspectPresentationCaptureTrigger(sql, params);
+      captured.push({ identity, sql });
+      // Reproduce the earlier deterministic failure before native registration.
+      if (++triggerAttempt === 2) throw new Error('Fixture native capture installation failure');
+      sqlite.exec(sql);
+      return Promise.resolve({ success: true, results: [], meta: { changes: 0, last_row_id: null } });
+    },
+  });
+  try {
+    await runMigrations(db);
+    await new SchemaRegistry(db).createSeedCollection(
+      { slug: 'posts', label: 'Existing Posts', supports: ['drafts', 'revisions'], routable: true },
+      [{ slug: 'title', label: 'Title', type: 'string' }]
+    );
+    const originalPosts = sqlite.prepare('SELECT * FROM _emdash_collections WHERE slug=?').get('posts');
+    const originalPostFields = sqlite
+      .prepare('SELECT * FROM _emdash_fields WHERE collection_id=? ORDER BY id')
+      .all(originalPosts.id);
+    // The original bootstrap selected table-only exports: inline constraints
+    // survive, while every separately defined index is absent in production.
+    const exportedIndexes = sqlite
+      .prepare("SELECT name FROM sqlite_schema WHERE type='index' AND sql IS NOT NULL")
+      .all();
+    assert.ok(exportedIndexes.length > 1);
+    for (const { name } of exportedIndexes) sqlite.exec(`DROP INDEX "${name.replaceAll('"', '""')}"`);
+    await db.updateTable('_emdash_media_usage_activation').set({ state: 'active' }).execute();
+    const seed = bindPresentationMedia(generatedSeed(), await registerApprovedMedia(db));
+    assert.equal((await ensureNativeSiteContentIndexes(query)).status, 'repair-required');
+    await assert.rejects(
+      initializeSiteContent({ db, seed, dryRun: false }),
+      /Fixture native capture installation failure/
+    );
+    const firstLifecycle = sqlite
+      .prepare("SELECT * FROM _emdash_media_usage_index_status WHERE scope_key='site_profile'")
+      .get();
+    assert.equal(firstLifecycle.capture_state, 'installing');
+    assert.equal(await new SchemaRegistry(db).getCollection('site_profile'), null);
+    // The next native attempt installs all triggers and registers the schema,
+    // then its real resume INSERT fails because the old unique index is missing.
+    await assert.rejects(
+      initializeSiteContent({ db, seed, dryRun: false, resume: true }),
+      /ON CONFLICT clause does not match any PRIMARY KEY or UNIQUE constraint/
+    );
+    const readyLifecycle = sqlite
+      .prepare("SELECT * FROM _emdash_media_usage_index_status WHERE scope_key='site_profile'")
+      .get();
+    assert.equal(readyLifecycle.capture_state, 'ready');
+    assert.equal(readyLifecycle.collection_id, firstLifecycle.collection_id);
+    assert.equal((await new SchemaRegistry(db).getCollection('site_profile')).id, firstLifecycle.collection_id);
+    assert.equal(
+      sqlite
+        .prepare('SELECT COUNT(*) AS count FROM _emdash_fields WHERE collection_id=?')
+        .get(firstLifecycle.collection_id).count,
+      0
+    );
+    assert.equal((await new OptionsRepository(db).get(SITE_CONTENT_INITIALIZATION_MARKER)).status, 'failed');
+    const beforeRepair = statements.length;
+    const plan = await initializeSiteContent({ db, seed, dryRun: true });
+    assert.deepEqual(plan.plan.collections.resume, ['site_profile']);
+    assert.ok(statements.slice(beforeRepair).every((sql) => !/^(?:insert|update|delete|create|drop|alter)/i.test(sql)));
+    const existingIndexes = new Set(
+      sqlite
+        .prepare("SELECT name FROM sqlite_schema WHERE type='index' AND sql IS NOT NULL")
+        .all()
+        .map((row) => row.name)
+    );
+    assert.equal((await ensureNativeSiteContentIndexes(query, { apply: true })).status, 'repaired');
+    assert.deepEqual(
+      sqlite
+        .prepare("SELECT name FROM sqlite_schema WHERE type='index' AND sql IS NOT NULL")
+        .all()
+        .map((row) => row.name)
+        .filter((name) => !existingIndexes.has(name)),
+      ['idx_fields_collection_slug'],
+      'repair creates only the one required original index'
+    );
+    assert.equal((await initializeSiteContent({ db, seed, dryRun: false, resume: true })).status, 'complete');
+    let entries = 0;
+    for (const collection of seed.collections) {
+      const registered = await new SchemaRegistry(db).getCollectionWithFields(collection.slug);
+      assert.equal(registered.fields.length, collection.fields.length);
+      if (collection.slug === 'site_profile') assert.equal(registered.id, firstLifecycle.collection_id);
+      assert.ok(sqlite.prepare(`PRAGMA table_info(ec_${collection.slug})`).all().length <= 100, 'D1 column limit');
+      entries += sqlite.prepare(`SELECT COUNT(*) AS count FROM ec_${collection.slug}`).get().count;
+      assert.equal(
+        sqlite
+          .prepare('SELECT capture_state FROM _emdash_media_usage_index_status WHERE scope_key=?')
+          .get(collection.slug).capture_state,
+        'active'
+      );
+    }
+    assert.equal(entries, 89);
+    assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM _emdash_menus').get().count, 24);
+    assert.equal(sqlite.prepare("SELECT COUNT(*) AS count FROM media WHERE status='ready'").get().count, 6);
+    const installed = sqlite
+      .prepare("SELECT name,sql FROM sqlite_schema WHERE type='trigger' AND name LIKE 'emdash_mu_%'")
+      .all();
+    assert.equal(installed.length, 24);
+    for (const trigger of installed) {
+      const native = captured.find(({ identity }) => identity.name === trigger.name).sql;
+      const normalize = (value) => value.replace(/\s+/g, ' ').trim().replace(/;$/, '');
+      assert.equal(normalize(trigger.sql), normalize(native));
+    }
+    assert.deepEqual(sqlite.prepare('SELECT * FROM _emdash_collections WHERE slug=?').get('posts'), originalPosts);
+    assert.deepEqual(
+      sqlite.prepare('SELECT * FROM _emdash_fields WHERE collection_id=? ORDER BY id').all(originalPosts.id),
+      originalPostFields
+    );
+    assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM ec_posts').get().count, 0);
+    for (const { name } of exportedIndexes.filter((index) => index.name !== 'idx_fields_collection_slug'))
+      assert.equal(
+        sqlite.prepare('SELECT COUNT(*) AS count FROM sqlite_schema WHERE type=? AND name=?').get('index', name).count,
+        0,
+        `${name} is outside this repair`
+      );
+    assert.equal((await initializeSiteContent({ db, seed, dryRun: false })).status, 'already-complete');
   } finally {
     await db.destroy();
     sqlite.close();

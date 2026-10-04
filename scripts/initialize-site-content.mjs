@@ -9,6 +9,10 @@ import { D1Dialect } from 'kysely-d1';
 import { MediaRepository } from 'emdash';
 import { sealSiteContentBackup } from './site-content-backup.mjs';
 import {
+  inspectNativeSiteContentIndexes,
+  ensureNativeSiteContentIndexes,
+} from './ensure-native-site-content-indexes.mjs';
+import {
   importPresentationCaptureTrigger,
   inspectPresentationCaptureTrigger,
   PresentationCaptureImportUncertainError,
@@ -278,8 +282,9 @@ async function main(command = process.argv[2] ?? 'validate') {
     // Existing persisted IDs must enter the fingerprint before plan/resume reads the marker.
     const references = await lookupPresentationMedia(media, assets);
     bindPresentationMedia(seed, references);
+    const nativeIndexPlan = await inspectNativeSiteContentIndexes(query);
     const plan = await initializeSiteContent({ db, seed, dryRun: true });
-    console.log(JSON.stringify(plan));
+    console.log(JSON.stringify({ ...plan, nativeIndexes: nativeIndexPlan }));
     if (command === 'plan' || plan.status === 'already-complete') return;
 
     const { bytes: backupBytes, proof: backupProof } = await downloadPresentationBackup();
@@ -292,6 +297,8 @@ async function main(command = process.argv[2] ?? 'validate') {
     );
     writeFileSync('site-content-backup.enc.json', JSON.stringify(encryptedBackup) + '\n', { mode: 0o600 });
     console.log(JSON.stringify({ backup: backupProof, keyFingerprint: encryptedBackup.keyFingerprint }));
+    const nativeIndexes = await ensureNativeSiteContentIndexes(query, { apply: true });
+    console.log(JSON.stringify({ nativeIndexes }));
     for (const asset of assets) {
       if (references[asset.name]) continue;
       execFileSync(
@@ -339,7 +346,7 @@ async function main(command = process.argv[2] ?? 'validate') {
     console.log(JSON.stringify({ result, media: Object.keys(references), backup: backupProof }));
     writeFileSync(
       'site-content-initialization-report.json',
-      JSON.stringify({ result, media: references, backup: backupProof }, null, 2) + '\n'
+      JSON.stringify({ result, media: references, backup: backupProof, nativeIndexes }, null, 2) + '\n'
     );
   } finally {
     await db.destroy();
