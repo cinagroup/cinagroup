@@ -1,0 +1,159 @@
+---
+import { getLangFromUrl, type Lang } from '~/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+
+const lang = Astro.props.lang ?? getLangFromUrl(Astro.url);
+const copy = {
+  en: { motion: 'Motion', auto: 'System', on: 'On', off: 'Off', disabled: 'Disabled in site settings' },
+  zh: { motion: '动态效果', auto: '跟随系统', on: '开启', off: '关闭', disabled: '站点设置已关闭动效' },
+  ja: {
+    motion: 'アニメーション',
+    auto: 'システム',
+    on: 'オン',
+    off: 'オフ',
+    disabled: 'サイト設定で無効になっています',
+  },
+  ko: { motion: '동작 효과', auto: '시스템 설정', on: '켜기', off: '끄기', disabled: '사이트 설정에서 비활성화됨' },
+  ru: { motion: 'Анимация', auto: 'Как в системе', on: 'Вкл.', off: 'Выкл.', disabled: 'Отключено в настройках сайта' },
+  es: {
+    motion: 'Animación',
+    auto: 'Sistema',
+    on: 'Activada',
+    off: 'Desactivada',
+    disabled: 'Desactivada en los ajustes del sitio',
+  },
+  pt: {
+    motion: 'Animação',
+    auto: 'Sistema',
+    on: 'Ligada',
+    off: 'Desligada',
+    disabled: 'Desativada nas definições do site',
+  },
+  fr: {
+    motion: 'Animations',
+    auto: 'Système',
+    on: 'Activées',
+    off: 'Désactivées',
+    disabled: 'Désactivées dans les réglages du site',
+  },
+}[lang];
+---
+
+<div
+  class="fx-motion-preferences"
+  data-fx-motion-preferences
+  data-disabled-label={copy.disabled}
+  role="group"
+  aria-label={copy.motion}
+  hidden
+>
+  <span class="fx-motion-label">{copy.motion}</span>
+  {
+    (['auto', 'on', 'off'] as const).map((preference) => (
+      <button type="button" data-fx-preference-option={preference} aria-pressed="false">
+        {copy[preference]}
+      </button>
+    ))
+  }
+  <small data-fx-motion-site-disabled role="status" hidden></small>
+</div>
+
+<script>
+  import { MOTION_CHANGE_EVENT, readMotionState, setVisitorMotionPreference } from './motion-preference';
+
+  const preferenceCleanups = new Map<HTMLElement, () => void>();
+
+  function cleanupPreferences() {
+    preferenceCleanups.forEach((cleanup) => cleanup());
+    preferenceCleanups.clear();
+  }
+
+  function updatePreferences() {
+    const state = readMotionState();
+    preferenceCleanups.forEach((_cleanup, root) => {
+      root.querySelectorAll<HTMLButtonElement>('[data-fx-preference-option]').forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.fxPreferenceOption === state.preference));
+        button.disabled = state.style === 'off' && button.dataset.fxPreferenceOption === 'on';
+      });
+      const disabled = root.querySelector<HTMLElement>('[data-fx-motion-site-disabled]');
+      if (disabled) {
+        disabled.hidden = state.style !== 'off';
+        disabled.textContent = state.style === 'off' ? (root.dataset.disabledLabel ?? '') : '';
+      }
+      root.hidden = false;
+    });
+  }
+
+  function initializePreferences() {
+    preferenceCleanups.forEach((cleanup, root) => {
+      if (root.isConnected) return;
+      cleanup();
+      preferenceCleanups.delete(root);
+    });
+    document.querySelectorAll<HTMLElement>('[data-fx-motion-preferences]').forEach((root) => {
+      if (preferenceCleanups.has(root)) return;
+      const controller = new AbortController();
+      root.querySelectorAll<HTMLButtonElement>('[data-fx-preference-option]').forEach((button) => {
+        button.addEventListener(
+          'click',
+          () => {
+            const preference = button.dataset.fxPreferenceOption;
+            if (preference === 'auto' || preference === 'on' || preference === 'off')
+              setVisitorMotionPreference(preference);
+          },
+          { signal: controller.signal }
+        );
+      });
+      preferenceCleanups.set(root, () => controller.abort());
+    });
+    updatePreferences();
+  }
+
+  initializePreferences();
+  document.addEventListener(MOTION_CHANGE_EVENT, updatePreferences);
+  document.addEventListener('astro:page-load', initializePreferences);
+  document.addEventListener('astro:before-swap', cleanupPreferences);
+</script>
+
+<style>
+  .fx-motion-preferences {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+    font-size: 12px;
+  }
+  .fx-motion-preferences[hidden] {
+    display: none;
+  }
+  .fx-motion-label {
+    margin-inline-end: 4px;
+  }
+  .fx-motion-preferences button {
+    min-height: 34px;
+    padding: 5px 10px;
+    border: 1px solid rgb(255 255 255 / 20%);
+    border-radius: 100px;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+  }
+  .fx-motion-preferences button[aria-pressed='true'] {
+    color: var(--color-on-brand, #062432);
+    background: var(--fx-primary, #03c2f6);
+    border-color: var(--fx-primary, #03c2f6);
+  }
+  .fx-motion-preferences button:disabled {
+    cursor: default;
+    opacity: 0.55;
+  }
+  .fx-motion-preferences small {
+    flex-basis: 100%;
+    font-size: 11px;
+  }
+</style>

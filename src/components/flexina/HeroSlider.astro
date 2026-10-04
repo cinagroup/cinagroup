@@ -103,6 +103,7 @@ const labels = {
 <section
   class="fx-hero"
   data-fx-hero
+  data-fx-ambient
   role="region"
   aria-roledescription={slides.length > 1 ? 'carousel' : undefined}
   aria-label={labels.carousel}
@@ -139,11 +140,11 @@ const labels = {
                 </p>
               )}
               {index === 0 ? (
-                <h1 class="fx-hero-title" data-fx-hero-part>
+                <h1 class="fx-hero-title" data-fx-hero-part data-fx-title>
                   {slide.title}
                 </h1>
               ) : (
-                <h2 class="fx-hero-title" data-fx-hero-part>
+                <h2 class="fx-hero-title" data-fx-hero-part data-fx-title>
                   {slide.title}
                 </h2>
               )}
@@ -152,10 +153,10 @@ const labels = {
               </p>
               <div class="fx-hero-actions" data-fx-hero-part>
                 <a class="fx-hero-button fx-hero-primary" href={sanitizeHref(primary.href)}>
-                  {primary.text}
+                  <span data-fx-button-label>{primary.text}</span>
                 </a>
                 <a class="fx-hero-button fx-hero-secondary" href={sanitizeHref(secondary.href)}>
-                  {secondary.text}
+                  <span data-fx-button-label>{secondary.text}</span>
                 </a>
               </div>
             </div>
@@ -197,32 +198,39 @@ const labels = {
 </section>
 
 <script>
-  let cleanups: Array<() => void> = [];
+  import { MOTION_CHANGE_EVENT, readMotionState } from './motion-preference';
+
+  const heroCleanups = new Map<HTMLElement, () => void>();
 
   function cleanupHeroes() {
-    cleanups.forEach((cleanup) => cleanup());
-    cleanups = [];
+    heroCleanups.forEach((cleanup) => cleanup());
+    heroCleanups.clear();
   }
 
   function initializeHeroes() {
-    cleanupHeroes();
+    heroCleanups.forEach((cleanup, root) => {
+      if (root.isConnected) return;
+      cleanup();
+      heroCleanups.delete(root);
+    });
     document.querySelectorAll<HTMLElement>('[data-fx-hero]').forEach((root) => {
+      if (heroCleanups.has(root)) return;
       const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-fx-slide]'));
+      if (!panels.length) return;
       const controls = root.querySelector<HTMLElement>('[data-fx-controls]');
       const previous = root.querySelector<HTMLButtonElement>('[data-fx-previous]');
       const next = root.querySelector<HTMLButtonElement>('[data-fx-next]');
       const pause = root.querySelector<HTMLButtonElement>('[data-fx-pause]');
       const announcement = root.querySelector<HTMLElement>('[data-fx-announcement]');
       const position = root.querySelector<HTMLElement>('[data-fx-position]');
-      if (panels.length < 2 || !controls || !previous || !next || !pause) return;
-
+      const carousel = panels.length > 1 && !!controls && !!previous && !!next && !!pause;
       const controller = new AbortController();
       const { signal } = controller;
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
       let current = 0;
       let manuallyPaused = false;
-      let hovered = false;
+      let hovered = root.matches(':hover');
       let focused = root.contains(document.activeElement);
+      let state = readMotionState();
       let timer: number | undefined;
       let heroAnimations: Animation[] = [];
 
@@ -233,26 +241,32 @@ const labels = {
 
       function animateSlide(panel: HTMLElement) {
         clearHeroAnimations();
-        if (reducedMotion.matches || document.hidden || typeof HTMLElement.prototype.animate !== 'function') return;
+        state = readMotionState();
+        if (!state.enabled || document.hidden || typeof HTMLElement.prototype.animate !== 'function') return;
+        const subtle = state.style === 'subtle';
         panel.querySelectorAll<HTMLElement>('[data-fx-hero-part]').forEach((part, index) => {
           if (part.contains(document.activeElement)) return;
           try {
             heroAnimations.push(
               part.animate(
                 [
-                  { opacity: 0, translate: '0 14px' },
-                  { opacity: 1, translate: '0 0' },
+                  {
+                    opacity: 0,
+                    translate: `0 ${subtle ? 14 : 32}px`,
+                    scale: part.hasAttribute('data-fx-title') ? '0.94' : '1',
+                  },
+                  { opacity: 1, translate: '0 0', scale: '1' },
                 ],
                 {
-                  duration: 600,
-                  delay: Math.min(index, 3) * 90,
+                  duration: subtle ? Math.round(state.revealDurationMs * 0.6) : state.revealDurationMs,
+                  delay: Math.min(index, 3) * (subtle ? 90 : 120),
                   easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
                   fill: 'backwards',
                 }
               )
             );
           } catch {
-            // Motion is optional; slide navigation still works if the browser rejects an animation.
+            // Optional motion must never stop normal slide navigation.
           }
         });
       }
@@ -264,17 +278,11 @@ const labels = {
 
       function scheduleRotation() {
         clearTimer();
-        if (
-          signal.aborted ||
-          !root.isConnected ||
-          manuallyPaused ||
-          hovered ||
-          focused ||
-          document.hidden ||
-          reducedMotion.matches
-        )
-          return;
-        timer = window.setTimeout(() => showSlide(current + 1, false), 12_000);
+        state = readMotionState();
+        const paused = !state.enabled || manuallyPaused || hovered || focused || document.hidden;
+        root.dataset.fxHeroPaused = String(paused);
+        if (!carousel || !state.heroAutoplay || signal.aborted || !root.isConnected || paused) return;
+        timer = window.setTimeout(() => showSlide(current + 1, false), state.heroIntervalMs);
       }
 
       function showSlide(index: number, announce: boolean) {
@@ -295,38 +303,43 @@ const labels = {
       }
 
       function updatePauseButton() {
-        if (!pause) return;
-        pause.hidden = reducedMotion.matches;
-        pause.setAttribute('aria-pressed', String(manuallyPaused));
-        pause.setAttribute('aria-label', (manuallyPaused ? root.dataset.playLabel : root.dataset.pauseLabel) ?? '');
-        const pauseIcon = pause.querySelector<HTMLElement>('[data-fx-pause-icon]');
-        const playIcon = pause.querySelector<HTMLElement>('[data-fx-play-icon]');
-        if (pauseIcon) pauseIcon.hidden = manuallyPaused;
-        if (playIcon) playIcon.hidden = !manuallyPaused;
+        state = readMotionState();
+        if (pause) {
+          pause.hidden = !state.enabled || !state.heroAutoplay;
+          pause.setAttribute('aria-pressed', String(manuallyPaused));
+          pause.setAttribute('aria-label', (manuallyPaused ? root.dataset.playLabel : root.dataset.pauseLabel) ?? '');
+          const pauseIcon = pause.querySelector<HTMLElement>('[data-fx-pause-icon]');
+          const playIcon = pause.querySelector<HTMLElement>('[data-fx-play-icon]');
+          if (pauseIcon) pauseIcon.hidden = manuallyPaused;
+          if (playIcon) playIcon.hidden = !manuallyPaused;
+        }
         scheduleRotation();
       }
 
-      previous.addEventListener('click', () => showSlide(current - 1, true), { signal });
-      next.addEventListener('click', () => showSlide(current + 1, true), { signal });
-      pause.addEventListener(
-        'click',
-        () => {
-          manuallyPaused = !manuallyPaused;
-          updatePauseButton();
-        },
-        { signal }
-      );
-      root.addEventListener(
-        'keydown',
-        (event) => {
-          if (event.altKey || event.ctrlKey || event.metaKey) return;
-          if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-            event.preventDefault();
-            showSlide(current + (event.key === 'ArrowLeft' ? -1 : 1), true);
-          }
-        },
-        { signal }
-      );
+      if (carousel) {
+        previous?.addEventListener('click', () => showSlide(current - 1, true), { signal });
+        next?.addEventListener('click', () => showSlide(current + 1, true), { signal });
+        pause?.addEventListener(
+          'click',
+          () => {
+            manuallyPaused = !manuallyPaused;
+            updatePauseButton();
+          },
+          { signal }
+        );
+        root.addEventListener(
+          'keydown',
+          (event) => {
+            if (event.altKey || event.ctrlKey || event.metaKey) return;
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+              event.preventDefault();
+              showSlide(current + (event.key === 'ArrowLeft' ? -1 : 1), true);
+            }
+          },
+          { signal }
+        );
+        if (controls) controls.hidden = false;
+      }
       root.addEventListener(
         'pointerenter',
         (event) => {
@@ -363,22 +376,32 @@ const labels = {
         },
         { signal }
       );
-      document.addEventListener('visibilitychange', scheduleRotation, { signal });
-      reducedMotion.addEventListener(
-        'change',
+      document.addEventListener(
+        'visibilitychange',
         () => {
-          if (reducedMotion.matches) clearHeroAnimations();
+          if (document.hidden) clearHeroAnimations();
+          scheduleRotation();
+        },
+        { signal }
+      );
+      document.addEventListener(
+        MOTION_CHANGE_EVENT,
+        () => {
+          const wasEnabled = state.enabled;
+          state = readMotionState();
+          if (!state.enabled) clearHeroAnimations();
+          else if (!wasEnabled) animateSlide(panels[current]);
           updatePauseButton();
         },
         { signal }
       );
-      controls.hidden = false;
       updatePauseButton();
       showSlide(0, false);
-      cleanups.push(() => {
+      heroCleanups.set(root, () => {
         clearTimer();
         clearHeroAnimations();
         controller.abort();
+        root.dataset.fxHeroPaused = 'true';
       });
     });
   }
@@ -443,9 +466,41 @@ const labels = {
     object-position: center;
   }
 
+  @keyframes fx-hero-image-drift {
+    from {
+      transform: scale(1.02);
+    }
+    to {
+      transform: scale(1.1);
+    }
+  }
+
+  :global(html[data-fx-motion-enabled='true']) .fx-hero-slide.is-active :global(img.fx-hero-image) {
+    animation: fx-hero-image-drift 20s ease-in-out infinite alternate;
+    animation-play-state: paused;
+    transform-origin: 15% 100%;
+  }
+
+  :global(html[data-fx-motion-enabled='true']) .fx-hero-slide:nth-child(even).is-active :global(img.fx-hero-image) {
+    transform-origin: 85% 100%;
+  }
+
+  :global(html[data-fx-motion-enabled='true'])
+    .fx-hero[data-fx-ambient-active='true'][data-fx-hero-paused='false']
+    .fx-hero-slide.is-active
+    :global(img.fx-hero-image) {
+    animation-play-state: running;
+  }
+
+  :global(html[data-fx-motion-enabled='false']) .fx-hero-slide,
+  :global(html[data-fx-motion-enabled='false']) .fx-hero-button,
+  :global(html[data-fx-motion-enabled='false']) .fx-hero-control {
+    transition: none;
+  }
+
   .fx-hero-container {
     width: 100%;
-    max-width: 1252px;
+    max-width: var(--wide-width, 1252px);
     margin-inline: auto;
     padding: 64px 24px 96px;
   }
@@ -456,7 +511,7 @@ const labels = {
 
   .fx-hero-eyebrow {
     margin: 0 0 16px;
-    color: #03c2f6;
+    color: var(--fx-link-dark, #42d7ff);
     font-family: var(--fx-font-heading, 'Red Hat Display', sans-serif);
     font-size: 18px;
     font-weight: 700;
@@ -498,7 +553,7 @@ const labels = {
     min-height: 50px;
     padding: 12px 26px;
     border: 1px solid transparent;
-    border-radius: 100px;
+    border-radius: var(--fx-button-radius, 100px);
     font-size: 16px;
     font-weight: 500;
     line-height: 1.5;
@@ -510,15 +565,15 @@ const labels = {
   }
 
   .fx-hero-primary {
-    color: #061b22;
-    background: #03c2f6;
-    border-color: #03c2f6;
+    color: var(--color-on-brand, #062432);
+    background: var(--fx-primary, #03c2f6);
+    border-color: var(--fx-primary, #03c2f6);
   }
 
   .fx-hero-primary:hover {
-    color: #061b22;
-    background: #42d7ff;
-    border-color: #42d7ff;
+    color: var(--color-on-brand, #062432);
+    background: var(--fx-primary-hover, #42d7ff);
+    border-color: var(--fx-primary-hover, #42d7ff);
   }
 
   .fx-hero-secondary {
@@ -566,8 +621,8 @@ const labels = {
   }
 
   .fx-hero-control:hover {
-    color: #131313;
-    background: #fff;
+    color: var(--color-on-brand, #062432);
+    background: var(--fx-primary-hover, #42d7ff);
   }
 
   .fx-hero-control :global(svg) {
@@ -718,9 +773,9 @@ const labels = {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .fx-hero-slide,
-    .fx-hero-button,
-    .fx-hero-control {
+    :global(html:not([data-fx-motion-enabled='true'])) .fx-hero-slide,
+    :global(html:not([data-fx-motion-enabled='true'])) .fx-hero-button,
+    :global(html:not([data-fx-motion-enabled='true'])) .fx-hero-control {
       transition: none;
     }
   }

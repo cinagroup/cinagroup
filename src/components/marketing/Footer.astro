@@ -2,6 +2,7 @@
 import { SITE, UI } from 'astrowind:config';
 import { Icon } from 'astro-icon/components';
 import Logo from '~/components/Logo.astro';
+import MotionPreferences from '~/components/flexina/MotionPreferences.astro';
 import { loadSitePresentation } from '~/emdash/site-presentation';
 import { flattenPresentationMenu } from '~/emdash/site-presentation-model';
 import { footerData } from '~/navigation';
@@ -85,6 +86,15 @@ const copy = {
 const label = (text?: string) => getLocalizedLabel(lang, text);
 const href = (url?: string) => localizeInternalHref(url, lang);
 const presentation = await loadSitePresentation(Astro);
+const { appearance } = presentation;
+const homeWave = /^\/(?:(?:en|zh|ja|ko|ru|es|pt|fr)\/?)?$/.test(Astro.url.pathname);
+// Original curves with matching commands permit smooth SVG interpolation without a theme asset.
+const waveShapes = [
+  'M0 70 C240 20 480 125 720 78 C960 25 1200 118 1440 60 L1440 150 L0 150 Z',
+  'M0 50 C240 118 480 20 720 64 C960 125 1200 30 1440 85 L1440 150 L0 150 Z',
+  'M0 88 C240 58 480 115 720 48 C960 30 1200 115 1440 65 L1440 150 L0 150 Z',
+  'M0 70 C240 20 480 125 720 78 C960 25 1200 118 1440 60 L1440 150 L0 150 Z',
+];
 const siteName = label(presentation.siteName ?? SITE?.name) ?? 'CinaGroup';
 const homeLabel = copy.home.replace(lang === 'zh' ? '海内集团' : 'CinaGroup', siteName);
 const contactEmail = presentation.contactEmail ?? 'info@cinagroup.com';
@@ -111,11 +121,40 @@ const legalLinks = presentation.menus['footer-legal']
 ---
 
 <footer class="site-footer fx-footer">
-  <svg class="fx-footer-wave" aria-hidden="true" viewBox="0 0 1440 60" preserveAspectRatio="none">
-    <path d="M0 34 C240 62 410 58 650 25 S1140 4 1440 28 L1440 60 L0 60 Z"></path>
-  </svg>
+  {
+    appearance.footerWave && (
+      <svg class="fx-footer-wave" data-fx-wave aria-hidden="true" viewBox="0 0 1440 150" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="fx-footer-wave-surface" x1="1" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="var(--fx-primary, #03c2f6)" />
+            <stop offset="1" stop-color="var(--fx-band-end, #42d7ff)" />
+          </linearGradient>
+        </defs>
+        <path
+          d={waveShapes[0]}
+          fill={homeWave ? 'url(#fx-footer-wave-surface)' : 'var(--fx-wave-surface, var(--color-bg, #fff))'}
+        >
+          <animate
+            data-fx-wave-animation
+            attributeName="d"
+            values={waveShapes.join(';')}
+            keyTimes="0;0.333333;0.666667;1"
+            keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"
+            calcMode="spline"
+            dur={`${appearance.waveDurationSeconds}s`}
+            repeatCount="indefinite"
+            begin="indefinite"
+          />
+        </path>
+      </svg>
+    )
+  }
+  <div class="fx-footer-patterns" data-fx-ambient aria-hidden="true">
+    <span class="fx-footer-shape fx-footer-shape-one"></span>
+    <span class="fx-footer-shape fx-footer-shape-two"></span>
+  </div>
   <div class="footer-content">
-    <div class="footer-brand">
+    <div class="footer-brand" data-fx-reveal>
       <a href={href('/')} class="footer-logo" aria-label={homeLabel}>
         <Logo variant="dark" />
       </a>
@@ -136,8 +175,8 @@ const legalLinks = presentation.menus['footer-legal']
     </div>
     <nav class="footer-links" aria-label={copy.navigation}>
       {
-        groups.map((group) => (
-          <div class="footer-col">
+        groups.map((group, index) => (
+          <div class="footer-col" data-fx-reveal data-fx-reveal-order={index + 1}>
             {group.label && <h3>{group.url !== '#' ? <a href={group.url}>{group.label}</a> : group.label}</h3>}
             {group.links.map((item) => (
               <a
@@ -156,7 +195,11 @@ const legalLinks = presentation.menus['footer-legal']
   </div>
   <div class="footer-bottom">
     <p>© {new Date().getFullYear()} {siteName}</p>
-    <div class="theme-switcher" data-default-theme={UI.theme || 'system'} aria-label={copy.theme}>
+    <div
+      class="theme-switcher"
+      data-default-theme={appearance.colorMode || UI.theme || 'system'}
+      aria-label={copy.theme}
+    >
       {
         (['light', 'dark', 'system'] as const).map((theme) => (
           <button type="button" class="theme-btn" data-marketing-theme={theme} aria-pressed="false">
@@ -165,6 +208,7 @@ const legalLinks = presentation.menus['footer-legal']
         ))
       }
     </div>
+    <MotionPreferences lang={lang} />
     <div class="fx-footer-legal">
       {
         legalLinks.map((item) => (
@@ -176,32 +220,76 @@ const legalLinks = presentation.menus['footer-legal']
     </div>
   </div>
 </footer>
-<button type="button" class="fx-back-to-top" aria-label={copy.top} hidden>
-  <Icon name="tabler:arrow-up" width={23} height={23} />
-</button>
+{
+  appearance.backToTop && (
+    <button type="button" class="fx-back-to-top" aria-label={copy.top} hidden>
+      <Icon name="tabler:arrow-up" width={23} height={23} />
+    </button>
+  )
+}
 
 <style>
   .fx-footer.site-footer {
     position: relative;
-    margin-top: 64px;
+    margin-top: 0;
+    overflow: hidden;
     border: 0;
-    background: #0e1422;
+    background: var(--fx-footer-bg, #0e1422);
     color: #fff;
   }
   .fx-footer-wave {
     position: absolute;
-    top: -49px;
+    top: -1px;
     left: 0;
     width: 100%;
-    height: 50px;
-    fill: #0e1422;
+    height: 60px;
+    transform: scaleY(-1);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .fx-footer-patterns {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .fx-footer-shape {
+    position: absolute;
+    display: block;
+    width: 210px;
+    height: 290px;
+    border: 1px solid #ffffff12;
+    border-radius: 45% 60% 30% 65%;
+    background: #ffffff05;
+    animation: fx-footer-drift 6s ease-in-out infinite alternate paused;
+  }
+  .fx-footer-shape-one {
+    left: -80px;
+    bottom: 70px;
+    rotate: -25deg;
+  }
+  .fx-footer-shape-two {
+    right: -70px;
+    top: 100px;
+    rotate: 25deg;
+    animation-delay: -3s;
+  }
+  :global(html[data-fx-motion-enabled='true']) .fx-footer-patterns[data-fx-ambient-active='true'] .fx-footer-shape {
+    animation-play-state: running;
+  }
+  @keyframes fx-footer-drift {
+    to {
+      translate: 8px -18px;
+      transform: rotate(4deg);
+    }
   }
   .fx-footer .footer-content {
+    position: relative;
     display: grid;
     grid-template-columns: 1.25fr 1fr 1fr 1fr;
-    max-width: 1252px;
+    max-width: var(--wide-width, 1252px);
     margin: 0 auto;
-    padding: 76px 24px 64px;
+    padding: 96px 24px 64px;
     gap: 56px;
   }
   .fx-footer .footer-links {
@@ -255,7 +343,7 @@ const legalLinks = presentation.menus['footer-legal']
   }
   .fx-footer .footer-social a:hover {
     background: var(--fx-primary, #03c2f6);
-    color: #131313;
+    color: var(--color-on-brand, #131313);
   }
   .fx-footer .footer-col h3 {
     position: relative;
@@ -292,15 +380,17 @@ const legalLinks = presentation.menus['footer-legal']
   .fx-footer .footer-col a:hover,
   .fx-footer .fx-footer-email:hover,
   .fx-footer .fx-footer-legal a:hover {
-    color: var(--fx-primary, #03c2f6);
+    color: var(--fx-link-dark, #42d7ff);
   }
   .fx-footer .footer-bottom {
+    position: relative;
     display: flex;
-    max-width: 1204px;
+    max-width: var(--fx-inner-width, 1204px);
     min-height: 90px;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
+    flex-wrap: wrap;
     margin: 0 auto;
     padding: 24px 0;
     border-top: 1px solid #ffffff21;
@@ -328,7 +418,7 @@ const legalLinks = presentation.menus['footer-legal']
   .fx-footer .theme-btn.active {
     border-color: var(--fx-primary, #03c2f6);
     background: var(--fx-primary, #03c2f6);
-    color: #131313;
+    color: var(--color-on-brand, #131313);
   }
   .fx-footer-legal {
     display: flex;
@@ -336,7 +426,7 @@ const legalLinks = presentation.menus['footer-legal']
     gap: 16px;
   }
   .fx-footer :is(a, button):focus-visible {
-    outline: 2px solid var(--fx-primary, #03c2f6);
+    outline: 2px solid var(--fx-link-dark, #42d7ff);
     outline-offset: 4px;
   }
   .fx-back-to-top {
@@ -349,10 +439,10 @@ const legalLinks = presentation.menus['footer-legal']
     height: 48px;
     align-items: center;
     justify-content: center;
-    border: 2px solid var(--fx-primary, #03c2f6);
+    border: 2px solid var(--fx-link-dark, #42d7ff);
     border-radius: 50%;
-    background: #0e1422;
-    color: var(--fx-primary, #03c2f6);
+    background: var(--fx-footer-bg, #0e1422);
+    color: var(--fx-link-dark, #42d7ff);
     cursor: pointer;
   }
   .fx-back-to-top[hidden] {
@@ -360,7 +450,7 @@ const legalLinks = presentation.menus['footer-legal']
   }
   .fx-back-to-top:hover {
     background: var(--fx-primary, #03c2f6);
-    color: #131313;
+    color: var(--color-on-brand, #131313);
   }
   .fx-back-to-top:focus-visible {
     outline: 2px solid currentColor;
@@ -376,7 +466,7 @@ const legalLinks = presentation.menus['footer-legal']
     .fx-footer .footer-content {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 36px 48px;
-      padding-top: 56px;
+      padding-top: 90px;
     }
     .fx-footer .footer-bottom {
       flex-wrap: wrap;
@@ -385,7 +475,7 @@ const legalLinks = presentation.menus['footer-legal']
   @media (max-width: 575px) {
     .fx-footer .footer-content {
       grid-template-columns: 1fr;
-      padding: 40px 24px;
+      padding: 80px 24px 40px;
       gap: 30px;
     }
     .fx-footer .footer-col h3 {
@@ -411,6 +501,18 @@ const legalLinks = presentation.menus['footer-legal']
 </style>
 
 <script>
+  import { readMotionState } from '~/components/flexina/motion-preference';
+
+  let transientTheme: string | undefined;
+  function readMarketingTheme() {
+    const fallback = document.documentElement.dataset.fxDefaultColorMode || 'system';
+    try {
+      return localStorage.getItem('theme') || transientTheme || fallback;
+    } catch {
+      return transientTheme || fallback;
+    }
+  }
+
   function setupMarketingTheme() {
     const buttons = document.querySelectorAll<HTMLButtonElement>('[data-marketing-theme]');
     const update = (theme: string) => {
@@ -420,17 +522,19 @@ const legalLinks = presentation.menus['footer-legal']
         button.setAttribute('aria-pressed', String(active));
       });
     };
-    const stored =
-      localStorage.getItem('theme') ||
-      document.querySelector<HTMLElement>('.theme-switcher')?.dataset.defaultTheme ||
-      'system';
+    const stored = readMarketingTheme();
     update(stored);
     buttons.forEach((button) => {
       if (button.dataset.bound) return;
       button.dataset.bound = 'true';
       button.addEventListener('click', () => {
         const theme = button.dataset.marketingTheme || 'system';
-        localStorage.setItem('theme', theme);
+        transientTheme = theme;
+        try {
+          localStorage.setItem('theme', theme);
+        } catch {
+          // A blocked preference store must not disable the controls or motion setup.
+        }
         const dark = theme === 'dark' || (theme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
         document.documentElement.classList.toggle('dark', dark);
         document.documentElement.classList.toggle('light', !dark);
@@ -449,14 +553,14 @@ const legalLinks = presentation.menus['footer-legal']
     button.addEventListener('click', () => {
       window.scrollTo({
         top: 0,
-        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+        behavior: readMotionState().enabled ? 'smooth' : 'instant',
       });
       document.querySelector<HTMLAnchorElement>('#marketing-header .site-logo')?.focus({ preventScroll: true });
     });
     updateBackToTop();
   }
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-    if (localStorage.getItem('theme') !== 'system') return;
+    if (readMarketingTheme() !== 'system') return;
     document.documentElement.classList.toggle('dark', event.matches);
     document.documentElement.classList.toggle('light', !event.matches);
   });

@@ -1,0 +1,296 @@
+<script>
+  import { MOTION_CHANGE_EVENT, MOTION_STORAGE_KEY, publishMotionState, readMotionState } from './motion-preference';
+
+  let activeBody: HTMLElement | undefined;
+  let cleanupSiteMotion: (() => void) | undefined;
+  const revealSelector = [
+    '[data-fx-reveal]',
+    'main .cg-section-heading',
+    'main .cg-card',
+    'main .cg-list-row',
+    'main .cg-code-panel',
+    'main .cg-form-card',
+    'main .features .section-header',
+    'main .feature-card',
+    'main .pricing-header',
+    'main .pricing-card',
+    '.fx-footer .footer-brand',
+    '.fx-footer .footer-col',
+    '.fx-footer .footer-bottom',
+  ].join(',');
+
+  function cleanupMotion() {
+    cleanupSiteMotion?.();
+    cleanupSiteMotion = undefined;
+    activeBody = undefined;
+  }
+
+  function initializeSiteMotion() {
+    if (activeBody === document.body) return;
+    cleanupMotion();
+    activeBody = document.body;
+    const controller = new AbortController();
+    const { signal } = controller;
+    const systemPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const revealAnimations = new Map<HTMLElement, Animation[]>();
+    const hoverAnimations = new Map<HTMLElement, Animation[]>();
+    const candidates = Array.from(document.querySelectorAll<HTMLElement>(revealSelector)).filter(
+      (target) => !document.body.hasAttribute('data-legacy-article-shell') || !target.closest('main')
+    );
+    const candidateSet = new Set(candidates);
+    const reveals = candidates.filter((target) => {
+      let parent = target.parentElement;
+      while (parent) {
+        if (candidateSet.has(parent)) return false;
+        parent = parent.parentElement;
+      }
+      return !target.hasAttribute('data-fx-hero-part');
+    });
+    const waves = new Map(
+      Array.from(document.querySelectorAll<SVGSVGElement>('svg[data-fx-wave]')).map((svg) => [
+        svg,
+        {
+          visible: false,
+          started: false,
+          animation: svg.querySelector<SVGAnimationElement>('[data-fx-wave-animation]'),
+        },
+      ])
+    );
+    const ambient = new Map(
+      Array.from(document.querySelectorAll<HTMLElement>('[data-fx-ambient]')).map((target) => [target, false])
+    );
+
+    function cancelAnimations(map: Map<HTMLElement, Animation[]>) {
+      map.forEach((animations) => animations.forEach((animation) => animation.cancel()));
+      map.clear();
+    }
+
+    function stopWave(svg: SVGSVGElement, reset: boolean) {
+      const wave = waves.get(svg);
+      if (!wave) return;
+      svg.dataset.fxWaveActive = 'false';
+      try {
+        svg.pauseAnimations?.();
+        if (reset && wave.started) {
+          wave.animation?.endElement?.();
+          svg.setCurrentTime?.(0);
+          wave.started = false;
+        }
+      } catch {
+        wave.started = false;
+      }
+    }
+
+    function updateDecorations() {
+      const state = readMotionState();
+      waves.forEach((wave, svg) => {
+        if (!state.enabled || document.hidden || !wave.visible) {
+          stopWave(svg, !state.enabled);
+          return;
+        }
+        if (
+          typeof wave.animation?.beginElement !== 'function' ||
+          typeof svg.pauseAnimations !== 'function' ||
+          typeof svg.unpauseAnimations !== 'function'
+        )
+          return;
+        try {
+          if (!wave.started) {
+            wave.animation.beginElement();
+            wave.started = true;
+          }
+          svg.unpauseAnimations();
+          svg.dataset.fxWaveActive = 'true';
+        } catch {
+          stopWave(svg, true);
+        }
+      });
+      ambient.forEach((visible, target) => {
+        target.dataset.fxAmbientActive = String(state.enabled && visible && !document.hidden);
+      });
+    }
+
+    function playReveal(target: HTMLElement) {
+      if (target.dataset.fxRevealed === 'true') return;
+      target.dataset.fxRevealed = 'true';
+      if (target.contains(document.activeElement) || typeof target.animate !== 'function') return;
+      const state = readMotionState();
+      const subtle = state.style === 'subtle';
+      const duration = subtle ? Math.round(state.revealDurationMs * 0.52) : state.revealDurationMs;
+      const siblings = target.parentElement ? Array.from(target.parentElement.children) : [target];
+      const order = Math.min(3, Math.max(0, Number(target.dataset.fxRevealOrder ?? siblings.indexOf(target)) || 0));
+      const options: KeyframeAnimationOptions = {
+        duration,
+        delay: order * (subtle ? 70 : 120),
+        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        fill: 'backwards',
+      };
+      const animations: Animation[] = [];
+      try {
+        animations.push(
+          target.animate(
+            [
+              {
+                opacity: 0,
+                translate: `0 ${subtle ? 12 : 32}px`,
+                scale: target.hasAttribute('data-fx-title') ? '0.96' : '1',
+              },
+              { opacity: 1, translate: '0 0', scale: '1' },
+            ],
+            options
+          )
+        );
+        const title = target.querySelector<HTMLElement>('[data-fx-title]');
+        if (title) animations.push(title.animate([{ scale: '0.96' }, { scale: '1' }], options));
+      } catch {
+        animations.forEach((animation) => animation.cancel());
+        return;
+      }
+      revealAnimations.set(target, animations);
+      void Promise.allSettled(animations.map((animation) => animation.finished)).then(() => {
+        if (revealAnimations.get(target) === animations) revealAnimations.delete(target);
+      });
+    }
+
+    const observer =
+      'IntersectionObserver' in window
+        ? new IntersectionObserver(
+            (entries) => {
+              if (signal.aborted) return;
+              entries.forEach((entry) => {
+                const target = entry.target;
+                if (waves.has(target as SVGSVGElement))
+                  waves.get(target as SVGSVGElement)!.visible = entry.isIntersecting;
+                if (ambient.has(target as HTMLElement)) ambient.set(target as HTMLElement, entry.isIntersecting);
+                if (!entry.isIntersecting || !readMotionState().enabled || document.hidden) return;
+                if (reveals.includes(target as HTMLElement)) {
+                  observer?.unobserve(target);
+                  playReveal(target as HTMLElement);
+                }
+              });
+              updateDecorations();
+            },
+            { threshold: 0, rootMargin: '0px 0px -24px 0px' }
+          )
+        : undefined;
+
+    function updateMotion() {
+      const state = readMotionState();
+      document.documentElement.dataset.fxMotionEnabled = String(state.enabled);
+      document.body.dataset.fxMotion = state.enabled ? state.style : 'off';
+      if (!state.enabled || document.hidden) {
+        cancelAnimations(revealAnimations);
+        cancelAnimations(hoverAnimations);
+      }
+      observer?.disconnect();
+      waves.forEach((_wave, svg) => observer?.observe(svg));
+      ambient.forEach((_visible, target) => observer?.observe(target));
+      if (state.enabled && !document.hidden)
+        reveals.forEach((target) => {
+          if (target.dataset.fxRevealed !== 'true') observer?.observe(target);
+        });
+      updateDecorations();
+    }
+
+    const hoverTargets = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        'a.btn, a.cg-page-button, .fx-hero-button, .fx-header-cta, .fx-mobile-pricing'
+      )
+    ).filter((target) => !document.body.hasAttribute('data-legacy-article-shell') || !target.closest('main'));
+    hoverTargets.forEach((target) => {
+      // Wrap the existing direct text only. Icons, accessible labels and text order are preserved.
+      Array.from(target.childNodes).forEach((node) => {
+        if (node.nodeType !== Node.TEXT_NODE || !node.textContent?.trim()) return;
+        const label = document.createElement('span');
+        label.dataset.fxButtonLabel = '';
+        target.replaceChild(label, node);
+        label.appendChild(node);
+      });
+      target.addEventListener(
+        'pointerenter',
+        (event) => {
+          if (
+            event.pointerType !== 'mouse' ||
+            target.contains(document.activeElement) ||
+            !readMotionState().enabled ||
+            typeof target.animate !== 'function'
+          )
+            return;
+          hoverAnimations.get(target)?.forEach((animation) => animation.cancel());
+          const animations: Animation[] = [];
+          target.querySelectorAll<HTMLElement>('[data-fx-button-label]').forEach((label) => {
+            try {
+              animations.push(
+                label.animate([{ translate: '0 0' }, { translate: '0 -4px', offset: 0.4 }, { translate: '0 0' }], {
+                  duration: 500,
+                  easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                })
+              );
+            } catch {
+              // A decorative hover enhancement never changes the link's normal behavior.
+            }
+          });
+          hoverAnimations.set(target, animations);
+          void Promise.allSettled(animations.map((animation) => animation.finished)).then(() => {
+            if (hoverAnimations.get(target) === animations) hoverAnimations.delete(target);
+          });
+        },
+        { signal }
+      );
+      target.addEventListener(
+        'pointerleave',
+        () => {
+          hoverAnimations.get(target)?.forEach((animation) => animation.cancel());
+          hoverAnimations.delete(target);
+        },
+        { signal }
+      );
+    });
+
+    document.addEventListener(
+      'focusin',
+      () => {
+        [revealAnimations, hoverAnimations].forEach((map) => {
+          map.forEach((animations, target) => {
+            if (!target.contains(document.activeElement)) return;
+            animations.forEach((animation) => animation.cancel());
+            map.delete(target);
+          });
+        });
+      },
+      { signal }
+    );
+    document.addEventListener(MOTION_CHANGE_EVENT, updateMotion, { signal });
+    document.addEventListener('visibilitychange', updateMotion, { signal });
+    systemPreference.addEventListener('change', publishMotionState, { signal });
+    window.addEventListener(
+      'storage',
+      (event) => {
+        if (event.key === MOTION_STORAGE_KEY) publishMotionState();
+      },
+      { signal }
+    );
+    cleanupSiteMotion = () => {
+      controller.abort();
+      observer?.disconnect();
+      cancelAnimations(revealAnimations);
+      cancelAnimations(hoverAnimations);
+      waves.forEach((_wave, svg) => stopWave(svg, true));
+      ambient.forEach((_visible, target) => {
+        target.dataset.fxAmbientActive = 'false';
+      });
+      delete document.body.dataset.fxMotion;
+    };
+    publishMotionState();
+  }
+
+  initializeSiteMotion();
+  document.addEventListener('astro:page-load', initializeSiteMotion);
+  document.addEventListener('astro:before-swap', cleanupMotion);
+</script>
+
+<style is:global>
+  [data-fx-button-label] {
+    display: inline-block;
+  }
+</style>

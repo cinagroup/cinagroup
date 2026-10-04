@@ -1,4 +1,5 @@
 import type { Lang } from '../i18n/routing.ts';
+import { mapSiteAppearance, type SiteAppearance } from './site-appearance.ts';
 
 export interface PresentationMenuItem {
   label: string;
@@ -19,6 +20,7 @@ export interface PresentationSocial {
   icon: string;
 }
 export interface SitePresentation {
+  appearance: SiteAppearance;
   siteName?: string;
   tagline?: string;
   logo?: PresentationMedia;
@@ -157,6 +159,7 @@ export function mapSitePresentation(
       })
     : [];
   return {
+    appearance: mapSiteAppearance(profile),
     siteName: presentationText(settings.title) ?? presentationText(profile?.site_name),
     tagline: presentationText(settings.tagline) ?? presentationText(profile?.tagline),
     logo: presentationMedia(settings.logo),
@@ -209,7 +212,7 @@ export function createSitePresentationLoader(readers: PresentationReaders) {
     locale: Lang,
     registerHint?: (hint: unknown) => void
   ): Promise<SitePresentation> => {
-    if (context.isPrerendered) return Promise.resolve({ menus: {} });
+    if (context.isPrerendered) return Promise.resolve({ appearance: mapSiteAppearance(), menus: {} });
     let locales = requests.get(context.locals);
     if (!locales) {
       locales = new Map();

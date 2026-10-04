@@ -37,13 +37,13 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html {
+    html:not([data-fx-motion-enabled='true']) {
       scroll-behavior: auto;
     }
 
-    *,
-    *::before,
-    *::after {
+    html:not([data-fx-motion-enabled='true']) *,
+    html:not([data-fx-motion-enabled='true']) *::before,
+    html:not([data-fx-motion-enabled='true']) *::after {
       scroll-behavior: auto !important;
       transition-duration: 0.01ms !important;
     }
