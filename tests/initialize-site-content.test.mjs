@@ -5,6 +5,8 @@ import { createDialect } from 'emdash/db/sqlite';
 import { runMigrations } from 'emdash/db';
 import { applySeed, ContentRepository, OptionsRepository, SchemaRegistry } from 'emdash';
 import { initializeSiteContent, SITE_CONTENT_INITIALIZATION_MARKER } from '../src/emdash/initialize-site-content.ts';
+import { hasUncertainPresentationCaptureImport } from '../scripts/initialize-site-content.mjs';
+import { PresentationCaptureImportUncertainError } from '../scripts/presentation-d1-capture-import.mjs';
 
 const locales = ['en', 'zh', 'ja', 'ko', 'ru', 'es', 'fr', 'pt'];
 
@@ -159,4 +161,55 @@ test('a failed menu creation is detected on resume and never destroys partial it
     assert.deepEqual(await db.selectFrom('_emdash_menu_items').selectAll().execute(), before);
     assert.equal((await options.get(SITE_CONTENT_INITIALIZATION_MARKER)).status, 'failed');
   });
+});
+
+test('an unconfirmed remote write retains the running lock and cannot be resumed', async () => {
+  await withDatabase(async (db) => {
+    const { sql } = await import('kysely');
+    await sql
+      .raw(
+        `CREATE TRIGGER test_unconfirmed_write BEFORE INSERT ON _emdash_menu_items
+      BEGIN SELECT RAISE(ABORT, 'simulated unconfirmed remote write'); END`
+      )
+      .execute(db);
+    const seed = fixture();
+    let observed = false;
+    await assert.rejects(
+      initializeSiteContent({
+        db,
+        seed,
+        dryRun: false,
+        retainLockOnError(error) {
+          observed = true;
+          assert.match(error.message, /simulated unconfirmed remote write/);
+          return hasUncertainPresentationCaptureImport(
+            new Error('SDK wrapper', {
+              cause: new PresentationCaptureImportUncertainError('poll', 'test-bookmark'),
+            })
+          );
+        },
+      }),
+      /simulated unconfirmed remote write/
+    );
+    assert.equal(observed, true);
+    const options = new OptionsRepository(db);
+    const before = await options.getVersioned(SITE_CONTENT_INITIALIZATION_MARKER);
+    assert.equal(before.value.status, 'running');
+    await sql.raw('DROP TRIGGER test_unconfirmed_write').execute(db);
+    await assert.rejects(initializeSiteContent({ db, seed, dryRun: false, resume: true }), {
+      code: 'INITIALIZATION_LOCKED',
+    });
+    assert.deepEqual(await options.getVersioned(SITE_CONTENT_INITIALIZATION_MARKER), before);
+    assert.deepEqual(await db.selectFrom('_emdash_menu_items').selectAll().execute(), []);
+  });
+});
+
+test('uncertain capture errors are recognized through cause and aggregate wrappers', () => {
+  const uncertain = new PresentationCaptureImportUncertainError('ingest');
+  const wrapper = new Error('SDK wrapper', { cause: uncertain });
+  assert.equal(hasUncertainPresentationCaptureImport(new AggregateError([new Error('ordinary'), wrapper])), true);
+  assert.equal(hasUncertainPresentationCaptureImport(new Error('ordinary')), false);
+  const cyclic = new Error('cycle');
+  cyclic.cause = cyclic;
+  assert.equal(hasUncertainPresentationCaptureImport(cyclic), false);
 });

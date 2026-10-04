@@ -8,6 +8,11 @@ import { Kysely, SqliteAdapter } from 'kysely';
 import { D1Dialect } from 'kysely-d1';
 import { MediaRepository } from 'emdash';
 import { sealSiteContentBackup } from './site-content-backup.mjs';
+import {
+  importPresentationCaptureTrigger,
+  inspectPresentationCaptureTrigger,
+  PresentationCaptureImportUncertainError,
+} from './presentation-d1-capture-import.mjs';
 import { readD1ApplicationBackupPlan, composeD1ApplicationBackupSql } from './d1-application-backup.mjs';
 import { validateSeed } from 'emdash/seed';
 import { initializeSiteContent } from '../src/emdash/initialize-site-content.ts';
@@ -88,7 +93,7 @@ export function mergePresentationSeedParts(parts) {
 }
 
 /** Kysely's D1 driver consumes the same result/meta shape returned by the REST query endpoint. */
-export function createPresentationD1Database(query) {
+export function createPresentationD1Database(query, { captureImport } = {}) {
   class PresentationD1Adapter extends SqliteAdapter {
     compoundSelectLimit = 5;
   }
@@ -101,12 +106,32 @@ export function createPresentationD1Database(query) {
     prepare(sql) {
       return {
         bind(...params) {
-          return { all: () => query(sql, params) };
+          return {
+            all: () =>
+              captureImport && inspectPresentationCaptureTrigger(sql, params)
+                ? captureImport(sql, params)
+                : query(sql, params),
+          };
         },
       };
     },
   };
   return new Kysely({ dialect: new PresentationD1Dialect({ database: binding }) });
+}
+
+/** Native SDK and query drivers may wrap the transport error in a cause. */
+export function hasUncertainPresentationCaptureImport(error) {
+  const pending = [error];
+  const seen = new Set();
+  while (pending.length) {
+    const current = pending.pop();
+    if (!current || typeof current !== 'object' || seen.has(current)) continue;
+    if (current instanceof PresentationCaptureImportUncertainError) return true;
+    seen.add(current);
+    if (current.cause) pending.push(current.cause);
+    if (Array.isArray(current.errors)) pending.push(...current.errors);
+  }
+  return false;
 }
 
 export function readPresentationAssets() {
@@ -245,7 +270,7 @@ async function main(command = process.argv[2] ?? 'validate') {
       throw new Error('Presentation D1 query failed');
     return result[0];
   };
-  const db = createPresentationD1Database(query);
+  const db = createPresentationD1Database(query, { captureImport: importPresentationCaptureTrigger });
   try {
     const database = await productionApi(`/accounts/${ACCOUNT}/d1/database/${DATABASE}`);
     if (database.name !== 'cinagroup-emdash-production') throw new Error('Production database name mismatch');
@@ -304,7 +329,13 @@ async function main(command = process.argv[2] ?? 'validate') {
     bindPresentationMedia(seed, references);
     // The second plan and apply now share the identical fully bound seed fingerprint.
     await initializeSiteContent({ db, seed, dryRun: true });
-    const result = await initializeSiteContent({ db, seed, dryRun: false, resume: command === 'resume' });
+    const result = await initializeSiteContent({
+      db,
+      seed,
+      dryRun: false,
+      resume: command === 'resume',
+      retainLockOnError: hasUncertainPresentationCaptureImport,
+    });
     console.log(JSON.stringify({ result, media: Object.keys(references), backup: backupProof }));
     writeFileSync(
       'site-content-initialization-report.json',
