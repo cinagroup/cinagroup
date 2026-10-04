@@ -4,7 +4,11 @@ The public front end reads native EmDash settings, menus and published page revi
 
 ## Where to edit
 
-Use the language selector in the administration interface before editing a localized entry or menu.
+Use the content list's **Locale** selector before editing a localized entry or menu. These eight content languages (en/zh/ja/ko/ru/es/pt/fr) are independent of the administration interface language.
+
+The native **Settings → Language** preference controls administration buttons and navigation. Choose 简体中文 or 繁體中文 there for a Chinese interface. The original EmDash preference order is the `emdash-locale` cookie, then browser `Accept-Language`, then English; a content `?locale=` parameter does not change this preference. Native EmDash 1.0.1 does not enable Korean or provide Russian as administration interface languages, although both remain supported content languages.
+
+Known Website collection, field and repeater sub-field names are presented in English, simplified/traditional Chinese, Japanese, Spanish, Brazilian Portuguese or French according to that native interface preference. After changing the interface language, reload the administration page to refresh the native cached manifest and its project-specific names. Other interface languages retain the original English project names. The projection applies only to a successful authenticated `GET /_emdash/api/manifest`; renamed fields and groups retain their authored labels. Stored schema labels, content values, binding keys, IDs, flags and locale configuration remain unchanged. Structure editors, schema exports, transfer snapshots and every write endpoint continue to use the original metadata, so saving a structure does not store a translated presentation label.
 
 | Front-end area                                                             | Administration location                           | Behavior                                                                                                                                            |
 | -------------------------------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |

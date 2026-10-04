@@ -1,5 +1,6 @@
 ---
 import HeroSlider from '~/components/flexina/HeroSlider.astro';
+import HomeMotion from '~/components/flexina/HomeMotion.astro';
 import { Icon } from 'astro-icon/components';
 import CMSImage from '~/components/CMSImage.astro';
 import { getLocalizedLabel } from '~/i18n';
@@ -42,7 +43,12 @@ const productHref = (href: string) => {
     structuredData: homeOrganizationStructuredData(presentation),
   }}
 >
-  <div class="flexina-blocks" data-marketing-template="flexina-original-port" data-site-content-source={contentSource}>
+  <div
+    class="flexina-blocks"
+    data-fx-home-motion
+    data-marketing-template="flexina-original-port"
+    data-site-content-source={contentSource}
+  >
     <HeroSlider
       eyebrow={content.eyebrow}
       title={content.heroTitle}
@@ -63,7 +69,7 @@ const productHref = (href: string) => {
       <div class="container fx-quick-grid">
         {
           content.products.slice(0, 4).map((product, index) => (
-            <a class="fx-quick-card" href={productHref(product.href)}>
+            <a class="fx-quick-card" href={productHref(product.href)} data-fx-reveal data-fx-reveal-order={index}>
               <div class="fx-quick-inner">
                 <span class="fx-outline-number" aria-hidden="true">
                   {String(index + 1).padStart(2, '0')}
@@ -86,7 +92,7 @@ const productHref = (href: string) => {
     </section>
     <section class="fx-about fx-section">
       <div class="container fx-about-grid">
-        <div class="fx-about-art" aria-hidden="true">
+        <div class="fx-about-art" aria-hidden="true" data-fx-reveal>
           <CMSImage
             image={content.aboutImage}
             fallback="/images/flexina/office-workspace.webp"
@@ -108,7 +114,7 @@ const productHref = (href: string) => {
             loading="lazy"
           />
         </div>
-        <div class="fx-about-copy">
+        <div class="fx-about-copy" data-fx-reveal data-fx-reveal-order="1">
           <p class="fx-eyebrow">{label('About')}</p>
           <h2>{content.heroTitle}</h2><p>{content.heroLead}</p>
           <ul class="fx-about-list">
@@ -129,7 +135,7 @@ const productHref = (href: string) => {
     </section>
     <section class="fx-products fx-section" id="products" aria-labelledby="products-title">
       <div class="container">
-        <header class="fx-section-heading">
+        <header class="fx-section-heading" data-fx-reveal>
           <p class="fx-eyebrow">{content.productsEyebrow}</p><h2 id="products-title">{content.productsTitle}</h2><p>
             {content.productsLead}
           </p>
@@ -137,7 +143,7 @@ const productHref = (href: string) => {
         <div class="fx-product-grid">
           {
             content.products.map((product, index) => (
-              <article class="fx-product-card">
+              <article class="fx-product-card" data-fx-reveal data-fx-reveal-order={index}>
                 <>
                   <Icon name={icons[index % icons.length]} width={54} height={54} />
                   <h3>{product.name}</h3>
@@ -155,7 +161,7 @@ const productHref = (href: string) => {
       </div>
     </section>
     <section class="fx-photo-cta">
-      <div class="container">
+      <div class="container" data-fx-reveal>
         <p class="fx-eyebrow">{content.nextEyebrow}</p><h2>{content.nextTitle}</h2><p>{content.nextLead}</p><a
           class="btn btn-primary"
           href={contactHref}>{content.contact}<Icon name="tabler:arrow-up-right" width={20} height={20} /></a
@@ -164,7 +170,7 @@ const productHref = (href: string) => {
     </section>
     <section class="fx-process fx-section" id="approach" aria-labelledby="approach-title">
       <div class="container">
-        <header class="fx-section-heading">
+        <header class="fx-section-heading" data-fx-reveal>
           <p class="fx-eyebrow">{content.methodEyebrow}</p><h2 id="approach-title">{content.methodTitle}</h2><p>
             {content.methodLead}
           </p>
@@ -172,7 +178,7 @@ const productHref = (href: string) => {
         <ol class="fx-process-grid">
           {
             content.methods.map((method, index) => (
-              <li>
+              <li data-fx-reveal data-fx-reveal-order={index}>
                 <>
                   <span class="fx-process-number" aria-hidden="true">
                     {String(index + 1).padStart(2, '0')}
@@ -187,7 +193,7 @@ const productHref = (href: string) => {
       </div>
     </section>
     <section class="fx-final-cta">
-      <div class="container">
+      <div class="container" data-fx-reveal>
         <div><p>{content.nextEyebrow}</p><h2>{content.nextTitle}</h2></div><a
           class="btn btn-secondary"
           href={contactHref}>{content.contact}<Icon name="tabler:arrow-up-right" width={20} height={20} /></a
@@ -195,4 +201,5 @@ const productHref = (href: string) => {
       </div>
     </section>
   </div>
+  <HomeMotion />
 </Layout>

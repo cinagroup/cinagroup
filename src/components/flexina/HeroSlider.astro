@@ -133,14 +133,24 @@ const labels = {
           />
           <div class="fx-hero-container">
             <div class="fx-hero-content">
-              {slide.eyebrow && <p class="fx-hero-eyebrow">{slide.eyebrow}</p>}
-              {index === 0 ? (
-                <h1 class="fx-hero-title">{slide.title}</h1>
-              ) : (
-                <h2 class="fx-hero-title">{slide.title}</h2>
+              {slide.eyebrow && (
+                <p class="fx-hero-eyebrow" data-fx-hero-part>
+                  {slide.eyebrow}
+                </p>
               )}
-              <p class="fx-hero-lead">{slide.lead}</p>
-              <div class="fx-hero-actions">
+              {index === 0 ? (
+                <h1 class="fx-hero-title" data-fx-hero-part>
+                  {slide.title}
+                </h1>
+              ) : (
+                <h2 class="fx-hero-title" data-fx-hero-part>
+                  {slide.title}
+                </h2>
+              )}
+              <p class="fx-hero-lead" data-fx-hero-part>
+                {slide.lead}
+              </p>
+              <div class="fx-hero-actions" data-fx-hero-part>
                 <a class="fx-hero-button fx-hero-primary" href={sanitizeHref(primary.href)}>
                   {primary.text}
                 </a>
@@ -214,6 +224,38 @@ const labels = {
       let hovered = false;
       let focused = root.contains(document.activeElement);
       let timer: number | undefined;
+      let heroAnimations: Animation[] = [];
+
+      function clearHeroAnimations() {
+        heroAnimations.forEach((animation) => animation.cancel());
+        heroAnimations = [];
+      }
+
+      function animateSlide(panel: HTMLElement) {
+        clearHeroAnimations();
+        if (reducedMotion.matches || document.hidden || typeof HTMLElement.prototype.animate !== 'function') return;
+        panel.querySelectorAll<HTMLElement>('[data-fx-hero-part]').forEach((part, index) => {
+          if (part.contains(document.activeElement)) return;
+          try {
+            heroAnimations.push(
+              part.animate(
+                [
+                  { opacity: 0, translate: '0 14px' },
+                  { opacity: 1, translate: '0 0' },
+                ],
+                {
+                  duration: 600,
+                  delay: Math.min(index, 3) * 90,
+                  easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                  fill: 'backwards',
+                }
+              )
+            );
+          } catch {
+            // Motion is optional; slide navigation still works if the browser rejects an animation.
+          }
+        });
+      }
 
       function clearTimer() {
         if (timer !== undefined) window.clearTimeout(timer);
@@ -244,6 +286,7 @@ const labels = {
           panel.inert = !active;
           panel.setAttribute('aria-hidden', String(!active));
         });
+        animateSlide(panels[current]);
         const status = `${current + 1} / ${panels.length}`;
         if (position) position.textContent = status;
         if (announce && announcement)
@@ -305,6 +348,7 @@ const labels = {
         'focusin',
         () => {
           focused = true;
+          clearHeroAnimations();
           scheduleRotation();
         },
         { signal }
@@ -320,12 +364,20 @@ const labels = {
         { signal }
       );
       document.addEventListener('visibilitychange', scheduleRotation, { signal });
-      reducedMotion.addEventListener('change', updatePauseButton, { signal });
+      reducedMotion.addEventListener(
+        'change',
+        () => {
+          if (reducedMotion.matches) clearHeroAnimations();
+          updatePauseButton();
+        },
+        { signal }
+      );
       controls.hidden = false;
       updatePauseButton();
       showSlide(0, false);
       cleanups.push(() => {
         clearTimer();
+        clearHeroAnimations();
         controller.abort();
       });
     });

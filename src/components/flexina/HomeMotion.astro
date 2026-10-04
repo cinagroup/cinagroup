@@ -1,0 +1,106 @@
+<script>
+  const homeCleanups = new Map<HTMLElement, () => void>();
+
+  function cleanupHomeMotion() {
+    homeCleanups.forEach((cleanup) => cleanup());
+    homeCleanups.clear();
+  }
+
+  function initializeHomeMotion() {
+    homeCleanups.forEach((cleanup, root) => {
+      if (root.isConnected) return;
+      cleanup();
+      homeCleanups.delete(root);
+    });
+    if (!('IntersectionObserver' in window) || typeof HTMLElement.prototype.animate !== 'function') return;
+
+    document.querySelectorAll<HTMLElement>('[data-fx-home-motion]').forEach((root) => {
+      if (homeCleanups.has(root)) return;
+      const targets = Array.from(root.querySelectorAll<HTMLElement>('[data-fx-reveal]'));
+      const controller = new AbortController();
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const animations = new Map<HTMLElement, Animation>();
+
+      function cancelAnimations() {
+        animations.forEach((animation) => animation.cancel());
+        animations.clear();
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (controller.signal.aborted || reducedMotion.matches) return;
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const target = entry.target as HTMLElement;
+            observer.unobserve(target);
+            if (target.dataset.fxRevealed === 'true') return;
+            target.dataset.fxRevealed = 'true';
+            // Content starts visible. A focused link is never faded away during keyboard navigation.
+            if (target.contains(document.activeElement)) return;
+            const order = Math.min(3, Math.max(0, Number(target.dataset.fxRevealOrder) || 0));
+            let animation: Animation;
+            try {
+              animation = target.animate(
+                [
+                  { opacity: 0, translate: '0 12px' },
+                  { opacity: 1, translate: '0 0' },
+                ],
+                {
+                  duration: 520,
+                  delay: order * 70,
+                  easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                  fill: 'backwards',
+                }
+              );
+            } catch {
+              // A browser that cannot animate a target keeps its normal visible content.
+              return;
+            }
+            animations.set(target, animation);
+            void animation.finished.then(
+              () => animations.delete(target),
+              () => animations.delete(target)
+            );
+          });
+        },
+        { threshold: 0, rootMargin: '0px 0px -24px 0px' }
+      );
+
+      function updateMotionPreference() {
+        observer.disconnect();
+        root.dataset.fxMotion = reducedMotion.matches ? 'reduced' : 'enabled';
+        if (reducedMotion.matches) {
+          cancelAnimations();
+          return;
+        }
+        targets.forEach((target) => {
+          if (target.dataset.fxRevealed !== 'true') observer.observe(target);
+        });
+      }
+
+      reducedMotion.addEventListener('change', updateMotionPreference, { signal: controller.signal });
+      root.addEventListener(
+        'focusin',
+        () => {
+          animations.forEach((animation, target) => {
+            if (!target.contains(document.activeElement)) return;
+            animation.cancel();
+            animations.delete(target);
+          });
+        },
+        { signal: controller.signal }
+      );
+      updateMotionPreference();
+      homeCleanups.set(root, () => {
+        observer.disconnect();
+        cancelAnimations();
+        controller.abort();
+        delete root.dataset.fxMotion;
+      });
+    });
+  }
+
+  initializeHomeMotion();
+  document.addEventListener('astro:page-load', initializeHomeMotion);
+  document.addEventListener('astro:before-swap', cleanupHomeMotion);
+</script>
