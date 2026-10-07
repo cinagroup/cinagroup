@@ -128,6 +128,12 @@ test('pushes and pull requests cannot mutate production, including content initi
     'auto-publish whitelist must pin the derived archive manifest'
   );
   assert.match(detector.run, /\*\)\s*auto=false/, 'any non-whitelisted path must disable auto-publish');
+  // The detector resolves github.event.before locally, so the checkout must not
+  // be a depth-1 clone: an unresolvable base would silently force auto=false and
+  // the publish would never deploy.
+  const checkout = steps.find((item) => (item.uses ?? '').startsWith('actions/checkout@'));
+  assert.ok(checkout, 'checkout step');
+  assert.equal(checkout.with?.['fetch-depth'], 0, 'auto-publish diff requires full history');
   const mutationCommands =
     /d1 migrations apply|wrangler deploy --name|scripts\/emdash-production\.mjs (?:cutover|rollback)|scripts\/initialize-site-content\.mjs (?:apply|resume)/;
   for (const step of steps) {
