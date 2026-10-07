@@ -59,26 +59,75 @@ test('pushes and pull requests cannot mutate production, including content initi
     ['Attach production routes and verify live domains', ['cutover']],
     ['Restore retained Pages routing', ['rollback']],
   ]);
+  // The single, pinned exception to "no push mutates production": an automated
+  // briefing publish. It is confined to the briefing collection plus its derived
+  // archive manifest, it must be gated on the computed `briefing.auto` output,
+  // and it reuses exactly the manual `deploy` operation's steps. Any broader
+  // push-triggered mutation is still rejected below.
+  const AUTO_PUBLISH_GATE = "steps.briefing.outputs.auto == 'true'";
+  const autoPublishSteps = new Set([
+    'Verify live production resources',
+    'Apply tracked contact migrations with exact production target',
+    'Deploy validated production Worker',
+  ]);
+  const manualPrefix = "github.event_name == 'workflow_dispatch' && ";
   for (const [name, operations] of expected) {
     const step = steps.find((item) => item.name === name);
     assert.ok(step, name);
-    const prefix = "github.event_name == 'workflow_dispatch' && ";
-    assert.ok(step.if.startsWith(prefix), name + ': only an explicit manual event');
-    const condition = step.if.slice(prefix.length).replace(/^\((.*)\)$/, '$1');
-    const clauses = condition.split(' || ');
+    // Strip only the recognised auto-publish gate; nothing else may follow.
+    const gateSuffix = ` || ${AUTO_PUBLISH_GATE}`;
+    const allowsAutoByPush = autoPublishSteps.has(name);
+    assert.equal(
+      step.if.endsWith(gateSuffix),
+      allowsAutoByPush,
+      name + ': auto-publish gate must match the pinned step set'
+    );
+    let manual = allowsAutoByPush ? step.if.slice(0, -gateSuffix.length) : step.if;
+    // Unwrap one optional layer of grouping parens around the manual condition.
+    if (manual.startsWith('(') && manual.endsWith(')')) manual = manual.slice(1, -1);
+    assert.ok(manual.startsWith(manualPrefix), name + ': mutating step must be gated on an explicit manual event');
+    const condition = manual.slice(manualPrefix.length);
+    const inner = condition.replace(/^\((.*)\)$/, '$1');
+    const clauses = inner.split(' || ');
     const actual = clauses.map((clause) => {
-      const match = /^inputs.operation == '([a-z-]+)'$/.exec(clause);
+      const match = /^inputs\.operation == '([a-z-]+)'$/.exec(clause);
       assert.ok(match, name + ': no broader or implicit operation');
       return match[1];
     });
     assert.deepEqual(actual, operations, name);
     for (const event of ['push', 'pull_request', 'workflow_dispatch']) {
       for (const operation of ['validate', ...deployOperations, 'cutover', 'rollback', 'unknown']) {
-        const enabled = event === 'workflow_dispatch' && actual.includes(operation);
-        assert.equal(enabled, event === 'workflow_dispatch' && operations.includes(operation), name);
+        const manualEnabled = event === 'workflow_dispatch' && actual.includes(operation);
+        assert.equal(manualEnabled, event === 'workflow_dispatch' && operations.includes(operation), name);
       }
     }
   }
+  // A whitelisted push may only enable the pinned auto-publish steps; every
+  // other mutating step stays manual-only.
+  for (const step of steps) {
+    if (!step.if) continue;
+    const hasAutoGate = step.if.includes(AUTO_PUBLISH_GATE);
+    if (hasAutoGate) assert.ok(autoPublishSteps.has(step.name), 'Unpinned auto-publish step: ' + step.name);
+  }
+  // The auto-publish decision must be a real whitelist over briefing files only.
+  const detector = steps.find((item) => item.id === 'briefing');
+  assert.ok(detector, 'briefing detection step');
+  const detectorIf = detector.if ?? '';
+  assert.ok(
+    detectorIf.includes("github.event_name == 'push'") && detectorIf.includes('refs/heads/main'),
+    'briefing detection must be a main-branch push only'
+  );
+  assert.match(
+    detector.run,
+    /src\/data\/post\/ai-news-briefing-\*\.md/,
+    'auto-publish whitelist must pin the briefing collection'
+  );
+  assert.match(
+    detector.run,
+    /docs\/briefing-archive-manifest\.json/,
+    'auto-publish whitelist must pin the derived archive manifest'
+  );
+  assert.match(detector.run, /\*\)\s*auto=false/, 'any non-whitelisted path must disable auto-publish');
   const mutationCommands =
     /d1 migrations apply|wrangler deploy --name|scripts\/emdash-production\.mjs (?:cutover|rollback)|scripts\/initialize-site-content\.mjs (?:apply|resume)/;
   for (const step of steps) {

@@ -43,6 +43,34 @@ jobs:
         if: github.event_name != 'pull_request' && (github.event_name == 'push' || inputs.operation != 'validate')
         run: |
           case "$GITHUB_REF" in refs/heads/main|refs/heads/codex/emdash-migration) ;; *) exit 1 ;; esac
+      - name: Detect automated briefing push
+        id: briefing
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          # The only change set allowed to deploy on a plain push to main is an
+          # automated briefing publish: the briefing collection plus its derived
+          # archive manifest, and nothing else. Any other path — or an empty or
+          # merge-only range — stays validate-only.
+          base='${{ github.event.before }}'
+          head='${{ github.sha }}'
+          if ! git cat-file -e "${base}^{commit}" 2>/dev/null; then
+            echo "auto=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          changed="$(git diff --name-only "$base" "$head")"
+          test -n "$changed" || { echo "auto=false" >> "$GITHUB_OUTPUT"; exit 0; }
+          auto=true
+          while IFS= read -r path; do
+            case "$path" in
+              src/data/post/ai-news-briefing-*.md) ;;
+              docs/briefing-archive-manifest.json) ;;
+              *) auto=false ;;
+            esac
+          done <<< "$changed"
+          echo "auto=$auto" >> "$GITHUB_OUTPUT"
+          echo "Changed files:"; echo "$changed"
+          echo "Automated briefing publish: $auto"
       - name: Install locked dependencies
         run: npm ci
       - name: Check types, lint and formatting
@@ -62,14 +90,14 @@ jobs:
       - name: Audit built public content and evidence
         run: npm run audit:evidence && npm run audit:content && npm run audit:blog && npm run audit:build
       - name: Verify live production resources
-        if: github.event_name == 'workflow_dispatch' && inputs.operation != 'validate'
+        if: (github.event_name == 'workflow_dispatch' && inputs.operation != 'validate') || steps.briefing.outputs.auto == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           EMDASH_ACCESS_ADMIN_EMAIL: ${{ secrets.EMDASH_ACCESS_ADMIN_EMAIL }}
         run: node scripts/emdash-production.mjs audit
       - name: Apply tracked contact migrations with exact production target
-        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'deploy' || inputs.operation == 'deploy-and-initialize' || inputs.operation == 'deploy-and-resume-initialization')
+        if: (github.event_name == 'workflow_dispatch' && (inputs.operation == 'deploy' || inputs.operation == 'deploy-and-initialize' || inputs.operation == 'deploy-and-resume-initialization')) || steps.briefing.outputs.auto == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -100,7 +128,7 @@ jobs:
           retention-days: 30
       - name: Deploy validated production Worker
         id: deploy
-        if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'deploy' || inputs.operation == 'deploy-and-initialize' || inputs.operation == 'deploy-and-resume-initialization')
+        if: (github.event_name == 'workflow_dispatch' && (inputs.operation == 'deploy' || inputs.operation == 'deploy-and-initialize' || inputs.operation == 'deploy-and-resume-initialization')) || steps.briefing.outputs.auto == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
