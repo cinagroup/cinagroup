@@ -1,7 +1,7 @@
 {
   "version": 1,
   "policy": "immutable_historical_archive",
-  "count": 434,
+  "count": 435,
   "records": [
     {
       "slug": "ai-news-briefing-2026-03-20",
@@ -2172,6 +2172,11 @@
       "slug": "ai-news-briefing-2026-10-14-06",
       "sourcePath": "src/data/post/ai-news-briefing-2026-10-14-06.md",
       "sha256": "cfd577e77b757523b7df79b8c30640e3eb87fedab824cea3f0df87a7c05e797c"
+    },
+    {
+      "slug": "ai-news-briefing-2026-10-14-18",
+      "sourcePath": "src/data/post/ai-news-briefing-2026-10-14-18.md",
+      "sha256": "31bdc882a1359e673f015a9cb7893480ec3229f21bedbfc33b0e4b78461c085f"
     }
   ]
 }
