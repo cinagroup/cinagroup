@@ -1,8 +1,8 @@
 # Briefing review queue
 
-The 28 briefing files added after commit `5de80389` and through `eea3f66a` require source and editorial review before a production deployment includes them. All entries below remain pending. The baseline is the last production Worker version observed on 2026-10-31; confirm the active version and repository head again before release.
+The 28 briefing files added after commit `5de80389` and through `eea3f66a` were deployed by explicit authorization before completing source and editorial review. All entries below remain pending and still require review. The release baseline is `a95006c1`, the source revision previously deployed on 2026-10-31; confirm the active version and repository head again before release.
 
-Production deploy and cutover operations fail closed while any added or modified automated briefing since `5de80389` lacks an approval below. After a real editorial review, replace that row's pending status with `approved; sha256=<full lowercase file SHA-256>; reviewer=<reviewer-id>; reviewed=YYYY-MM-DD`. The hash must match the exact current source bytes. A subsequent change invalidates the approval; an approval record is not a substitute for checking the cited claims. The active production version and baseline must be reconfirmed before release. Rollback remains available.
+Production deploy and cutover operations fail closed while any added or modified automated briefing since `a95006c1` lacks an approval below. After a real editorial review, replace that row's pending status with `approved; sha256=<full lowercase file SHA-256>; reviewer=<reviewer-id>; reviewed=YYYY-MM-DD`. The hash must match the exact current source bytes. A subsequent change invalidates the approval; an approval record is not a substitute for checking the cited claims. The active production version and baseline must be reconfirmed before release. Rollback remains available.
 
 URL counts are a triage aid only: a URL is not evidence that a claim is correct, current, or supported by that page. Review every material claim against its original source, verify the publication time and attribution, and record the reviewer and decision. Entries without citations require source discovery. Preserve the archive governance and review process in `content-governance.md`.
 
@@ -37,4 +37,4 @@ URL counts are a triage aid only: a URL is not evidence that a claim is correct,
 | [ai-news-briefing-2026-10-30-18.md](../src/data/post/ai-news-briefing-2026-10-30-18.md) |             10 | [Preliminary review](briefing-review-2026-10-30-18.md); pending |
 | [ai-news-briefing-2026-10-31-06.md](../src/data/post/ai-news-briefing-2026-10-31-06.md) |              0 | [Preliminary review](briefing-review-2026-10-31-06.md); pending |
 
-Do not treat this queue or the presence of a URL as a fact-check. A production upload can publish all pending static files together; do not deploy an unreviewed batch.
+Do not treat this queue or the presence of a URL as a fact-check. The already deployed pending briefings remain unverified; newly added or modified briefings require review before production deployment.
