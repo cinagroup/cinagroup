@@ -9,21 +9,79 @@ html:root.light {
   --cg-link: var(--fx-link-light, #007d9e);
 }
 html[data-fx-layout='boxed'] {
-  background-color: light-dark(#e9eef2, #080c12);
+  background-color: var(--fx-pattern-base, light-dark(#e9eef2, #080c12));
+  background-image: var(--fx-pattern-image, none);
+  background-size: var(--fx-pattern-size, auto);
+  background-position: var(--fx-pattern-position, 0 0);
   background-attachment: fixed;
 }
-html[data-fx-layout='boxed'][data-fx-background-pattern='dots'] {
-  background-image: radial-gradient(light-dark(#9eaab7, #3b4c60) 1px, transparent 1px);
-  background-size: 16px 16px;
+/* Share each original pattern between its thumbnail and the boxed surround. */
+html[data-fx-background-pattern='dots'],
+.fx-appearance-pattern[data-appearance-pattern='dots'] {
+  --fx-pattern-image: radial-gradient(light-dark(#9eaab7, #3b4c60) 1px, transparent 1px);
+  --fx-pattern-size: 16px 16px;
 }
-html[data-fx-layout='boxed'][data-fx-background-pattern='grid'] {
-  background-image:
+html[data-fx-background-pattern='grid'],
+.fx-appearance-pattern[data-appearance-pattern='grid'] {
+  --fx-pattern-image:
     linear-gradient(light-dark(#c4cdd6, #253343) 1px, transparent 1px),
     linear-gradient(90deg, light-dark(#c4cdd6, #253343) 1px, transparent 1px);
-  background-size: 28px 28px;
+  --fx-pattern-size: 28px 28px;
 }
-html[data-fx-layout='boxed'][data-fx-background-pattern='diagonal'] {
-  background-image: repeating-linear-gradient(135deg, transparent 0 10px, light-dark(#d1d9e0, #182330) 10px 11px);
+html[data-fx-background-pattern='diagonal'],
+.fx-appearance-pattern[data-appearance-pattern='diagonal'] {
+  --fx-pattern-image: repeating-linear-gradient(135deg, transparent 0 10px, light-dark(#d1d9e0, #182330) 10px 11px);
+}
+html[data-fx-background-pattern='crosshatch'],
+.fx-appearance-pattern[data-appearance-pattern='crosshatch'] {
+  --fx-pattern-image:
+    repeating-linear-gradient(45deg, transparent 0 12px, light-dark(#c4cdd6, #253343) 12px 13px),
+    repeating-linear-gradient(135deg, transparent 0 12px, light-dark(#c4cdd6, #253343) 12px 13px);
+}
+html[data-fx-background-pattern='bricks'],
+.fx-appearance-pattern[data-appearance-pattern='bricks'] {
+  --fx-pattern-image:
+    linear-gradient(light-dark(#c4cdd6, #253343) 1px, transparent 1px),
+    conic-gradient(
+      from 90deg at 1px 20px,
+      transparent 0 180deg,
+      light-dark(#c4cdd6, #253343) 180deg 270deg,
+      transparent 270deg
+    ),
+    conic-gradient(
+      from 90deg at 1px 20px,
+      transparent 0 90deg,
+      light-dark(#c4cdd6, #253343) 90deg 180deg,
+      transparent 180deg
+    );
+  --fx-pattern-size: 40px 20px, 40px 40px, 40px 40px;
+  --fx-pattern-position: 0 0, 0 0, 20px 0;
+}
+html[data-fx-background-pattern='waves'],
+.fx-appearance-pattern[data-appearance-pattern='waves'] {
+  --fx-pattern-image: repeating-radial-gradient(
+    ellipse at 0 0,
+    transparent 0 7px,
+    light-dark(#c4cdd6, #253343) 8px 9px,
+    transparent 10px 16px
+  );
+  --fx-pattern-size: 48px 32px;
+}
+html[data-fx-background-pattern='checker'],
+.fx-appearance-pattern[data-appearance-pattern='checker'] {
+  --fx-pattern-image: conic-gradient(
+    light-dark(#d5dee6, #172231) 25%,
+    transparent 0 50%,
+    light-dark(#d5dee6, #172231) 0 75%,
+    transparent 0
+  );
+  --fx-pattern-size: 24px 24px;
+}
+html[data-fx-background-pattern='dark-dots'],
+.fx-appearance-pattern[data-appearance-pattern='dark-dots'] {
+  --fx-pattern-base: #111827;
+  --fx-pattern-image: radial-gradient(#425269 1px, transparent 1px);
+  --fx-pattern-size: 10px 10px;
 }
 html[data-fx-layout='boxed'] body.marketing-template {
   width: 100%;
@@ -257,9 +315,9 @@ html[data-fx-motion-enabled='false'] :where(.fx-quick-inner, .fx-product-card)::
 }
 @supports not (color: light-dark(#000, #fff)) {
   html[data-fx-layout='boxed'] {
-    background-color: #e9eef2;
+    background-color: var(--fx-pattern-base, #e9eef2);
   }
   html.dark[data-fx-layout='boxed'] {
-    background-color: #080c12;
+    background-color: var(--fx-pattern-base, #080c12);
   }
 }

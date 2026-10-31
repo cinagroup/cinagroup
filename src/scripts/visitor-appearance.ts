@@ -10,6 +10,7 @@ interface AppearanceBaseline {
   primaryColor: string;
   gradientColor: string;
   layout: string;
+  backgroundPattern: string;
   headerContrast: string;
   properties: Record<string, { value: string; priority: string }>;
 }
@@ -42,6 +43,7 @@ function captureBaseline(page: Document): AppearanceBaseline {
     gradientColor:
       html.style.getPropertyValue('--fx-secondary').trim() || controls?.dataset.defaultGradient || '#42d7ff',
     layout: html.dataset.fxLayout || controls?.dataset.defaultLayout || 'wide',
+    backgroundPattern: html.dataset.fxBackgroundPattern || controls?.dataset.defaultPattern || 'none',
     headerContrast: html.dataset.fxHeaderContrast || 'dark',
     properties,
   };
@@ -60,6 +62,7 @@ function applyAppearance(page: Document, defaults: AppearanceBaseline) {
   const projection = projectVisitorAppearance(defaults, preferences);
   for (const [name, value] of Object.entries(projection.properties)) html.style.setProperty(name, value);
   html.dataset.fxLayout = preferences.layout ?? defaults.layout;
+  html.dataset.fxBackgroundPattern = preferences.backgroundPattern ?? defaults.backgroundPattern;
   html.dataset.fxHeaderContrast = projection.headerContrast ?? defaults.headerContrast;
   if (preferences.secondaryColor) html.setAttribute('data-fx-visitor-secondary', '');
   else html.removeAttribute('data-fx-visitor-secondary');
@@ -95,6 +98,15 @@ function syncControls(root: HTMLElement) {
       String(button.dataset.appearanceLayout === (preferences.layout ?? baseline.layout))
     );
   });
+  root.querySelectorAll<HTMLButtonElement>('[data-appearance-pattern]').forEach((button) => {
+    button.setAttribute(
+      'aria-pressed',
+      String(button.dataset.appearancePattern === (preferences.backgroundPattern ?? baseline.backgroundPattern))
+    );
+  });
+  root
+    .querySelector('[data-appearance-pattern-default]')
+    ?.setAttribute('aria-pressed', String(!preferences.backgroundPattern));
 }
 
 function closePanel(root: HTMLElement, restoreFocus = false) {
@@ -158,6 +170,21 @@ function initializeSwitcher() {
     );
   });
   root.querySelector('[data-appearance-reset]')?.addEventListener('click', () => updatePreferences(root, {}, true));
+  root.querySelectorAll<HTMLButtonElement>('[data-appearance-pattern]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const pattern = button.dataset.appearancePattern as VisitorAppearance['backgroundPattern'];
+      updatePreferences(root, {
+        ...preferences,
+        backgroundPattern: pattern,
+        ...(pattern && pattern !== 'none' ? { layout: 'boxed' } : {}),
+      });
+    });
+  });
+  root.querySelector('[data-appearance-pattern-default]')?.addEventListener('click', () => {
+    const next = { ...preferences };
+    delete next.backgroundPattern;
+    updatePreferences(root, next);
+  });
   root.addEventListener('focusout', (event) => {
     if (event.relatedTarget instanceof Node && !root.contains(event.relatedTarget)) closePanel(root);
   });

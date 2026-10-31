@@ -5,6 +5,7 @@ import { getAppearanceStrings } from '../src/i18n/appearance.ts';
 import { supportedLocales } from '../src/i18n/routing.ts';
 import {
   PRIMARY_PRESETS,
+  BACKGROUND_PATTERNS,
   SECONDARY_PRESETS,
   mixSecondarySurface,
   parseVisitorAppearance,
@@ -125,11 +126,45 @@ test('absence of visitor colors leaves the published appearance intact', () => {
   });
 });
 
+test('background preferences accept only named local patterns and preserve independent colors', () => {
+  assert.equal(BACKGROUND_PATTERNS.length, 9);
+  assert.equal(new Set(BACKGROUND_PATTERNS).size, 9);
+  for (const backgroundPattern of BACKGROUND_PATTERNS) {
+    assert.deepEqual(parseVisitorAppearance({ backgroundPattern }), { backgroundPattern });
+    assert.deepEqual(projectVisitorAppearance(published, { backgroundPattern }), {
+      properties: {},
+      headerContrast: undefined,
+    });
+  }
+  for (const backgroundPattern of [
+    'GRID',
+    ' grid',
+    'grid\n',
+    '',
+    null,
+    {},
+    'url(https://untrusted.example)',
+    'https://untrusted.example/pattern.png',
+    'dots" onload="bad',
+    '__proto__',
+  ]) {
+    assert.deepEqual(parseVisitorAppearance({ primaryColor: '#0554f2', backgroundPattern }), {
+      primaryColor: '#0554f2',
+    });
+  }
+  // Preferences saved before patterns were introduced remain valid without a migration.
+  assert.deepEqual(parseVisitorAppearance({ primaryColor: '#0554f2', layout: 'boxed' }), {
+    primaryColor: '#0554f2',
+    layout: 'boxed',
+  });
+});
+
 test('all eight locales provide clear appearance controls and browser-only feedback', () => {
   const english = getAppearanceStrings('en');
   assert.equal(english.primary, 'Primary Color');
   assert.equal(english.secondary, 'Secondary Color');
   assert.equal(english.layout, 'Layout Mode');
+  assert.equal(english.backgroundPatterns, 'Background Patterns');
   assert.equal(getAppearanceStrings('zh').primary, '主色');
   assert.equal(getAppearanceStrings('zh').secondary, '辅助色');
   assert.match(getAppearanceStrings('zh').secondaryHint, /深色基底/);
@@ -137,7 +172,12 @@ test('all eight locales provide clear appearance controls and browser-only feedb
   for (const locale of supportedLocales) {
     const copy = getAppearanceStrings(locale);
     assert.deepEqual(Object.keys(copy).sort(), Object.keys(english).sort(), `complete locale ${locale}`);
-    for (const value of Object.values(copy)) assert.ok(typeof value === 'string' && value.trim(), `text in ${locale}`);
+    for (const [name, value] of Object.entries(copy)) {
+      if (name === 'patterns') continue;
+      assert.ok(typeof value === 'string' && value.trim(), `text in ${locale}`);
+    }
+    assert.deepEqual(Object.keys(copy.patterns).sort(), [...BACKGROUND_PATTERNS].sort(), `all patterns in ${locale}`);
+    for (const label of Object.values(copy.patterns)) assert.ok(label.trim(), `pattern label in ${locale}`);
     assert.notEqual(copy.updated, copy.restored, `distinct feedback in ${locale}`);
     if (locale !== 'en') {
       assert.notEqual(copy.primary, english.primary, `localized primary in ${locale}`);

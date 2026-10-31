@@ -3,7 +3,7 @@ import { Icon } from 'astro-icon/components';
 import { getLangFromUrl, type Lang } from '~/i18n';
 import { getAppearanceStrings } from '~/i18n/appearance';
 import type { SiteAppearance } from '~/emdash/site-appearance';
-import { PRIMARY_PRESETS, SECONDARY_PRESETS } from '~/utils/visitor-appearance';
+import { BACKGROUND_PATTERNS, PRIMARY_PRESETS, SECONDARY_PRESETS } from '~/utils/visitor-appearance';
 
 interface Props {
   appearance: SiteAppearance;
@@ -22,6 +22,7 @@ const copy = getAppearanceStrings(lang);
   data-default-primary={appearance.primaryColor}
   data-default-gradient={appearance.secondaryColor}
   data-default-layout={appearance.layout}
+  data-default-pattern={appearance.backgroundPattern}
   aria-label={copy.title}
   hidden
 >
@@ -115,6 +116,36 @@ const copy = getAppearanceStrings(lang);
           ))
         }
       </div>
+    </fieldset>
+    <fieldset>
+      <legend>{copy.backgroundPatterns}</legend>
+      <p class="fx-appearance-hint">{copy.backgroundHint}</p>
+      <div class="fx-appearance-patterns">
+        {
+          BACKGROUND_PATTERNS.filter((pattern) => pattern !== 'none').map((pattern) => (
+            <button
+              type="button"
+              class="fx-appearance-pattern"
+              data-appearance-pattern={pattern}
+              aria-label={`${copy.backgroundPatterns}: ${copy.patterns[pattern]}`}
+              aria-pressed={appearance.backgroundPattern === pattern}
+              title={copy.patterns[pattern]}
+            >
+              <Icon name="tabler:check" width={20} height={20} aria-hidden="true" />
+              <span class="sr-only">{copy.patterns[pattern]}</span>
+            </button>
+          ))
+        }
+      </div>
+      <button
+        type="button"
+        class="fx-appearance-default"
+        data-appearance-pattern="none"
+        aria-pressed={appearance.backgroundPattern === 'none'}>{copy.patternNone}</button
+      >
+      <button type="button" class="fx-appearance-default" data-appearance-pattern-default aria-pressed="true">
+        {copy.patternDefault}
+      </button>
     </fieldset>
     <button type="button" class="fx-appearance-reset" data-appearance-reset>{copy.reset}</button>
     <p class="fx-appearance-note">{copy.browserOnly}</p>
