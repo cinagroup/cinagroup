@@ -82,10 +82,16 @@ html .marketing-template .page-title-eyebrow {
 html .marketing-template :is(a, button, summary, select):focus-visible {
   outline-color: var(--cg-link);
 }
-html[data-fx-header-contrast='light'] .fx-header .fx-header-logo img[src='/brand/cinagroup-horizontal.png'] {
+html .fx-header .fx-header-logo img[data-logo-variant='light'] {
+  display: block;
+}
+html .fx-header .fx-header-logo img[data-logo-variant='dark'] {
   display: none;
 }
-html[data-fx-header-contrast='light'] .fx-header .fx-header-logo img[src='/brand/cinagroup-horizontal-white.png'] {
+html[data-fx-header-contrast='light'] .fx-header .fx-header-logo img[data-logo-variant='light'] {
+  display: none;
+}
+html[data-fx-header-contrast='light'] .fx-header .fx-header-logo img[data-logo-variant='dark'] {
   display: block;
 }
 html .marketing-template .fx-header .nav-actions > .fx-header-cta {

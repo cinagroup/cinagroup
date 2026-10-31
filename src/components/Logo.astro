@@ -6,7 +6,7 @@ import type { PresentationMedia } from '~/emdash/site-presentation-model';
 
 export interface Props {
   imageAlt?: string;
-  variant?: 'light' | 'dark' | 'auto';
+  variant?: 'light' | 'dark' | 'auto' | 'contrast';
 }
 
 const presentation = await loadSitePresentation(Astro);
@@ -31,6 +31,7 @@ const alt = imageAlt ?? light.alt ?? localizedName ?? 'CinaGroup';
     variant !== 'dark' && (
       <img
         src={light.url}
+        data-logo-variant="light"
         alt={alt}
         class:list={['site-brand-image h-14 w-auto object-contain', variant === 'auto' ? 'block dark:hidden' : 'block']}
         width={light.width}
@@ -42,6 +43,7 @@ const alt = imageAlt ?? light.alt ?? localizedName ?? 'CinaGroup';
     variant !== 'light' && (
       <img
         src={dark.url}
+        data-logo-variant="dark"
         alt={imageAlt ?? dark.alt ?? localizedName ?? 'CinaGroup'}
         class:list={['site-brand-image h-14 w-auto object-contain', variant === 'auto' ? 'hidden dark:block' : 'block']}
         width={dark.width}

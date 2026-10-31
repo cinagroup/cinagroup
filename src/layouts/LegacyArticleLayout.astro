@@ -5,6 +5,8 @@ import marketingBaseStyles from '~/styles/marketing/base.css?url';
 import flexinaThemeStyles from '~/styles/marketing/theme.css?url';
 import appearanceStyles from '~/styles/marketing/appearance.css?url';
 import SiteMotion from '~/components/flexina/SiteMotion.astro';
+import AppearanceSwitcher from '~/components/flexina/AppearanceSwitcher.astro';
+import visitorAppearanceStyles from '~/styles/marketing/visitor-appearance.css?url';
 import Favicons from '~/components/Favicons.astro';
 import CustomStyles from '~/components/CustomStyles.astro';
 import ApplyColorMode from '~/components/common/ApplyColorMode.astro';
@@ -35,6 +37,7 @@ const skipLabel = article.language.startsWith('zh') ? '跳到主要内容' : 'Sk
     <link rel="stylesheet" href={marketingBaseStyles} />
     <link rel="stylesheet" href={flexinaThemeStyles} />
     <link rel="stylesheet" href={appearanceStyles} />
+    <link rel="stylesheet" href={visitorAppearanceStyles} />
     <ApplyColorMode defaultTheme={presentation.appearance.colorMode} />
     <ClientRouter fallback="swap" />
   </head>
@@ -44,6 +47,10 @@ const skipLabel = article.language.startsWith('zh') ? '跳到主要内容' : 'Sk
     <!-- Only compiled ASSETS can supply this immutable main; CMS HTML cannot. -->
     <Fragment set:html={article.mainHtml} />
     <Footer />
+    <AppearanceSwitcher appearance={presentation.appearance} />
+    <script>
+      import '~/scripts/visitor-appearance';
+    </script>
     <Fragment set:html={article.bodyScriptsHtml} />
     <BasicScripts />
     <SiteMotion />
