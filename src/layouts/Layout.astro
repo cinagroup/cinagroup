@@ -5,6 +5,9 @@ import marketingBaseStyles from '~/styles/marketing/base.css?url';
 import flexinaThemeStyles from '~/styles/marketing/theme.css?url';
 import appearanceStyles from '~/styles/marketing/appearance.css?url';
 import SiteMotion from '~/components/flexina/SiteMotion.astro';
+import AppearanceSwitcher from '~/components/flexina/AppearanceSwitcher.astro';
+import visitorAppearanceStyles from '~/styles/marketing/visitor-appearance.css?url';
+import appearanceSwitcherStyles from '~/styles/marketing/appearance-switcher.css?url';
 
 import { I18N } from 'astrowind:config';
 
@@ -49,6 +52,8 @@ const structuredDataJson = metadata.structuredData
     <link rel="stylesheet" href={marketingBaseStyles} />
     <link rel="stylesheet" href={flexinaThemeStyles} />
     <link rel="stylesheet" href={appearanceStyles} />
+    <link rel="stylesheet" href={visitorAppearanceStyles} />
+    <link rel="stylesheet" href={appearanceSwitcherStyles} />
     <ApplyColorMode defaultTheme={presentation.appearance.colorMode} />
     <Metadata {...metadata} />
     <SiteVerification />
@@ -63,6 +68,11 @@ const structuredDataJson = metadata.structuredData
 
   <body class="marketing-template antialiased">
     <slot />
+
+    <AppearanceSwitcher appearance={presentation.appearance} />
+    <script>
+      import '~/scripts/visitor-appearance';
+    </script>
 
     <BasicScripts />
     <SiteMotion />

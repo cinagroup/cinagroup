@@ -1,0 +1,31 @@
+/* Visitor-only deep base, independent of the published gradient companion. */
+html:root[data-fx-visitor-secondary] {
+  --color-bg: light-dark(#fff, var(--fx-visitor-secondary));
+  --color-text: light-dark(var(--fx-visitor-secondary), #f5f6f7);
+  --color-surface: light-dark(#f7f7f7, color-mix(in srgb, var(--fx-visitor-secondary) 80%, #fff));
+}
+html[data-fx-visitor-secondary] .marketing-template .cg-page-section-dark {
+  --color-bg: var(--fx-visitor-secondary);
+  --color-surface: color-mix(in srgb, var(--fx-visitor-secondary) 80%, #fff);
+  --color-text: #f5f6f7;
+  --color-muted: #cbd2df;
+  --cg-ink: var(--color-text);
+  --cg-body: var(--color-muted);
+  --cg-muted: var(--color-muted);
+  --cg-canvas: var(--color-bg);
+  --cg-canvas-soft: var(--color-surface);
+  --cg-link: var(--fx-link-dark);
+  background-color: var(--fx-visitor-secondary);
+}
+@supports not (color: light-dark(#000, #fff)) {
+  html:root[data-fx-visitor-secondary] {
+    --color-bg: #fff;
+    --color-text: var(--fx-visitor-secondary);
+    --color-surface: #f7f7f7;
+  }
+  html:root.dark[data-fx-visitor-secondary] {
+    --color-bg: var(--fx-visitor-secondary);
+    --color-text: #f5f6f7;
+    --color-surface: var(--fx-visitor-secondary);
+  }
+}

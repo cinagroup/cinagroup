@@ -1,0 +1,123 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getLangFromUrl, type Lang } from '~/i18n';
+import { getAppearanceStrings } from '~/i18n/appearance';
+import type { SiteAppearance } from '~/emdash/site-appearance';
+import { PRIMARY_PRESETS, SECONDARY_PRESETS } from '~/utils/visitor-appearance';
+
+interface Props {
+  appearance: SiteAppearance;
+  lang?: Lang;
+}
+
+const { appearance, lang = getLangFromUrl(Astro.url) } = Astro.props;
+const copy = getAppearanceStrings(lang);
+---
+
+<aside
+  class="fx-appearance-switcher"
+  data-appearance-switcher
+  data-updated-message={copy.updated}
+  data-reset-message={copy.restored}
+  data-default-primary={appearance.primaryColor}
+  data-default-gradient={appearance.secondaryColor}
+  data-default-layout={appearance.layout}
+  aria-label={copy.title}
+  hidden
+>
+  <button
+    class="fx-appearance-toggle"
+    type="button"
+    data-appearance-toggle
+    aria-label={copy.toggle}
+    aria-controls="appearance-panel"
+    aria-expanded="false"
+    title={copy.toggle}
+  >
+    <Icon name="tabler:palette" width={24} height={24} aria-hidden="true" />
+  </button>
+  <section
+    class="fx-appearance-panel"
+    data-appearance-panel
+    id="appearance-panel"
+    aria-labelledby="appearance-title"
+    hidden
+  >
+    <div class="fx-appearance-heading">
+      <h2 id="appearance-title">{copy.title}</h2>
+      <button type="button" class="fx-appearance-close" data-appearance-close aria-label={copy.close}>
+        <Icon name="tabler:x" width={21} height={21} aria-hidden="true" />
+      </button>
+    </div>
+    <fieldset>
+      <legend>{copy.primary}</legend>
+      <div class="fx-appearance-colors">
+        {
+          PRIMARY_PRESETS.map((color) => (
+            <button
+              type="button"
+              class="fx-appearance-swatch"
+              data-appearance-primary-preset={color}
+              aria-label={`${copy.primaryPreset} ${color}`}
+              aria-pressed="false"
+              title={color}
+              style={`--appearance-swatch:${color}`}
+            >
+              <Icon name="tabler:check" width={20} height={20} aria-hidden="true" />
+            </button>
+          ))
+        }
+      </div>
+      <div class="fx-appearance-custom">
+        <label for="appearance-primary-color">{copy.customColor}</label>
+        <input id="appearance-primary-color" type="color" value={appearance.primaryColor} data-appearance-primary />
+        <output for="appearance-primary-color" data-appearance-primary-value>{appearance.primaryColor}</output>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>{copy.secondary}</legend>
+      <p class="fx-appearance-hint">{copy.secondaryHint}</p>
+      <div class="fx-appearance-colors">
+        {
+          SECONDARY_PRESETS.map((color) => (
+            <button
+              type="button"
+              class="fx-appearance-swatch"
+              data-appearance-secondary={color}
+              aria-label={`${copy.secondaryPreset} ${color}`}
+              aria-pressed="false"
+              title={color}
+              style={`--appearance-swatch:${color}`}
+            >
+              <Icon name="tabler:check" width={20} height={20} aria-hidden="true" />
+            </button>
+          ))
+        }
+      </div>
+      <button type="button" class="fx-appearance-default" data-appearance-secondary-default aria-pressed="true">
+        {copy.secondaryDefault}
+      </button>
+    </fieldset>
+    <fieldset>
+      <legend>{copy.layout}</legend>
+      <div class="fx-appearance-layouts">
+        {
+          (['wide', 'boxed'] as const).map((layout) => (
+            <button type="button" data-appearance-layout={layout} aria-pressed={appearance.layout === layout}>
+              <Icon
+                name={layout === 'wide' ? 'tabler:layout-distribute-horizontal' : 'tabler:layout-sidebar'}
+                width={18}
+                height={18}
+                aria-hidden="true"
+              />
+              {copy[layout]}
+            </button>
+          ))
+        }
+      </div>
+    </fieldset>
+    <button type="button" class="fx-appearance-reset" data-appearance-reset>{copy.reset}</button>
+    <p class="fx-appearance-note">{copy.browserOnly}</p>
+    <p class="fx-appearance-status" data-appearance-status role="status" aria-live="polite" aria-atomic="true"></p>
+  </section>
+</aside>

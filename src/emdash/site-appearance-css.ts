@@ -13,7 +13,7 @@ export function appearanceContrast(first: string, second: string): number {
   return (values[0] + 0.05) / (values[1] + 0.05);
 }
 
-function readableAccent(color: string, background: string, destination: string): string {
+export function readableAccent(color: string, background: string, destination: string): string {
   const source = rgb(color);
   const target = rgb(destination);
   for (let amount = 0; amount <= 100; amount += 1) {

@@ -3,7 +3,6 @@ import { Icon } from 'astro-icon/components';
 import Logo from '~/components/Logo.astro';
 import { SITE } from 'astrowind:config';
 import { loadSitePresentation } from '~/emdash/site-presentation';
-import { siteAppearanceCss } from '~/emdash/site-appearance-css';
 import { flattenPresentationMenu, type PresentationMenuItem } from '~/emdash/site-presentation-model';
 import { footerData, headerData } from '~/navigation';
 import { changeLangPath, getLangFromUrl, getLocalizedLabel, languages, localizeInternalHref, type Lang } from '~/i18n';
@@ -72,7 +71,6 @@ const alternates = new Map(languageAlternates.map((item) => [item.hreflang, item
 const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isCurrent = (url: string) => (url.replace(/\/+$/, '') || '/') === currentPath;
 const presentation = await loadSitePresentation(Astro);
-const headerLogoVariant = siteAppearanceCss(presentation.appearance).headerContrast === 'light' ? 'dark' : 'light';
 const siteName = getLocalizedLabel(lang, presentation.siteName ?? SITE?.name) ?? 'CinaGroup';
 const homeLabel = copy.home.replace(lang === 'zh' ? '海内集团' : 'CinaGroup', siteName);
 const contactEmail = presentation.contactEmail ?? 'info@cinagroup.com';
@@ -99,7 +97,7 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
 
 <header class="site-header fx-header" id="marketing-header">
   <a href={href('/')} class="site-logo fx-header-logo" aria-label={homeLabel}>
-    <Logo variant={headerLogoVariant} />
+    <Logo variant="contrast" />
   </a>
   <div class="fx-header-body">
     <div class="fx-topbar">
@@ -242,12 +240,6 @@ const ctaHref = presentation.headerCtaHref ?? href('/contact/');
     padding: 20px 24px;
     background: none;
     isolation: isolate;
-  }
-  .fx-header .fx-header-logo :global(img[src='/brand/cinagroup-horizontal.png']) {
-    display: block;
-  }
-  .fx-header .fx-header-logo :global(img[src='/brand/cinagroup-horizontal-white.png']) {
-    display: block;
   }
   .fx-header-logo::before {
     position: absolute;

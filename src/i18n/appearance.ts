@@ -1,0 +1,178 @@
+import type { Lang } from './routing';
+
+export interface AppearanceStrings {
+  title: string;
+  toggle: string;
+  close: string;
+  primary: string;
+  customColor: string;
+  primaryPreset: string;
+  secondary: string;
+  secondaryHint: string;
+  secondaryPreset: string;
+  secondaryDefault: string;
+  layout: string;
+  wide: string;
+  boxed: string;
+  reset: string;
+  browserOnly: string;
+  updated: string;
+  restored: string;
+}
+
+const appearanceStrings: Record<Lang, AppearanceStrings> = {
+  en: {
+    title: 'Appearance',
+    toggle: 'Customize appearance',
+    close: 'Close appearance settings',
+    primary: 'Primary Color',
+    customColor: 'Custom color',
+    primaryPreset: 'Primary color',
+    secondary: 'Secondary Color',
+    secondaryHint: 'Dark base for headings and dark sections.',
+    secondaryPreset: 'Secondary color',
+    secondaryDefault: 'Use site default',
+    layout: 'Layout Mode',
+    wide: 'Wide',
+    boxed: 'Boxed',
+    reset: 'Reset appearance',
+    browserOnly: 'Your choices apply only in this browser.',
+    updated: 'Appearance updated.',
+    restored: 'Site appearance restored.',
+  },
+  zh: {
+    title: '外观设置',
+    toggle: '自定义页面外观',
+    close: '关闭外观设置',
+    primary: '主色',
+    customColor: '自定义颜色',
+    primaryPreset: '主色',
+    secondary: '辅助色',
+    secondaryHint: '用于标题与深色区域的深色基底。',
+    secondaryPreset: '辅助色',
+    secondaryDefault: '恢复站点本色',
+    layout: '布局模式',
+    wide: '宽屏',
+    boxed: '盒式',
+    reset: '重置外观',
+    browserOnly: '设置仅对当前浏览器生效。',
+    updated: '外观已更新。',
+    restored: '已恢复站点默认外观。',
+  },
+  ja: {
+    title: '表示設定',
+    toggle: 'ページの外観を変更',
+    close: '表示設定を閉じる',
+    primary: 'メインカラー',
+    customColor: 'カスタムカラー',
+    primaryPreset: 'メインカラー',
+    secondary: 'サブカラー',
+    secondaryHint: '見出しと暗いセクションの基調色です。',
+    secondaryPreset: 'サブカラー',
+    secondaryDefault: 'サイトの標準色に戻す',
+    layout: 'レイアウト',
+    wide: '全幅',
+    boxed: 'ボックス',
+    reset: '表示設定をリセット',
+    browserOnly: '設定はこのブラウザーにのみ適用されます。',
+    updated: '表示設定を更新しました。',
+    restored: 'サイトの標準設定に戻しました。',
+  },
+  ko: {
+    title: '화면 설정',
+    toggle: '페이지 화면 설정',
+    close: '화면 설정 닫기',
+    primary: '기본 색상',
+    customColor: '사용자 지정 색상',
+    primaryPreset: '기본 색상',
+    secondary: '보조 색상',
+    secondaryHint: '제목과 어두운 영역의 바탕색입니다.',
+    secondaryPreset: '보조 색상',
+    secondaryDefault: '사이트 기본 색상 복원',
+    layout: '레이아웃',
+    wide: '전체 너비',
+    boxed: '박스형',
+    reset: '화면 설정 초기화',
+    browserOnly: '설정은 현재 브라우저에만 적용됩니다.',
+    updated: '화면 설정을 변경했습니다.',
+    restored: '사이트 기본 화면 설정을 복원했습니다.',
+  },
+  ru: {
+    title: 'Оформление',
+    toggle: 'Настроить оформление',
+    close: 'Закрыть настройки оформления',
+    primary: 'Основной цвет',
+    customColor: 'Свой цвет',
+    primaryPreset: 'Основной цвет',
+    secondary: 'Дополнительный цвет',
+    secondaryHint: 'Тёмный базовый цвет заголовков и тёмных разделов.',
+    secondaryPreset: 'Дополнительный цвет',
+    secondaryDefault: 'Вернуть цвет сайта',
+    layout: 'Макет страницы',
+    wide: 'Широкий',
+    boxed: 'В рамке',
+    reset: 'Сбросить оформление',
+    browserOnly: 'Настройки действуют только в этом браузере.',
+    updated: 'Оформление обновлено.',
+    restored: 'Исходное оформление сайта восстановлено.',
+  },
+  es: {
+    title: 'Apariencia',
+    toggle: 'Personalizar apariencia',
+    close: 'Cerrar ajustes de apariencia',
+    primary: 'Color principal',
+    customColor: 'Color personalizado',
+    primaryPreset: 'Color principal',
+    secondary: 'Color secundario',
+    secondaryHint: 'Base oscura para títulos y secciones oscuras.',
+    secondaryPreset: 'Color secundario',
+    secondaryDefault: 'Usar el color del sitio',
+    layout: 'Diseño de página',
+    wide: 'Ancho',
+    boxed: 'Enmarcado',
+    reset: 'Restablecer apariencia',
+    browserOnly: 'Tus preferencias solo se aplican en este navegador.',
+    updated: 'Apariencia actualizada.',
+    restored: 'Se ha restaurado la apariencia del sitio.',
+  },
+  pt: {
+    title: 'Aparência',
+    toggle: 'Personalizar aparência',
+    close: 'Fechar definições de aparência',
+    primary: 'Cor principal',
+    customColor: 'Cor personalizada',
+    primaryPreset: 'Cor principal',
+    secondary: 'Cor secundária',
+    secondaryHint: 'Base escura para títulos e secções escuras.',
+    secondaryPreset: 'Cor secundária',
+    secondaryDefault: 'Usar a cor do site',
+    layout: 'Layout da página',
+    wide: 'Amplo',
+    boxed: 'Em caixa',
+    reset: 'Repor aparência',
+    browserOnly: 'As escolhas aplicam-se apenas neste navegador.',
+    updated: 'Aparência atualizada.',
+    restored: 'A aparência original do site foi reposta.',
+  },
+  fr: {
+    title: 'Apparence',
+    toggle: 'Personnaliser l’apparence',
+    close: 'Fermer les réglages d’apparence',
+    primary: 'Couleur principale',
+    customColor: 'Couleur personnalisée',
+    primaryPreset: 'Couleur principale',
+    secondary: 'Couleur secondaire',
+    secondaryHint: 'Base sombre pour les titres et les sections sombres.',
+    secondaryPreset: 'Couleur secondaire',
+    secondaryDefault: 'Utiliser la couleur du site',
+    layout: 'Mise en page',
+    wide: 'Large',
+    boxed: 'Encadrée',
+    reset: 'Réinitialiser l’apparence',
+    browserOnly: 'Vos choix s’appliquent uniquement à ce navigateur.',
+    updated: 'Apparence mise à jour.',
+    restored: 'L’apparence initiale du site a été rétablie.',
+  },
+};
+
+export const getAppearanceStrings = (lang?: Lang): AppearanceStrings => appearanceStrings[lang ?? 'en'];
