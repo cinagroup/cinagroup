@@ -401,11 +401,11 @@ test('initialization refuses changes to posts before making any writes', async (
   });
 });
 
-test('a failed menu creation is detected on resume and never destroys partial items', async () => {
+test('a failed atomic menu replacement and later partial items are detected on resume', async () => {
   await withDatabase(async (db) => {
     const seed = fixture();
-    // A deliberate SQLite-only failure simulates D1 committing an item before
-    // the following statement fails. It does not touch a production database.
+    // The 1.4 seed creates menu records separately, then replaces their items
+    // in a transaction (or a D1 atomic batch). An item error rolls that back.
     const { sql } = await import('kysely');
     await sql
       .raw(
@@ -416,9 +416,27 @@ test('a failed menu creation is detected on resume and never destroys partial it
     await assert.rejects(initializeSiteContent({ db, seed, dryRun: false }), /simulated interruption/);
     const options = new OptionsRepository(db);
     assert.equal((await options.get(SITE_CONTENT_INITIALIZATION_MARKER)).status, 'failed');
+    assert.deepEqual(await db.selectFrom('_emdash_menu_items').selectAll().execute(), []);
+    assert.equal((await db.selectFrom('_emdash_menus').selectAll().execute()).length, seed.menus.length);
+    await sql.raw('DROP TRIGGER test_abort_menu').execute(db);
+    await assert.rejects(initializeSiteContent({ db, seed, dryRun: false, resume: true }), {
+      code: 'INITIALIZATION_MENU_INCOMPLETE_OR_EDITED',
+    });
+    assert.deepEqual(await db.selectFrom('_emdash_menu_items').selectAll().execute(), []);
+    // A prior interrupted deployment or subsequent edit may still leave a
+    // partial menu. It must be detected and preserved rather than replaced.
+    const menu = await db
+      .selectFrom('_emdash_menus')
+      .select('id')
+      .where('name', '=', 'primary')
+      .where('locale', '=', 'en')
+      .executeTakeFirstOrThrow();
+    await db
+      .insertInto('_emdash_menu_items')
+      .values({ id: 'partial-item', menu_id: menu.id, type: 'custom', label: 'Home', custom_url: '/', locale: 'en' })
+      .execute();
     const before = await db.selectFrom('_emdash_menu_items').selectAll().execute();
     assert.equal(before.length, 1);
-    await sql.raw('DROP TRIGGER test_abort_menu').execute(db);
     await assert.rejects(initializeSiteContent({ db, seed, dryRun: false, resume: true }), {
       code: 'INITIALIZATION_MENU_INCOMPLETE_OR_EDITED',
     });

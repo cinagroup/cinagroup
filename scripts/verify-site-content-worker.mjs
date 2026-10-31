@@ -156,9 +156,35 @@ export async function verifySiteContentWorker(server) {
     assert.ok((await html('/about/')).includes('CMS published English page proof'));
     assert.ok((await html('/zh/services/')).includes('CMS published inner page proof'));
     await html('/work/');
+    // Capture validators before changing a related setting. If the response has
+    // no validator, exercise a plausible stale client validator anyway: some
+    // clients may retain one from an earlier deployment.
+    const previousValidators = new Map();
+    for (const route of ['/', '/zh/']) {
+      const before = await server.fetch('https://cinagroup.com' + route);
+      assert.equal(before.status, 200, route);
+      assert.ok((await before.text()).includes('CMS site identity proof'), route);
+      previousValidators.set(route, {
+        'If-Modified-Since': before.headers.get('Last-Modified') ?? new Date().toUTCString(),
+        'If-None-Match': before.headers.get('ETag') ?? '"cinagroup-obsolete-validator"',
+      });
+    }
     // A different isolate's setting write must be visible without another deployment.
     await setSiteSettings({ title: 'CMS updated identity without redeploy' }, db);
-    assert.ok((await html('/zh/')).includes('CMS updated identity without redeploy'));
+    for (const [route, validators] of previousValidators) {
+      assert.ok((await html(route)).includes('CMS updated identity without redeploy'), route);
+      // Test each validator separately: If-None-Match takes precedence when both
+      // are present and could otherwise hide an incorrect date-based 304.
+      for (const [name, value] of Object.entries(validators)) {
+        const response = await server.fetch('https://cinagroup.com' + route, {
+          headers: { [name]: value },
+          redirect: 'manual',
+        });
+        assert.equal(response.status, 200, `${route} stale ${name} must not return 304`);
+        assert.equal(response.headers.get('X-CinaGroup-Deployment'), 'emdash-production', route);
+        assert.ok((await response.text()).includes('CMS updated identity without redeploy'), `${route} ${name}`);
+      }
+    }
     // Legacy numeric listing pages intentionally retain their governed static shell.
     await html('/blog/10/');
     const articleSlug = readdirSync('dist/client/blog', { withFileTypes: true })

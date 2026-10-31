@@ -113,9 +113,14 @@ test('native admin language is independent from the eight content locales and re
     true
   );
   assert.equal(
-    SUPPORTED_LOCALES.some(({ code }) => code === 'ko' || code === 'ru'),
+    SUPPORTED_LOCALES.some(({ code }) => code === 'ru'),
+    true
+  );
+  assert.equal(
+    SUPPORTED_LOCALES.some(({ code }) => code === 'ko'),
     false
   );
+  assert.equal(resolveLocale(localeRequest('ru')), 'ru');
   const request = new Request('https://cinagroup.com/_emdash/api/manifest?locale=ja', {
     headers: { 'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8' },
   });
