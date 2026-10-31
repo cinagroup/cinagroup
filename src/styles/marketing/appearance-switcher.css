@@ -103,12 +103,16 @@ html .marketing-template .fx-appearance-switcher :is(button, input):focus-visibl
   font-weight: 700;
   overflow-wrap: anywhere;
 }
-.fx-appearance-colors {
+.fx-appearance-colors,
+.fx-appearance-patterns {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
 }
-.fx-appearance-swatch {
+.fx-appearance-swatch,
+.fx-appearance-pattern {
+  --fx-pattern-base: light-dark(#e9eef2, #080c12);
+  --fx-pattern-size: auto;
   position: relative;
   display: grid;
   place-items: center;
@@ -119,17 +123,26 @@ html .marketing-template .fx-appearance-switcher :is(button, input):focus-visibl
   background-clip: padding-box;
   box-shadow: inset 0 0 0 1px rgb(0 0 0 / 12%);
 }
-.fx-appearance-swatch svg {
+.fx-appearance-pattern {
+  min-height: 48px !important;
+  background-color: var(--fx-pattern-base, light-dark(#e9eef2, #080c12));
+  background-image: var(--fx-pattern-image, none);
+  background-size: var(--fx-pattern-size, auto);
+}
+.fx-appearance-swatch svg,
+.fx-appearance-pattern svg {
   visibility: hidden;
   padding: 2px;
   border-radius: 50%;
   color: #fff;
   background: #111827;
 }
-.fx-appearance-swatch[aria-pressed='true'] {
+.fx-appearance-swatch[aria-pressed='true'],
+.fx-appearance-pattern[aria-pressed='true'] {
   border-color: var(--appearance-panel-text);
 }
-.fx-appearance-swatch[aria-pressed='true'] svg {
+.fx-appearance-swatch[aria-pressed='true'] svg,
+.fx-appearance-pattern[aria-pressed='true'] svg {
   visibility: visible;
 }
 .fx-appearance-custom {

@@ -21,12 +21,25 @@ export const SECONDARY_PRESETS = [
   '#030925',
   '#14212b',
 ] as const;
+export const BACKGROUND_PATTERNS = [
+  'none',
+  'dots',
+  'grid',
+  'diagonal',
+  'crosshatch',
+  'bricks',
+  'waves',
+  'checker',
+  'dark-dots',
+] as const;
+export type BackgroundPattern = (typeof BACKGROUND_PATTERNS)[number];
 
 export interface VisitorAppearance {
   primaryColor?: string;
   /** The reference switcher's dark base, separate from the CMS gradient companion. */
   secondaryColor?: string;
   layout?: 'wide' | 'boxed';
+  backgroundPattern?: BackgroundPattern;
 }
 
 const hexColor = (value: unknown): value is string =>
@@ -41,6 +54,8 @@ export function parseVisitorAppearance(value: unknown): VisitorAppearance {
   const secondary = hexColor(source.secondaryColor) ? source.secondaryColor.toLowerCase() : undefined;
   if (secondary && SECONDARY_PRESETS.some((color) => color === secondary)) result.secondaryColor = secondary;
   if (source.layout === 'wide' || source.layout === 'boxed') result.layout = source.layout;
+  if (BACKGROUND_PATTERNS.some((pattern) => pattern === source.backgroundPattern))
+    result.backgroundPattern = source.backgroundPattern as BackgroundPattern;
   return result;
 }
 
