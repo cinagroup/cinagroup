@@ -5,6 +5,7 @@ import Layout from '~/layouts/PageLayout.astro';
 import BlogList from '~/components/blog/List.astro';
 import Headline from '~/components/blog/Headline.astro';
 import Pagination from '~/components/blog/Pagination.astro';
+import ArchiveSearch from '~/components/blog/ArchiveSearch.astro';
 // import PostTags from "~/components/blog/Tags.astro";
 
 import { blogListRobots, getBlogListLanguageAlternates, getStaticPathsBlogList } from '~/utils/blog';
@@ -45,13 +46,16 @@ const metadata = {
 <Layout metadata={metadata} languageAlternates={languageAlternates}>
   <section class="cg-blog-index" data-blog-collection="index">
     <Headline subtitle={strings.listSubtitle(page.total)}>{strings.listTitle}</Headline>
+    {currentPage === 1 && <ArchiveSearch />}
     <BlogList posts={page.data} />
-    <Pagination
-      prevUrl={page.url.prev}
-      nextUrl={page.url.next}
-      prevText={strings.newerPosts}
-      nextText={strings.olderPosts}
-    />
+    <div data-archive-pagination>
+      <Pagination
+        prevUrl={page.url.prev}
+        nextUrl={page.url.next}
+        prevText={strings.newerPosts}
+        nextText={strings.olderPosts}
+      />
+    </div>
     <!--
       <PostTags tags={allCategories} class="mb-2" title="Search by Categories:" isCategory />
       <PostTags tags={allTags}  title="Search by Tags:" />
