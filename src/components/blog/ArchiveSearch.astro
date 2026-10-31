@@ -1,0 +1,160 @@
+---
+
+---
+
+<section class="archive-search" aria-labelledby="archive-search-heading" data-archive-search>
+  <div class="archive-search-topline">
+    <div>
+      <h2 id="archive-search-heading">Explore the archive</h2>
+      <p>Search the English automated briefing archive by keyword or month. Editorial posts are not included.</p>
+    </div>
+    <a class="archive-rss" href="/rss.xml">Blog RSS <span aria-hidden="true">↗</span></a>
+  </div>
+  <form class="archive-search-form" hidden>
+    <div class="archive-search-field archive-search-keywords">
+      <label for="archive-query">Keywords</label>
+      <input id="archive-query" name="q" type="search" placeholder="Search titles and summaries" autocomplete="off" />
+    </div>
+    <div class="archive-search-field">
+      <label for="archive-month">Month</label>
+      <input id="archive-month" name="month" type="month" />
+    </div>
+    <button type="submit" class="archive-search-submit">Search archive</button>
+    <button type="reset" class="archive-search-clear">Clear</button>
+  </form>
+  <div class="archive-search-results" hidden>
+    <p class="archive-search-status" role="status" aria-live="polite" tabindex="-1"></p>
+    <ol class="cg-blog-list" data-archive-results></ol>
+    <nav class="archive-search-pages" aria-label="Search results pages" hidden>
+      <button type="button" data-archive-previous>Previous</button>
+      <span data-archive-page></span>
+      <button type="button" data-archive-next>Next</button>
+    </nav>
+  </div>
+</section>
+
+<script>
+  import '~/scripts/blog-archive-search';
+</script>
+
+<style>
+  .archive-search {
+    margin: 2rem 0 2.5rem;
+    padding: 1.5rem;
+    border: 1px solid color-mix(in srgb, currentColor 17%, transparent);
+    border-radius: 1rem;
+  }
+  .archive-search-topline {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    flex-wrap: wrap;
+  }
+  .archive-search h2 {
+    font-size: 1.2rem;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+  .archive-search-topline p {
+    max-width: 42rem;
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    opacity: 0.8;
+  }
+  .archive-rss {
+    flex: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .archive-search-form {
+    display: flex;
+    align-items: end;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+  .archive-search-form[hidden],
+  .archive-search-results[hidden],
+  .archive-search-pages[hidden] {
+    display: none;
+  }
+  :global(.cg-blog-list[hidden]),
+  :global([data-archive-pagination][hidden]) {
+    display: none;
+  }
+  .archive-search-field {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 10rem;
+  }
+  .archive-search-keywords {
+    flex: 1 1 16rem;
+  }
+  .archive-search-field label {
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .archive-search-field input {
+    width: 100%;
+    min-height: 2.8rem;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+    border-radius: 0.5rem;
+    background: transparent;
+    color: inherit;
+  }
+  .archive-search-submit,
+  .archive-search-clear,
+  .archive-search-pages button {
+    min-height: 2.8rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid currentColor;
+    border-radius: 0.5rem;
+    font-weight: 700;
+  }
+  .archive-search-submit {
+    background: var(--aw-color-primary, #1763cd);
+    border-color: var(--aw-color-primary, #1763cd);
+    color: var(--cg-on-primary, white);
+  }
+  .archive-search-clear,
+  .archive-search-pages button {
+    background: transparent;
+  }
+  .archive-search button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .archive-search :is(input, button, a):focus-visible {
+    outline: 2px solid var(--aw-color-primary, #1763cd);
+    outline-offset: 3px;
+  }
+  .archive-search-status {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .archive-search-pages {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+  }
+  @media (max-width: 600px) {
+    .archive-search {
+      padding: 1rem;
+    }
+    .archive-search-field {
+      flex: 1 1 100%;
+    }
+    .archive-search-submit {
+      flex: 1;
+    }
+  }
+</style>

@@ -230,14 +230,26 @@ test('conflicting field metadata, orphan columns and partially committed D1 writ
         sqlite.exec('ALTER TABLE ec_site_profile ADD COLUMN design_primary_color TEXT');
       } else {
         const plan = await planSiteAppearanceSchema(db);
-        refuseWrites((statement) =>
-          /^\s*alter\s+table\s+"ec_site_profile"\s+add\s+column\s+"design_primary_color"/i.test(statement)
+        // EmDash 1.4 cleans up field metadata after ADD COLUMN fails. Also
+        // fail that cleanup to model an interrupted or uncertain D1 write.
+        refuseWrites(
+          (statement) =>
+            /^\s*alter\s+table\s+"ec_site_profile"\s+add\s+column\s+"design_primary_color"/i.test(statement) ||
+            /^\s*delete\s+from\s+"_emdash_fields"/i.test(statement)
         );
         await assert.rejects(
           applySiteAppearanceSchema(db, { expectedPlanSha256: plan.planSha256, beforeApply() {} }),
           /Fixture transport write refused/
         );
         refuseWrites(undefined);
+        assert.ok(sqlite.prepare('SELECT id FROM _emdash_fields WHERE slug=?').get('design_primary_color'));
+        assert.equal(
+          sqlite
+            .prepare('PRAGMA table_info("ec_site_profile")')
+            .all()
+            .some(({ name }) => name === 'design_primary_color'),
+          false
+        );
       }
       const count = history.length;
       await assert.rejects(
@@ -248,6 +260,34 @@ test('conflicting field metadata, orphan columns and partially committed D1 writ
       assert.deepEqual(protectedRows(sqlite), before);
     });
   }
+});
+
+test('failed D1 column creation with successful SDK cleanup leaves a safe resumable plan', async () => {
+  await withFixture(async ({ db, sqlite, history, refuseWrites }) => {
+    const before = protectedRows(sqlite);
+    const plan = await planSiteAppearanceSchema(db);
+    refuseWrites((statement) =>
+      /^\s*alter\s+table\s+"ec_site_profile"\s+add\s+column\s+"design_primary_color"/i.test(statement)
+    );
+    await assert.rejects(
+      applySiteAppearanceSchema(db, { expectedPlanSha256: plan.planSha256, beforeApply() {} }),
+      /Fixture transport write refused/
+    );
+    refuseWrites(undefined);
+    assert.equal(sqlite.prepare('SELECT id FROM _emdash_fields WHERE slug=?').get('design_primary_color'), undefined);
+    assert.equal(
+      sqlite
+        .prepare('PRAGMA table_info("ec_site_profile")')
+        .all()
+        .some(({ name }) => name === 'design_primary_color'),
+      false
+    );
+    const count = history.length;
+    const resumed = await planSiteAppearanceSchema(db);
+    assert.deepEqual(resumed.add, plan.add);
+    assert.deepEqual(writes(history.slice(count)), []);
+    assert.deepEqual(protectedRows(sqlite), before);
+  });
 });
 
 test('native published shared appearance reaches all eight locales while drafts and localized copy remain separate', async () => {
