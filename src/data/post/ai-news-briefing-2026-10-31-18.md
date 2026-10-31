@@ -3,7 +3,7 @@ status: archived_unverified
 origin: automated_news_workflow
 verification:
   status: unverified
-  note: "Preserved from a retired automated workflow; claims were not independently source-checked."
+  note: "Preserved from a retired automated workflow; claims were not independently source-checked. Republished 2026-10-31 after the deploy pipeline fix (PR #15 + auto-deploy restoration) so this edition reaches the live site."
 title: "Anthropic Junk-Rating Warning, Nvidia Backstops Nscale, Google Opens Gemini 4 Carbon to Cyber Defenders — AI News Briefing"
 description: "Anthropic reportedly faces a high junk credit rating after its IPO, Nvidia weighs multibillion-dollar credit guarantees for Nscale's West Virginia AI campus, and Google restricts Gemini 4 Carbon to vetted cyber defenders. Also: AI training opt-out pledges, the Anthropic VS Code extension backdoor on Cursor, and cracks in the AI spending boom."
 publishDate: 2026-10-31T10:00:00.000Z
