@@ -2,6 +2,8 @@
 
 The 28 briefing files added after commit `5de80389` and through `eea3f66a` require source and editorial review before a production deployment includes them. All entries below remain pending. The baseline is the last production Worker version observed on 2026-10-31; confirm the active version and repository head again before release.
 
+Production deploy and cutover operations fail closed while any added or modified automated briefing since `5de80389` lacks an approval below. After a real editorial review, replace that row's pending status with `approved; sha256=<full lowercase file SHA-256>; reviewer=<reviewer-id>; reviewed=YYYY-MM-DD`. The hash must match the exact current source bytes. A subsequent change invalidates the approval; an approval record is not a substitute for checking the cited claims. The active production version and baseline must be reconfirmed before release. Rollback remains available.
+
 URL counts are a triage aid only: a URL is not evidence that a claim is correct, current, or supported by that page. Review every material claim against its original source, verify the publication time and attribution, and record the reviewer and decision. Entries without citations require source discovery. Preserve the archive governance and review process in `content-governance.md`.
 
 | Briefing                                                                                | URLs in source | Review                                                          |
