@@ -5,6 +5,16 @@ import { rememberArchiveVisit } from './blog-archive-return';
 
 // Astro keeps this module across page swaps, so history navigation reuses the download.
 let index: Promise<BlogArchiveIndexEntry[]> | undefined;
+let historyScroll: { href: string; x: number; y: number } | undefined;
+let navigationVersion = 0;
+document.addEventListener('astro:before-preparation', (event) => {
+  navigationVersion++;
+  const state = window.history.state;
+  historyScroll =
+    event.navigationType === 'traverse' && typeof state?.scrollY === 'number'
+      ? { href: event.to.href, x: state.scrollX ?? 0, y: state.scrollY }
+      : undefined;
+});
 function loadIndex() {
   if (!index) {
     index = fetch('/blog-archive-index.json', { signal: AbortSignal.timeout(12000) })
@@ -83,11 +93,24 @@ function initializeArchiveSearch() {
     originalList,
   };
   const perPage = 10;
+  const currentNavigation = navigationVersion;
+  const restoredScroll = historyScroll?.href === window.location.href ? historyScroll : undefined;
+  if (restoredScroll) historyScroll = undefined;
   let request = 0;
   let currentPage = 1;
   let totalPages = 1;
   let activeFilter: { q: string; month: string; sort: ArchiveSort } | undefined;
   let activeResultsUrl = window.location.href;
+
+  function restoreScroll(sequence: number) {
+    if (!restoredScroll) return;
+    // ClientRouter restores before async search expands the shorter static list.
+    requestAnimationFrame(() => {
+      if (sequence === request && currentNavigation === navigationVersion && controls.root.isConnected) {
+        window.scrollTo({ left: restoredScroll.x, top: restoredScroll.y, behavior: 'instant' });
+      }
+    });
+  }
 
   function resultsUrl(q: string, selectedMonth: string, order: ArchiveSort, page: number) {
     const url = new URL(window.location.href);
@@ -187,6 +210,7 @@ function initializeArchiveSearch() {
       controls.originalList.hidden = false;
       if (originalPagination) originalPagination.hidden = false;
       if (pushHistory) await updateHistory('', '', 'newest', 1);
+      else restoreScroll(sequence);
       return;
     }
     controls.results.hidden = false;
@@ -205,6 +229,7 @@ function initializeArchiveSearch() {
       activeResultsUrl = resultsUrl(q, selectedMonth, order, currentPage).href;
       controls.list.setAttribute('aria-busy', 'false');
       if (pushHistory) await updateHistory(q, selectedMonth, order, currentPage);
+      else restoreScroll(sequence);
     } catch {
       if (sequence !== request || !controls.root.isConnected) return;
       controls.list.setAttribute('aria-busy', 'false');
