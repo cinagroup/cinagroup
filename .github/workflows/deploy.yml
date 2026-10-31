@@ -46,7 +46,8 @@ jobs:
           case "$GITHUB_REF" in refs/heads/main|refs/heads/codex/emdash-migration) ;; *) exit 1 ;; esac
       - name: Require reviewed briefing content before production changes
         if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'deploy' || inputs.operation == 'deploy-and-initialize' || inputs.operation == 'deploy-and-resume-initialization' || inputs.operation == 'cutover')
-        run: git diff --name-only --diff-filter=AM 5de80389a0dfaa0f04650635defa62c9bff48845 HEAD -- 'src/data/post/ai-news-briefing-*.md' | node scripts/verify-briefing-release.mjs
+        shell: bash
+        run: git diff --no-renames --name-only --diff-filter=AM 5de80389a0dfaa0f04650635defa62c9bff48845 HEAD -- 'src/data/post/ai-news-briefing-*.md' | node scripts/verify-briefing-release.mjs
       - name: Test briefing release gate
         run: node --test tests/briefing-release.test.mjs tests/emdash-verification-options.test.mjs
       - name: Install locked dependencies
