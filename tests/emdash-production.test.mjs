@@ -168,6 +168,8 @@ test('pushes and pull requests cannot mutate production, including content initi
     assert.ok(releaseGate.if.includes(`inputs.operation == '${operation}'`));
   assert.ok(!releaseGate.if.includes("inputs.operation == 'rollback'"));
   assert.match(releaseGate.run, /git diff .*5de80389a0dfaa0f04650635defa62c9bff48845.*verify-briefing-release\.mjs/);
+  assert.equal(releaseGate.shell, 'bash', 'pipefail must propagate a git diff error');
+  assert.match(releaseGate.run, /git diff --no-renames/, 'renamed files must be checked as additions');
   assert.ok(steps.indexOf(releaseGate) < steps.findIndex((item) => item.name === 'Verify live production resources'));
   assert.equal(steps.find((item) => item.name === 'Checkout repository')?.with?.['fetch-depth'], 0);
   const onlineDeploy = steps.find((item) => item.name === 'Verify uploaded production Worker through workers.dev');
