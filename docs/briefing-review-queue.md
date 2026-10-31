@@ -32,7 +32,7 @@ URL counts are a triage aid only: a URL is not evidence that a claim is correct,
 | [ai-news-briefing-2026-10-29-06.md](../src/data/post/ai-news-briefing-2026-10-29-06.md) |              8 | Pending                                                         |
 | [ai-news-briefing-2026-10-29-18.md](../src/data/post/ai-news-briefing-2026-10-29-18.md) |              0 | Pending                                                         |
 | [ai-news-briefing-2026-10-30-06.md](../src/data/post/ai-news-briefing-2026-10-30-06.md) |              9 | Pending                                                         |
-| [ai-news-briefing-2026-10-30-18.md](../src/data/post/ai-news-briefing-2026-10-30-18.md) |             10 | Pending                                                         |
+| [ai-news-briefing-2026-10-30-18.md](../src/data/post/ai-news-briefing-2026-10-30-18.md) |             10 | [Preliminary review](briefing-review-2026-10-30-18.md); pending |
 | [ai-news-briefing-2026-10-31-06.md](../src/data/post/ai-news-briefing-2026-10-31-06.md) |              0 | [Preliminary review](briefing-review-2026-10-31-06.md); pending |
 
 Do not treat this queue or the presence of a URL as a fact-check. A production upload can publish all pending static files together; do not deploy an unreviewed batch.
