@@ -24,7 +24,12 @@ test('production resource configuration cannot reuse preview resources or attach
 });
 test('protected redirect requires its exact route and rejects conflicting routes', () => {
   const spec = ROUTES[1];
-  const redirect = { id: 'redirect', pattern: spec.host + '/*', script: REDIRECT_WORKER, request_limit_fail_open: false };
+  const redirect = {
+    id: 'redirect',
+    pattern: spec.host + '/*',
+    script: REDIRECT_WORKER,
+    request_limit_fail_open: false,
+  };
   assert.equal(verifyRouteOwnership([redirect], spec), redirect);
   assert.throws(() => verifyRouteOwnership([], spec), /Required protected/);
   for (const route of [
@@ -32,7 +37,8 @@ test('protected redirect requires its exact route and rejects conflicting routes
     { ...redirect, pattern: '*.xn--fiqs8s/*' },
     { ...redirect, pattern: spec.host + '/private/*' },
     { ...redirect, request_limit_fail_open: true },
-  ]) assert.throws(() => verifyRouteOwnership([redirect, route], spec), /Conflicting/);
+  ])
+    assert.throws(() => verifyRouteOwnership([redirect, route], spec), /Conflicting/);
 });
 test('cutover and rollback never mutate the protected redirect route', async () => {
   for (const operation of ['cutover', 'rollback']) {
@@ -142,7 +148,11 @@ test('pushes and pull requests cannot mutate production, including content initi
     steps.find((item) => item.name === 'Verify live production resources')?.if,
     "github.event_name == 'workflow_dispatch' && inputs.operation != 'validate'"
   );
-  assert.equal(steps.find((item) => item.id === 'briefing'), undefined, 'briefing pushes have no deployment exception');
+  assert.equal(
+    steps.find((item) => item.id === 'briefing'),
+    undefined,
+    'briefing pushes have no deployment exception'
+  );
   for (const name of [
     'Check types, lint and formatting',
     'Audit source content and build production',
