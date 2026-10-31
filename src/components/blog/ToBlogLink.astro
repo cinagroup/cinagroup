@@ -12,5 +12,9 @@ const href = lang === 'en' ? getBlogPermalink() : getPath(getBlogPermalink(), la
 ---
 
 <div class="cg-blog-back">
-  <a class="cg-page-button" href={href}>{getBlogStrings(lang).backToBlog}</a>
+  <a class="cg-page-button" href={href} data-archive-return={lang === 'en' ? '' : undefined}>
+    {getBlogStrings(lang).backToBlog}
+  </a>
 </div>
+
+{lang === 'en' && <script>import '~/scripts/blog-archive-return';</script>}

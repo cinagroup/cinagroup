@@ -46,7 +46,7 @@ const metadata = {
 <Layout metadata={metadata} languageAlternates={languageAlternates}>
   <section class="cg-blog-index" data-blog-collection="index">
     <Headline subtitle={strings.listSubtitle(page.total)}>{strings.listTitle}</Headline>
-    {currentPage === 1 && <ArchiveSearch />}
+    <ArchiveSearch />
     <BlogList posts={page.data} />
     <div data-archive-pagination>
       <Pagination
