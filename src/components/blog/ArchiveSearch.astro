@@ -1,11 +1,15 @@
 ---
+import { fetchBlogArchiveIndex } from '~/utils/blog-archive-data';
+import { archiveMonths } from '~/utils/blog-archive-search';
 
+const months = archiveMonths(await fetchBlogArchiveIndex());
+const monthFormatter = new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric', timeZone: 'UTC' });
 ---
 
 <section class="archive-search" aria-labelledby="archive-search-heading" data-archive-search>
   <div class="archive-search-topline">
     <div>
-      <h2 id="archive-search-heading">Explore the archive</h2>
+      <h2 id="archive-search-heading" tabindex="-1">Explore the archive</h2>
       <p>Search the English automated briefing archive by keyword or month. Editorial posts are not included.</p>
     </div>
     <a class="archive-rss" href="/rss.xml">Blog RSS <span aria-hidden="true">↗</span></a>
@@ -13,17 +17,54 @@
   <form class="archive-search-form" hidden>
     <div class="archive-search-field archive-search-keywords">
       <label for="archive-query">Keywords</label>
-      <input id="archive-query" name="q" type="search" placeholder="Search titles and summaries" autocomplete="off" />
+      <input
+        id="archive-query"
+        name="q"
+        type="search"
+        placeholder="Search titles and summaries"
+        autocomplete="off"
+        maxlength="300"
+        aria-describedby="archive-search-help"
+      />
     </div>
     <div class="archive-search-field">
       <label for="archive-month">Month</label>
-      <input id="archive-month" name="month" type="month" />
+      <select id="archive-month" name="month">
+        <option value="">All months</option>
+        {
+          months.map(({ value, count }) => (
+            <option value={value}>
+              {monthFormatter.format(new Date(`${value}-01T00:00:00Z`))} ({count})
+            </option>
+          ))
+        }
+      </select>
+    </div>
+    <div class="archive-search-field">
+      <label for="archive-sort">Order</label>
+      <select id="archive-sort" name="sort">
+        <option value="newest">Newest first</option>
+        <option value="oldest">Oldest first</option>
+      </select>
     </div>
     <button type="submit" class="archive-search-submit">Search archive</button>
     <button type="reset" class="archive-search-clear">Clear</button>
   </form>
+  <p id="archive-search-help" class="archive-search-help" hidden>
+    Combine words to narrow results, for example “OpenAI agents”. Month and order apply when you search.
+  </p>
+  <noscript
+    ><p class="archive-search-help">
+      Search needs JavaScript. You can browse every briefing using the archive links below.
+    </p></noscript
+  >
   <div class="archive-search-results" hidden>
-    <p class="archive-search-status" role="status" aria-live="polite" tabindex="-1"></p>
+    <div class="archive-results-toolbar">
+      <p class="archive-search-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
+      <button type="button" class="archive-search-copy" data-archive-copy hidden>Copy results link</button>
+      <button type="button" class="archive-search-retry" data-archive-retry hidden>Try again</button>
+    </div>
+    <p role="status" class="archive-search-help" data-archive-copy-status></p>
     <ol class="cg-blog-list" data-archive-results></ol>
     <nav class="archive-search-pages" aria-label="Search results pages" hidden>
       <button type="button" data-archive-previous>Previous</button>
@@ -79,7 +120,8 @@
   }
   .archive-search-form[hidden],
   .archive-search-results[hidden],
-  .archive-search-pages[hidden] {
+  .archive-search-pages[hidden],
+  .archive-search [hidden] {
     display: none;
   }
   :global(.cg-blog-list[hidden]),
@@ -89,7 +131,7 @@
   .archive-search-field {
     display: grid;
     gap: 0.35rem;
-    min-width: 10rem;
+    min-width: min(10rem, 100%);
   }
   .archive-search-keywords {
     flex: 1 1 16rem;
@@ -98,18 +140,23 @@
     font-size: 0.8rem;
     font-weight: 700;
   }
-  .archive-search-field input {
+  .archive-search-field :is(input, select) {
     width: 100%;
     min-height: 2.8rem;
     padding: 0.65rem 0.8rem;
     border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
     border-radius: 0.5rem;
-    background: transparent;
+    background: var(--aw-color-bg-page, white);
     color: inherit;
+  }
+  :global(.dark) .archive-search-field :is(input, select) {
+    background: var(--aw-color-bg-page-dark, #0f172a);
   }
   .archive-search-submit,
   .archive-search-clear,
-  .archive-search-pages button {
+  .archive-search-pages button,
+  .archive-search-copy,
+  .archive-search-retry {
     min-height: 2.8rem;
     padding: 0.6rem 1rem;
     border: 1px solid currentColor;
@@ -129,14 +176,35 @@
     opacity: 0.4;
     cursor: not-allowed;
   }
-  .archive-search :is(input, button, a):focus-visible {
+  .archive-search :is(input, select, button, a):focus-visible {
     outline: 2px solid var(--aw-color-primary, #1763cd);
     outline-offset: 3px;
   }
-  .archive-search-status {
+  .archive-results-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
     margin-top: 1.5rem;
+  }
+  .archive-search-status {
     font-size: 0.9rem;
     font-weight: 700;
+  }
+  .archive-search-help {
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    opacity: 0.8;
+  }
+  .archive-search-copy,
+  .archive-search-retry {
+    font-size: 0.8rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.8rem;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
   .archive-search-pages {
     display: flex;
