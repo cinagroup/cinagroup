@@ -118,7 +118,7 @@ test('production admin policy requires the selected email and dedicated CinaAuth
   assert.throws(() => verifyAdminPolicy([policy, policy], 'admin@example.test'));
 });
 
-test('pushes and pull requests cannot mutate production, including content initialization', async () => {
+test('pushes and pull requests cannot mutate production, except the audited automated-briefing release', async () => {
   const { load } = await import('js-yaml');
   const workflow = load(readFileSync('.github/workflows/deploy.yml', 'utf8'));
   const steps = workflow.jobs.production.steps;
@@ -131,11 +131,33 @@ test('pushes and pull requests cannot mutate production, including content initi
     ['Restore retained Pages routing', ['rollback']],
   ]);
   const manualPrefix = "github.event_name == 'workflow_dispatch' && ";
+
+  // --- The ONE authorised exception (owner decision 2026-10-31) -------------
+  // Automated briefings deploy from a plain push to main with no human review.
+  // This is deliberately narrow and must stay narrow:
+  //   * only `Deploy validated production Worker` may carry the exception;
+  //   * it may NOT carry it for content initialization, cutover or rollback;
+  //   * contact/D1 migrations and route cutover remain manual-only, so a push
+  //     can refresh untended archive content but never touch production data
+  //     structures or routing;
+  //   * the exception is spelled out literally here, so widening it in the
+  //     workflow fails this test.
+  const AUTO_BRIEFING = "steps.briefing.outputs.auto == 'true'";
+  const autoBriefingSteps = new Set(['Deploy validated production Worker']);
+
   for (const [name, operations] of expected) {
     const step = steps.find((item) => item.name === name);
     assert.ok(step, name);
-    assert.ok(step.if?.startsWith(manualPrefix), name + ': an explicit manual event is required');
-    const condition = step.if.slice(manualPrefix.length);
+    const wantsAuto = autoBriefingSteps.has(name);
+    const prefix = wantsAuto ? `(${manualPrefix}` : manualPrefix;
+    assert.ok(step.if?.startsWith(prefix), name + ': an explicit manual event is required');
+    let condition = step.if.slice(manualPrefix.length);
+    let autoClause = false;
+    if (wantsAuto) {
+      assert.ok(step.if.endsWith(`) || ${AUTO_BRIEFING}`), name + ': briefing exception must be the final clause');
+      autoClause = true;
+      condition = condition.slice(1, condition.lastIndexOf(')'));
+    }
     const inner = condition.replace(/^\((.*)\)$/, '$1');
     const actual = inner.split(' || ').map((clause) => {
       const match = /^inputs\.operation == '([a-z-]+)'$/.exec(clause);
@@ -143,16 +165,36 @@ test('pushes and pull requests cannot mutate production, including content initi
       return match[1];
     });
     assert.deepEqual(actual, operations, name);
+    assert.equal(autoClause, wantsAuto, name);
   }
+
   assert.equal(
     steps.find((item) => item.name === 'Verify live production resources')?.if,
-    "github.event_name == 'workflow_dispatch' && inputs.operation != 'validate'"
+    `(${manualPrefix}inputs.operation != 'validate') || ${AUTO_BRIEFING}`
   );
+
+  // --- The briefing detector exists, is push-only, and is tightly scoped -----
+  const briefing = steps.find((item) => item.id === 'briefing');
+  assert.ok(briefing, 'briefing detector present');
+  assert.equal(briefing.name, 'Detect automated briefing push');
   assert.equal(
-    steps.find((item) => item.id === 'briefing'),
-    undefined,
-    'briefing pushes have no deployment exception'
+    briefing.if,
+    "github.event_name == 'push' && github.ref == 'refs/heads/main'",
+    'briefing auto-deploy must never trigger from a pull request'
   );
+  // The allow-list in the shell script must name exactly the two permitted paths.
+  assert.match(briefing.run, /src\/data\/post\/ai-news-briefing-\*\.md/);
+  assert.match(briefing.run, /docs\/briefing-archive-manifest\.json/);
+  assert.match(briefing.run, /auto=false/, 'any other path must force auto=false');
+  // A shallow clone would make ${before}^{commit} unresolvable and silently
+  // disable the exception — the checkout depth is load-bearing.
+  assert.equal(steps.find((item) => item.name === 'Checkout repository')?.with?.['fetch-depth'], 0);
+  // Detection must run before the first step that consumes its output.
+  assert.ok(
+    steps.indexOf(briefing) < steps.findIndex((item) => item.name === 'Verify live production resources'),
+    'detector must precede consumers'
+  );
+
   for (const name of [
     'Check types, lint and formatting',
     'Audit source content and build production',
@@ -162,6 +204,7 @@ test('pushes and pull requests cannot mutate production, including content initi
     assert.ok(step, name);
     assert.equal(step.if, undefined, name + ': validation runs on pushes');
   }
+
   const releaseGate = steps.find((item) => item.name === 'Require reviewed briefing content before production changes');
   assert.ok(releaseGate?.if?.startsWith(manualPrefix));
   for (const operation of [...deployOperations, 'cutover'])
