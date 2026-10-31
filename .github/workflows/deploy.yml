@@ -47,7 +47,7 @@ jobs:
       - name: Require reviewed briefing content before production changes
         if: github.event_name == 'workflow_dispatch' && (inputs.operation == 'deploy' || inputs.operation == 'deploy-and-initialize' || inputs.operation == 'deploy-and-resume-initialization' || inputs.operation == 'cutover')
         shell: bash
-        run: git diff --no-renames --name-only --diff-filter=AM 5de80389a0dfaa0f04650635defa62c9bff48845 HEAD -- 'src/data/post/ai-news-briefing-*.md' | node scripts/verify-briefing-release.mjs
+        run: git diff --no-renames --name-only --diff-filter=AM a95006c11c74d1dee64643ae3149f95f16a99cb1 HEAD -- 'src/data/post/ai-news-briefing-*.md' | node scripts/verify-briefing-release.mjs
       - name: Test briefing release gate
         run: node --test tests/briefing-release.test.mjs tests/emdash-verification-options.test.mjs
       - name: Install locked dependencies

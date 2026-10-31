@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 
 // Last observed production source revision; reconfirm the active version before release.
-export const REVIEW_BASELINE = '5de80389a0dfaa0f04650635defa62c9bff48845';
+export const REVIEW_BASELINE = 'a95006c11c74d1dee64643ae3149f95f16a99cb1';
 const prefix = 'src/data/post/';
 const filename = /^ai-news-briefing-\d{4}-\d{2}-\d{2}-(?:06|18)\.md$/;
 
