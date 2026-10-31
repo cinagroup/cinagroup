@@ -113,6 +113,7 @@ html .marketing-template .fx-appearance-switcher :is(button, input):focus-visibl
 .fx-appearance-pattern {
   --fx-pattern-base: light-dark(#e9eef2, #080c12);
   --fx-pattern-size: auto;
+  --fx-pattern-position: 0 0;
   position: relative;
   display: grid;
   place-items: center;
@@ -128,6 +129,7 @@ html .marketing-template .fx-appearance-switcher :is(button, input):focus-visibl
   background-color: var(--fx-pattern-base, light-dark(#e9eef2, #080c12));
   background-image: var(--fx-pattern-image, none);
   background-size: var(--fx-pattern-size, auto);
+  background-position: var(--fx-pattern-position, 0 0);
 }
 .fx-appearance-swatch svg,
 .fx-appearance-pattern svg {
