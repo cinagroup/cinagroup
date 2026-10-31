@@ -162,6 +162,14 @@ test('pushes and pull requests cannot mutate production, including content initi
     assert.ok(step, name);
     assert.equal(step.if, undefined, name + ': validation runs on pushes');
   }
+  const releaseGate = steps.find((item) => item.name === 'Require reviewed briefing content before production changes');
+  assert.ok(releaseGate?.if?.startsWith(manualPrefix));
+  for (const operation of [...deployOperations, 'cutover'])
+    assert.ok(releaseGate.if.includes(`inputs.operation == '${operation}'`));
+  assert.ok(!releaseGate.if.includes("inputs.operation == 'rollback'"));
+  assert.match(releaseGate.run, /git diff .*5de80389a0dfaa0f04650635defa62c9bff48845.*verify-briefing-release\.mjs/);
+  assert.ok(steps.indexOf(releaseGate) < steps.findIndex((item) => item.name === 'Verify live production resources'));
+  assert.equal(steps.find((item) => item.name === 'Checkout repository')?.with?.['fetch-depth'], 0);
   const mutationCommands =
     /d1 migrations apply|wrangler deploy --name|scripts\/emdash-production\.mjs (?:cutover|rollback)|scripts\/initialize-site-content\.mjs (?:apply|resume)/;
   for (const step of steps) {
