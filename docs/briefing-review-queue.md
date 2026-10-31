@@ -6,22 +6,22 @@ URL counts are a triage aid only: a URL is not evidence that a claim is correct,
 
 | Briefing                                                                                | URLs in source | Review                                                          |
 | --------------------------------------------------------------------------------------- | -------------: | --------------------------------------------------------------- |
-| [ai-news-briefing-2026-10-17-18.md](../src/data/post/ai-news-briefing-2026-10-17-18.md) |              0 | Pending                                                         |
-| [ai-news-briefing-2026-10-18-06.md](../src/data/post/ai-news-briefing-2026-10-18-06.md) |              8 | Pending                                                         |
-| [ai-news-briefing-2026-10-18-18.md](../src/data/post/ai-news-briefing-2026-10-18-18.md) |             14 | Pending                                                         |
-| [ai-news-briefing-2026-10-19-06.md](../src/data/post/ai-news-briefing-2026-10-19-06.md) |              0 | Pending                                                         |
-| [ai-news-briefing-2026-10-19-18.md](../src/data/post/ai-news-briefing-2026-10-19-18.md) |              0 | Pending                                                         |
-| [ai-news-briefing-2026-10-20-06.md](../src/data/post/ai-news-briefing-2026-10-20-06.md) |              8 | Pending                                                         |
-| [ai-news-briefing-2026-10-20-18.md](../src/data/post/ai-news-briefing-2026-10-20-18.md) |              0 | Pending                                                         |
-| [ai-news-briefing-2026-10-21-06.md](../src/data/post/ai-news-briefing-2026-10-21-06.md) |              7 | Pending                                                         |
-| [ai-news-briefing-2026-10-21-18.md](../src/data/post/ai-news-briefing-2026-10-21-18.md) |              0 | Pending                                                         |
-| [ai-news-briefing-2026-10-22-06.md](../src/data/post/ai-news-briefing-2026-10-22-06.md) |              0 | Pending                                                         |
-| [ai-news-briefing-2026-10-22-18.md](../src/data/post/ai-news-briefing-2026-10-22-18.md) |             13 | Pending                                                         |
-| [ai-news-briefing-2026-10-23-06.md](../src/data/post/ai-news-briefing-2026-10-23-06.md) |             11 | Pending                                                         |
-| [ai-news-briefing-2026-10-23-18.md](../src/data/post/ai-news-briefing-2026-10-23-18.md) |              7 | Pending                                                         |
-| [ai-news-briefing-2026-10-24-06.md](../src/data/post/ai-news-briefing-2026-10-24-06.md) |             10 | Pending                                                         |
-| [ai-news-briefing-2026-10-24-18.md](../src/data/post/ai-news-briefing-2026-10-24-18.md) |              7 | Pending                                                         |
-| [ai-news-briefing-2026-10-25-06.md](../src/data/post/ai-news-briefing-2026-10-25-06.md) |             14 | Pending                                                         |
+| [ai-news-briefing-2026-10-17-18.md](../src/data/post/ai-news-briefing-2026-10-17-18.md) |              0 | [Preliminary review](briefing-review-2026-10-17-18.md); pending |
+| [ai-news-briefing-2026-10-18-06.md](../src/data/post/ai-news-briefing-2026-10-18-06.md) |              8 | [Preliminary review](briefing-review-2026-10-18-06.md); pending |
+| [ai-news-briefing-2026-10-18-18.md](../src/data/post/ai-news-briefing-2026-10-18-18.md) |             14 | [Preliminary review](briefing-review-2026-10-18-18.md); pending |
+| [ai-news-briefing-2026-10-19-06.md](../src/data/post/ai-news-briefing-2026-10-19-06.md) |              0 | [Preliminary review](briefing-review-2026-10-19-06.md); pending |
+| [ai-news-briefing-2026-10-19-18.md](../src/data/post/ai-news-briefing-2026-10-19-18.md) |              0 | [Preliminary review](briefing-review-2026-10-19-18.md); pending |
+| [ai-news-briefing-2026-10-20-06.md](../src/data/post/ai-news-briefing-2026-10-20-06.md) |              8 | [Preliminary review](briefing-review-2026-10-20-06.md); pending |
+| [ai-news-briefing-2026-10-20-18.md](../src/data/post/ai-news-briefing-2026-10-20-18.md) |              0 | [Preliminary review](briefing-review-2026-10-20-18.md); pending |
+| [ai-news-briefing-2026-10-21-06.md](../src/data/post/ai-news-briefing-2026-10-21-06.md) |              7 | [Preliminary review](briefing-review-2026-10-21-06.md); pending |
+| [ai-news-briefing-2026-10-21-18.md](../src/data/post/ai-news-briefing-2026-10-21-18.md) |              0 | [Preliminary review](briefing-review-2026-10-21-18.md); pending |
+| [ai-news-briefing-2026-10-22-06.md](../src/data/post/ai-news-briefing-2026-10-22-06.md) |              0 | [Preliminary review](briefing-review-2026-10-22-06.md); pending |
+| [ai-news-briefing-2026-10-22-18.md](../src/data/post/ai-news-briefing-2026-10-22-18.md) |             13 | [Preliminary review](briefing-review-2026-10-22-18.md); pending |
+| [ai-news-briefing-2026-10-23-06.md](../src/data/post/ai-news-briefing-2026-10-23-06.md) |             11 | [Preliminary review](briefing-review-2026-10-23-06.md); pending |
+| [ai-news-briefing-2026-10-23-18.md](../src/data/post/ai-news-briefing-2026-10-23-18.md) |              7 | [Preliminary review](briefing-review-2026-10-23-18.md); pending |
+| [ai-news-briefing-2026-10-24-06.md](../src/data/post/ai-news-briefing-2026-10-24-06.md) |             10 | [Preliminary review](briefing-review-2026-10-24-06.md); pending |
+| [ai-news-briefing-2026-10-24-18.md](../src/data/post/ai-news-briefing-2026-10-24-18.md) |              7 | [Preliminary review](briefing-review-2026-10-24-18.md); pending |
+| [ai-news-briefing-2026-10-25-06.md](../src/data/post/ai-news-briefing-2026-10-25-06.md) |             14 | [Preliminary review](briefing-review-2026-10-25-06.md); pending |
 | [ai-news-briefing-2026-10-25-18.md](../src/data/post/ai-news-briefing-2026-10-25-18.md) |              0 | [Preliminary review](briefing-review-2026-10-25-18.md); pending |
 | [ai-news-briefing-2026-10-26-06.md](../src/data/post/ai-news-briefing-2026-10-26-06.md) |             10 | [Preliminary review](briefing-review-2026-10-26-06.md); pending |
 | [ai-news-briefing-2026-10-26-18.md](../src/data/post/ai-news-briefing-2026-10-26-18.md) |              8 | [Preliminary review](briefing-review-2026-10-26-18.md); pending |
