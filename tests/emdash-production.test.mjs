@@ -170,6 +170,12 @@ test('pushes and pull requests cannot mutate production, including content initi
   assert.match(releaseGate.run, /git diff .*5de80389a0dfaa0f04650635defa62c9bff48845.*verify-briefing-release\.mjs/);
   assert.ok(steps.indexOf(releaseGate) < steps.findIndex((item) => item.name === 'Verify live production resources'));
   assert.equal(steps.find((item) => item.name === 'Checkout repository')?.with?.['fetch-depth'], 0);
+  const onlineDeploy = steps.find((item) => item.name === 'Verify uploaded production Worker through workers.dev');
+  assert.equal(onlineDeploy?.if, "steps.deploy.outcome == 'success'");
+  assert.equal(onlineDeploy?.run, 'node scripts/verify-emdash-production.mjs --staging');
+  const parity = steps.find((item) => item.name === 'Verify current migration parity before route cutover');
+  assert.equal(parity?.if, "github.event_name == 'workflow_dispatch' && inputs.operation == 'cutover'");
+  assert.equal(parity?.run, 'node scripts/verify-emdash-production.mjs --staging --migration-parity');
   const mutationCommands =
     /d1 migrations apply|wrangler deploy --name|scripts\/emdash-production\.mjs (?:cutover|rollback)|scripts\/initialize-site-content\.mjs (?:apply|resume)/;
   for (const step of steps) {
