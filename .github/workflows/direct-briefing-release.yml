@@ -1,0 +1,67 @@
+name: One-time direct release of unverified briefings
+on:
+  push:
+    branches: [codex/direct-briefing-release-20261030]
+concurrency:
+  group: emdash-production-live
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  release:
+    if: github.repository == 'cinagroup/cinagroup' && github.ref == 'refs/heads/codex/direct-briefing-release-20261030'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      EMDASH_BUILD_TARGET: production
+      PUBLIC_TURNSTILE_SITE_KEY: '0x4AAAAAAEigqtYgQBcKUhpa'
+    steps:
+      - name: Checkout the release commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Verify exact release source and record unverified status
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD^)" = 'a95006c11c74d1dee64643ae3149f95f16a99cb1'
+          test "$(git diff --name-only HEAD^ HEAD)" = '.github/workflows/direct-briefing-release.yml'
+          echo 'Direct release requested by repository owner; briefing articles remain archived_unverified and are not represented as editorially approved.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24.19'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Check types lint and formatting
+        run: npm run check:astro && npm run check:cloudflare && npm run check:eslint && npm run check:prettier
+      - name: Test content and deployment boundaries
+        run: npm run test:contact && npm run test:blog-i18n && npm run test:emdash && node --experimental-strip-types --test tests/emdash-deployment-target.test.mjs tests/emdash-production.test.mjs tests/briefing-release.test.mjs tests/emdash-verification-options.test.mjs
+      - name: Audit source and build production
+        run: npm run validate:site-content && npm run audit:source && npm run build
+      - name: Verify generated production target and dry-run Worker
+        run: node scripts/emdash-production.mjs verify-build && npx wrangler deploy --dry-run --name cinagroup-emdash-production --outdir dist/offline-worker && npx wrangler check startup --outfile /tmp/emdash-production-startup.cpuprofile
+      - name: Audit compiled production responses with local bindings
+        run: node scripts/render-production-audit.mjs && node --experimental-strip-types scripts/verify-legacy-article-shell.mjs && npm run audit:evidence && npm run audit:content && npm run audit:blog && npm run audit:build
+      - name: Audit live Cloudflare resources
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          EMDASH_ACCESS_ADMIN_EMAIL: ${{ secrets.EMDASH_ACCESS_ADMIN_EMAIL }}
+        run: node scripts/emdash-production.mjs audit
+      - name: Apply tracked contact migrations
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          node scripts/emdash-production.mjs contact-before
+          npx wrangler d1 migrations apply cinagroup-contact-submissions --remote --config wrangler.production.jsonc
+          node scripts/emdash-production.mjs contact-after
+      - name: Publish production Worker using Cloudflare CLI
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler deploy --name cinagroup-emdash-production
+      - name: Verify deployed Worker
+        run: node scripts/verify-emdash-production.mjs --staging
