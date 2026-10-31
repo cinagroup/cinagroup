@@ -5,6 +5,7 @@ import { isDeepStrictEqual } from 'node:util';
 
 export const ACCOUNT = '7ea8e46d8210bad342fa7595f7935fea';
 export const WORKER = 'cinagroup-emdash-production';
+export const REDIRECT_WORKER = 'cinagroup-chinese-domain-redirect';
 export const STAGING_HOST = `${WORKER}.cinagroup.workers.dev`;
 export const DATABASE = '88da0e99-bbf0-45f6-82f6-74922e1ba2f7';
 export const CONTACT = '0cfb1da1-2079-411b-bb21-f5a04fed292b';
@@ -15,7 +16,12 @@ export const ADMIN_AUD = '4b6dc6f6abc12241ac7da21915a0424f524e652c699377f50586d2
 export const MEDIA_APP = '007b6231-3a0b-408e-8804-2570ffa90c4c';
 export const ROUTES = [
   { zone: '8f2b43a0fb38060c48a84439de5a914f', host: 'cinagroup.com' },
-  { zone: '8d451bb2a57510b85592f5901ff8294e', host: 'xn--v6qq4kq7wvy1b.xn--fiqs8s' },
+  {
+    zone: '8d451bb2a57510b85592f5901ff8294e',
+    host: 'xn--v6qq4kq7wvy1b.xn--fiqs8s',
+    script: REDIRECT_WORKER,
+    protected: true,
+  },
 ];
 const SECRETS = [
   'EMDASH_AUTH_MODE',
@@ -55,10 +61,14 @@ export function verifyRouteOwnership(routes, spec) {
   for (const route of routes)
     if (
       matches(hostPattern(route)) &&
-      (route.pattern !== spec.host + '/*' || route.script !== WORKER || route.request_limit_fail_open !== false)
+      (route.pattern !== spec.host + '/*' ||
+        route.script !== (spec.script ?? WORKER) ||
+        route.request_limit_fail_open !== false)
     )
       throw new Error('Conflicting production route; no route will be overwritten');
-  return routes.find((r) => r.pattern === spec.host + '/*') ?? null;
+  const route = routes.find((r) => r.pattern === spec.host + '/*') ?? null;
+  if (spec.protected && !route) throw new Error('Required protected production route is missing');
+  return route;
 }
 export function verifyAdminPolicy(policies, email) {
   if (
@@ -201,21 +211,25 @@ export async function verifyContact(stage) {
     throw new Error('Production contact indexes differ');
   console.log('Production contact schema and migration history verified: ' + stage);
 }
-export async function setProductionRoutes(operation) {
+export async function setProductionRoutes(operation, { api = productionApi, audit = auditProduction } = {}) {
   if (!['cutover', 'rollback'].includes(operation)) throw new Error('Unknown route operation');
-  if (operation === 'cutover') await auditProduction();
+  if (operation === 'cutover') await audit();
   const planned = [];
   for (const spec of ROUTES) {
-    const routes = await productionApi('/zones/' + spec.zone + '/workers/routes');
+    const routes = await api('/zones/' + spec.zone + '/workers/routes');
     planned.push({ spec, existing: verifyRouteOwnership(routes, spec) });
   }
   const created = [];
   try {
-    for (const { spec, existing } of planned) {
-      const current = verifyRouteOwnership(await productionApi('/zones/' + spec.zone + '/workers/routes'), spec);
+    // Recheck protected routes first so a missing redirect cannot trigger a primary-route mutation.
+    for (const { spec, existing } of [...planned].sort(
+      (a, b) => Number(Boolean(b.spec.protected)) - Number(Boolean(a.spec.protected))
+    )) {
+      const current = verifyRouteOwnership(await api('/zones/' + spec.zone + '/workers/routes'), spec);
       if ((current?.id ?? null) !== (existing?.id ?? null)) throw new Error('Production route changed before mutation');
+      if (spec.protected) continue;
       if (operation === 'cutover' && !existing) {
-        const route = await productionApi('/zones/' + spec.zone + '/workers/routes', 'POST', {
+        const route = await api('/zones/' + spec.zone + '/workers/routes', 'POST', {
           pattern: spec.host + '/*',
           script: WORKER,
           request_limit_fail_open: false,
@@ -223,19 +237,19 @@ export async function setProductionRoutes(operation) {
         created.push({ spec, id: route.id });
       }
       if (operation === 'rollback' && existing)
-        await productionApi('/zones/' + spec.zone + '/workers/routes/' + existing.id, 'DELETE');
+        await api('/zones/' + spec.zone + '/workers/routes/' + existing.id, 'DELETE');
     }
   } catch (error) {
     for (const { spec, id } of created.reverse()) {
-      const own = verifyRouteOwnership(await productionApi('/zones/' + spec.zone + '/workers/routes'), spec);
-      if (own?.id === id) await productionApi('/zones/' + spec.zone + '/workers/routes/' + id, 'DELETE');
+      const own = verifyRouteOwnership(await api('/zones/' + spec.zone + '/workers/routes'), spec);
+      if (own?.id === id) await api('/zones/' + spec.zone + '/workers/routes/' + id, 'DELETE');
     }
     throw error;
   }
   console.log(
     operation === 'cutover'
-      ? 'Production routes attached; Pages and DNS retained for rollback'
-      : 'Owned production routes removed; retained Pages resumes serving the domains'
+      ? 'Production route attached; protected redirect route and DNS retained'
+      : 'Owned production route removed; protected redirect route and DNS retained'
   );
 }
 async function main() {

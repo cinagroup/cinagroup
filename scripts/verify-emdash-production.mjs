@@ -1,8 +1,9 @@
 import { appendFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { STAGING_HOST, ADMIN_AUD, ROUTES } from './emdash-production.mjs';
+import { parseVerificationOptions } from './emdash-verification-options.mjs';
 
-const staging = process.argv.includes('--staging');
+const { staging, migrationParity } = parseVerificationOptions(process.argv.slice(2));
 const host = staging ? STAGING_HOST : 'cinagroup.com';
 const origin = 'https://' + host;
 async function get(path, method = 'GET', requireWorker = false) {
@@ -55,7 +56,7 @@ await publicPath('/sitemap-index.xml');
 await publicPath('/sitemap-emdash.xml');
 if (/\/cms-preview\/|\/_emdash\//.test(sitemap) || !robots.includes('sitemap-index.xml'))
   throw new Error('Discovery routes changed their public/private boundary');
-if (staging) {
+if (migrationParity) {
   for (const [path, candidate] of [
     ['/rss.xml', rss],
     ['/sitemap-0.xml', sitemap],
@@ -142,4 +143,5 @@ if (!staging) {
 }
 const summary = `Verified ${staging ? 'staging' : 'production'} Worker: public GET/HEAD, eight locale indexes, archives, discovery, indexing/security headers, redirects, canonical media and anonymous Access boundaries. RSS items: ${(rss.match(/<item>/g) ?? []).length}; sitemap URLs: ${(sitemap.match(/<loc>/g) ?? []).length}.`;
 console.log(summary);
+if (migrationParity) console.log('Migration parity with the current production RSS and sitemap passed.');
 if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, '\n' + summary + '\n');
