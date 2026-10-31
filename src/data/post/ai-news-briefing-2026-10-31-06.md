@@ -6,7 +6,7 @@ verification:
   note: "Preserved from a retired automated workflow; claims were not independently source-checked."
 title: "Gemini 4 Carbon Ships, OpenAI Buys Google Chips, DOJ Probes NVIDIA — AI News Briefing"
 description: "Google's rapid-fire Gemini 4 cadence continues with Carbon, just two weeks after Argon. Meanwhile OpenAI reportedly turns to Google's custom silicon, the DOJ opens a competition probe into an NVIDIA acquisition, and Washington's appetite for AI regulation grows ahead of the midterms."
-publishDate: 2026-10-31T22:00:00.000Z
+publishDate: 2026-10-30T22:00:00.000Z
 author: "001"
 tags:
   - AI
