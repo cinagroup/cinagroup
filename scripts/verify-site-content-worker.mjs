@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import { createHash } from 'node:crypto';
-import { ContentRepository, MediaRepository, setSiteSettings } from 'emdash';
+import { ContentRepository, MediaRepository, SchemaRegistry, setSiteSettings } from 'emdash';
 import { parse } from 'parse5';
 import {
   bindPresentationMedia,
@@ -13,6 +13,7 @@ import {
 } from './initialize-site-content.mjs';
 import { initializeSiteContent } from '../src/emdash/initialize-site-content.ts';
 import { extractLegacyArticleShell } from '../src/emdash/legacy-article-shell.ts';
+import { SITE_APPEARANCE_FIELDS } from '../src/emdash/site-appearance.ts';
 
 /** Exercise the already compiled Worker with local, ephemeral native CMS/R2 data. */
 export async function verifySiteContentWorker(server) {
@@ -61,6 +62,10 @@ export async function verifySiteContentWorker(server) {
     const content = new ContentRepository(db);
     // The native editor publishes an ImageValue with an ID but no src. Reproduce
     // the production regression with black primary and a real white-wordmark row.
+    await new SchemaRegistry(db).createField(
+      'site_profile',
+      structuredClone(SITE_APPEARANCE_FIELDS.find((field) => field.slug === 'design_primary_color'))
+    );
     const profile = await content.findBySlug('site_profile', 'site', 'en');
     await content.updateDraftAware('site_profile', profile.id, {
       data: {
