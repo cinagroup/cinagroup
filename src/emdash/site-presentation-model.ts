@@ -197,6 +197,7 @@ export interface PresentationReaders {
   settings(): Promise<ReadResult>;
   menu(name: string, locale: Lang): Promise<ReadResult>;
   profile(locale: Lang): Promise<unknown>;
+  media?(value: unknown): Promise<PresentationMedia | undefined>;
 }
 interface PresentationRequest {
   locals: object;
@@ -238,7 +239,17 @@ export function createSitePresentationLoader(readers: PresentationReaders) {
       const settings = read(0);
       const menus = { primary: read(1), footer: read(2), 'footer-legal': read(3) };
       const profile = publishedSiteProfile(read(4), locale);
-      return mapSitePresentation(settings, menus, profile, locale);
+      const presentation = mapSitePresentation(settings, menus, profile, locale);
+      if (readers.media && profile?.logo_dark) {
+        try {
+          // Native editor image values may contain only an ID after publication.
+          // Never use a stale src snapshot when the current media row is unavailable.
+          presentation.darkLogo = await readers.media(profile.logo_dark);
+        } catch {
+          presentation.darkLogo = undefined;
+        }
+      }
+      return presentation;
     })();
     locales.set(locale, promise);
     return promise;
