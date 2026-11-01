@@ -1,5 +1,6 @@
 import { defineMiddleware } from 'astro:middleware';
 import { defaultLang, languages } from './i18n';
+import { retiredProductRedirect } from './emdash/retired-products';
 import {
   previewPublicProbeScope,
   projectPublicRouteResponse,
@@ -9,6 +10,8 @@ import {
 export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url);
   const pathname = url.pathname;
+  const retiredDestination = retiredProductRedirect(pathname);
+  if (retiredDestination) return context.redirect(retiredDestination, 301);
 
   // Extract language from path
   const pathParts = pathname.split('/').filter(Boolean);

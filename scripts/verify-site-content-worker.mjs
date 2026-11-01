@@ -14,6 +14,7 @@ import {
 import { initializeSiteContent } from '../src/emdash/initialize-site-content.ts';
 import { extractLegacyArticleShell } from '../src/emdash/legacy-article-shell.ts';
 import { SITE_APPEARANCE_FIELDS } from '../src/emdash/site-appearance.ts';
+import { isRetiredProductLink } from '../src/emdash/retired-products.ts';
 
 /** Exercise the already compiled Worker with local, ephemeral native CMS/R2 data. */
 export async function verifySiteContentWorker(server) {
@@ -133,9 +134,14 @@ export async function verifySiteContentWorker(server) {
       assert.ok(body.includes('CMS site identity proof'), locale + ' reads native settings');
       assert.ok(body.includes(references.logo.src), locale + ' header uses registered original logo');
       assert.ok(body.includes(references.logoDark.src), locale + ' footer uses registered original logo');
+      assert.equal(/CinaClaw/i.test(body), false, locale + ' published legacy homepage hides the retired product');
       const renderedImages = [];
       const contrastLogos = [];
       const findImages = (node) => {
+        if (node.tagName === 'a') {
+          const href = node.attrs.find(({ name }) => name === 'href')?.value;
+          assert.equal(href ? isRetiredProductLink(href) : false, false, locale + ' no retired product links');
+        }
         if (node.tagName === 'img') {
           const attrs = Object.fromEntries(node.attrs.map(({ name, value }) => [name, value]));
           if (attrs.class?.split(/\s+/).includes('fx-hero-image')) renderedImages.push(attrs.src);
@@ -164,12 +170,20 @@ export async function verifySiteContentWorker(server) {
         'contact',
         'pricing',
         'cinaseek',
-        'cinaclaw',
         'cinatoken',
         'cinaskill',
         'cinachain',
       ])
         await html('/' + locale + slug + '/');
+      for (const method of ['GET', 'HEAD']) {
+        const response = await server.fetch('https://cinagroup.com/' + locale + 'cinaclaw/', {
+          method,
+          redirect: 'manual',
+        });
+        assert.equal(response.status, 301, locale + ' retired product ' + method);
+        assert.equal(response.headers.get('Location'), '/' + locale);
+        await response.body?.cancel();
+      }
     }
     const chinese = await html('/zh/');
     assert.ok(chinese.includes('CMS published homepage proof'));
@@ -236,7 +250,7 @@ export async function verifySiteContentWorker(server) {
       503
     );
     assert.equal((await initializeSiteContent({ db, seed, dryRun: false })).status, 'already-complete');
-    console.log('Compiled Worker CMS acceptance: 8 homepages, 73 inner pages, settings/menus, 6 media, draft boundary');
+    console.log('Compiled Worker CMS acceptance: 8 homepages, 65 inner pages, settings/menus, 6 media, draft boundary');
   } finally {
     await db.destroy();
   }

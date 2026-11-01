@@ -2,6 +2,7 @@ import { cp, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createTestHarness } from 'wrangler';
 import { verifyProductionConfig } from './emdash-production.mjs';
+import { retiredProductRedirect } from '../src/emdash/retired-products.ts';
 
 const root = process.cwd();
 if (process.env.EMDASH_BUILD_TARGET !== 'production') throw new Error('Production build required');
@@ -97,6 +98,13 @@ try {
   for (const route of [...routes].sort()) {
     if (!publicPath(route)) throw new Error('Private route reached offline audit');
     const response = await server.fetch('https://cinagroup.com' + route, { redirect: 'manual' });
+    const retiredDestination = retiredProductRedirect(route);
+    if (retiredDestination) {
+      if (response.status !== 301 || response.headers.get('Location') !== retiredDestination)
+        throw new Error('Retired product route did not redirect: ' + route);
+      await response.body?.cancel();
+      continue;
+    }
     const expected = /\/404(?:\/|\.html)$/.test(route) ? [200, 404] : [200];
     if (!expected.includes(response.status)) throw new Error('Offline production ' + route + ': ' + response.status);
     if (response.headers.get('X-CinaGroup-Deployment') !== 'emdash-production')

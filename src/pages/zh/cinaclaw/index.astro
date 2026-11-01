@@ -1,5 +1,4 @@
 ---
-import LocalizedProductPage from '~/components/LocalizedProductPage.astro';
+export const prerender = false;
+return Astro.redirect('/zh/', 301);
 ---
-
-<LocalizedProductPage lang="zh" product="cinaclaw" />

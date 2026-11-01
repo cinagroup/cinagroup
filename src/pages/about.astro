@@ -4,6 +4,10 @@ import { loadEnglishPageText } from '~/emdash/english-page-text';
 import { getPageCopyMetadata } from '~/emdash/published-page-copy';
 
 const copy = await loadEnglishPageText(Astro, 'about', ENGLISH_PAGE_DEFAULTS.about);
+const stackMapHeading =
+  copy.stack_map_heading === 'Five focused routes into production.'
+    ? ENGLISH_PAGE_DEFAULTS.about.stack_map_heading
+    : copy.stack_map_heading;
 
 import CinaPageHero from '~/components/CinaPageHero.astro';
 import Layout from '~/layouts/PageLayout.astro';
@@ -57,7 +61,7 @@ const metadata = await getPageCopyMetadata(Astro, {
       <div class="cg-page-shell">
         <div class="cg-section-heading">
           <p class="cg-eyebrow">{copy.stack_map_eyebrow}</p>
-          <h2 id="stack-map-title">{copy.stack_map_heading}</h2>
+          <h2 id="stack-map-title">{stackMapHeading}</h2>
           <p>
             {copy.stack_map_paragraph}
           </p>
@@ -65,9 +69,6 @@ const metadata = await getPageCopyMetadata(Astro, {
         <div class="cg-list-panel">
           <a class="cg-list-row" href="/cinaseek/"
             ><strong>{copy.stack_map_item_label}</strong><span>{copy.stack_map_item_description}</span></a
-          >
-          <a class="cg-list-row" href="/cinaclaw/"
-            ><strong>{copy.stack_map_item_label_2}</strong><span>{copy.stack_map_item_description_2}</span></a
           >
           <a class="cg-list-row" href="/cinatoken/"
             ><strong>{copy.stack_map_item_label_3}</strong><span>{copy.stack_map_item_description_3}</span></a

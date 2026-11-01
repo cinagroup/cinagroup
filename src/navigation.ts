@@ -11,15 +11,11 @@ export const headerData = {
           href: getPermalink('/cinaseek'),
         },
         {
-          text: 'CinaClaw — Local-first Agent Gateway',
-          href: getPermalink('/cinaclaw'),
-        },
-        {
           text: 'CinaToken — Open-source Model Gateway',
           href: getPermalink('/cinatoken'),
         },
         {
-          text: 'CinaSkill — CinaClaw SKILL.md Format',
+          text: 'CinaSkill — SKILL.md Capability Format',
           href: getPermalink('/cinaskill'),
         },
         {
@@ -84,7 +80,6 @@ export const footerData = {
       title: 'Products',
       links: [
         { text: 'CinaSeek', href: '/cinaseek/' },
-        { text: 'CinaClaw', href: '/cinaclaw/' },
         { text: 'CinaToken', href: '/cinatoken/' },
         { text: 'CinaSkill', href: '/cinaskill/' },
         { text: 'CinaChain', href: '/cinachain/' },

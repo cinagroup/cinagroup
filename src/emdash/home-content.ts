@@ -1,6 +1,7 @@
 import type { CacheHint, ImageValue } from 'emdash';
 import type { SitePresentation } from './site-presentation-model.ts';
 import { publicPostSeo, type PublicPostSeo } from './post-seo.ts';
+import { isRetiredProductLink, isRetiredProductName } from './retired-products.ts';
 import {
   DEFAULT_HOME_COPY,
   DEFAULT_HOME_IMAGES,
@@ -60,6 +61,17 @@ const TEXT_LIMITS: Record<TextKey, number> = {
   nextEyebrow: 160,
   nextTitle: 400,
   nextLead: 2000,
+};
+
+const FORMER_PRODUCT_HEADINGS: Record<HomeLocale, string> = {
+  en: 'Five products. A clear starting point for each task.',
+  zh: '五款产品，各自从一项明确任务出发。',
+  ja: '一つの明確な仕事から始める五つの製品。',
+  ko: '하나의 명확한 업무에서 시작하는 다섯 제품.',
+  ru: 'Пять продуктов, каждый начинается с одной ясной задачи.',
+  es: 'Cinco productos que empiezan por un trabajo claro.',
+  pt: 'Cinco produtos que começam por um trabalho claro.',
+  fr: 'Cinq produits qui commencent par un travail clair.',
 };
 
 function record(value: unknown): value is Record<string, unknown> {
@@ -144,6 +156,11 @@ function productsFromValue(value: unknown): HomeCopy['products'] | undefined {
   const products: HomeCopy['products'] = [];
   for (const item of value) {
     if (!record(item)) return undefined;
+    if (
+      (typeof item.name === 'string' && isRetiredProductName(item.name)) ||
+      (typeof item.href === 'string' && isRetiredProductLink(item.href))
+    )
+      continue;
     const name = text(item.name, 120);
     const role = text(item.role, 300);
     const description = text(item.description, 2000);
@@ -183,6 +200,30 @@ export function homeContentFromEntry(
     content[key] = text(data[HOME_TEXT_FIELDS[key]], TEXT_LIMITS[key]) ?? content[key];
   }
   content.products = productsFromValue(data.products) ?? content.products;
+  // Previously published CMS content must not restore a withdrawn product or
+  // its old five-product heading after the static defaults have been updated.
+  const defaults = DEFAULT_HOME_COPY[locale];
+  const hadRetiredProduct =
+    Array.isArray(data.products) &&
+    data.products.some(
+      (item) =>
+        record(item) &&
+        ((typeof item.name === 'string' && isRetiredProductName(item.name)) ||
+          (typeof item.href === 'string' && isRetiredProductLink(item.href)))
+    );
+  if (hadRetiredProduct && content.productsTitle === FORMER_PRODUCT_HEADINGS[locale])
+    content.productsTitle = defaults.productsTitle;
+  content.products = content.products.map((product) => {
+    const path = new URL(product.href, 'https://cinagroup.com').pathname.replace(/\/+$/, '');
+    const current = defaults.products.find((item) => item.href.replace(/\/+$/, '') === path);
+    return current
+      ? {
+          ...product,
+          role: /cinaclaw/i.test(product.role) ? current.role : product.role,
+          description: /cinaclaw/i.test(product.description) ? current.description : product.description,
+        }
+      : product;
+  });
   content.methods = methodsFromValue(data.methods) ?? content.methods;
   content.heroImage = homeImageFromValue(data.hero_image) ?? content.heroImage;
   content.aboutImage = homeImageFromValue(data.about_image) ?? content.aboutImage;
@@ -195,6 +236,9 @@ export function homeContentFromEntry(
     content.description = text(data.seo.description, TEXT_LIMITS.description) ?? content.description;
     content.noIndex = data.seo.noIndex === true;
   }
+  if (/cinaclaw/i.test(content.description)) content.description = defaults.description;
+  if (content.seo?.description && /cinaclaw/i.test(content.seo.description))
+    content.seo.description = content.description;
   return content;
 }
 

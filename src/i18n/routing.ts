@@ -24,7 +24,6 @@ const everyLocale = [...supportedLocales] as const;
 export const routeMatrix = {
   '/': everyLocale,
   '/cinaseek': everyLocale,
-  '/cinaclaw': everyLocale,
   '/cinatoken': everyLocale,
   '/cinaskill': everyLocale,
   '/cinachain': everyLocale,

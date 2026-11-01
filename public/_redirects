@@ -34,3 +34,21 @@
 
 # Multilingual blog: the zh-CN archived briefing moved to its locale section
 /blog/ai-news-briefing-2026-05-03-06 /zh/blog/ai-news-briefing-2026-05-03-06 301
+
+# Retired product pages
+/cinaclaw / 301
+/cinaclaw/* / 301
+/zh/cinaclaw /zh/ 301
+/zh/cinaclaw/* /zh/ 301
+/ja/cinaclaw /ja/ 301
+/ja/cinaclaw/* /ja/ 301
+/ko/cinaclaw /ko/ 301
+/ko/cinaclaw/* /ko/ 301
+/ru/cinaclaw /ru/ 301
+/ru/cinaclaw/* /ru/ 301
+/es/cinaclaw /es/ 301
+/es/cinaclaw/* /es/ 301
+/pt/cinaclaw /pt/ 301
+/pt/cinaclaw/* /pt/ 301
+/fr/cinaclaw /fr/ 301
+/fr/cinaclaw/* /fr/ 301

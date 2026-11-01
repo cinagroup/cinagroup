@@ -178,7 +178,7 @@
             {
               "key": "stack_map_heading",
               "label": "Stack / Map / Heading",
-              "value": "Five focused routes into production."
+              "value": "Four focused routes into production."
             },
             {
               "key": "stack_map_paragraph",
@@ -194,16 +194,6 @@
               "key": "stack_map_item_description",
               "label": "Stack / Map / Item / Description",
               "value": "Search across documents, product context, support history, and operating knowledge."
-            },
-            {
-              "key": "stack_map_item_label_2",
-              "label": "Stack / Map / Item / Label / 2",
-              "value": "CinaClaw"
-            },
-            {
-              "key": "stack_map_item_description_2",
-              "label": "Stack / Map / Item / Description / 2",
-              "value": "Move repeated operational work through visible context gathering and review."
             },
             {
               "key": "stack_map_item_label_3",
