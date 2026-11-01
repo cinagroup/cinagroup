@@ -16,6 +16,43 @@ const entry = (locale = 'zh', fields = {}, status = 'published') => ({
 });
 const publicOptions = { isPreview: false };
 
+test('previously published product lists cannot restore CinaClaw or discard other editor changes', async () => {
+  const seed = JSON.parse(await readFile(new URL('../seed/site-presentation.json', import.meta.url), 'utf8'));
+  for (const row of seed.content.site_pages) {
+    const data = structuredClone(row.data);
+    data.products[0].description = 'Editor chosen active product description';
+    const skill = data.products.find((item) => item.name === 'CinaSkill');
+    skill.href += '/?source=edited';
+    const content = homeContentFromEntry(
+      { data: { ...data, slug: row.slug, locale: row.locale, status: row.status } },
+      row.locale,
+      publicOptions
+    );
+    assert.equal(content.products.length, 4, row.locale);
+    assert.equal(
+      content.products.some((item) => /cinaclaw/i.test(item.name + item.href)),
+      false,
+      row.locale
+    );
+    assert.equal(content.products[0].description, 'Editor chosen active product description');
+    assert.equal(content.productsTitle, DEFAULT_HOME_COPY[row.locale].productsTitle);
+    const currentSkill = content.products.find((item) => item.name === 'CinaSkill');
+    assert.equal(/cinaclaw/i.test(currentSkill.role + currentSkill.description), false);
+    assert.equal(currentSkill.href, skill.href);
+  }
+});
+
+test('retirement preserves an authored section title and independent active-product copy', () => {
+  const products = structuredClone(DEFAULT_HOME_COPY.zh.products);
+  const skill = products.find((item) => item.name === 'CinaSkill');
+  skill.role = 'CinaClaw SKILL.md 格式';
+  skill.description = '编辑选择的说明';
+  products.push({ name: 'CinaClaw', role: 'Gateway', description: 'Old product', href: '/zh/cinaclaw/' });
+  const content = homeContentFromEntry(entry('zh', { products, products_title: '精选产品' }), 'zh', publicOptions);
+  assert.equal(content.productsTitle, '精选产品');
+  assert.equal(content.products.find((item) => item.name === 'CinaSkill').description, '编辑选择的说明');
+});
+
 test('the homepage seed presents all eight existing translations without missing fields or photos', async () => {
   const seed = JSON.parse(await readFile(new URL('../seed/site-presentation.json', import.meta.url), 'utf8'));
   assert.equal(seed.collections[0].slug, 'site_pages');

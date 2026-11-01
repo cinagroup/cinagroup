@@ -1,5 +1,6 @@
 import type { Lang } from '../i18n/routing.ts';
 import { mapSiteAppearance, type SiteAppearance } from './site-appearance.ts';
+import { isRetiredProductLink, publicProductMenuLabel } from './retired-products.ts';
 
 export interface PresentationMenuItem {
   label: string;
@@ -94,8 +95,14 @@ export function presentationMenu(value: unknown, locale: Lang): PresentationMenu
           const children = Array.isArray(row?.children) ? mapItems(row.children, depth + 1) : [];
           const url = safePresentationHref(row?.url);
           if (!label || (!url && !children.length)) return [];
+          if (url && isRetiredProductLink(url)) return children;
           return [
-            { label, url: url ?? '#', target: row?.target === '_blank' ? ('_blank' as const) : undefined, children },
+            {
+              label: publicProductMenuLabel(label, locale, url ?? '#'),
+              url: url ?? '#',
+              target: row?.target === '_blank' ? ('_blank' as const) : undefined,
+              children,
+            },
           ];
         });
   return mapItems(menu.items, 0);

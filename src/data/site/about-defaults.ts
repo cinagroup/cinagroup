@@ -16,7 +16,7 @@ export interface AboutCopy {
   productsEyebrow: string;
   productsTitle: string;
   productsText: string;
-  productDescriptions: Record<'cinaseek' | 'cinaclaw' | 'cinatoken' | 'cinaskill' | 'cinachain', string>;
+  productDescriptions: Record<'cinaseek' | 'cinatoken' | 'cinaskill' | 'cinachain', string>;
   nextEyebrow: string;
   nextTitle: string;
   nextText: string;
@@ -56,7 +56,6 @@ export const DEFAULT_ABOUT_COPY: Record<Locale, AboutCopy> = {
     productsText: '每款产品都有明确职责，既可独立使用，也可组合使用。',
     productDescriptions: {
       cinaseek: '检索获准使用的知识，并连同依据一起给出答案。',
-      cinaclaw: '将重复工作转化为可审核的工作流。',
       cinatoken: '管理模型访问、路由与使用边界。',
       cinaskill: '定义、审核并版本化小型能力。',
       cinachain: '支持可验证状态与清晰的发布管理。',
@@ -99,7 +98,6 @@ export const DEFAULT_ABOUT_COPY: Record<Locale, AboutCopy> = {
     productsText: '各製品は明確な責任を持ち、単独でも組み合わせても利用できます。',
     productDescriptions: {
       cinaseek: '承認された知識を検索し、根拠と一緒に回答します。',
-      cinaclaw: '繰り返し作業をレビュー可能なワークフローにします。',
       cinatoken: 'モデルアクセス、ルーティング、利用境界を管理します。',
       cinaskill: '小さな機能を定義、レビュー、バージョン管理します。',
       cinachain: '検証可能な状態と明確なリリース管理を支えます。',
@@ -141,7 +139,6 @@ export const DEFAULT_ABOUT_COPY: Record<Locale, AboutCopy> = {
     productsText: '각 제품은 명확한 책임을 가지며 단독 또는 함께 사용할 수 있습니다.',
     productDescriptions: {
       cinaseek: '승인된 지식을 검색하고 근거와 함께 답변합니다.',
-      cinaclaw: '반복 업무를 검토 가능한 워크플로로 만듭니다.',
       cinatoken: '모델 접근, 라우팅 정책, 사용 경계를 관리합니다.',
       cinaskill: '작은 기능을 정의하고 검토하며 버전 관리합니다.',
       cinachain: '검증 가능한 상태와 명확한 릴리스를 지원합니다.',
@@ -184,7 +181,6 @@ export const DEFAULT_ABOUT_COPY: Record<Locale, AboutCopy> = {
     productsText: 'У каждого продукта своя четкая зона ответственности; их можно использовать отдельно или вместе.',
     productDescriptions: {
       cinaseek: 'Ищет в одобренных знаниях и показывает основания ответа.',
-      cinaclaw: 'Превращает повторяемую работу в проверяемый процесс.',
       cinatoken: 'Управляет доступом к моделям, маршрутизацией и лимитами.',
       cinaskill: 'Описывает, проверяет и версионирует небольшие возможности.',
       cinachain: 'Поддерживает проверяемое состояние и понятные релизы.',
@@ -228,7 +224,6 @@ export const DEFAULT_ABOUT_COPY: Record<Locale, AboutCopy> = {
     productsText: 'Cada producto tiene una responsabilidad clara y puede funcionar solo o como parte del conjunto.',
     productDescriptions: {
       cinaseek: 'Busca conocimiento aprobado y responde con sus fuentes.',
-      cinaclaw: 'Convierte tareas repetidas en flujos revisables.',
       cinatoken: 'Gestiona acceso a modelos, enrutamiento y límites de uso.',
       cinaskill: 'Define, revisa y versiona capacidades pequeñas.',
       cinachain: 'Sustenta estados verificables y lanzamientos claros.',
@@ -271,7 +266,6 @@ export const DEFAULT_ABOUT_COPY: Record<Locale, AboutCopy> = {
     productsText: 'Cada produto tem uma responsabilidade clara e pode ser usado sozinho ou em conjunto.',
     productDescriptions: {
       cinaseek: 'Pesquisa conhecimento aprovado e responde com as fontes.',
-      cinaclaw: 'Transforma tarefas repetidas em fluxos revisáveis.',
       cinatoken: 'Gerencia acesso a modelos, roteamento e limites de uso.',
       cinaskill: 'Define, revisa e versiona pequenas capacidades.',
       cinachain: 'Sustenta estados verificáveis e lançamentos claros.',
@@ -315,7 +309,6 @@ export const DEFAULT_ABOUT_COPY: Record<Locale, AboutCopy> = {
     productsText: 'Chaque produit a une responsabilité claire et peut être utilisé seul ou avec les autres.',
     productDescriptions: {
       cinaseek: 'Recherche dans les connaissances approuvées et cite ses sources.',
-      cinaclaw: 'Transforme les tâches répétées en flux contrôlables.',
       cinatoken: 'Gère l’accès aux modèles, le routage et les limites d’usage.',
       cinaskill: 'Définit, révise et versionne de petites capacités.',
       cinachain: 'Soutient des états vérifiables et des versions explicites.',

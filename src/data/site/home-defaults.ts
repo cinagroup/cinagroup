@@ -27,7 +27,7 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
   en: {
     title: 'CinaGroup | Agent workspaces, gateways, skills, and testnet apps',
     description:
-      'CinaGroup builds an early-access agent workspace, local-first and model gateways, the CinaClaw SKILL.md format, and a Base Sepolia NFT DApp beta.',
+      'CinaGroup builds an early-access agent workspace, an open-source model gateway, reusable SKILL.md capabilities, and a Base Sepolia NFT DApp beta.',
     eyebrow: 'CinaGroup',
     heroTitle: 'Agent workspaces, gateways, and reusable skills.',
     heroLead:
@@ -35,7 +35,7 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
     explore: 'Explore products',
     contact: 'Plan a workflow',
     productsEyebrow: 'Products',
-    productsTitle: 'Five products. A clear starting point for each task.',
+    productsTitle: 'Four products. A clear starting point for each task.',
     productsLead: 'Choose the scope you need and connect it to your existing systems and review process.',
     learn: 'Learn more',
     products: [
@@ -46,12 +46,6 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
         href: '/cinaseek',
       },
       {
-        name: 'CinaClaw',
-        role: 'Local-first agent gateway',
-        description: 'Run agents through an operator-controlled Gateway, channel adapters, and skills.',
-        href: '/cinaclaw',
-      },
-      {
         name: 'CinaToken',
         role: 'Open-source model gateway',
         description: 'Manage credentials, routing, usage policy, and cost boundaries in one layer.',
@@ -59,8 +53,8 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
       },
       {
         name: 'CinaSkill',
-        role: 'CinaClaw SKILL.md format',
-        description: 'Package instructions and resources for CinaClaw workspaces.',
+        role: 'SKILL.md capability format',
+        description: 'Package task instructions and resources as SKILL.md-based capabilities.',
         href: '/cinaskill',
       },
       {
@@ -95,7 +89,7 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
     explore: '查看产品',
     contact: '沟通工作流',
     productsEyebrow: '产品。',
-    productsTitle: '五款产品，各自从一项明确任务出发。',
+    productsTitle: '四款产品，各自从一项明确任务出发。',
     productsLead: '只选择需要的范围，并接入现有系统与审核流程。',
     learn: '了解更多',
     products: [
@@ -106,12 +100,6 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
         href: '/zh/cinaseek',
       },
       {
-        name: 'CinaClaw',
-        role: '本地优先智能体网关',
-        description: '通过由操作者控制的 Gateway、渠道适配器与技能运行智能体。',
-        href: '/zh/cinaclaw',
-      },
-      {
         name: 'CinaToken',
         role: '开源自托管模型网关',
         description: '在同一层管理凭据、路由、使用策略与成本边界。',
@@ -119,8 +107,8 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
       },
       {
         name: 'CinaSkill',
-        role: 'CinaClaw 的 SKILL.md 能力格式',
-        description: '打包可由 CinaClaw 工作空间加载的指令与资源。',
+        role: 'SKILL.md 能力格式',
+        description: '将任务指令与资源打包为基于 SKILL.md 的能力。',
         href: '/zh/cinaskill',
       },
       {
@@ -152,7 +140,7 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
     explore: '製品を見る',
     contact: 'ワークフローを相談する',
     productsEyebrow: '製品。',
-    productsTitle: '一つの明確な仕事から始める五つの製品。',
+    productsTitle: '一つの明確な仕事から始める四つの製品。',
     productsLead: '必要な範囲だけを選び、既存のシステムやレビュー手順に合わせて組み合わせます。',
     learn: '詳しく見る',
     products: [
@@ -163,12 +151,6 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
         href: '/ja/cinaseek',
       },
       {
-        name: 'CinaClaw',
-        role: 'ローカルファーストのエージェントゲートウェイ',
-        description: '利用者が管理する Gateway、チャネルアダプター、スキルでエージェントを実行します。',
-        href: '/ja/cinaclaw',
-      },
-      {
         name: 'CinaToken',
         role: 'オープンソース・セルフホスト型モデルゲートウェイ',
         description: '認証情報、ルーティング、利用ポリシー、コスト境界を一つの層で管理します。',
@@ -176,8 +158,8 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
       },
       {
         name: 'CinaSkill',
-        role: 'CinaClaw の SKILL.md 機能形式',
-        description: 'CinaClaw のワークスペース等で読み込む指示とリソースをまとめます。',
+        role: 'SKILL.md 機能形式',
+        description: 'タスクの指示とリソースを SKILL.md ベースの機能としてまとめます。',
         href: '/ja/cinaskill',
       },
       {
@@ -209,7 +191,7 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
     explore: '제품 보기',
     contact: '워크플로 상담하기',
     productsEyebrow: '제품.',
-    productsTitle: '하나의 명확한 업무에서 시작하는 다섯 제품.',
+    productsTitle: '하나의 명확한 업무에서 시작하는 네 제품.',
     productsLead: '필요한 범위만 선택하고 기존 시스템과 검토 절차에 맞춰 연결합니다.',
     learn: '자세히 보기',
     products: [
@@ -220,12 +202,6 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
         href: '/ko/cinaseek',
       },
       {
-        name: 'CinaClaw',
-        role: '로컬 우선 에이전트 게이트웨이',
-        description: '운영자가 제어하는 Gateway, 채널 어댑터, 스킬로 에이전트를 실행합니다.',
-        href: '/ko/cinaclaw',
-      },
-      {
         name: 'CinaToken',
         role: '오픈 소스 자체 호스팅 모델 게이트웨이',
         description: '자격 증명, 라우팅, 사용 정책 및 비용 경계를 한 계층에서 관리합니다.',
@@ -233,8 +209,8 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
       },
       {
         name: 'CinaSkill',
-        role: 'CinaClaw SKILL.md 기능 형식',
-        description: 'CinaClaw의 워크스페이스 등에서 불러올 지침과 리소스를 패키징합니다.',
+        role: 'SKILL.md 기능 형식',
+        description: '업무 지침과 리소스를 SKILL.md 기반 기능으로 패키징합니다.',
         href: '/ko/cinaskill',
       },
       {
@@ -267,7 +243,7 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
     explore: 'Посмотреть продукты',
     contact: 'Обсудить процесс',
     productsEyebrow: 'Продукты.',
-    productsTitle: 'Пять продуктов, каждый начинается с одной ясной задачи.',
+    productsTitle: 'Четыре продукта, каждый начинается с одной ясной задачи.',
     productsLead: 'Выберите нужный объём и соедините его с существующими системами и проверками.',
     learn: 'Подробнее',
     products: [
@@ -278,12 +254,6 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
         href: '/ru/cinaseek',
       },
       {
-        name: 'CinaClaw',
-        role: 'Local-first шлюз агентов',
-        description: 'Запускает агентов через Gateway, адаптеры каналов и навыки под контролем оператора.',
-        href: '/ru/cinaclaw',
-      },
-      {
         name: 'CinaToken',
         role: 'Open-source самостоятельно развёртываемый шлюз моделей',
         description: 'Управляет учётными данными, маршрутизацией, политиками использования и границами затрат.',
@@ -291,8 +261,8 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
       },
       {
         name: 'CinaSkill',
-        role: 'Формат SKILL.md для CinaClaw',
-        description: 'Упаковывает инструкции и ресурсы, загружаемые в workspace CinaClaw.',
+        role: 'Формат возможностей SKILL.md',
+        description: 'Упаковывает инструкции задач и ресурсы в возможности на основе SKILL.md.',
         href: '/ru/cinaskill',
       },
       {
@@ -328,7 +298,7 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
     explore: 'Ver productos',
     contact: 'Hablar del flujo',
     productsEyebrow: 'Productos.',
-    productsTitle: 'Cinco productos que empiezan por un trabajo claro.',
+    productsTitle: 'Cuatro productos que empiezan por un trabajo claro.',
     productsLead: 'Elija solo el alcance necesario y conéctelo con los sistemas y revisiones que ya existen.',
     learn: 'Más información',
     products: [
@@ -339,12 +309,6 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
         href: '/es/cinaseek',
       },
       {
-        name: 'CinaClaw',
-        role: 'Gateway de agentes local-first',
-        description: 'Ejecuta agentes mediante un Gateway, adaptadores de canal y skills controlados por el operador.',
-        href: '/es/cinaclaw',
-      },
-      {
         name: 'CinaToken',
         role: 'Gateway de modelos abierto y autohospedado',
         description: 'Gestiona credenciales, enrutamiento, políticas de uso y límites de coste en una capa.',
@@ -352,8 +316,8 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
       },
       {
         name: 'CinaSkill',
-        role: 'Formato SKILL.md para CinaClaw',
-        description: 'Empaqueta instrucciones y recursos que se cargan en workspaces de CinaClaw.',
+        role: 'Formato de capacidades SKILL.md',
+        description: 'Empaqueta instrucciones de tareas y recursos como capacidades basadas en SKILL.md.',
         href: '/es/cinaskill',
       },
       {
@@ -389,7 +353,7 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
     explore: 'Ver produtos',
     contact: 'Conversar sobre o fluxo',
     productsEyebrow: 'Produtos.',
-    productsTitle: 'Cinco produtos que começam por um trabalho claro.',
+    productsTitle: 'Quatro produtos que começam por um trabalho claro.',
     productsLead: 'Escolha apenas o escopo necessário e conecte-o aos sistemas e revisões existentes.',
     learn: 'Saiba mais',
     products: [
@@ -400,12 +364,6 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
         href: '/pt/cinaseek',
       },
       {
-        name: 'CinaClaw',
-        role: 'Gateway de agentes local-first',
-        description: 'Executa agentes por um Gateway, adaptadores de canal e skills controlados pelo operador.',
-        href: '/pt/cinaclaw',
-      },
-      {
         name: 'CinaToken',
         role: 'Gateway de modelos aberto e auto-hospedado',
         description: 'Gerencia credenciais, roteamento, políticas de uso e limites de custo em uma camada.',
@@ -413,8 +371,8 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
       },
       {
         name: 'CinaSkill',
-        role: 'Formato SKILL.md para CinaClaw',
-        description: 'Empacota instruções e recursos carregados nos workspaces do CinaClaw.',
+        role: 'Formato de capacidades SKILL.md',
+        description: 'Empacota instruções de tarefas e recursos como capacidades baseadas em SKILL.md.',
         href: '/pt/cinaskill',
       },
       {
@@ -453,7 +411,7 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
     explore: 'Voir les produits',
     contact: 'Parler du flux',
     productsEyebrow: 'Produits.',
-    productsTitle: 'Cinq produits qui commencent par un travail clair.',
+    productsTitle: 'Quatre produits qui commencent par un travail clair.',
     productsLead: 'Choisissez le périmètre nécessaire et reliez-le aux systèmes et revues déjà en place.',
     learn: 'En savoir plus',
     products: [
@@ -464,13 +422,6 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
         href: '/fr/cinaseek',
       },
       {
-        name: 'CinaClaw',
-        role: 'Passerelle d’agents local-first',
-        description:
-          'Exécute les agents via un Gateway, des adaptateurs de canal et des skills contrôlés par l’opérateur.',
-        href: '/fr/cinaclaw',
-      },
-      {
         name: 'CinaToken',
         role: 'Passerelle de modèles open source et auto-hébergée',
         description: 'Gère identifiants, routage, politiques d’usage et limites de coût dans une même couche.',
@@ -478,8 +429,8 @@ export const DEFAULT_HOME_COPY: Record<HomeLocale, HomeCopy> = {
       },
       {
         name: 'CinaSkill',
-        role: 'Format SKILL.md pour CinaClaw',
-        description: 'Regroupe les instructions et ressources chargées dans les workspaces CinaClaw.',
+        role: 'Format de capacités SKILL.md',
+        description: 'Regroupe les instructions de tâches et les ressources en capacités basées sur SKILL.md.',
         href: '/fr/cinaskill',
       },
       {

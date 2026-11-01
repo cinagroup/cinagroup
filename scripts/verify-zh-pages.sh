@@ -20,7 +20,6 @@ PAGES=(
   "/zh/about"
   "/zh/contact"
   "/zh/cinaseek"
-  "/zh/cinaclaw"
   "/zh/cinatoken"
   "/zh/cinaskill"
   "/zh/cinachain"

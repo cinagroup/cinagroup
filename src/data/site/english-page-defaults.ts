@@ -43,13 +43,11 @@ export const ENGLISH_PAGE_DEFAULTS = {
     mission_paragraph_4:
       'Match human review, access boundaries, auditability, and recovery paths to the impact of the action.',
     stack_map_eyebrow: 'Product map.',
-    stack_map_heading: 'Five focused routes into production.',
+    stack_map_heading: 'Four focused routes into production.',
     stack_map_paragraph:
       'Each product can stand alone. Together they support workflows that need knowledge, action, access, reusable capability, and connected state.',
     stack_map_item_label: 'CinaSeek',
     stack_map_item_description: 'Search across documents, product context, support history, and operating knowledge.',
-    stack_map_item_label_2: 'CinaClaw',
-    stack_map_item_description_2: 'Move repeated operational work through visible context gathering and review.',
     stack_map_item_label_3: 'CinaToken',
     stack_map_item_description_3: 'Centralize model access, routing policy, usage boundaries, and request traces.',
     stack_map_item_label_4: 'CinaSkill',

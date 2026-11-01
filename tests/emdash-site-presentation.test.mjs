@@ -94,6 +94,32 @@ test('menus use the exact locale, preserve intentional emptiness, and sanitize n
   );
 });
 
+test('legacy CMS navigation hides the retired product while retaining authored active links', () => {
+  const links = presentationMenu(
+    menu('zh', [
+      {
+        label: '产品',
+        url: '#',
+        children: [
+          { label: 'CinaSeek', url: '/zh/cinaseek/' },
+          { label: 'CinaClaw — 本地优先智能体网关', url: '/zh/cinaclaw/' },
+          { label: '旧产品别名', url: 'https://cinagroup.com/zh/cinaclaw/?source=menu' },
+          { label: 'CinaSkill — CinaClaw SKILL.md 格式', url: '/zh/cinaskill/' },
+          { label: '自定义链接', url: '/zh/contact/', target: '_blank' },
+          { label: 'CinaClaw release notes', url: '/blog/cinaclaw-news/' },
+          { label: '旧产品分组', url: '/zh/cinaclaw/', children: [{ label: '服务', url: '/zh/services/' }] },
+        ],
+      },
+    ]),
+    'zh'
+  );
+  assert.deepEqual(
+    links[0].children.map(({ label }) => label),
+    ['CinaSeek', 'CinaSkill — SKILL.md 能力格式', '自定义链接', 'CinaClaw release notes', '服务']
+  );
+  assert.equal(links[0].children[2].target, '_blank');
+});
+
 test('public profile rejects preview, drafts, locale fallback and a different singleton', () => {
   assert.equal(publishedSiteProfile(profileResult(), 'zh').slug, 'site');
   for (const result of [

@@ -13,10 +13,12 @@ interface Props {
 
 const { lang } = Astro.props;
 const content = await getPublishedPageCopy(Astro, 'page_about', 'about', DEFAULT_ABOUT_COPY[lang]);
+const productsText = /cinaclaw/i.test(content.productsText)
+  ? DEFAULT_ABOUT_COPY[lang].productsText
+  : content.productsText;
 const route = (path: string) => localizeInternalHref(path, lang) || path;
 const products = [
   { slug: 'cinaseek', name: 'CinaSeek' },
-  { slug: 'cinaclaw', name: 'CinaClaw' },
   { slug: 'cinatoken', name: 'CinaToken' },
   { slug: 'cinaskill', name: 'CinaSkill' },
   { slug: 'cinachain', name: 'CinaChain' },
@@ -64,7 +66,7 @@ const metadata = await getPageCopyMetadata(Astro, {
         <div class="cg-section-heading">
           <p class="cg-eyebrow">{content.productsEyebrow}</p>
           <h2 id={`${lang}-about-products`}>{content.productsTitle}</h2>
-          <p>{content.productsText}</p>
+          <p>{productsText}</p>
         </div>
         <div class="cg-list-panel">
           {
