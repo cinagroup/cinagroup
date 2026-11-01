@@ -227,3 +227,55 @@ test('prerender needs no database and failed CMS reads retain independent valid 
   assert.deepEqual(presentation.menus.footer, []);
   assert.equal(reads, 5);
 });
+
+test('published native dark logos resolve once per request and refresh without retaining stale snapshots', async () => {
+  const image = { id: 'native-logo', provider: 'local', src: '/stale-black-logo.png' };
+  let calls = 0;
+  let current = { url: '/current-white-logo.png', width: 832, height: 288 };
+  const load = createSitePresentationLoader({
+    settings: async () => ({ data: { title: 'Published identity' } }),
+    menu: async (_name, locale) => ({ data: menu(locale) }),
+    profile: async (locale) => profileResult(locale, { logo_dark: image }),
+    media: async (value) => {
+      calls++;
+      assert.equal(value, image);
+      return current;
+    },
+  });
+  const context = request();
+  const first = load(context, 'zh');
+  assert.equal(load(context, 'zh'), first);
+  assert.deepEqual((await first).darkLogo, current);
+  assert.equal(calls, 1);
+  current = undefined;
+  assert.equal((await load(request(), 'zh')).darkLogo, undefined);
+  assert.equal(calls, 2);
+});
+
+test('media failures retain the published site identity and never expose rejected profile images', async () => {
+  let reads = 0;
+  let result = profileResult('zh', { logo_dark: { id: 'selected', src: '/stale-logo.png' } });
+  const load = createSitePresentationLoader({
+    settings: async () => ({ data: { title: 'Published identity' } }),
+    menu: async (_name, locale) => ({ data: menu(locale) }),
+    profile: async () => result,
+    media: async () => {
+      reads++;
+      throw new Error('Media temporarily unavailable');
+    },
+  });
+  const presentation = await load(request(), 'zh');
+  assert.equal(presentation.darkLogo, undefined);
+  assert.equal(presentation.siteName, 'Published identity');
+  assert.equal(reads, 1);
+  for (const rejected of [
+    { ...result, isPreview: true },
+    { ...result, fallbackLocale: 'en' },
+    profileResult('en', { logo_dark: { id: 'wrong-locale' } }),
+    profileResult('zh', { status: 'draft', logo_dark: { id: 'draft' } }),
+  ]) {
+    result = rejected;
+    assert.equal((await load(request(), 'zh')).darkLogo, undefined);
+  }
+  assert.equal(reads, 1);
+});

@@ -17,12 +17,11 @@ const light: PresentationMedia = presentation.logo ?? {
   width: 832,
   height: 288,
 };
-const dark: PresentationMedia = presentation.darkLogo ??
-  presentation.logo ?? {
-    url: '/brand/cinagroup-horizontal-white.png',
-    width: 832,
-    height: 288,
-  };
+const dark: PresentationMedia = presentation.darkLogo ?? {
+  url: '/brand/cinagroup-horizontal-white.png',
+  width: 832,
+  height: 288,
+};
 const alt = imageAlt ?? light.alt ?? localizedName ?? 'CinaGroup';
 ---
 

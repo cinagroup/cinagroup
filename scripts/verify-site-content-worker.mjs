@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import { createHash } from 'node:crypto';
-import { ContentRepository, MediaRepository, setSiteSettings } from 'emdash';
+import { ContentRepository, MediaRepository, SchemaRegistry, setSiteSettings } from 'emdash';
 import { parse } from 'parse5';
 import {
   bindPresentationMedia,
@@ -13,6 +13,7 @@ import {
 } from './initialize-site-content.mjs';
 import { initializeSiteContent } from '../src/emdash/initialize-site-content.ts';
 import { extractLegacyArticleShell } from '../src/emdash/legacy-article-shell.ts';
+import { SITE_APPEARANCE_FIELDS } from '../src/emdash/site-appearance.ts';
 
 /** Exercise the already compiled Worker with local, ephemeral native CMS/R2 data. */
 export async function verifySiteContentWorker(server) {
@@ -59,6 +60,20 @@ export async function verifySiteContentWorker(server) {
     // Seed a published revision and a later draft before restarting the isolated
     // test Worker. The compiled public route must select the published snapshot.
     const content = new ContentRepository(db);
+    // The native editor publishes an ImageValue with an ID but no src. Reproduce
+    // the production regression with black primary and a real white-wordmark row.
+    await new SchemaRegistry(db).createField(
+      'site_profile',
+      structuredClone(SITE_APPEARANCE_FIELDS.find((field) => field.slug === 'design_primary_color'))
+    );
+    const profile = await content.findBySlug('site_profile', 'site', 'en');
+    await content.updateDraftAware('site_profile', profile.id, {
+      data: {
+        design_primary_color: '#000000',
+        logo_dark: { id: references.logoDark.id, provider: 'local', alt: 'Published white wordmark' },
+      },
+    });
+    await content.publish('site_profile', profile.id);
     const home = await content.findBySlug('site_pages', 'home', 'zh');
     await content.updateDraftAware('site_pages', home.id, { data: { hero_title: 'CMS published homepage proof' } });
     await content.publish('site_pages', home.id);
@@ -119,14 +134,21 @@ export async function verifySiteContentWorker(server) {
       assert.ok(body.includes(references.logo.src), locale + ' header uses registered original logo');
       assert.ok(body.includes(references.logoDark.src), locale + ' footer uses registered original logo');
       const renderedImages = [];
+      const contrastLogos = [];
       const findImages = (node) => {
         if (node.tagName === 'img') {
           const attrs = Object.fromEntries(node.attrs.map(({ name, value }) => [name, value]));
           if (attrs.class?.split(/\s+/).includes('fx-hero-image')) renderedImages.push(attrs.src);
+          if (attrs['data-logo-variant'] === 'dark') contrastLogos.push(attrs.src);
         }
         for (const child of node.childNodes ?? []) findImages(child);
       };
       findImages(parse(body));
+      assert.ok(contrastLogos.includes(references.logoDark.src), locale + ' resolves selected native dark logo');
+      if (!locale) {
+        assert.ok(body.includes('--fx-primary:#000000'), 'published black primary color');
+        assert.ok(body.includes('data-fx-header-contrast="light"'), 'black header selects white foreground');
+      }
       assert.deepEqual(renderedImages, [references.hero.src, references.about.src], locale + ' actual homepage images');
       for (const source of renderedImages) {
         const response = await server.fetch(new URL(source, 'https://cinagroup.com').href);
