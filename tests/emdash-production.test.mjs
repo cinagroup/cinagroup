@@ -205,15 +205,15 @@ test('pushes and pull requests cannot mutate production, except the audited auto
     assert.equal(step.if, undefined, name + ': validation runs on pushes');
   }
 
-  const releaseGate = steps.find((item) => item.name === 'Require reviewed briefing content before production changes');
-  assert.ok(releaseGate?.if?.startsWith(manualPrefix));
-  for (const operation of [...deployOperations, 'cutover'])
-    assert.ok(releaseGate.if.includes(`inputs.operation == '${operation}'`));
-  assert.ok(!releaseGate.if.includes("inputs.operation == 'rollback'"));
-  assert.match(releaseGate.run, /git diff .*a95006c11c74d1dee64643ae3149f95f16a99cb1.*verify-briefing-release\.mjs/);
-  assert.equal(releaseGate.shell, 'bash', 'pipefail must propagate a git diff error');
-  assert.match(releaseGate.run, /git diff --no-renames/, 'renamed files must be checked as additions');
-  assert.ok(steps.indexOf(releaseGate) < steps.findIndex((item) => item.name === 'Verify live production resources'));
+  // Automated briefings publish without a human editorial review gate (owner decision,
+  // 2026-11-14). Guard against the gate being reintroduced — a briefings release gate that
+  // fails closed on pending review rows silently blocks every deploy while the cron keeps
+  // committing content, which is how briefings stalled for days with a green-ish pipeline.
+  assert.equal(
+    steps.find((item) => item.name === 'Require reviewed briefing content before production changes'),
+    undefined,
+    'briefing review gate must not be reintroduced; automated briefings publish unreviewed by design'
+  );
   assert.equal(steps.find((item) => item.name === 'Checkout repository')?.with?.['fetch-depth'], 0);
   const onlineDeploy = steps.find((item) => item.name === 'Verify uploaded production Worker through workers.dev');
   assert.equal(onlineDeploy?.if, "steps.deploy.outcome == 'success'");
