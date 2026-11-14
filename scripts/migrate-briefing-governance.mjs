@@ -28,7 +28,11 @@ const residualArtifactPatterns = [
   { label: 'DSML marker', pattern: /DSML/iu },
   { label: 'model control token', pattern: /<｜[^\n>]*｜>/u },
   { label: 'tool invocation markup', pattern: /<(?:[^>\n]*)(?:tool_calls?|invoke\s+name=|parameter\s+name=)/iu },
-  { label: 'Unix home path', pattern: /\/(?:home|root)\/[A-Za-z0-9._/-]+/u },
+  {
+    label: 'Unix home path',
+    // Local paths only — URL segments like businesswire.com/news/home/<id>/en/ are not leaks.
+    pattern: /(?<![A-Za-z0-9._~-])\/(?:home\/(?:[A-Za-z][\w.-]*|runner)|root)(?:\/[\w./-]*)?/u,
+  },
   { label: 'Windows local path', pattern: /[A-Za-z]:\\(?:Users|cinagroup)\\[^\s<]*/iu },
 ];
 

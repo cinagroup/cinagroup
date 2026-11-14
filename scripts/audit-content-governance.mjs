@@ -57,7 +57,13 @@ const artifactPatterns = [
   { label: 'DSML marker', pattern: /DSML/iu },
   { label: 'model control token', pattern: /<｜[^\n>]*｜>/u },
   { label: 'tool invocation markup', pattern: /<(?:[^>\n]*)(?:tool_calls?|invoke\s+name=|parameter\s+name=)/iu },
-  { label: 'Unix home path', pattern: /\/(?:home|root)\/[A-Za-z0-9._/-]+/u },
+  // Real local leaked paths, NOT URL path segments. Require a local-looking home
+  // segment preceded by a path boundary, so URLs like
+  // businesswire.com/news/home/<id>/en/ do not trip the guard.
+  {
+    label: 'Unix home path',
+    pattern: /(?<![A-Za-z0-9._~-])\/(?:home\/(?:[A-Za-z][\w.-]*|runner)|root)(?:\/[\w./-]*)?/u,
+  },
   { label: 'Windows local path', pattern: /[A-Za-z]:\\(?:Users|cinagroup)\\[^\s<]*/iu },
 ];
 
