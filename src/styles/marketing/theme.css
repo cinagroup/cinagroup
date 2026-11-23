@@ -462,6 +462,7 @@ body.marketing-template .container {
   background: rgb(0 0 0 / 20%);
 }
 .fx-photo-cta h2 {
+  color: inherit;
   font-size: 44.5px;
   line-height: 1.2;
   margin-bottom: 25px;
@@ -510,6 +511,7 @@ body.marketing-template .container {
   gap: 50px;
 }
 .fx-final-cta h2 {
+  color: inherit;
   font-size: 36px;
   line-height: 1.2;
   max-width: 800px;
